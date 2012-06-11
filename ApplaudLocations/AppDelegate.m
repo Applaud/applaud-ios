@@ -3,19 +3,46 @@
 //  ApplaudLocations
 //
 //  Created by Luke Lovett on 6/8/12.
-//  Copyright (c) 2012 Oberlin College. All rights reserved.
+//  Copyright (c) 2012 Applaud, Inc. All rights reserved.
 //
 
 #import "AppDelegate.h"
+#import "MapViewController.h"
+#import "MasterViewController.h"
 
 @implementation AppDelegate
 
 @synthesize window = _window;
+@synthesize tracker;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
+{ 
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
+
+    // The "tracker" updates the NotificationCenter about changes in the user's location
+    // Since we want to track this throughout the application, we initialize it here.
+    self.tracker = [[BusinessLocationsTracker alloc] init];
+    
+    // Map view, for finding user location
+    MapViewController *mapViewController = [[MapViewController alloc] init];
+    
+    // List view controller, for selecting the location
+    MasterViewController *masterViewController = [[MasterViewController alloc] init];
+    masterViewController.mapViewController = mapViewController;
+   
+    // Ipad initialization
+    if ( [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad ) {
+        NSArray *viewControllers = [NSArray arrayWithObjects:masterViewController, mapViewController, nil];
+        UISplitViewController *splitView = [[UISplitViewController alloc] init];
+        splitView.viewControllers = viewControllers;
+        self.window.rootViewController = splitView;
+    }
+    // Iphone initialization 
+    else {
+        UINavigationController *navControl = [[UINavigationController alloc] initWithRootViewController:masterViewController];
+        self.window.rootViewController = navControl;
+    }
+    
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;

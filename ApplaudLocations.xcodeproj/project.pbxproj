@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B9389A41583C9D30088F468 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B9389A31583C9D30088F468 /* MasterViewController.m */; };
+		1B9389A81583CB170088F468 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B9389A71583CB170088F468 /* MapViewController.m */; };
+		1B9389AA1583CB460088F468 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B9389A91583CB460088F468 /* MapKit.framework */; };
+		1B9389B01583EB110088F468 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B9389AF1583EB110088F468 /* CoreLocation.framework */; };
+		1B9389BB1584EF010088F468 /* BusinessLocationsTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B9389BA1584EF010088F468 /* BusinessLocationsTracker.m */; };
 		1BA358E81582F05E00EB8F32 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BA358E71582F05E00EB8F32 /* UIKit.framework */; };
 		1BA358EA1582F05E00EB8F32 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BA358E91582F05E00EB8F32 /* Foundation.framework */; };
 		1BA358EC1582F05E00EB8F32 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BA358EB1582F05E00EB8F32 /* CoreGraphics.framework */; };
@@ -16,15 +21,23 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1B9389A21583C9D30088F468 /* MasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
+		1B9389A31583C9D30088F468 /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
+		1B9389A61583CB170088F468 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
+		1B9389A71583CB170088F468 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
+		1B9389A91583CB460088F468 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		1B9389AF1583EB110088F468 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		1B9389B91584EF010088F468 /* BusinessLocationsTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessLocationsTracker.h; sourceTree = "<group>"; };
+		1B9389BA1584EF010088F468 /* BusinessLocationsTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessLocationsTracker.m; sourceTree = "<group>"; };
 		1BA358E31582F05E00EB8F32 /* ApplaudLocations.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ApplaudLocations.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BA358E71582F05E00EB8F32 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		1BA358E91582F05E00EB8F32 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1BA358EB1582F05E00EB8F32 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		1BA358EF1582F05E00EB8F32 /* ApplaudLocations-Info.plist */ = {isa = PBXFileReference; path = "ApplaudLocations-Info.plist"; sourceTree = "<group>"; };
+		1BA358EF1582F05E00EB8F32 /* ApplaudLocations-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ApplaudLocations-Info.plist"; sourceTree = "<group>"; };
 		1BA358F11582F05E00EB8F32 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1BA358F31582F05E00EB8F32 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		1BA358F51582F05E00EB8F32 /* ApplaudLocations-Prefix.pch */ = {isa = PBXFileReference; path = "ApplaudLocations-Prefix.pch"; sourceTree = "<group>"; };
-		1BA358F61582F05E00EB8F32 /* AppDelegate.h */ = {isa = PBXFileReference; path = AppDelegate.h; sourceTree = "<group>"; };
+		1BA358F51582F05E00EB8F32 /* ApplaudLocations-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ApplaudLocations-Prefix.pch"; sourceTree = "<group>"; };
+		1BA358F61582F05E00EB8F32 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1BA358F71582F05E00EB8F32 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -33,6 +46,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B9389B01583EB110088F468 /* CoreLocation.framework in Frameworks */,
+				1B9389AA1583CB460088F468 /* MapKit.framework in Frameworks */,
 				1BA358E81582F05E00EB8F32 /* UIKit.framework in Frameworks */,
 				1BA358EA1582F05E00EB8F32 /* Foundation.framework in Frameworks */,
 				1BA358EC1582F05E00EB8F32 /* CoreGraphics.framework in Frameworks */,
@@ -62,6 +77,8 @@
 		1BA358E61582F05E00EB8F32 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1B9389AF1583EB110088F468 /* CoreLocation.framework */,
+				1B9389A91583CB460088F468 /* MapKit.framework */,
 				1BA358E71582F05E00EB8F32 /* UIKit.framework */,
 				1BA358E91582F05E00EB8F32 /* Foundation.framework */,
 				1BA358EB1582F05E00EB8F32 /* CoreGraphics.framework */,
@@ -74,6 +91,12 @@
 			children = (
 				1BA358F61582F05E00EB8F32 /* AppDelegate.h */,
 				1BA358F71582F05E00EB8F32 /* AppDelegate.m */,
+				1B9389A21583C9D30088F468 /* MasterViewController.h */,
+				1B9389A31583C9D30088F468 /* MasterViewController.m */,
+				1B9389A61583CB170088F468 /* MapViewController.h */,
+				1B9389A71583CB170088F468 /* MapViewController.m */,
+				1B9389B91584EF010088F468 /* BusinessLocationsTracker.h */,
+				1B9389BA1584EF010088F468 /* BusinessLocationsTracker.m */,
 				1BA358EE1582F05E00EB8F32 /* Supporting Files */,
 			);
 			path = ApplaudLocations;
@@ -117,7 +140,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0430;
-				ORGANIZATIONNAME = "Oberlin College";
+				ORGANIZATIONNAME = "Applaud, Inc";
 			};
 			buildConfigurationList = 1BA358DD1582F05E00EB8F32 /* Build configuration list for PBXProject "ApplaudLocations" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -154,6 +177,9 @@
 			files = (
 				1BA358F41582F05E00EB8F32 /* main.m in Sources */,
 				1BA358F81582F05E00EB8F32 /* AppDelegate.m in Sources */,
+				1B9389A41583C9D30088F468 /* MasterViewController.m in Sources */,
+				1B9389A81583CB170088F468 /* MapViewController.m in Sources */,
+				1B9389BB1584EF010088F468 /* BusinessLocationsTracker.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -259,6 +285,7 @@
 				1BA358FD1582F05E00EB8F32 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

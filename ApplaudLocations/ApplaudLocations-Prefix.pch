@@ -12,3 +12,6 @@
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
 #endif
+
+#define BUSINESS_RADIUS_ENTRY 100
+#define BUSINESS_RADIUS_EXIT 250
