@@ -3,7 +3,7 @@
 //  ApplaudLocations
 //
 //  Created by Luke Lovett on 6/9/12.
-//  Copyright (c) 2012 Oberlin College. All rights reserved.
+//  Copyright (c) 2012 Applaud, Inc. All rights reserved.
 //
 
 #import "MasterViewController.h"
