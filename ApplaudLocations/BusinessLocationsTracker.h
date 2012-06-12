@@ -10,7 +10,11 @@
 #import <CoreLocation/CoreLocation.h>
 
 @interface BusinessLocationsTracker : NSObject <CLLocationManagerDelegate> {
-    CLLocationManager *locMan;
+    CLLocationManager *locMan;  // The location manager
+    CLLocationCoordinate2D lastCoordinate; // The last coordinate we were recorded in
+    
+    NSURLConnection *urlConnection; // Connection to our backend
+    NSMutableData *serverData;   // Data received from the server
 }
 
 @end
