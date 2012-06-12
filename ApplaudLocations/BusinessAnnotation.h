@@ -13,5 +13,7 @@
 @interface BusinessAnnotation : NSObject <MKAnnotation>
 @property (nonatomic, strong) Business *business;
 @property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
+@property (nonatomic, copy) NSString *title;
+@property (nonatomic, copy) NSString *subtitle;
 - (id) initWithBusiness:(Business *)b;
 @end

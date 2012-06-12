@@ -75,7 +75,7 @@
 #pragma mark Other Methods
 
 - (void)notificationUpdate:(NSNotification *)notification {
-    if([notification.name isEqualToString:@"LOCATION_RECIEVED"]) {
+    if([notification.name isEqualToString:@"LOCATION_CHANGE"]) {
         CLLocation *newLocation = notification.object;
         [self zoomMapTo:newLocation.coordinate];
     }

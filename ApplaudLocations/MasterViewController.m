@@ -158,7 +158,6 @@
 - (void) businessRecieved:(NSNotification *)notification {
   self.locationsArray = [notification object];
   [tableView reloadData];
-  NSLog(@"%@", [self.locationsArray description]);
 }
 
 @end
