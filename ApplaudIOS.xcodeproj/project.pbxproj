@@ -33,10 +33,10 @@
 		1BA358E71582F05E00EB8F32 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		1BA358E91582F05E00EB8F32 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1BA358EB1582F05E00EB8F32 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		1BA358EF1582F05E00EB8F32 /* ApplaudLocations-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ApplaudLocations-Info.plist"; sourceTree = "<group>"; };
+		1BA358EF1582F05E00EB8F32 /* ApplaudIOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ApplaudLocations-Info.plist"; sourceTree = "<group>"; };
 		1BA358F11582F05E00EB8F32 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1BA358F31582F05E00EB8F32 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		1BA358F51582F05E00EB8F32 /* ApplaudLocations-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ApplaudLocations-Prefix.pch"; sourceTree = "<group>"; };
+		1BA358F51582F05E00EB8F32 /* ApplaudIOS-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ApplaudLocations-Prefix.pch"; sourceTree = "<group>"; };
 		1BA358F61582F05E00EB8F32 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1BA358F71582F05E00EB8F32 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -105,10 +105,10 @@
 		1BA358EE1582F05E00EB8F32 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				1BA358EF1582F05E00EB8F32 /* ApplaudLocations-Info.plist */,
+				1BA358EF1582F05E00EB8F32 /* ApplaudIOS-Info.plist */,
 				1BA358F01582F05E00EB8F32 /* InfoPlist.strings */,
 				1BA358F31582F05E00EB8F32 /* main.m */,
-				1BA358F51582F05E00EB8F32 /* ApplaudLocations-Prefix.pch */,
+				1BA358F51582F05E00EB8F32 /* ApplaudIOS-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -248,8 +248,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "ApplaudLocations/ApplaudLocations-Prefix.pch";
-				INFOPLIST_FILE = "ApplaudLocations/ApplaudLocations-Info.plist";
+				GCC_PREFIX_HEADER = "ApplaudLocations/ApplaudIOS-Prefix.pch";
+				INFOPLIST_FILE = "ApplaudLocations/ApplaudIOS-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -259,8 +259,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "ApplaudLocations/ApplaudLocations-Prefix.pch";
-				INFOPLIST_FILE = "ApplaudLocations/ApplaudLocations-Info.plist";
+				GCC_PREFIX_HEADER = "ApplaudLocations/ApplaudIOS-Prefix.pch";
+				INFOPLIST_FILE = "ApplaudLocations/ApplaudIOS-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
