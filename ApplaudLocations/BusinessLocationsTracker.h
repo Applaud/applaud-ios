@@ -17,4 +17,7 @@
     NSMutableData *serverData;   // Data received from the server
 }
 
+// Convenient method to show an alert to the user with only an "OK" button
+- (void)showAlertView:(NSString *)msg;
+
 @end

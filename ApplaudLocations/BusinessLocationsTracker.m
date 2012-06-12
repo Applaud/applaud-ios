@@ -39,9 +39,9 @@
         // We left the business
         lastCoordinate = newLocation.coordinate;
         [self findBusinesses];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"LOCATION_CHANGE" object:newLocation];
     }
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"LOCATION_CHANGE" object:newLocation];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
@@ -95,10 +95,15 @@
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-    NSLog(@"Connection error: %@",error);
+    [self showAlertView:[NSString stringWithFormat:@"Connection error: %@",error]];
     
     serverData = nil;
     urlConnection = nil;
+}
+
+- (void)showAlertView:(NSString *)msg {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Applaud" message:msg delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
 }
 
 @end
