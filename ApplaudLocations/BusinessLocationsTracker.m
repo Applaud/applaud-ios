@@ -33,7 +33,7 @@
     // Ignore cached data
     if (t < -180)
         return;
-        
+    
     // Check distance
     if ( [[[CLLocation alloc] initWithLatitude:lastCoordinate.latitude longitude:lastCoordinate.longitude] distanceFromLocation:newLocation] > BUSINESS_RADIUS_EXIT) {
         // We left the business
@@ -45,6 +45,12 @@
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
+    UIAlertView *connection_problem = [[UIAlertView alloc] initWithTitle:@"Connection error"
+                                                                 message:@"Couldn't get business data"
+                                                                delegate:nil
+                                                       cancelButtonTitle:nil
+                                                       otherButtonTitles:@"OK", nil];
+    [connection_problem show];
     NSLog(@"Error finding location: %@",error);
 }
 
@@ -66,23 +72,22 @@
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-//    NSLog(@"%@", [[NSString alloc] initWithData:serverData encoding:NSUTF8StringEncoding]);
-  NSError *e = [[NSError alloc] init];
-  NSMutableDictionary *businesses = [NSJSONSerialization JSONObjectWithData:serverData options:NSJSONReadingMutableLeaves | NSJSONReadingMutableContainers error:&e];
-  //NSLog(@"%d    %@",businesses.count, e);
-  NSMutableArray *businessArray = [[NSMutableArray alloc] init];
-  for(NSDictionary *dict in [businesses objectForKey:@"nearby_businesses"]) {
-    Business *bus = [[Business alloc] initWithName:[dict objectForKey:@"name"]
-                                              type:[dict objectForKey:@"type"]
-                                           goog_id:[dict objectForKey:@"goog_id"]
-                                          latitude:[dict objectForKey:@"latitude"]
-                                         longitude:[dict objectForKey:@"longitude"]];
-    [businessArray addObject:bus];
-  }
-  [[NSNotificationCenter defaultCenter] postNotificationName:@"BUSINESS_RECIEVED" object:businessArray];
-  businesses = nil;
-  serverData = nil;
-  urlConnection = nil;
+    //    NSLog(@"%@", [[NSString alloc] initWithData:serverData encoding:NSUTF8StringEncoding]);
+    NSError *e = [[NSError alloc] init];
+    NSMutableDictionary *businesses = [NSJSONSerialization JSONObjectWithData:serverData options:NSJSONReadingMutableLeaves | NSJSONReadingMutableContainers error:&e];
+    NSMutableArray *businessArray = [[NSMutableArray alloc] init];
+    for(NSDictionary *dict in [businesses objectForKey:@"nearby_businesses"]) {
+        Business *bus = [[Business alloc] initWithName:[dict objectForKey:@"name"]
+                                                  type:[dict objectForKey:@"type"]
+                                               goog_id:[dict objectForKey:@"goog_id"]
+                                              latitude:[dict objectForKey:@"latitude"]
+                                             longitude:[dict objectForKey:@"longitude"]];
+        [businessArray addObject:bus];
+    }
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"BUSINESS_RECIEVED" object:businessArray];
+    businesses = nil;
+    serverData = nil;
+    urlConnection = nil;
     
     // put some info in the notificationcenter
     

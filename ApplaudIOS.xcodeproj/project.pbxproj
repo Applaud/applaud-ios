@@ -19,6 +19,7 @@
 		1BA358F41582F05E00EB8F32 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BA358F31582F05E00EB8F32 /* main.m */; };
 		1BA358F81582F05E00EB8F32 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BA358F71582F05E00EB8F32 /* AppDelegate.m */; };
 		6F2A39171587B2AB0024FB52 /* Business.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F2A39161587B2AB0024FB52 /* Business.m */; };
+		6FAB07A01587BF0700C9F1DF /* BusinessAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FAB079F1587BF0700C9F1DF /* BusinessAnnotation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,8 @@
 		1BA358F71582F05E00EB8F32 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		6F2A39151587B2AB0024FB52 /* Business.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Business.h; sourceTree = "<group>"; };
 		6F2A39161587B2AB0024FB52 /* Business.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Business.m; sourceTree = "<group>"; };
+		6FAB079E1587BF0700C9F1DF /* BusinessAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessAnnotation.h; sourceTree = "<group>"; };
+		6FAB079F1587BF0700C9F1DF /* BusinessAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessAnnotation.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +101,8 @@
 				1B9389A31583C9D30088F468 /* MasterViewController.m */,
 				1B9389A61583CB170088F468 /* MapViewController.h */,
 				1B9389A71583CB170088F468 /* MapViewController.m */,
+				6FAB079E1587BF0700C9F1DF /* BusinessAnnotation.h */,
+				6FAB079F1587BF0700C9F1DF /* BusinessAnnotation.m */,
 				1B9389B91584EF010088F468 /* BusinessLocationsTracker.h */,
 				1B9389BA1584EF010088F468 /* BusinessLocationsTracker.m */,
 				6F2A39151587B2AB0024FB52 /* Business.h */,
@@ -186,6 +191,7 @@
 				1B9389A81583CB170088F468 /* MapViewController.m in Sources */,
 				1B9389BB1584EF010088F468 /* BusinessLocationsTracker.m in Sources */,
 				6F2A39171587B2AB0024FB52 /* Business.m in Sources */,
+				6FAB07A01587BF0700C9F1DF /* BusinessAnnotation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

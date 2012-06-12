@@ -18,6 +18,7 @@
 }
 
 @property (nonatomic, strong) MKMapView *mapView;
+@property (nonatomic, strong) NSMutableArray *businesses;
 
 - (void)zoomMapTo:(CLLocationCoordinate2D)loc;
 

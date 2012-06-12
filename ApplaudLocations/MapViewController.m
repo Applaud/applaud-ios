@@ -7,10 +7,13 @@
 //
 
 #import "MapViewController.h"
+#import "Business.h"
+#import "BusinessAnnotation.h"
 
 @implementation MapViewController
 
 @synthesize mapView;
+@synthesize businesses = _businesses;
 
 #pragma mark -
 #pragma mark View Load/Unload
@@ -26,6 +29,10 @@
        
         // Register as an observer to the BusinessLocationsTracker
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notificationUpdate:) name:@"LOCATION_CHANGE" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(notificationUpdate:)
+                                                     name:@"BUSINESS_RECIEVED"
+                                                   object:nil];
       
     }
     return self;
@@ -68,8 +75,17 @@
 #pragma mark Other Methods
 
 - (void)notificationUpdate:(NSNotification *)notification {
-    CLLocation *newLocation = notification.object;
-    [self zoomMapTo:newLocation.coordinate];
+    if([notification.name isEqualToString:@"LOCATION_RECIEVED"]) {
+        CLLocation *newLocation = notification.object;
+        [self zoomMapTo:newLocation.coordinate];
+    }
+    else if([notification.name isEqualToString:@"BUSINESS_RECIEVED"]) {
+        for(Business *b in notification.object) {
+            BusinessAnnotation *busAnnotation = [[BusinessAnnotation alloc] initWithBusiness:b];
+            [self.businesses addObject:busAnnotation];
+            [self.mapView addAnnotation:busAnnotation];
+        }
+    }
 }
 
 /**
