@@ -18,6 +18,7 @@
 		1BA358F21582F05E00EB8F32 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1BA358F01582F05E00EB8F32 /* InfoPlist.strings */; };
 		1BA358F41582F05E00EB8F32 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BA358F31582F05E00EB8F32 /* main.m */; };
 		1BA358F81582F05E00EB8F32 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BA358F71582F05E00EB8F32 /* AppDelegate.m */; };
+		6F2A39171587B2AB0024FB52 /* Business.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F2A39161587B2AB0024FB52 /* Business.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,12 +34,14 @@
 		1BA358E71582F05E00EB8F32 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		1BA358E91582F05E00EB8F32 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1BA358EB1582F05E00EB8F32 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		1BA358EF1582F05E00EB8F32 /* ApplaudIOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ApplaudLocations-Info.plist"; sourceTree = "<group>"; };
+		1BA358EF1582F05E00EB8F32 /* ApplaudLocations-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ApplaudLocations-Info.plist"; sourceTree = "<group>"; };
 		1BA358F11582F05E00EB8F32 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1BA358F31582F05E00EB8F32 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		1BA358F51582F05E00EB8F32 /* ApplaudIOS-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ApplaudLocations-Prefix.pch"; sourceTree = "<group>"; };
+		1BA358F51582F05E00EB8F32 /* ApplaudLocations-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ApplaudLocations-Prefix.pch"; sourceTree = "<group>"; };
 		1BA358F61582F05E00EB8F32 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1BA358F71582F05E00EB8F32 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		6F2A39151587B2AB0024FB52 /* Business.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Business.h; sourceTree = "<group>"; };
+		6F2A39161587B2AB0024FB52 /* Business.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Business.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +100,8 @@
 				1B9389A71583CB170088F468 /* MapViewController.m */,
 				1B9389B91584EF010088F468 /* BusinessLocationsTracker.h */,
 				1B9389BA1584EF010088F468 /* BusinessLocationsTracker.m */,
+				6F2A39151587B2AB0024FB52 /* Business.h */,
+				6F2A39161587B2AB0024FB52 /* Business.m */,
 				1BA358EE1582F05E00EB8F32 /* Supporting Files */,
 			);
 			path = ApplaudLocations;
@@ -105,10 +110,10 @@
 		1BA358EE1582F05E00EB8F32 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				1BA358EF1582F05E00EB8F32 /* ApplaudIOS-Info.plist */,
+				1BA358EF1582F05E00EB8F32 /* ApplaudLocations-Info.plist */,
 				1BA358F01582F05E00EB8F32 /* InfoPlist.strings */,
 				1BA358F31582F05E00EB8F32 /* main.m */,
-				1BA358F51582F05E00EB8F32 /* ApplaudIOS-Prefix.pch */,
+				1BA358F51582F05E00EB8F32 /* ApplaudLocations-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -142,7 +147,7 @@
 				LastUpgradeCheck = 0430;
 				ORGANIZATIONNAME = "Applaud, Inc";
 			};
-			buildConfigurationList = 1BA358DD1582F05E00EB8F32 /* Build configuration list for PBXProject "ApplaudLocations" */;
+			buildConfigurationList = 1BA358DD1582F05E00EB8F32 /* Build configuration list for PBXProject "ApplaudIOS" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -180,6 +185,7 @@
 				1B9389A41583C9D30088F468 /* MasterViewController.m in Sources */,
 				1B9389A81583CB170088F468 /* MapViewController.m in Sources */,
 				1B9389BB1584EF010088F468 /* BusinessLocationsTracker.m in Sources */,
+				6F2A39171587B2AB0024FB52 /* Business.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,7 +275,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1BA358DD1582F05E00EB8F32 /* Build configuration list for PBXProject "ApplaudLocations" */ = {
+		1BA358DD1582F05E00EB8F32 /* Build configuration list for PBXProject "ApplaudIOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1BA358F91582F05E00EB8F32 /* Debug */,

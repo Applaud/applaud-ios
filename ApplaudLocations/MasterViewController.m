@@ -7,6 +7,7 @@
 //
 
 #import "MasterViewController.h"
+#import "Business.h"
 
 @implementation MasterViewController
 
@@ -16,6 +17,7 @@
     self = [super init];
     if (self) {
         self.view.backgroundColor = [UIColor lightGrayColor];
+      self.locationsArray = [[NSMutableArray alloc] init];
         CGRect labelRect = CGRectMake(0, 0, 320, 50);
         tableView = [[UITableView alloc] 
                      initWithFrame:CGRectMake(0, labelRect.size.height + labelRect.origin.y,
@@ -36,6 +38,7 @@
         self.navigationItem.backBarButtonItem = backButton;
         [self.view addSubview:titleLabel];
         [self.view addSubview:tableView];
+      [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(businessRecieved:) name:@"BUSINESS_RECIEVED" object:nil];
     }
     return self;
 }
@@ -73,7 +76,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;//locationsArray.count;
+    return locationsArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -84,7 +87,8 @@
     if ( nil == cell ) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:@"UITableViewCell"];
         [[cell textLabel] setText:@"foo"];
-//        [[cell textLabel] setText:[locationsArray objectAtIndex:indexPath.row].name];
+      Business *business = [locationsArray objectAtIndex:indexPath.row];
+        [[cell textLabel] setText:business.name];
     }
     
     // Configure the cell...
@@ -149,6 +153,12 @@
 
 - (void)showMapView {
     [self.navigationController pushViewController:mapViewController animated:YES];
+}
+
+- (void) businessRecieved:(NSNotification *)notification {
+  self.locationsArray = [notification object];
+  [tableView reloadData];
+  NSLog(@"%@", [self.locationsArray description]);
 }
 
 @end

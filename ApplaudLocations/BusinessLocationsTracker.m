@@ -7,6 +7,7 @@
 //
 
 #import "BusinessLocationsTracker.h"
+#import "Business.h"
 
 @implementation BusinessLocationsTracker
 
@@ -65,10 +66,23 @@
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-    NSLog(@"%@", [[NSString alloc] initWithData:serverData encoding:NSUTF8StringEncoding]);
-    
-    serverData = nil;
-    urlConnection = nil;
+//    NSLog(@"%@", [[NSString alloc] initWithData:serverData encoding:NSUTF8StringEncoding]);
+  NSError *e = [[NSError alloc] init];
+  NSMutableDictionary *businesses = [NSJSONSerialization JSONObjectWithData:serverData options:NSJSONReadingMutableLeaves | NSJSONReadingMutableContainers error:&e];
+  //NSLog(@"%d    %@",businesses.count, e);
+  NSMutableArray *businessArray = [[NSMutableArray alloc] init];
+  for(NSDictionary *dict in [businesses objectForKey:@"nearby_businesses"]) {
+    Business *bus = [[Business alloc] initWithName:[dict objectForKey:@"name"]
+                                              type:[dict objectForKey:@"type"]
+                                           goog_id:[dict objectForKey:@"goog_id"]
+                                          latitude:[dict objectForKey:@"latitude"]
+                                         longitude:[dict objectForKey:@"longitude"]];
+    [businessArray addObject:bus];
+  }
+  [[NSNotificationCenter defaultCenter] postNotificationName:@"BUSINESS_RECIEVED" object:businessArray];
+  businesses = nil;
+  serverData = nil;
+  urlConnection = nil;
     
     // put some info in the notificationcenter
     

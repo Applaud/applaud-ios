@@ -26,6 +26,7 @@
        
         // Register as an observer to the BusinessLocationsTracker
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notificationUpdate:) name:@"LOCATION_CHANGE" object:nil];
+      
     }
     return self;
 }
