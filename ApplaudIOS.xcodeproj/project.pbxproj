@@ -63,6 +63,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1B301C5515884C970038A5BE /* SelectLocations */ = {
+			isa = PBXGroup;
+			children = (
+				1B9389A21583C9D30088F468 /* MasterViewController.h */,
+				1B9389A31583C9D30088F468 /* MasterViewController.m */,
+				1B9389A61583CB170088F468 /* MapViewController.h */,
+				1B9389A71583CB170088F468 /* MapViewController.m */,
+				6FAB079E1587BF0700C9F1DF /* BusinessAnnotation.h */,
+				6FAB079F1587BF0700C9F1DF /* BusinessAnnotation.m */,
+			);
+			name = SelectLocations;
+			sourceTree = "<group>";
+		};
 		1BA358D81582F05E00EB8F32 = {
 			isa = PBXGroup;
 			children = (
@@ -95,18 +108,13 @@
 		1BA358ED1582F05E00EB8F32 /* ApplaudLocations */ = {
 			isa = PBXGroup;
 			children = (
+				1B301C5515884C970038A5BE /* SelectLocations */,
 				1BA358F61582F05E00EB8F32 /* AppDelegate.h */,
 				1BA358F71582F05E00EB8F32 /* AppDelegate.m */,
-				1B9389A21583C9D30088F468 /* MasterViewController.h */,
-				1B9389A31583C9D30088F468 /* MasterViewController.m */,
-				1B9389A61583CB170088F468 /* MapViewController.h */,
-				1B9389A71583CB170088F468 /* MapViewController.m */,
-				6FAB079E1587BF0700C9F1DF /* BusinessAnnotation.h */,
-				6FAB079F1587BF0700C9F1DF /* BusinessAnnotation.m */,
-				1B9389B91584EF010088F468 /* BusinessLocationsTracker.h */,
-				1B9389BA1584EF010088F468 /* BusinessLocationsTracker.m */,
 				6F2A39151587B2AB0024FB52 /* Business.h */,
 				6F2A39161587B2AB0024FB52 /* Business.m */,
+				1B9389B91584EF010088F468 /* BusinessLocationsTracker.h */,
+				1B9389BA1584EF010088F468 /* BusinessLocationsTracker.m */,
 				1BA358EE1582F05E00EB8F32 /* Supporting Files */,
 			);
 			path = ApplaudLocations;

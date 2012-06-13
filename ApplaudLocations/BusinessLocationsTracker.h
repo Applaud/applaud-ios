@@ -20,4 +20,8 @@
 // Convenient method to show an alert to the user with only an "OK" button
 - (void)showAlertView:(NSString *)msg;
 
+- (void)findBusinessesWithLocation:(CLLocationCoordinate2D)location;
+
+- (NSString *)GETStringFromDict:(NSDictionary *)dict;
+
 @end

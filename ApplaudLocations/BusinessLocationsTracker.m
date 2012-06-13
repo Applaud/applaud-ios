@@ -36,9 +36,9 @@
     
     // Check distance
     if ( [[[CLLocation alloc] initWithLatitude:lastCoordinate.latitude longitude:lastCoordinate.longitude] distanceFromLocation:newLocation] > BUSINESS_RADIUS_EXIT) {
-        // We left the business
+        // We left the business, or are starting up
         lastCoordinate = newLocation.coordinate;
-        [self findBusinesses];
+        [self findBusinessesWithLocation:newLocation.coordinate];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"LOCATION_CHANGE" object:newLocation];
     }
     
@@ -57,9 +57,24 @@
 #pragma mark -
 #pragma mark Call to Backend
 
-- (void)findBusinesses {
-    NSURL *url = [NSURL URLWithString:
-                  @"http://ec2-107-22-6-55.compute-1.amazonaws.com/example3"];
+/**
+ * What we do when we want to find businesses around a certain location.
+ */
+- (void)findBusinessesWithLocation:(CLLocationCoordinate2D)location {
+    NSArray *keyArray = [[NSArray alloc] initWithObjects:@"latitude", @"longitude", nil];
+    NSArray *valArray = [[NSArray alloc] initWithObjects:
+                         [NSNumber numberWithFloat:location.latitude], 
+                         [NSNumber numberWithFloat:location.longitude], nil];
+    NSDictionary *getDict = [[NSDictionary alloc] initWithObjects:valArray forKeys:keyArray];
+    NSString *urlString = [NSString stringWithFormat:
+                           @"http://ec2-107-22-6-55.compute-1.amazonaws.com/checkin%@",
+                           [self GETStringFromDict:getDict]];
+
+    NSLog(@"Making request with URL: %@",urlString);
+    
+    NSURL *url = [NSURL URLWithString:urlString];
+
+    //                  @"http://ec2-107-22-6-55.compute-1.amazonaws.com/example3"];
     
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
     urlConnection = [[NSURLConnection alloc] initWithRequest:request 
@@ -67,10 +82,16 @@
                                             startImmediately:YES];
 }
 
+/**
+ * Got a chunk of data from the server.
+ */
 - (void)connection:(NSURLConnection *)conn didReceiveData:(NSData *)data {
     [serverData appendData:data];
 }
 
+/**
+ * Done getting info from the server.
+ */
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     //    NSLog(@"%@", [[NSString alloc] initWithData:serverData encoding:NSUTF8StringEncoding]);
     NSError *e = [[NSError alloc] init];
@@ -94,6 +115,9 @@
     
 }
 
+/**
+ * Could not connect to the server.
+ */
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
     [self showAlertView:[NSString stringWithFormat:@"Connection error: %@",error]];
     
@@ -101,9 +125,26 @@
     urlConnection = nil;
 }
 
+#pragma mark -
+#pragma mark Other Methods
+
+/**
+ * Convenient way to display a alert to the user with only an 'OK' button.
+ */
 - (void)showAlertView:(NSString *)msg {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Applaud" message:msg delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
     [alert show];
+}
+
+/**
+ * Turns a dictionary into a GET request url format, starting with the &
+ */
+- (NSString *)GETStringFromDict:(NSDictionary *)dict {
+    NSMutableString *ret = [[NSMutableString alloc] initWithString:@"?"];
+    [dict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+        [ret appendString:[NSString stringWithFormat:@"%@=%@&",key,obj]];
+    }];
+    return [ret substringToIndex:(ret.length-1)];
 }
 
 @end

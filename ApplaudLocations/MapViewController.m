@@ -24,6 +24,7 @@
     if (self) {
         mapView = [[MKMapView alloc] initWithFrame:UIScreen.mainScreen.applicationFrame];
         mapView.userTrackingMode = MKUserTrackingModeNone;
+        mapView.centerCoordinate = CLLocationCoordinate2DMake(LATITUDE, LONGITUDE);
 
         self.view = mapView;
        
@@ -68,7 +69,8 @@
 }
 
 - (void)mapViewDidFailLoadingMap:(MKMapView *)mapView withError:(NSError *)error {
-    NSLog(@"%@",error);
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Applaud" message:error.description delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
 }
 
 #pragma mark -
