@@ -48,7 +48,6 @@
 					<object class="IBUITabBarItem" key="IBUITabBarItem" id="437584092">
 						<string key="IBUITitle">News</string>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<reference key="IBUITabBar" ref="672950347"/>
 					</object>
 					<reference key="IBUIParentViewController" ref="765556800"/>
 					<object class="IBUISimulatedOrientationMetrics" key="IBUISimulatedOrientationMetrics">
@@ -64,7 +63,6 @@
 						<object class="IBUITabBarItem" key="IBUITabBarItem" id="631396372">
 							<string key="IBUITitle">Applaud!</string>
 							<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-							<reference key="IBUITabBar" ref="672950347"/>
 						</object>
 						<reference key="IBUIParentViewController" ref="765556800"/>
 						<object class="IBUISimulatedOrientationMetrics" key="IBUISimulatedOrientationMetrics">
@@ -79,7 +77,6 @@
 							<bool key="IBUIEnabled">NO</bool>
 							<string key="IBUITitle"/>
 							<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-							<reference key="IBUITabBar" ref="672950347"/>
 						</object>
 						<array key="IBUIToolbarItems" id="0"/>
 						<reference key="IBUIParentViewController" ref="765556800"/>
@@ -95,7 +92,6 @@
 						<object class="IBUITabBarItem" key="IBUITabBarItem" id="751184204">
 							<string key="IBUITitle">Dialog</string>
 							<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-							<reference key="IBUITabBar" ref="672950347"/>
 						</object>
 						<reference key="IBUIToolbarItems" ref="0"/>
 						<reference key="IBUIParentViewController" ref="765556800"/>
@@ -113,20 +109,12 @@
 					<int key="NSvFlags">266</int>
 					<string key="NSFrame">{{0, 431}, {320, 49}}</string>
 					<reference key="NSSuperview"/>
-					<reference key="NSWindow"/>
 					<string key="NSReuseIdentifierKey">_NS:29</string>
 					<object class="NSColor" key="IBUIBackgroundColor">
 						<int key="NSColorSpace">3</int>
 						<bytes key="NSWhite">MCAwAA</bytes>
 					</object>
 					<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-					<array class="NSMutableArray" key="IBUIItems">
-						<reference ref="631396372"/>
-						<reference ref="665016471"/>
-						<reference ref="751184204"/>
-						<reference ref="437584092"/>
-					</array>
-					<reference key="IBUISelectedItem" ref="437584092"/>
 				</object>
 			</object>
 		</array>

@@ -7,6 +7,7 @@
 //
 
 #import "MasterViewController.h"
+#import "NFViewController.h"
 #import "Business.h"
 
 @implementation MasterViewController
@@ -145,7 +146,9 @@
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
-
+    NFViewController *nfvc = [[NFViewController alloc] init];
+    [[NSBundle mainBundle] loadNibNamed:@"NFViewController" owner:nfvc options:nil];
+    [self.navigationController pushViewController:nfvc animated:YES];
     // This corresponds to the newsfeed.
     [tabBarController setSelectedIndex:3];
     _window.rootViewController = tabBarController;
