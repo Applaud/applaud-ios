@@ -29,7 +29,10 @@
         self.view = mapView;
        
         // Register as an observer to the BusinessLocationsTracker
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notificationUpdate:) name:@"LOCATION_CHANGE" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(notificationUpdate:)
+                                                     name:@"LOCATION_CHANGE"
+                                                   object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(notificationUpdate:)
                                                      name:@"BUSINESS_RECIEVED"

@@ -85,14 +85,13 @@
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     if ( nil == cell ) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:@"UITableViewCell"];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"UITableViewCell"];
     }
     
     // Configure the cell...
     // TODO: Why the heck is everything so abbreviated in the cell's label????
     Business *business = [locationsArray objectAtIndex:indexPath.row];
     [[cell textLabel] setText:business.name];
-    
     return cell;
 }
 
