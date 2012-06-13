@@ -11,7 +11,7 @@
 
 @implementation MasterViewController
 
-@synthesize locationsArray, mapViewController, tableView, titleLabel, tabBarController;
+@synthesize locationsArray, mapViewController, tableView, titleLabel, tabBarController, window=_window;
 
 - (id)init {
     self = [super init];
@@ -138,10 +138,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // This corresponds to the newsfeed.
-    [tabBarController setSelectedIndex:3];
-    [self.navigationController pushViewController:tabBarController animated:YES];
-    
     // Navigation logic may go here. Create and push another view controller.
     /*
      <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
@@ -149,6 +145,11 @@
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
+
+    // This corresponds to the newsfeed.
+    [tabBarController setSelectedIndex:3];
+    _window.rootViewController = tabBarController;
+          
 }
 
 #pragma mark -
@@ -159,8 +160,8 @@
 }
 
 - (void) businessRecieved:(NSNotification *)notification {
-  self.locationsArray = [notification object];
-  [tableView reloadData];
+    self.locationsArray = [notification object];
+    [tableView reloadData];
 }
 
 @end

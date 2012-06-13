@@ -42,6 +42,7 @@
                                     [[NFViewController alloc] init],                                    
                                     nil];
     masterViewController.tabBarController = tabNavigator;
+    [masterViewController setWindow:self.window];
    
     // Ipad initialization
     if ( [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad ) {

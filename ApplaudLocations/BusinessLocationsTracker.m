@@ -70,12 +70,10 @@
                            @"http://ec2-107-22-6-55.compute-1.amazonaws.com/checkin%@",
                            [self GETStringFromDict:getDict]];
 
-    NSLog(@"Making request with URL: %@",urlString);
-    
     NSURL *url = [NSURL URLWithString:urlString];
+//    NSURL *url=[NSURL URLWithString:@"http://ec2-107-22-6-55.compute-1.amazonaws.com/example3"];
 
-    //                  @"http://ec2-107-22-6-55.compute-1.amazonaws.com/example3"];
-    
+    NSLog(@"Making request with URL: %@",[url description]);
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
     urlConnection = [[NSURLConnection alloc] initWithRequest:request 
                                                     delegate:self 
@@ -93,7 +91,7 @@
  * Done getting info from the server.
  */
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-    //    NSLog(@"%@", [[NSString alloc] initWithData:serverData encoding:NSUTF8StringEncoding]);
+    NSLog(@"%@", [[NSString alloc] initWithData:serverData encoding:NSUTF8StringEncoding]);
     NSError *e = [[NSError alloc] init];
     NSMutableDictionary *businesses = [NSJSONSerialization JSONObjectWithData:serverData options:NSJSONReadingMutableLeaves | NSJSONReadingMutableContainers error:&e];
     NSMutableArray *businessArray = [[NSMutableArray alloc] init];
