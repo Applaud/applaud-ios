@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface NFViewController : UIViewController
-
+@interface NFViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@property (nonatomic, strong) NSMutableArray *newsFeeds;
+@property (nonatomic, strong) UITableView *tableView;
 @end
