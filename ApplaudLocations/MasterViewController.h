@@ -16,4 +16,7 @@
 @property (nonatomic, strong) MapViewController *mapViewController;
 @property (nonatomic, strong) UILabel *titleLabel;
 
+// This is persistent throughout the application. It controls all of the view controllers.
+@property (nonatomic, strong) UITabBarController *tabBarController;
+
 @end

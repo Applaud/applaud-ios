@@ -11,7 +11,7 @@
 
 @implementation MasterViewController
 
-@synthesize locationsArray, mapViewController, tableView, titleLabel;
+@synthesize locationsArray, mapViewController, tableView, titleLabel, tabBarController;
 
 - (id)init {
     self = [super init];
@@ -138,6 +138,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    // This corresponds to the newsfeed.
+    [tabBarController setSelectedIndex:3];
+    [self.navigationController pushViewController:tabBarController animated:YES];
+    
     // Navigation logic may go here. Create and push another view controller.
     /*
      <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];

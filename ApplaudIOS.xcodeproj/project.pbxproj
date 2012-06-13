@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B301C5715884FD90038A5BE /* TabBarNavigatorIphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B301C5615884FD90038A5BE /* TabBarNavigatorIphone.xib */; };
+		1B301C621588580E0038A5BE /* NFViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B301C601588580E0038A5BE /* NFViewController.m */; };
+		1B301C631588580E0038A5BE /* NFViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B301C611588580E0038A5BE /* NFViewController.xib */; };
+		1B301C67158858430038A5BE /* EmployeeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B301C65158858430038A5BE /* EmployeeViewController.m */; };
+		1B301C68158858430038A5BE /* EmployeeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B301C66158858430038A5BE /* EmployeeViewController.xib */; };
+		1B301C6D158858560038A5BE /* QuestionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B301C6B158858560038A5BE /* QuestionsViewController.m */; };
+		1B301C6E158858560038A5BE /* QuestionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B301C6C158858560038A5BE /* QuestionsViewController.xib */; };
 		1B9389A41583C9D30088F468 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B9389A31583C9D30088F468 /* MasterViewController.m */; };
 		1B9389A81583CB170088F468 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B9389A71583CB170088F468 /* MapViewController.m */; };
 		1B9389AA1583CB460088F468 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B9389A91583CB460088F468 /* MapKit.framework */; };
@@ -23,6 +30,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1B301C5615884FD90038A5BE /* TabBarNavigatorIphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TabBarNavigatorIphone.xib; sourceTree = "<group>"; };
+		1B301C5F1588580E0038A5BE /* NFViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NFViewController.h; sourceTree = "<group>"; };
+		1B301C601588580E0038A5BE /* NFViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NFViewController.m; sourceTree = "<group>"; };
+		1B301C611588580E0038A5BE /* NFViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NFViewController.xib; sourceTree = "<group>"; };
+		1B301C64158858430038A5BE /* EmployeeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmployeeViewController.h; sourceTree = "<group>"; };
+		1B301C65158858430038A5BE /* EmployeeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmployeeViewController.m; sourceTree = "<group>"; };
+		1B301C66158858430038A5BE /* EmployeeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmployeeViewController.xib; sourceTree = "<group>"; };
+		1B301C6A158858560038A5BE /* QuestionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionsViewController.h; sourceTree = "<group>"; };
+		1B301C6B158858560038A5BE /* QuestionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionsViewController.m; sourceTree = "<group>"; };
+		1B301C6C158858560038A5BE /* QuestionsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QuestionsViewController.xib; sourceTree = "<group>"; };
 		1B9389A21583C9D30088F468 /* MasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
 		1B9389A31583C9D30088F468 /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
 		1B9389A61583CB170088F468 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
@@ -76,6 +93,36 @@
 			name = SelectLocations;
 			sourceTree = "<group>";
 		};
+		1B301C5B158856470038A5BE /* Newsfeed */ = {
+			isa = PBXGroup;
+			children = (
+				1B301C5F1588580E0038A5BE /* NFViewController.h */,
+				1B301C601588580E0038A5BE /* NFViewController.m */,
+				1B301C611588580E0038A5BE /* NFViewController.xib */,
+			);
+			name = Newsfeed;
+			sourceTree = "<group>";
+		};
+		1B301C5E158857D20038A5BE /* Employee */ = {
+			isa = PBXGroup;
+			children = (
+				1B301C64158858430038A5BE /* EmployeeViewController.h */,
+				1B301C65158858430038A5BE /* EmployeeViewController.m */,
+				1B301C66158858430038A5BE /* EmployeeViewController.xib */,
+			);
+			name = Employee;
+			sourceTree = "<group>";
+		};
+		1B301C69158858490038A5BE /* Questions */ = {
+			isa = PBXGroup;
+			children = (
+				1B301C6A158858560038A5BE /* QuestionsViewController.h */,
+				1B301C6B158858560038A5BE /* QuestionsViewController.m */,
+				1B301C6C158858560038A5BE /* QuestionsViewController.xib */,
+			);
+			name = Questions;
+			sourceTree = "<group>";
+		};
 		1BA358D81582F05E00EB8F32 = {
 			isa = PBXGroup;
 			children = (
@@ -108,6 +155,9 @@
 		1BA358ED1582F05E00EB8F32 /* ApplaudLocations */ = {
 			isa = PBXGroup;
 			children = (
+				1B301C69158858490038A5BE /* Questions */,
+				1B301C5E158857D20038A5BE /* Employee */,
+				1B301C5B158856470038A5BE /* Newsfeed */,
 				1B301C5515884C970038A5BE /* SelectLocations */,
 				1BA358F61582F05E00EB8F32 /* AppDelegate.h */,
 				1BA358F71582F05E00EB8F32 /* AppDelegate.m */,
@@ -115,6 +165,7 @@
 				6F2A39161587B2AB0024FB52 /* Business.m */,
 				1B9389B91584EF010088F468 /* BusinessLocationsTracker.h */,
 				1B9389BA1584EF010088F468 /* BusinessLocationsTracker.m */,
+				1B301C5615884FD90038A5BE /* TabBarNavigatorIphone.xib */,
 				1BA358EE1582F05E00EB8F32 /* Supporting Files */,
 			);
 			path = ApplaudLocations;
@@ -183,6 +234,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				1BA358F21582F05E00EB8F32 /* InfoPlist.strings in Resources */,
+				1B301C5715884FD90038A5BE /* TabBarNavigatorIphone.xib in Resources */,
+				1B301C631588580E0038A5BE /* NFViewController.xib in Resources */,
+				1B301C68158858430038A5BE /* EmployeeViewController.xib in Resources */,
+				1B301C6E158858560038A5BE /* QuestionsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -200,6 +255,9 @@
 				1B9389BB1584EF010088F468 /* BusinessLocationsTracker.m in Sources */,
 				6F2A39171587B2AB0024FB52 /* Business.m in Sources */,
 				6FAB07A01587BF0700C9F1DF /* BusinessAnnotation.m in Sources */,
+				1B301C621588580E0038A5BE /* NFViewController.m in Sources */,
+				1B301C67158858430038A5BE /* EmployeeViewController.m in Sources */,
+				1B301C6D158858560038A5BE /* QuestionsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
