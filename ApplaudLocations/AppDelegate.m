@@ -9,6 +9,9 @@
 #import "AppDelegate.h"
 #import "MapViewController.h"
 #import "MasterViewController.h"
+#import "NFViewController.h"
+#import "EmployeeViewController.h"
+#import "QuestionsViewController.h"
 
 @implementation AppDelegate
 
@@ -29,6 +32,16 @@
     // List view controller, for selecting the location
     MasterViewController *masterViewController = [[MasterViewController alloc] init];
     masterViewController.mapViewController = mapViewController;
+    
+    // The tab bar, for navigation
+    UITabBarController *tabNavigator = [[UITabBarController alloc] init];
+    tabNavigator.viewControllers = [NSArray arrayWithObjects:
+                                    [[EmployeeViewController alloc] init],
+                                    [[UIViewController alloc] init],    // This is a dummy!!
+                                    [[QuestionsViewController alloc] init],
+                                    [[NFViewController alloc] init],                                    
+                                    nil];
+    masterViewController.tabBarController = tabNavigator;
    
     // Ipad initialization
     if ( [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad ) {
