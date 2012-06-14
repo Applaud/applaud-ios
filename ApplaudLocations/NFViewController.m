@@ -25,15 +25,6 @@
         // Let us know about updates from the newsfeed.
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newfeedReceived:) name:@"NEWSFEED_RECEIVED" object:nil];
         _newsFeeds = [[NSMutableArray alloc] init];
-        /*CGRect labelRect = CGRectMake(0, 0, 320, 50);
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, labelRect.size.height + labelRect.origin.y,
-                                                                   labelRect.size.width,
-                                                                   self.view.bounds.size.height -
-                                                                   (labelRect.size.height+labelRect.origin.y))
-                                                  style:UITableViewStyleGrouped];
-        self.tableView.delegate = self;
-        self.tableView.dataSource = self;
-        [self.view addSubview:self.tableView];*/
     }
     return self;
 }
@@ -73,6 +64,7 @@
                                       reuseIdentifier:CellIdentifier];
         cell.editing = NO;
     }
+    // set the label text to the corresponding NFItem title
     cell.textLabel.text = [[self.newsFeeds objectAtIndex:indexPath.row] title];
     return cell;
 }
@@ -80,6 +72,9 @@
 #pragma mark -
 #pragma UITableView delegate methods
 
+/*
+ * create a new detail view controller and show it
+ */
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NFItemViewController *nfivc = [[NFItemViewController alloc] initWithNibName:@"NFItemViewController" bundle:nil];
     nfivc.item = [self.newsFeeds objectAtIndex:indexPath.row];
@@ -89,6 +84,9 @@
 #pragma mark -
 #pragma Other methods
 
+/*
+ * We just got a new newsfeed; set up our array of feed items
+ */
 - (void) newfeedReceived:(NSNotification *)notification {
     NSArray *feeds = notification.object;
     for(NSDictionary *feed in feeds) {
@@ -97,7 +95,7 @@
                                                            body:[feed objectForKey:@"body"]
                                                            date:[feed objectForKey:@"date"]]];
     }
-  [self.tableView reloadData];
+  [self.tableView reloadData]; // make sure everything gets displayed properly
 }
 
 @end

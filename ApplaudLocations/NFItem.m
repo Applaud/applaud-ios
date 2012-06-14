@@ -8,6 +8,10 @@
 
 #import "NFItem.h"
 
+/*
+ * A news feed item -- this corresponds to the Django model.
+ */
+
 @implementation NFItem
 @synthesize body = _body;
 @synthesize title = _title;

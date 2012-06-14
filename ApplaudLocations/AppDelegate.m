@@ -90,6 +90,9 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+/*
+ * make sure we can't select the empty view controller in the space between evaluations and everything else
+ */
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
     if([viewController isEqual:[tabBarController.viewControllers objectAtIndex:1]])
         return NO;

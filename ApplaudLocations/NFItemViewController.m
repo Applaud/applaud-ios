@@ -18,6 +18,8 @@
 @synthesize titleLabel = _titleLabel;
 @synthesize bodyText = _bodyText;
 @synthesize subtitleLabel = _subtitleLabel;
+@synthesize dateLabel = _dateLabel;
+@synthesize dismissButton = _dismissButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -32,18 +34,24 @@
     _item = item;
 }
 
+/*
+ * Set up text for the detail view.
+ */
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self.titleLabel.text = self.item.title;
     self.bodyText.text = self.item.body;
     self.subtitleLabel.text = self.item.subtitle;
+    self.dateLabel.text = self.item.date;
 }
 
 - (void)viewDidUnload
 {
     [self setBodyText:nil];
     [self setSubtitleLabel:nil];
+    [self setDateLabel:nil];
+    [self setDismissButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -54,4 +62,7 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (IBAction)buttonPressed:(id)sender {
+    // should get rid of view here -- how?
+}
 @end

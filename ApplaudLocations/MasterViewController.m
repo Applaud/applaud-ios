@@ -155,6 +155,10 @@
 #pragma mark -
 #pragma URL connection
 
+/*
+ * get newsfeeds from the server.
+ * this is called when we load up the news feed is selected
+ */
 - (void) getNewsFeeds {
 //    NSURL *url = [[NSURL alloc] initWithString:@"http://ec2-107-22-6-55.compute-1.amazonaws.com/newsfeed"];
     NSURL *url = [[NSURL alloc] initWithString:@"http://127.0.0.1:8000/newsfeed"];
@@ -162,7 +166,7 @@
     [NSURLConnection sendAsynchronousRequest:request
                                        queue:[NSOperationQueue mainQueue]
                            completionHandler:^(NSURLResponse *response, NSData *d, NSError *err) {
-                               if(err) {
+                               if(err) { // couldn't get data, warn the user
                                    [[[UIAlertView alloc] initWithTitle:@"Connection error"
                                                                message:[err description]
                                                               delegate:nil
@@ -170,11 +174,12 @@
                                                      otherButtonTitles:nil] show];
                                }
                                else {
-                                   NSError *e = [[NSError alloc] init];
+                                   NSError *e = [[NSError alloc] init]; // for debugging, probably not needed anymore
                                    NSDictionary *data = [NSJSONSerialization JSONObjectWithData:d
                                                                                         options:NSJSONReadingAllowFragments
                                                                                           error:&e];
                                    NSArray *items = [data objectForKey:@"newsfeed_items"];
+                                   // tell the world we have new data
                                    [[NSNotificationCenter defaultCenter] postNotificationName:@"NEWSFEED_RECEIVED"
                                                                                        object:items
                                                                                      userInfo:nil];

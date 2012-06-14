@@ -12,7 +12,7 @@
 @property (nonatomic, strong) NSString *body;
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *subtitle;
-@property (nonatomic, strong) NSString *date;
+@property (nonatomic, strong) NSString *date; // should be changed to an NSDate when I figure out date parsing
 
 -(id)initWithTitle:(NSString *)title subtitle:(NSString *)subtitle body:(NSString *)body date:(NSString *)date;
 
