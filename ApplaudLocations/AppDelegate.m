@@ -39,9 +39,10 @@
                                     [[EmployeeViewController alloc] init],
                                     [[UIViewController alloc] init],    // This is a dummy!!
                                     [[QuestionsViewController alloc] init],
-                                    [[NFViewController alloc] init],                                    
+                                    [[NFViewController alloc] initWithNibName:@"NFViewController" bundle:nil],
                                     nil];
     masterViewController.tabBarController = tabNavigator;
+    tabNavigator.delegate = self;
     [masterViewController setWindow:self.window];
    
     // Ipad initialization
@@ -89,4 +90,10 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
+    if([viewController isEqual:[tabBarController.viewControllers objectAtIndex:1]])
+        return NO;
+    return YES;
+
+}
 @end

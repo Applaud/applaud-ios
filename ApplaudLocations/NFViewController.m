@@ -24,6 +24,7 @@
 
         // Let us know about updates from the newsfeed.
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newfeedReceived:) name:@"NEWSFEED_RECEIVED" object:nil];
+        _newsFeeds = [[NSMutableArray alloc] init];
         /*CGRect labelRect = CGRectMake(0, 0, 320, 50);
         _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, labelRect.size.height + labelRect.origin.y,
                                                                    labelRect.size.width,
@@ -72,7 +73,7 @@
                                       reuseIdentifier:CellIdentifier];
         cell.editing = NO;
     }
-    cell.textLabel.text = [[self.newsFeeds objectAtIndex:indexPath.row] description];
+    cell.textLabel.text = [[self.newsFeeds objectAtIndex:indexPath.row] title];
     return cell;
 }
 
@@ -81,9 +82,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NFItemViewController *nfivc = [[NFItemViewController alloc] init];
-    [[NSBundle mainBundle] loadNibNamed:@"NFItem" owner:nfivc options:nil];
-    /* TODO: figure out what goes into newsFeeds array */
-    nfivc.itemTitle = [self.newsFeeds objectAtIndex:indexPath.row];
+    [[NSBundle mainBundle] loadNibNamed:@"NFItemViewController" owner:nfivc options:nil];
+    nfivc.item = [self.newsFeeds objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:nfivc animated:YES];
 }
 
@@ -91,7 +91,13 @@
 #pragma Other methods
 
 - (void) newfeedReceived:(NSNotification *)notification {
-  self.newsFeeds = notification.object;
+    NSArray *feeds = notification.object;
+    for(NSDictionary *feed in feeds) {
+        [self.newsFeeds addObject:[[NFItem alloc] initWithTitle:[feed objectForKey:@"title"]
+                                                       subtitle:[feed objectForKey:@"subtitle"]
+                                                           body:[feed objectForKey:@"body"]
+                                                           date:[feed objectForKey:@"date"]]];
+    }
   [self.tableView reloadData];
 }
 

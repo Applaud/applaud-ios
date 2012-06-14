@@ -66,14 +66,16 @@
                          [NSNumber numberWithFloat:location.latitude], 
                          [NSNumber numberWithFloat:location.longitude], nil];
     NSDictionary *getDict = [[NSDictionary alloc] initWithObjects:valArray forKeys:keyArray];
-    NSString *urlString = [NSString stringWithFormat:
-                           @"http://ec2-107-22-6-55.compute-1.amazonaws.com/checkin%@",
-                           [self GETStringFromDict:getDict]];
+//    NSString *urlString = [NSString stringWithFormat:
+//                           @"http://ec2-107-22-6-55.compute-1.amazonaws.com/checkin%@",
+//                           @"http://127.0.0.1:8000/checkin%@",
+//                           [self GETStringFromDict:getDict]];
 
-    NSURL *url = [NSURL URLWithString:urlString];
+//    NSURL *url = [NSURL URLWithString:urlString];
 //    NSURL *url=[NSURL URLWithString:@"http://ec2-107-22-6-55.compute-1.amazonaws.com/example3"];
+    NSURL *url = [NSURL URLWithString:@"http://127.0.0.1:8000/example3"];
 
-    NSLog(@"Making request with URL: %@",[url description]);
+//    NSLog(@"Making request with URL: %@",[url description]);
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
     urlConnection = [[NSURLConnection alloc] initWithRequest:request 
                                                     delegate:self 
@@ -91,7 +93,6 @@
  * Done getting info from the server.
  */
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-    NSLog(@"%@", [[NSString alloc] initWithData:serverData encoding:NSUTF8StringEncoding]);
     NSError *e = [[NSError alloc] init];
     NSMutableDictionary *businesses = [NSJSONSerialization JSONObjectWithData:serverData options:NSJSONReadingMutableLeaves | NSJSONReadingMutableContainers error:&e];
     NSMutableArray *businessArray = [[NSMutableArray alloc] init];

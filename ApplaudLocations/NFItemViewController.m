@@ -14,7 +14,7 @@
 
 @implementation NFItemViewController
 
-@synthesize itemTitle = _itemTitle;
+@synthesize item = _item;
 @synthesize titleLabel = _titleLabel;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -24,6 +24,11 @@
         // Custom initialization
     }
     return self;
+}
+
+- (void)setItem:(NFItem *)item {
+    _item = item;
+    self.titleLabel.text = item.title;
 }
 
 - (void)viewDidLoad

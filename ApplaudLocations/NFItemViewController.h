@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "NFItem.h"
 
 @interface NFItemViewController : UIViewController
-@property NSString *itemTitle;
+@property (nonatomic, strong) NFItem *item;
 @property IBOutlet UILabel *titleLabel;
 @end

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "BusinessLocationsTracker.h"
 #import "NFItemViewController.h"
+#import "NFItem.h"
 
 @interface NFViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) NSMutableArray *newsFeeds;

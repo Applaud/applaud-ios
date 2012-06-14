@@ -146,13 +146,40 @@
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
-    NFViewController *nfvc = [[NFViewController alloc] init];
-    [[NSBundle mainBundle] loadNibNamed:@"NFViewController" owner:nfvc options:nil];
-    [self.navigationController pushViewController:nfvc animated:YES];
     // This corresponds to the newsfeed.
     [tabBarController setSelectedIndex:3];
+    [self getNewsFeeds];
     _window.rootViewController = tabBarController;
-          
+}
+
+#pragma mark -
+#pragma URL connection
+
+- (void) getNewsFeeds {
+//    NSURL *url = [[NSURL alloc] initWithString:@"http://ec2-107-22-6-55.compute-1.amazonaws.com/newsfeed"];
+    NSURL *url = [[NSURL alloc] initWithString:@"http://127.0.0.1:8000/newsfeed"];
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+    [NSURLConnection sendAsynchronousRequest:request
+                                       queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *response, NSData *d, NSError *err) {
+                               if(err) {
+                                   [[[UIAlertView alloc] initWithTitle:@"Connection error"
+                                                               message:[err description]
+                                                              delegate:nil
+                                                     cancelButtonTitle:@"OK"
+                                                     otherButtonTitles:nil] show];
+                               }
+                               else {
+                                   NSError *e = [[NSError alloc] init];
+                                   NSDictionary *data = [NSJSONSerialization JSONObjectWithData:d
+                                                                                        options:NSJSONReadingAllowFragments
+                                                                                          error:&e];
+                                   NSArray *items = [data objectForKey:@"newsfeed_items"];
+                                   [[NSNotificationCenter defaultCenter] postNotificationName:@"NEWSFEED_RECEIVED"
+                                                                                       object:items
+                                                                                     userInfo:nil];
+                               }
+                           }];
 }
 
 #pragma mark -

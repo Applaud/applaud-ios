@@ -28,6 +28,7 @@
 		6F2A39171587B2AB0024FB52 /* Business.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F2A39161587B2AB0024FB52 /* Business.m */; };
 		6F37B93B1589400E001DD06D /* NFItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F37B9391589400D001DD06D /* NFItemViewController.m */; };
 		6F37B93C1589400E001DD06D /* NFItemViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F37B93A1589400D001DD06D /* NFItemViewController.xib */; };
+		6F462623158A8BDE007EA86E /* NFItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F462622158A8BDE007EA86E /* NFItem.m */; };
 		6FAB07A01587BF0700C9F1DF /* BusinessAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FAB079F1587BF0700C9F1DF /* BusinessAnnotation.m */; };
 /* End PBXBuildFile section */
 
@@ -65,6 +66,8 @@
 		6F37B9381589400D001DD06D /* NFItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NFItemViewController.h; sourceTree = "<group>"; };
 		6F37B9391589400D001DD06D /* NFItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NFItemViewController.m; sourceTree = "<group>"; };
 		6F37B93A1589400D001DD06D /* NFItemViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NFItemViewController.xib; sourceTree = "<group>"; };
+		6F462621158A8BDE007EA86E /* NFItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NFItem.h; sourceTree = "<group>"; };
+		6F462622158A8BDE007EA86E /* NFItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NFItem.m; sourceTree = "<group>"; };
 		6FAB079E1587BF0700C9F1DF /* BusinessAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessAnnotation.h; sourceTree = "<group>"; };
 		6FAB079F1587BF0700C9F1DF /* BusinessAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessAnnotation.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -104,6 +107,8 @@
 				1B301C5F1588580E0038A5BE /* NFViewController.h */,
 				1B301C601588580E0038A5BE /* NFViewController.m */,
 				6F37B9381589400D001DD06D /* NFItemViewController.h */,
+				6F462621158A8BDE007EA86E /* NFItem.h */,
+				6F462622158A8BDE007EA86E /* NFItem.m */,
 				6F37B9391589400D001DD06D /* NFItemViewController.m */,
 				6F37B93A1589400D001DD06D /* NFItemViewController.xib */,
 				1B301C611588580E0038A5BE /* NFViewController.xib */,
@@ -268,6 +273,7 @@
 				1B301C67158858430038A5BE /* EmployeeViewController.m in Sources */,
 				1B301C6D158858560038A5BE /* QuestionsViewController.m in Sources */,
 				6F37B93B1589400E001DD06D /* NFItemViewController.m in Sources */,
+				6F462623158A8BDE007EA86E /* NFItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

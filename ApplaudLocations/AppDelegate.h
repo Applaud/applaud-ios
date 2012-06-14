@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "BusinessLocationsTracker.h"
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, UITabBarControllerDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) BusinessLocationsTracker *tracker;
