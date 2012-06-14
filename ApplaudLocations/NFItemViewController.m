@@ -16,6 +16,8 @@
 
 @synthesize item = _item;
 @synthesize titleLabel = _titleLabel;
+@synthesize bodyText = _bodyText;
+@synthesize subtitleLabel = _subtitleLabel;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -28,17 +30,20 @@
 
 - (void)setItem:(NFItem *)item {
     _item = item;
-    self.titleLabel.text = item.title;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    self.titleLabel.text = self.item.title;
+    self.bodyText.text = self.item.body;
+    self.subtitleLabel.text = self.item.subtitle;
 }
 
 - (void)viewDidUnload
 {
+    [self setBodyText:nil];
+    [self setSubtitleLabel:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;

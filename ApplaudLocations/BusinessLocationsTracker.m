@@ -61,11 +61,11 @@
  * What we do when we want to find businesses around a certain location.
  */
 - (void)findBusinessesWithLocation:(CLLocationCoordinate2D)location {
-    NSArray *keyArray = [[NSArray alloc] initWithObjects:@"latitude", @"longitude", nil];
-    NSArray *valArray = [[NSArray alloc] initWithObjects:
-                         [NSNumber numberWithFloat:location.latitude], 
-                         [NSNumber numberWithFloat:location.longitude], nil];
-    NSDictionary *getDict = [[NSDictionary alloc] initWithObjects:valArray forKeys:keyArray];
+//    NSArray *keyArray = [[NSArray alloc] initWithObjects:@"latitude", @"longitude", nil];
+//    NSArray *valArray = [[NSArray alloc] initWithObjects:
+//                         [NSNumber numberWithFloat:location.latitude], 
+//                         [NSNumber numberWithFloat:location.longitude], nil];
+//    NSDictionary *getDict = [[NSDictionary alloc] initWithObjects:valArray forKeys:keyArray];
 //    NSString *urlString = [NSString stringWithFormat:
 //                           @"http://ec2-107-22-6-55.compute-1.amazonaws.com/checkin%@",
 //                           @"http://127.0.0.1:8000/checkin%@",

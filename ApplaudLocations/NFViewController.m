@@ -81,10 +81,9 @@
 #pragma UITableView delegate methods
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NFItemViewController *nfivc = [[NFItemViewController alloc] init];
-    [[NSBundle mainBundle] loadNibNamed:@"NFItemViewController" owner:nfivc options:nil];
+    NFItemViewController *nfivc = [[NFItemViewController alloc] initWithNibName:@"NFItemViewController" bundle:nil];
     nfivc.item = [self.newsFeeds objectAtIndex:indexPath.row];
-    [self.navigationController pushViewController:nfivc animated:YES];
+    [self presentViewController:nfivc animated:YES completion:nil];
 }
 
 #pragma mark -
