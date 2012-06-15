@@ -9,6 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "Survey.h"
 
-@interface QuestionsViewController : UIViewController
+@interface QuestionsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 @property Survey *survey;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UITextView *summaryText;
+@property (weak, nonatomic) IBOutlet UITableView *questionsTable;
 @end
