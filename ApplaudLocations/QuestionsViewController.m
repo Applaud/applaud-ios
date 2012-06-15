@@ -23,6 +23,10 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        SurveyField *sf1 = [[SurveyField alloc] initWithLabel:@"q1" required:YES id:1 type:DROPDOWN options:nil];
+        SurveyField *sf2 = [[SurveyField alloc] initWithLabel:@"q2" required:YES id:2 type:CHECKBOX options:nil];
+        _survey = [[Survey alloc] initWithTitle:@"Survey" summary:@"test survey" fields:[[NSMutableArray alloc]
+                                                                                         initWithObjects:sf1, sf2, nil]];
     }
     return self;
 }
