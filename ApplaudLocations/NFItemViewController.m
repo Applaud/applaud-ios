@@ -64,5 +64,7 @@
 
 - (IBAction)buttonPressed:(id)sender {
     // should get rid of view here -- how?
+    [self.presentingViewController dismissViewControllerAnimated:YES
+                                                      completion:nil];
 }
 @end
