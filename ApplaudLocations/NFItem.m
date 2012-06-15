@@ -18,7 +18,7 @@
 @synthesize subtitle = _subtitle;
 @synthesize date = _date;
 
--(id)initWithTitle:(NSString *)title subtitle:(NSString *)subtitle body:(NSString *)body date:(NSString *)date {
+-(id)initWithTitle:(NSString *)title subtitle:(NSString *)subtitle body:(NSString *)body date:(NSDate *)date {
     if(self = [super init]) {
         _title = title;
         _subtitle = subtitle;

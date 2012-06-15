@@ -9,10 +9,10 @@
 #import <Foundation/Foundation.h>
 
 @interface NFItem : NSObject
-@property (nonatomic, strong) NSString *body;
-@property (nonatomic, strong) NSString *title;
-@property (nonatomic, strong) NSString *subtitle;
-@property (nonatomic, strong) NSString *date; // should be changed to an NSDate when I figure out date parsing
+@property (nonatomic, copy) NSString *body;
+@property (nonatomic, copy) NSString *title;
+@property (nonatomic, copy) NSString *subtitle;
+@property (nonatomic, strong) NSDate *date; // should be changed to an NSDate when I figure out date parsing
 
 -(id)initWithTitle:(NSString *)title subtitle:(NSString *)subtitle body:(NSString *)body date:(NSString *)date;
 

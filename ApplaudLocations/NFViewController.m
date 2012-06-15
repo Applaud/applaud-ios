@@ -89,11 +89,13 @@
  */
 - (void) newfeedReceived:(NSNotification *)notification {
     NSArray *feeds = notification.object;
+    NSDateFormatter *format = [[NSDateFormatter alloc] init];
+    [format setDateFormat:@"yyyy-MM-dd hh:mm"];
     for(NSDictionary *feed in feeds) {
         [self.newsFeeds addObject:[[NFItem alloc] initWithTitle:[feed objectForKey:@"title"]
                                                        subtitle:[feed objectForKey:@"subtitle"]
                                                            body:[feed objectForKey:@"body"]
-                                                           date:[feed objectForKey:@"date"]]];
+                                                           date:[format dateFromString:[feed objectForKey:@"date"]]]];
     }
   [self.tableView reloadData]; // make sure everything gets displayed properly
 }
