@@ -13,6 +13,7 @@
 @end
 
 @implementation QuestionsViewController
+@synthesize survey = _survey;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

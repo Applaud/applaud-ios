@@ -28,6 +28,8 @@
 		6F2A39171587B2AB0024FB52 /* Business.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F2A39161587B2AB0024FB52 /* Business.m */; };
 		6F37B93B1589400E001DD06D /* NFItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F37B9391589400D001DD06D /* NFItemViewController.m */; };
 		6F37B93C1589400E001DD06D /* NFItemViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F37B93A1589400D001DD06D /* NFItemViewController.xib */; };
+		6F40324C158BA1B700024402 /* Survey.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F40324B158BA1B700024402 /* Survey.m */; };
+		6F403250158BA4C400024402 /* SurveyField.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F40324F158BA4C400024402 /* SurveyField.m */; };
 		6F462623158A8BDE007EA86E /* NFItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F462622158A8BDE007EA86E /* NFItem.m */; };
 		6FAB07A01587BF0700C9F1DF /* BusinessAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FAB079F1587BF0700C9F1DF /* BusinessAnnotation.m */; };
 /* End PBXBuildFile section */
@@ -66,6 +68,10 @@
 		6F37B9381589400D001DD06D /* NFItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NFItemViewController.h; sourceTree = "<group>"; };
 		6F37B9391589400D001DD06D /* NFItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NFItemViewController.m; sourceTree = "<group>"; };
 		6F37B93A1589400D001DD06D /* NFItemViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NFItemViewController.xib; sourceTree = "<group>"; };
+		6F40324A158BA1B700024402 /* Survey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Survey.h; sourceTree = "<group>"; };
+		6F40324B158BA1B700024402 /* Survey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Survey.m; sourceTree = "<group>"; };
+		6F40324E158BA4C400024402 /* SurveyField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SurveyField.h; sourceTree = "<group>"; };
+		6F40324F158BA4C400024402 /* SurveyField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SurveyField.m; sourceTree = "<group>"; };
 		6F462621158A8BDE007EA86E /* NFItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NFItem.h; sourceTree = "<group>"; };
 		6F462622158A8BDE007EA86E /* NFItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NFItem.m; sourceTree = "<group>"; };
 		6FAB079E1587BF0700C9F1DF /* BusinessAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessAnnotation.h; sourceTree = "<group>"; };
@@ -130,6 +136,10 @@
 			isa = PBXGroup;
 			children = (
 				1B301C6A158858560038A5BE /* QuestionsViewController.h */,
+				6F40324A158BA1B700024402 /* Survey.h */,
+				6F40324B158BA1B700024402 /* Survey.m */,
+				6F40324E158BA4C400024402 /* SurveyField.h */,
+				6F40324F158BA4C400024402 /* SurveyField.m */,
 				1B301C6B158858560038A5BE /* QuestionsViewController.m */,
 				1B301C6C158858560038A5BE /* QuestionsViewController.xib */,
 			);
@@ -274,6 +284,8 @@
 				1B301C6D158858560038A5BE /* QuestionsViewController.m in Sources */,
 				6F37B93B1589400E001DD06D /* NFItemViewController.m in Sources */,
 				6F462623158A8BDE007EA86E /* NFItem.m in Sources */,
+				6F40324C158BA1B700024402 /* Survey.m in Sources */,
+				6F403250158BA4C400024402 /* SurveyField.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Survey.h"
 
 @interface QuestionsViewController : UIViewController
-
+@property Survey *survey;
 @end
