@@ -39,7 +39,7 @@
         self.navigationItem.backBarButtonItem = backButton;
         [self.view addSubview:titleLabel];
         [self.view addSubview:tableView];
-      [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(businessRecieved:) name:@"BUSINESS_RECIEVED" object:nil];
+      [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(businessReceived:) name:@"BUSINESS_RECEIVED" object:nil];
     }
     return self;
 }
@@ -148,44 +148,10 @@
      */
     // This corresponds to the newsfeed.
     [tabBarController setSelectedIndex:3];
-    [self getNewsFeeds];
+    [[tabBarController.viewControllers objectAtIndex:3] getNewsFeeds];
     _window.rootViewController = tabBarController;
 }
 
-#pragma mark -
-#pragma URL connection
-
-/*
- * get newsfeeds from the server.
- * this is called when we load up the news feed is selected
- */
-- (void) getNewsFeeds {
-//    NSURL *url = [[NSURL alloc] initWithString:@"http://ec2-107-22-6-55.compute-1.amazonaws.com/newsfeed"];
-    NSURL *url = [[NSURL alloc] initWithString:@"http://127.0.0.1:8000/newsfeed"];
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
-    [NSURLConnection sendAsynchronousRequest:request
-                                       queue:[NSOperationQueue mainQueue]
-                           completionHandler:^(NSURLResponse *response, NSData *d, NSError *err) {
-                               if(err) { // couldn't get data, warn the user
-                                   [[[UIAlertView alloc] initWithTitle:@"Connection error"
-                                                               message:[err description]
-                                                              delegate:nil
-                                                     cancelButtonTitle:@"OK"
-                                                     otherButtonTitles:nil] show];
-                               }
-                               else {
-                                   NSError *e = [[NSError alloc] init]; // for debugging, probably not needed anymore
-                                   NSDictionary *data = [NSJSONSerialization JSONObjectWithData:d
-                                                                                        options:NSJSONReadingAllowFragments
-                                                                                          error:&e];
-                                   NSArray *items = [data objectForKey:@"newsfeed_items"];
-                                   // tell the world we have new data
-                                   [[NSNotificationCenter defaultCenter] postNotificationName:@"NEWSFEED_RECEIVED"
-                                                                                       object:items
-                                                                                     userInfo:nil];
-                               }
-                           }];
-}
 
 #pragma mark -
 #pragma mark Other Methods
@@ -194,7 +160,7 @@
     [self.navigationController pushViewController:mapViewController animated:YES];
 }
 
-- (void) businessRecieved:(NSNotification *)notification {
+- (void) businessReceived:(NSNotification *)notification {
     self.locationsArray = [notification object];
     [tableView reloadData];
 }

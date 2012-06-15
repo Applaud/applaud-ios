@@ -14,5 +14,5 @@
 @interface NFViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) NSMutableArray *newsFeeds;
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
-
+-(void)getNewsFeeds;
 @end

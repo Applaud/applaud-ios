@@ -84,20 +84,45 @@
 #pragma mark -
 #pragma Other methods
 
+
+#pragma mark -
+#pragma URL connection
+
 /*
- * We just got a new newsfeed; set up our array of feed items
+ * get newsfeeds from the server.
+ * this is called when we load up the news feed is selected
  */
-- (void) newfeedReceived:(NSNotification *)notification {
-    NSArray *feeds = notification.object;
-    NSDateFormatter *format = [[NSDateFormatter alloc] init];
-    [format setDateFormat:@"yyyy-MM-dd hh:mm"];
-    for(NSDictionary *feed in feeds) {
-        [self.newsFeeds addObject:[[NFItem alloc] initWithTitle:[feed objectForKey:@"title"]
-                                                       subtitle:[feed objectForKey:@"subtitle"]
-                                                           body:[feed objectForKey:@"body"]
-                                                           date:[format dateFromString:[feed objectForKey:@"date"]]]];
-    }
-  [self.tableView reloadData]; // make sure everything gets displayed properly
+- (void) getNewsFeeds {
+    //    NSURL *url = [[NSURL alloc] initWithString:@"http://ec2-107-22-6-55.compute-1.amazonaws.com/newsfeed"];
+    NSURL *url = [[NSURL alloc] initWithString:@"http://127.0.0.1:8000/newsfeed"];
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+    [NSURLConnection sendAsynchronousRequest:request
+                                       queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *response, NSData *d, NSError *err) {
+                               if(err) { // couldn't get data, warn the user
+                                   [[[UIAlertView alloc] initWithTitle:@"Connection error"
+                                                               message:[err description]
+                                                              delegate:nil
+                                                     cancelButtonTitle:@"OK"
+                                                     otherButtonTitles:nil] show];
+                               }
+                               else {
+                                   NSError *e = [[NSError alloc] init]; // for debugging, probably not needed anymore
+                                   NSDictionary *data = [NSJSONSerialization JSONObjectWithData:d
+                                                                                        options:NSJSONReadingAllowFragments
+                                                                                          error:&e];
+                                   NSArray *items = [data objectForKey:@"newsfeed_items"];
+                                   NSDateFormatter *format = [[NSDateFormatter alloc] init];
+                                   [format setDateFormat:@"yyyy-MM-dd hh:mm"];
+                                   for(NSDictionary *feed in items) {
+                                       [self.newsFeeds addObject:[[NFItem alloc] initWithTitle:[feed objectForKey:@"title"]
+                                                                                      subtitle:[feed objectForKey:@"subtitle"]
+                                                                                          body:[feed objectForKey:@"body"]
+                                                                                          date:[format dateFromString:[feed objectForKey:@"date"]]]];
+                                   }
+                                   [self.tableView reloadData];
+                               }
+                           }];
 }
 
 @end
