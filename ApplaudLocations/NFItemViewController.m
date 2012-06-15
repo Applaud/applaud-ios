@@ -62,8 +62,16 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+/*
+ * dismisses the current item detail, and deselects the corresponding row in the table.
+ *
+ * kinda gross way of finding the right row to deselect; oh well.
+ */
 - (IBAction)buttonPressed:(id)sender {
-    // should get rid of view here -- how?
+    UITabBarController *presenting = (UITabBarController *)self.presentingViewController;
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    UITableView *tableView = [[presenting.viewControllers objectAtIndex:3] tableView];
+    NSIndexPath *path = [tableView indexPathForSelectedRow];
+    [tableView deselectRowAtIndexPath:path animated:YES];
 }
 @end
