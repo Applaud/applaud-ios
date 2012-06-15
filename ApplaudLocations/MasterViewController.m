@@ -93,6 +93,7 @@
     // TODO: Why the heck is everything so abbreviated in the cell's label????
     Business *business = [locationsArray objectAtIndex:indexPath.row];
     [[cell textLabel] setText:business.name];
+    [[cell detailTextLabel] setText:business.type];
     return cell;
 }
 
