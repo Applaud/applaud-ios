@@ -35,6 +35,9 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+	if(nil == _survey) {
+	  [self getSurveys];
+	}
     self.titleLabel.text = self.survey.title;
     self.summaryText.text = self.survey.summary;
 }
@@ -74,5 +77,25 @@
     SurveyField *field = [self.survey.fields objectAtIndex:indexPath.row];
     cell.textLabel.text = field.label;
     return cell;
+}
+
+-(void)getSurveys {
+  NSURL *url = [[NSURL alloc] initWithString:@"http://127.0.0.1:8000/surveydata"]; // not the right URL, will change when server is ready
+  NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+  [NSURLConnection sendAsynchronousRequest:request
+									 queue:[NSOperationQueue mainQueue]
+						 completionHandler:^(NSURLResponse *response, NSData *d, NSError *err) {
+	  if(err) {
+		[[[UIAlertView alloc] initWithTitle:@"Connection error"
+									message:@[[NSString alloc] initWithFormat:"Couldn't get survey: %@", [err description]]
+								   delegate:nil
+						  cancelButtonTitle:@"OK"
+						  otherButtonTitles:nil] show];
+	  }
+	  else {
+		// might have to wait for JSON description
+		[self.questionsTable reloadData];
+	  }
+	}];
 }
 @end
