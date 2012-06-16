@@ -87,7 +87,7 @@
 						 completionHandler:^(NSURLResponse *response, NSData *d, NSError *err) {
 	  if(err) {
 		[[[UIAlertView alloc] initWithTitle:@"Connection error"
-									message:@[[NSString alloc] initWithFormat:"Couldn't get survey: %@", [err description]]
+									message:[[NSString alloc] initWithFormat:@"Couldn't get survey: %@", [err description]]
 								   delegate:nil
 						  cancelButtonTitle:@"OK"
 						  otherButtonTitles:nil] show];

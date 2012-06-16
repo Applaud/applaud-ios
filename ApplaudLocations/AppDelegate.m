@@ -39,8 +39,9 @@
                                     [[EmployeeViewController alloc] init],
                                     [[UIViewController alloc] init],    // This is a dummy!!
                                     [[QuestionsViewController alloc] init],
-                                    [[NFViewController alloc] initWithNibName:@"NFViewController" bundle:nil],
+                                    [[NFViewController alloc] init],
                                     nil];
+    // TODO: should figure out how to set UITabBarItem images
     masterViewController.tabBarController = tabNavigator;
     tabNavigator.delegate = self;
     [masterViewController setWindow:self.window];
