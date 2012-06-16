@@ -13,6 +13,10 @@
 @end
 
 @implementation EmployeeViewController
+@synthesize employee = _employee;
+@synthesize image;
+@synthesize nameLabel;
+@synthesize bioField;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -27,10 +31,16 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    if(nil == _employee) {
+//        [self
+    }
 }
 
 - (void)viewDidUnload
 {
+    [self setImage:nil];
+    [self setNameLabel:nil];
+    [self setBioField:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;

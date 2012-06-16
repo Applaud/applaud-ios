@@ -31,6 +31,7 @@
 		6F40324C158BA1B700024402 /* Survey.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F40324B158BA1B700024402 /* Survey.m */; };
 		6F403250158BA4C400024402 /* SurveyField.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F40324F158BA4C400024402 /* SurveyField.m */; };
 		6F462623158A8BDE007EA86E /* NFItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F462622158A8BDE007EA86E /* NFItem.m */; };
+		6F8C8A2B158C03DB00BB4BA0 /* Employee.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F8C8A2A158C03DB00BB4BA0 /* Employee.m */; };
 		6FAB07A01587BF0700C9F1DF /* BusinessAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FAB079F1587BF0700C9F1DF /* BusinessAnnotation.m */; };
 /* End PBXBuildFile section */
 
@@ -74,6 +75,8 @@
 		6F40324F158BA4C400024402 /* SurveyField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SurveyField.m; sourceTree = "<group>"; };
 		6F462621158A8BDE007EA86E /* NFItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NFItem.h; sourceTree = "<group>"; };
 		6F462622158A8BDE007EA86E /* NFItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NFItem.m; sourceTree = "<group>"; };
+		6F8C8A29158C03DB00BB4BA0 /* Employee.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Employee.h; sourceTree = "<group>"; };
+		6F8C8A2A158C03DB00BB4BA0 /* Employee.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Employee.m; sourceTree = "<group>"; };
 		6FAB079E1587BF0700C9F1DF /* BusinessAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessAnnotation.h; sourceTree = "<group>"; };
 		6FAB079F1587BF0700C9F1DF /* BusinessAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessAnnotation.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -127,6 +130,8 @@
 			children = (
 				1B301C64158858430038A5BE /* EmployeeViewController.h */,
 				1B301C65158858430038A5BE /* EmployeeViewController.m */,
+				6F8C8A29158C03DB00BB4BA0 /* Employee.h */,
+				6F8C8A2A158C03DB00BB4BA0 /* Employee.m */,
 				1B301C66158858430038A5BE /* EmployeeViewController.xib */,
 			);
 			name = Employee;
@@ -286,6 +291,7 @@
 				6F462623158A8BDE007EA86E /* NFItem.m in Sources */,
 				6F40324C158BA1B700024402 /* Survey.m in Sources */,
 				6F403250158BA4C400024402 /* SurveyField.m in Sources */,
+				6F8C8A2B158C03DB00BB4BA0 /* Employee.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
