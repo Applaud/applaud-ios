@@ -7,6 +7,7 @@
 //
 
 #import "EmployeeViewController.h"
+#import "Employee.h"
 
 @interface EmployeeViewController ()
 
@@ -18,12 +19,12 @@
 @synthesize nameLabel;
 @synthesize bioField;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
+
+- (id)initWithEmployee:(Employee *)e {
+    if ( self = [super init] ) {
+        employee = e;
     }
+    
     return self;
 }
 
@@ -32,7 +33,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     if(nil == _employee) {
-//        [self
+        [self.nameLabel setText:[NSString stringWithFormat:@"%@ %@",
+                                 employee.firstName, employee.lastName]];
+        [self.bioField setText:employee.bio];
     }
 }
 
@@ -50,5 +53,6 @@
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
+
 
 @end

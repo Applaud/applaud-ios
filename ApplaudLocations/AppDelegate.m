@@ -10,7 +10,7 @@
 #import "MapViewController.h"
 #import "MasterViewController.h"
 #import "NFViewController.h"
-#import "EmployeeViewController.h"
+#import "EmployeeListViewController.h"
 #import "QuestionsViewController.h"
 
 @implementation AppDelegate
@@ -35,8 +35,14 @@
     
     // The tab bar, for navigation
     UITabBarController *tabNavigator = [[UITabBarController alloc] init];
+    
+    // Creating the view controllers in the tab bar
+    EmployeeListViewController *elvc = [[EmployeeListViewController alloc] init];
+    [elvc setTitle:@"Employees"];
+    UINavigationController *employeeNav = [[UINavigationController alloc] initWithRootViewController:elvc];
+    elvc.navigationController = employeeNav;
     tabNavigator.viewControllers = [NSArray arrayWithObjects:
-                                    [[EmployeeViewController alloc] init],
+                                    employeeNav,
                                     [[UIViewController alloc] init],    // This is a dummy!!
                                     [[QuestionsViewController alloc] init],
                                     [[NFViewController alloc] init],

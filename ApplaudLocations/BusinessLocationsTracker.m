@@ -104,14 +104,12 @@
                                              longitude:[dict objectForKey:@"longitude"]];
         [businessArray addObject:bus];
     }
+    
+    // put some info in the notificationcenter
     [[NSNotificationCenter defaultCenter] postNotificationName:@"BUSINESS_RECEIVED" object:businessArray];
     businesses = nil;
     serverData = nil;
     urlConnection = nil;
-    
-    // put some info in the notificationcenter
-    
-    
 }
 
 /**

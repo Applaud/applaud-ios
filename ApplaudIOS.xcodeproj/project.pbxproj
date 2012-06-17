@@ -25,6 +25,8 @@
 		1BA358F21582F05E00EB8F32 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1BA358F01582F05E00EB8F32 /* InfoPlist.strings */; };
 		1BA358F41582F05E00EB8F32 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BA358F31582F05E00EB8F32 /* main.m */; };
 		1BA358F81582F05E00EB8F32 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BA358F71582F05E00EB8F32 /* AppDelegate.m */; };
+		1BFF2E7E158D9CDC00753F94 /* EmployeeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BFF2E7C158D9CDB00753F94 /* EmployeeListViewController.m */; };
+		1BFF2E7F158D9CDC00753F94 /* EmployeeListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1BFF2E7D158D9CDC00753F94 /* EmployeeListViewController.xib */; };
 		6F2A39171587B2AB0024FB52 /* Business.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F2A39161587B2AB0024FB52 /* Business.m */; };
 		6F37B93B1589400E001DD06D /* NFItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F37B9391589400D001DD06D /* NFItemViewController.m */; };
 		6F37B93C1589400E001DD06D /* NFItemViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F37B93A1589400D001DD06D /* NFItemViewController.xib */; };
@@ -64,6 +66,9 @@
 		1BA358F51582F05E00EB8F32 /* ApplaudLocations-Prefix.pch */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; lineEnding = 0; path = "ApplaudLocations-Prefix.pch"; sourceTree = "<group>"; };
 		1BA358F61582F05E00EB8F32 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1BA358F71582F05E00EB8F32 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		1BFF2E7B158D9CDB00753F94 /* EmployeeListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmployeeListViewController.h; sourceTree = "<group>"; };
+		1BFF2E7C158D9CDB00753F94 /* EmployeeListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmployeeListViewController.m; sourceTree = "<group>"; };
+		1BFF2E7D158D9CDC00753F94 /* EmployeeListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmployeeListViewController.xib; sourceTree = "<group>"; };
 		6F2A39151587B2AB0024FB52 /* Business.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Business.h; sourceTree = "<group>"; };
 		6F2A39161587B2AB0024FB52 /* Business.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Business.m; sourceTree = "<group>"; };
 		6F37B9381589400D001DD06D /* NFItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NFItemViewController.h; sourceTree = "<group>"; };
@@ -116,9 +121,9 @@
 				1B301C5F1588580E0038A5BE /* NFViewController.h */,
 				1B301C601588580E0038A5BE /* NFViewController.m */,
 				6F37B9381589400D001DD06D /* NFItemViewController.h */,
+				6F37B9391589400D001DD06D /* NFItemViewController.m */,
 				6F462621158A8BDE007EA86E /* NFItem.h */,
 				6F462622158A8BDE007EA86E /* NFItem.m */,
-				6F37B9391589400D001DD06D /* NFItemViewController.m */,
 				6F37B93A1589400D001DD06D /* NFItemViewController.xib */,
 				1B301C611588580E0038A5BE /* NFViewController.xib */,
 			);
@@ -130,9 +135,12 @@
 			children = (
 				1B301C64158858430038A5BE /* EmployeeViewController.h */,
 				1B301C65158858430038A5BE /* EmployeeViewController.m */,
+				1B301C66158858430038A5BE /* EmployeeViewController.xib */,
 				6F8C8A29158C03DB00BB4BA0 /* Employee.h */,
 				6F8C8A2A158C03DB00BB4BA0 /* Employee.m */,
-				1B301C66158858430038A5BE /* EmployeeViewController.xib */,
+				1BFF2E7B158D9CDB00753F94 /* EmployeeListViewController.h */,
+				1BFF2E7C158D9CDB00753F94 /* EmployeeListViewController.m */,
+				1BFF2E7D158D9CDC00753F94 /* EmployeeListViewController.xib */,
 			);
 			name = Employee;
 			sourceTree = "<group>";
@@ -141,11 +149,11 @@
 			isa = PBXGroup;
 			children = (
 				1B301C6A158858560038A5BE /* QuestionsViewController.h */,
+				1B301C6B158858560038A5BE /* QuestionsViewController.m */,
 				6F40324A158BA1B700024402 /* Survey.h */,
 				6F40324B158BA1B700024402 /* Survey.m */,
 				6F40324E158BA4C400024402 /* SurveyField.h */,
 				6F40324F158BA4C400024402 /* SurveyField.m */,
-				1B301C6B158858560038A5BE /* QuestionsViewController.m */,
 				1B301C6C158858560038A5BE /* QuestionsViewController.xib */,
 			);
 			name = Questions;
@@ -267,6 +275,7 @@
 				1B301C68158858430038A5BE /* EmployeeViewController.xib in Resources */,
 				1B301C6E158858560038A5BE /* QuestionsViewController.xib in Resources */,
 				6F37B93C1589400E001DD06D /* NFItemViewController.xib in Resources */,
+				1BFF2E7F158D9CDC00753F94 /* EmployeeListViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,6 +301,7 @@
 				6F40324C158BA1B700024402 /* Survey.m in Sources */,
 				6F403250158BA4C400024402 /* SurveyField.m in Sources */,
 				6F8C8A2B158C03DB00BB4BA0 /* Employee.m in Sources */,
+				1BFF2E7E158D9CDC00753F94 /* EmployeeListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

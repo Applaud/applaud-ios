@@ -9,8 +9,12 @@
 #import <Foundation/Foundation.h>
 
 @interface Employee : NSObject
-@property (nonatomic, copy) NSString *name;
+@property (nonatomic, copy) NSString *firstName;
+@property (nonatomic, copy) NSString *lastName;
 @property (nonatomic, copy) NSString *bio;
 @property (nonatomic, strong) UIImage *image;
--(id)initWithName:(NSString *)name bio:(NSString *)bio image:(UIImage *)image;
+@property (nonatomic, strong) NSArray *ratingDimensions;    // What dimensions the employee can be rated on
+
+- (id) initWithFirstName:(NSString *)firstname lastName:(NSString *)lastname bio:(NSString *)bio image:(UIImage *)image dimensions:(NSArray *)dims;
+
 @end

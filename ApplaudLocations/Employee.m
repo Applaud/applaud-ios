@@ -9,16 +9,25 @@
 #import "Employee.h"
 
 @implementation Employee
-@synthesize name = _name;
+@synthesize firstName = _firstName;
+@synthesize lastName = _lastName;
 @synthesize bio = _bio;
 @synthesize image = _image;
+@synthesize ratingDimensions = _ratingDimensions;
 
--(id)initWithName:(NSString *)name bio:(NSString *)bio image:(UIImage *)image {
+-(id)initWithFirstName:(NSString *)name lastName:(NSString *)lastname bio:(NSString *)bio image:(UIImage *)image dimensions:(NSArray *)dims {
     if(self = [super init]) {
-        _name = name;
+        _firstName = name;
+        _lastName = lastname;
         _bio = bio;
         _image = image;
+        _ratingDimensions = dims;
     }
     return self;
 }
+
+- (NSString *)description {
+    return [NSString stringWithFormat:@"%@ %@", self.firstName, self.lastName];
+}
+
 @end

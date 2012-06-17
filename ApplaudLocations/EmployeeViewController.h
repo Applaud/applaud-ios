@@ -9,9 +9,18 @@
 #import <UIKit/UIKit.h>
 #import "Employee.h"
 
-@interface EmployeeViewController : UIViewController
+#define RATING_FIELD_HEIGHT 100
+
+@interface EmployeeViewController : UIViewController {
+    Employee *employee;
+}
+
+
 @property (nonatomic, strong) Employee *employee;
-@property (weak, nonatomic) IBOutlet UIImageView *image;
-@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-@property (weak, nonatomic) IBOutlet UITextView *bioField;
+@property (strong, nonatomic) IBOutlet UIImageView *image;
+@property (strong, nonatomic) IBOutlet UILabel *nameLabel;
+@property (strong, nonatomic) IBOutlet UITextView *bioField;
+
+- (id)initWithEmployee:(Employee *)e;
+
 @end
