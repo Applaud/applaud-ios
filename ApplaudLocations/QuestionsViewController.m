@@ -27,6 +27,7 @@
         SurveyField *sf2 = [[SurveyField alloc] initWithLabel:@"q2" required:YES id:2 type:CHECKBOX options:nil];
         _survey = [[Survey alloc] initWithTitle:@"Survey" summary:@"test survey" fields:[[NSMutableArray alloc]
                                                                                          initWithObjects:sf1, sf2, nil]];
+        [self setTitle:@"Dialog"];
     }
     return self;
 }

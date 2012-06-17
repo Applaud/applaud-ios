@@ -25,6 +25,7 @@
         // Let us know about updates from the newsfeed.
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newfeedReceived:) name:@"NEWSFEED_RECEIVED" object:nil];
         _newsFeeds = [[NSMutableArray alloc] init];
+        [self setTitle:@"Newsfeed"];
     }
     return self;
 }

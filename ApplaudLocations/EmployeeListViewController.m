@@ -120,6 +120,7 @@
             
         }
         
+        // reload the table view to display all the employees
         [self.tableView reloadData];
     }
 }
