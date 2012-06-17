@@ -15,6 +15,7 @@
 @implementation NFViewController
 
 @synthesize newsFeeds = _newsFeeds;
+@synthesize navigationController = _navigationController;
 @synthesize tableView = _tableView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -34,6 +35,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    [self getNewsFeeds];
 }
 
 - (void)viewDidUnload
@@ -79,7 +81,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NFItemViewController *nfivc = [[NFItemViewController alloc] initWithNibName:@"NFItemViewController" bundle:nil];
     nfivc.item = [self.newsFeeds objectAtIndex:indexPath.row];
-    [self presentViewController:nfivc animated:YES completion:nil];
+    [self.navigationController pushViewController:nfivc animated:YES];
 }
 
 #pragma mark -

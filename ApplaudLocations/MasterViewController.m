@@ -149,7 +149,6 @@
      */
     // This corresponds to the newsfeed.
     [tabBarController setSelectedIndex:3];
-    [[tabBarController.viewControllers objectAtIndex:3] getNewsFeeds];
 //    [[tabBarController.viewControllers objectAtIndex:0] getEmployees];
     _window.rootViewController = tabBarController;
 }

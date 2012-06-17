@@ -35,6 +35,8 @@
 		6F462623158A8BDE007EA86E /* NFItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F462622158A8BDE007EA86E /* NFItem.m */; };
 		6F8C8A2B158C03DB00BB4BA0 /* Employee.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F8C8A2A158C03DB00BB4BA0 /* Employee.m */; };
 		6FAB07A01587BF0700C9F1DF /* BusinessAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FAB079F1587BF0700C9F1DF /* BusinessAnnotation.m */; };
+		6FFAD3E1158E60A5000CE190 /* SurveyFieldViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FFAD3DF158E60A5000CE190 /* SurveyFieldViewController.m */; };
+		6FFAD3E2158E60A5000CE190 /* SurveyFieldViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6FFAD3E0158E60A5000CE190 /* SurveyFieldViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -84,6 +86,9 @@
 		6F8C8A2A158C03DB00BB4BA0 /* Employee.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Employee.m; sourceTree = "<group>"; };
 		6FAB079E1587BF0700C9F1DF /* BusinessAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessAnnotation.h; sourceTree = "<group>"; };
 		6FAB079F1587BF0700C9F1DF /* BusinessAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessAnnotation.m; sourceTree = "<group>"; };
+		6FFAD3DE158E60A5000CE190 /* SurveyFieldViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SurveyFieldViewController.h; sourceTree = "<group>"; };
+		6FFAD3DF158E60A5000CE190 /* SurveyFieldViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SurveyFieldViewController.m; sourceTree = "<group>"; };
+		6FFAD3E0158E60A5000CE190 /* SurveyFieldViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SurveyFieldViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +155,9 @@
 			children = (
 				1B301C6A158858560038A5BE /* QuestionsViewController.h */,
 				1B301C6B158858560038A5BE /* QuestionsViewController.m */,
+				6FFAD3DE158E60A5000CE190 /* SurveyFieldViewController.h */,
+				6FFAD3DF158E60A5000CE190 /* SurveyFieldViewController.m */,
+				6FFAD3E0158E60A5000CE190 /* SurveyFieldViewController.xib */,
 				6F40324A158BA1B700024402 /* Survey.h */,
 				6F40324B158BA1B700024402 /* Survey.m */,
 				6F40324E158BA4C400024402 /* SurveyField.h */,
@@ -276,6 +284,7 @@
 				1B301C6E158858560038A5BE /* QuestionsViewController.xib in Resources */,
 				6F37B93C1589400E001DD06D /* NFItemViewController.xib in Resources */,
 				1BFF2E7F158D9CDC00753F94 /* EmployeeListViewController.xib in Resources */,
+				6FFAD3E2158E60A5000CE190 /* SurveyFieldViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -302,6 +311,7 @@
 				6F403250158BA4C400024402 /* SurveyField.m in Sources */,
 				6F8C8A2B158C03DB00BB4BA0 /* Employee.m in Sources */,
 				1BFF2E7E158D9CDC00753F94 /* EmployeeListViewController.m in Sources */,
+				6FFAD3E1158E60A5000CE190 /* SurveyFieldViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
