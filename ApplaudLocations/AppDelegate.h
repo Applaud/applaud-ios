@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "BusinessLocationsTracker.h"
+#import "GeneralFeedbackViewController.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, UITabBarControllerDelegate>
 

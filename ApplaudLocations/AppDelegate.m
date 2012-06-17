@@ -49,14 +49,22 @@
     UINavigationController *questionNav = [[UINavigationController alloc] initWithRootViewController:qvc];
     qvc.navigationController = questionNav;
     
-    // And then NFViewController.
+    // And then NFViewController
     NFViewController *nfvc = [[NFViewController alloc] init];
     [nfvc setTitle:@"News Feed"];
     UINavigationController *newsNav = [[UINavigationController alloc] initWithRootViewController:nfvc];
     nfvc.navigationController = newsNav;
+	
+	// Finally GeneralFeedbackViewController
+	GeneralFeedbackViewController *gfvc = [[GeneralFeedbackViewController alloc] init];
+	[gfvc setTitle:@"General Feedback"];
+	UINavigationController *generalNav = [[UINavigationController alloc] initWithRootViewController:gfvc];
+	gfvc.navigationController = generalNav;
+	
     tabNavigator.viewControllers = [NSArray arrayWithObjects:
                                     employeeNav,
                                     [[UIViewController alloc] init],    // This is a dummy!!
+									generalNav,
                                     questionNav,
                                     newsNav,
                                     nil];

@@ -30,7 +30,35 @@
 {
     [super viewDidLoad];
     self.titleLabel.text = self.field.label;
-    // Do any additional setup after loading the view from its nib.
+    
+    // Load up the appropriate view, based upon the field type.
+    // The curly braces are necessary to make the compiler happy.
+    switch(self.field.type) {
+        case TEXTAREA:
+
+            break;
+        case TEXTFIELD:
+        {
+            UITextField *field = [[UITextField alloc] initWithFrame:
+/*                                  CGRectMake(0,
+                                             WIDGET_BEGIN,
+                                             self.view.frame.size.width,
+                                             WIDGET_HEIGHT)];*/
+                                  CGRectMake(0,0,self.view.frame.size.width,self.view.frame.size.height)];
+            [self.view addSubview:field];
+        }
+            break;
+        case RADIO:
+        {
+            
+        }
+            break;
+        case CHECKBOX:
+        {
+            
+        }
+            break;
+    }
 }
 
 - (void)viewDidUnload
