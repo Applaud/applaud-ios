@@ -113,7 +113,7 @@
                                                         image:[[UIImage alloc] init]
                                                    dimensions:[[dict objectForKey:@"ratings"]
                                                                objectForKey:@"dimensions"]];
-            NSLog(@"%@",e);
+//            NSLog(@"%@",e);
             
             // employeeArray will hold all the employees
             [self.employeeArray addObject:e];

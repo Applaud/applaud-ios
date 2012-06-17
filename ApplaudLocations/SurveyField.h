@@ -9,8 +9,8 @@
 #import <Foundation/Foundation.h>
 
 typedef enum {
-    DROPDOWN,
-    TEXT,
+    TEXTFIELD,
+    TEXTAREA,
     RADIO,
     CHECKBOX
 } QuestionType;

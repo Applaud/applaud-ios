@@ -37,14 +37,27 @@
     UITabBarController *tabNavigator = [[UITabBarController alloc] init];
     
     // Creating the view controllers in the tab bar
+    // EmployeeListViewController first
     EmployeeListViewController *elvc = [[EmployeeListViewController alloc] init];
     UINavigationController *employeeNav = [[UINavigationController alloc] initWithRootViewController:elvc];
     elvc.navigationController = employeeNav;
+    
+    // QuestionsViewController next
+    QuestionsViewController *qvc = [[QuestionsViewController alloc] init];
+    [qvc setTitle:@"Dialog"];
+    UINavigationController *questionNav = [[UINavigationController alloc] initWithRootViewController:qvc];
+    qvc.navigationController = questionNav;
+    
+    // And then NFViewController.
+    NFViewController *nfvc = [[NFViewController alloc] init];
+    [nfvc setTitle:@"News Feed"];
+    UINavigationController *newsNav = [[UINavigationController alloc] initWithRootViewController:nfvc];
+    nfvc.navigationController = newsNav;
     tabNavigator.viewControllers = [NSArray arrayWithObjects:
                                     employeeNav,
                                     [[UIViewController alloc] init],    // This is a dummy!!
-                                    [[QuestionsViewController alloc] init],
-                                    [[NFViewController alloc] init],
+                                    questionNav,
+                                    newsNav,
                                     nil];
     // TODO: should figure out how to set UITabBarItem images
     masterViewController.tabBarController = tabNavigator;

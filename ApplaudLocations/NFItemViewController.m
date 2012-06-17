@@ -19,7 +19,6 @@
 @synthesize bodyText = _bodyText;
 @synthesize subtitleLabel = _subtitleLabel;
 @synthesize dateLabel = _dateLabel;
-@synthesize dismissButton = _dismissButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -53,7 +52,6 @@
     [self setBodyText:nil];
     [self setSubtitleLabel:nil];
     [self setDateLabel:nil];
-    [self setDismissButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -68,12 +66,12 @@
  * dismisses the current item detail, and deselects the corresponding row in the table.
  *
  * kinda gross way of finding the right row to deselect; oh well.
- */
+ *
 - (IBAction)buttonPressed:(id)sender {
     UITabBarController *presenting = (UITabBarController *)self.presentingViewController;
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
     UITableView *tableView = [[presenting.viewControllers objectAtIndex:3] tableView];
     NSIndexPath *path = [tableView indexPathForSelectedRow];
     [tableView deselectRowAtIndexPath:path animated:YES];
-}
+}*/
 @end

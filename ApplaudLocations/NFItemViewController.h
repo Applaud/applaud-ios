@@ -15,6 +15,4 @@
 @property (weak, nonatomic) IBOutlet UITextView *bodyText;
 @property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
-@property (weak, nonatomic) IBOutlet UIButton *dismissButton;
-- (IBAction)buttonPressed:(id)sender;
 @end
