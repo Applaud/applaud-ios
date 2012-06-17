@@ -20,7 +20,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom init stuff
+        [self setTitle:@"Employees"];
     }
     return self;
 }
@@ -42,8 +42,8 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-
-#pragma mark - Table view data source
+#pragma mark -
+#pragma mark - Table view data source/delegation
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -99,10 +99,10 @@
     }
     else {
         
-        NSError *e = [[NSError alloc] init]; // for debugging, probably not needed anymore
+        NSError *err = [[NSError alloc] init]; // for debugging, probably not needed anymore
         NSArray *employeeData = [NSJSONSerialization JSONObjectWithData:d
                                                                 options:NSJSONReadingAllowFragments
-                                                                  error:&e];
+                                                                  error:&err];
         self.employeeArray = [[NSMutableArray alloc] init];
         
         // employeeArray is a list of dictionaries, each containing information about an employee

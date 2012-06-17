@@ -12,10 +12,7 @@
 #define RATING_FIELD_HEIGHT 70
 #define RATING_FIELDS_BEGIN 300
 
-@interface EmployeeViewController : UIViewController {
-    Employee *employee;
-}
-
+@interface EmployeeViewController : UIViewController
 
 @property (nonatomic, strong) Employee *employee;
 @property (nonatomic, strong) IBOutlet UIScrollView *scrollView;

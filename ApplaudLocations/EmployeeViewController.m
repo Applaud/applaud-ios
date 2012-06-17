@@ -23,7 +23,7 @@
 
 - (id)initWithEmployee:(Employee *)e {
     if ( self = [super init] ) {
-        employee = e;
+        _employee = e;
     }
     
     return self;
@@ -33,40 +33,44 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    if(nil == _employee) {
-        [self.nameLabel setText:[NSString stringWithFormat:@"%@ %@",
-                                 employee.firstName, employee.lastName]];
-        [self.bioField setText:employee.bio];
-        
-        // Keeps track of where we're putting labels/sliders
-        int curr_y = RATING_FIELDS_BEGIN;
-        
-        // Parse all of the rating dimensions
-        for ( NSString *dimension in employee.ratingDimensions ) {
-            // Create a label
-            UILabel *dimensionLabel = [[UILabel alloc] 
-                                       initWithFrame:CGRectMake(0,
-                                                                curr_y,
-                                                                self.view.frame.size.width,
-                                                                RATING_FIELD_HEIGHT/2)];
-            [dimensionLabel setText:dimension];
-            // Create a slider
-            UISlider *dimensionSlider = [[UISlider alloc] 
-                                         initWithFrame:CGRectMake(0, 
-                                                                  curr_y + 20,
-                                                                  self.view.frame.size.width,                                                                  RATING_FIELD_HEIGHT)];
-            [dimensionSlider setMinimumValue:0.0f];
-            [dimensionSlider setMaximumValue:1.0f];
-            curr_y += RATING_FIELD_HEIGHT;
-            [self.view addSubview:dimensionLabel];
-            [self.view addSubview:dimensionSlider];
-        }
-        self.scrollView.contentSize = CGSizeMake(self.view.frame.size.width,
-                                                 curr_y+RATING_FIELD_HEIGHT);
+    [self.nameLabel setText:[NSString stringWithFormat:@"%@ %@",
+                             self.employee.firstName, self.employee.lastName]];
 
+    if ( self.employee.bio != (id)[NSNull null] && self.employee.bio.length > 0 ) {
+        [self.bioField setText:self.employee.bio];
+    }
+    else {
+        NSLog(@"Null bio for %@.",self.employee);
     }
     
+    // Keeps track of where we're putting labels/sliders
+    int curr_y = RATING_FIELDS_BEGIN;
+    
+    // Parse all of the rating dimensions
+    for ( NSString *dimension in self.employee.ratingDimensions ) {
+        // Create a label
+        UILabel *dimensionLabel = [[UILabel alloc] 
+                                   initWithFrame:CGRectMake(0,
+                                                            curr_y,
+                                                            self.view.frame.size.width,
+                                                            RATING_FIELD_HEIGHT/2)];
+        [dimensionLabel setText:dimension];
+        // Create a slider
+        UISlider *dimensionSlider = [[UISlider alloc] 
+                                     initWithFrame:CGRectMake(0, 
+                                                              curr_y + 20,
+                                                              self.view.frame.size.width,                                                                  RATING_FIELD_HEIGHT)];
+        [dimensionSlider setMinimumValue:0.0f];
+        [dimensionSlider setMaximumValue:1.0f];
+        curr_y += RATING_FIELD_HEIGHT;
+        [self.view addSubview:dimensionLabel];
+        [self.view addSubview:dimensionSlider];
+    }
     // Tell our scroll view how big its contents are, so we can scroll in it.
+    self.scrollView.contentSize = CGSizeMake(self.view.frame.size.width,
+                                             curr_y);
+    
+
     
 }
 
