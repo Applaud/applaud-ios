@@ -8,11 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GeneralFeedbackViewController : UIViewController
+@interface GeneralFeedbackViewController : UIViewController <UITextFieldDelegate>
 @property (weak, nonatomic) UINavigationController *navigationController;
 @property (weak, nonatomic) IBOutlet UILabel *questionLabel;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
-@property (weak, nonatomic) IBOutlet UIButton *submitButton;
-- (IBAction)buttonPressed:(id)sender;
-- (IBAction)doneEditing:(id)sender;
+- (IBAction)doneEditing:(UITextField *)sender;
 @end

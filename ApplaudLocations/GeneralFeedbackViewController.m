@@ -16,7 +16,6 @@
 @synthesize navigationController = _navigationController;
 @synthesize questionLabel;
 @synthesize textField;
-@synthesize submitButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -32,13 +31,13 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.questionLabel.text = @"General Feedback";
+    self.textField.delegate = self;
 }
 
 - (void)viewDidUnload
 {
     [self setQuestionLabel:nil];
 
-    [self setSubmitButton:nil];
     [self setTextField:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
@@ -48,16 +47,6 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
-- (IBAction)buttonPressed:(id)sender {
-/*    UITextField *textView = (UITextField *)sender;
-    NSString *response = textView.text;
-    [self sendResponse:response];*/
-}
-
-- (IBAction)doneEditing:(UITextField *)sender {
-    [sender resignFirstResponder];
 }
 
 /*
@@ -85,5 +74,15 @@
                                                      otherButtonTitles:nil] show];
                                }
                            }];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)field {
+    [field resignFirstResponder];
+    return YES;
+}
+
+- (IBAction)doneEditing:(UITextField *)sender {
+    [self sendResponse:sender.text];
+    [sender resignFirstResponder];
 }
 @end
