@@ -81,7 +81,7 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    SurveyFieldViewController *sfvc = [[SurveyFieldViewController alloc] init];
+    SurveyFieldViewController *sfvc = [[SurveyFieldViewController alloc] initWithNibName:@"SurveyFieldViewController" bundle:nil];
     sfvc.field = [self.survey.fields objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:sfvc animated:YES];
 }

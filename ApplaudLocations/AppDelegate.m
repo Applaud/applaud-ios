@@ -121,10 +121,10 @@
     [self.window makeKeyAndVisible];
     
     // Authenticate the user
-    UIAlertView *loginAlert = [[UIAlertView alloc] initWithTitle:@"Login to Applaud" message:@"Please enter your login information." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
+/*    UIAlertView *loginAlert = [[UIAlertView alloc] initWithTitle:@"Login to Applaud" message:@"Please enter your login information." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
     loginAlert.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
     [loginAlert show];
-    
+    */
     return YES;
 }
 

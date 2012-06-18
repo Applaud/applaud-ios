@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <QuartzCore/QuartzCore.h>
 #import "SurveyField.h"
 
 #define WIDGET_HEIGHT 100
