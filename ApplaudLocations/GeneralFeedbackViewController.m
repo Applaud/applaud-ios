@@ -30,7 +30,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.questionLabel.text = @"General Feedback";
+    self.questionLabel.text = @"Leave Comment";
     self.textField.delegate = self;
 }
 
