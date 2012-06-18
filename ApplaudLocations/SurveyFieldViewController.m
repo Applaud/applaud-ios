@@ -15,7 +15,7 @@
 @implementation SurveyFieldViewController
 
 @synthesize field = _field;
-@synthesize titleLabel = _titleLabel;
+@synthesize questionLabel = _questionLabel;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -29,33 +29,28 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.titleLabel.text = self.field.label;
-    
+    self.questionLabel.text = self.field.label;
     // Load up the appropriate view, based upon the field type.
     // The curly braces are necessary to make the compiler happy.
     switch(self.field.type) {
         case TEXTAREA:
-
+        {
+            [self addTextArea];
+        }
             break;
         case TEXTFIELD:
         {
-            UITextField *field = [[UITextField alloc] initWithFrame:
-/*                                  CGRectMake(0,
-                                             WIDGET_BEGIN,
-                                             self.view.frame.size.width,
-                                             WIDGET_HEIGHT)];*/
-                                  CGRectMake(0,0,self.view.frame.size.width,self.view.frame.size.height)];
-            [self.view addSubview:field];
+            [self addTextField];
         }
             break;
         case RADIO:
         {
-            
+            [self addRadioGroup];
         }
             break;
         case CHECKBOX:
         {
-            
+            [self addCheckBoxGroup];
         }
             break;
     }
@@ -63,6 +58,7 @@
 
 - (void)viewDidUnload
 {
+    [self setQuestionLabel:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -73,4 +69,28 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+#pragma mark -
+#pragma Adding Views
+
+- (void)addTextField {
+    UITextField *field = [[UITextField alloc] initWithFrame:
+                          CGRectMake(0,
+                                     0,
+                                     self.view.frame.size.width,
+                                     WIDGET_HEIGHT)];
+    field.backgroundColor = [UIColor redColor];
+    [self.view addSubview:field];
+}
+
+- (void)addTextArea {
+    
+}
+
+- (void)addRadioGroup {
+    
+}
+
+- (void)addCheckBoxGroup {
+    
+}
 @end
