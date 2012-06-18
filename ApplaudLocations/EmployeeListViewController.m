@@ -77,7 +77,8 @@
 #pragma mark Other Methods
 
 - (void)getEmployees {
-    NSURL *url = [[NSURL alloc] initWithString:@"http://127.0.0.1:8000/employees"];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVER_URL, @"/employees"];
+    NSURL *url = [[NSURL alloc] initWithString:urlString];
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
     [NSURLConnection sendAsynchronousRequest:request
                                        queue:[NSOperationQueue mainQueue]

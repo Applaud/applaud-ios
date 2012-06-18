@@ -96,7 +96,7 @@
  * this is called when we load up the news feed is selected
  */
 - (void) getNewsFeeds {
-    NSString *urlString = [NSString stringWithFormat:SERVER_URL, @"/newsfeed"];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVER_URL, @"/newsfeed"];
     NSURL *url = [[NSURL alloc] initWithString:urlString];
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
     [NSURLConnection sendAsynchronousRequest:request

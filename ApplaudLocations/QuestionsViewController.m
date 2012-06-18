@@ -89,7 +89,7 @@
 #pragma mark -
 #pragma Other Methods
 -(void)getSurveys {
-    NSString *urlString = [NSString stringWithFormat:SERVER_URL, @"/get_survey"];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVER_URL, @"/get_survey"];
     NSURL *url = [[NSURL alloc] initWithString:urlString];
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
     [NSURLConnection sendAsynchronousRequest:request

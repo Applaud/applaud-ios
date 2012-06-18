@@ -54,7 +54,7 @@
  * the server is ready.
  */
 - (void)sendResponse:(NSString *)response {
-    NSString *urlString = [NSString stringWithFormat:SERVER_URL, @"/general_feedback"];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVER_URL, @"/general_feedback"];
     NSURL *url = [[NSURL alloc] initWithString:urlString];      
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
     NSArray *keys = [[NSArray alloc] initWithObjects:@"answer", nil];
@@ -67,6 +67,7 @@
     [NSURLConnection sendAsynchronousRequest:request
                                        queue:[NSOperationQueue mainQueue]
                            completionHandler:^(NSURLResponse *response, NSData *d, NSError *err) {
+                               NSLog(@"%@", response);
                                if(err) {
                                    [[[UIAlertView alloc] initWithTitle:@"Connection Error"
                                                                message:@"Couldn't send response."
