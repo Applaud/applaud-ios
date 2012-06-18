@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreData/CoreData.h>
 #import "BusinessLocationsTracker.h"
 #import "GeneralFeedbackViewController.h"
 
@@ -16,5 +17,18 @@
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) BusinessLocationsTracker *tracker;
+
+
+/**
+ * This stuff is for CoreData
+ */
+@property (nonatomic, retain, readonly) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, retain, readonly) NSManagedObjectModel *managedObjectModel;
+@property (nonatomic, retain, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (nonatomic, readonly) NSString *applicationDocumentPath;
+
+
+- (NSString *)applicationDocumentsDirectory;
+- (void)saveContext;
 
 @end

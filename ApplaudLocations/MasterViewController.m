@@ -14,6 +14,7 @@
 @implementation MasterViewController
 
 @synthesize locationsArray, mapViewController, tableView, titleLabel, tabBarController, window=_window;
+@synthesize managedObjectContext;
 
 - (id)init {
     self = [super init];
@@ -140,16 +141,19 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+    // Retrieve program settings
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"ApplaudProgramSettings" inManagedObjectContext:managedObjectContext];
+    [request setEntity:entity];
+    
+    NSError *error = nil;    
+    NSMutableArray *mutableFetchResults = [[managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+    if (mutableFetchResults == nil) {
+        NSLog(@"%@",error);
+    }
+    
     // This corresponds to the newsfeed.
     [tabBarController setSelectedIndex:3];
-//    [[tabBarController.viewControllers objectAtIndex:0] getEmployees];
     _window.rootViewController = tabBarController;
 }
 
