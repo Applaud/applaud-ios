@@ -8,9 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FirstTimeNavigatorViewController : UIViewController
+@interface FirstTimeNavigatorViewController : UIViewController {
+
+}
 
 // This is persistent throughout the application. It controls all of the view controllers.
 @property (nonatomic, strong) UITabBarController *tabBarController;
+@property (nonatomic, weak) UIWindow *window;
+
+- (IBAction)employeeView:(id)sender;
+- (IBAction)questionsView:(id)sender;
+- (IBAction)newsfeedView:(id)sender;
+- (IBAction)feedbackView:(id)sender;
 
 @end

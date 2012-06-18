@@ -146,6 +146,7 @@
     if ( self.settings.firstTimeLaunching ) {
         FirstTimeNavigatorViewController *ftnvc = [[FirstTimeNavigatorViewController alloc] initWithNibName:@"FirstTimeNavigatorViewControllerIphone" bundle:nil];
         ftnvc.tabBarController = self.tabBarController;
+        ftnvc.window = _window;
         _window.rootViewController = ftnvc;
     }
     else {

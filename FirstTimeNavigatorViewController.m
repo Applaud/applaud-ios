@@ -10,7 +10,8 @@
 
 @implementation FirstTimeNavigatorViewController
 
-@synthesize tabBarController = _tabBarController;
+@synthesize tabBarController;
+@synthesize window = _window;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -36,6 +37,26 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+- (IBAction)employeeView:(id)sender {
+    [tabBarController setSelectedIndex:0];
+    _window.rootViewController = tabBarController;
+}
+
+- (IBAction)questionsView:(id)sender {
+    [tabBarController setSelectedIndex:3];
+    _window.rootViewController = tabBarController;
+}
+
+- (IBAction)feedbackView:(id)sender {
+    [tabBarController setSelectedIndex:2];
+    _window.rootViewController = tabBarController;
+}
+
+- (IBAction)newsfeedView:(id)sender {
+    [tabBarController setSelectedIndex:4];
+    _window.rootViewController = tabBarController;
 }
 
 @end
