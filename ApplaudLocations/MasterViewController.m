@@ -10,11 +10,13 @@
 #import "NFViewController.h"
 #import "EmployeeListViewController.h"
 #import "Business.h"
+#import "ApplaudProgramSettingsModel.h"
+#import "FirstTimeNavigatorViewController.h"
 
 @implementation MasterViewController
 
 @synthesize locationsArray, mapViewController, tableView, titleLabel, tabBarController, window=_window;
-@synthesize managedObjectContext;
+@synthesize settings = _settings;
 
 - (id)init {
     self = [super init];
@@ -141,20 +143,16 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Retrieve program settings
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"ApplaudProgramSettings" inManagedObjectContext:managedObjectContext];
-    [request setEntity:entity];
-    
-    NSError *error = nil;    
-    NSMutableArray *mutableFetchResults = [[managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
-    if (mutableFetchResults == nil) {
-        NSLog(@"%@",error);
+    if ( self.settings.firstTimeLaunching ) {
+        FirstTimeNavigatorViewController *ftnvc = [[FirstTimeNavigatorViewController alloc] initWithNibName:@"FirstTimeNavigatorViewControllerIphone" bundle:nil];
+        ftnvc.tabBarController = self.tabBarController;
+        _window.rootViewController = ftnvc;
     }
-    
-    // This corresponds to the newsfeed.
-    [tabBarController setSelectedIndex:3];
-    _window.rootViewController = tabBarController;
+    else {
+        // This corresponds to the newsfeed.
+        [tabBarController setSelectedIndex:3];
+        _window.rootViewController = tabBarController;
+    }
 }
 
 

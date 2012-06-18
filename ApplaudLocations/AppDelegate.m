@@ -18,11 +18,42 @@
 @synthesize window = _window;
 @synthesize tracker;
 @synthesize managedObjectContext, managedObjectModel, persistentStoreCoordinator, applicationDocumentPath;
+@synthesize settings = _settings;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 { 
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
+    
+    //
+    // Retrieve program settings
+    // 
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"ApplaudProgramSettings" inManagedObjectContext:[self managedObjectContext]];
+    [request setEntity:entity];
+    
+    NSError *error = nil;    
+    NSMutableArray *mutableFetchResults = [[managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+    if (mutableFetchResults == nil) {
+        NSLog(@"%@",error);
+    }
+    else {
+        if ( mutableFetchResults.count == 0 ) {
+            // first time launching
+            // Create some settings here
+            _settings = (ApplaudProgramSettingsModel *)[NSEntityDescription insertNewObjectForEntityForName:@"ApplaudProgramSettings" inManagedObjectContext:managedObjectContext];
+            _settings.firstTimeLaunching = YES;
+        }
+        else {
+            _settings = [mutableFetchResults objectAtIndex:0];
+            _settings.firstTimeLaunching = NO;
+        }
+    }
+    
+
+    //
+    // Set up view controllers and class members
+    //
     // The "tracker" updates the NotificationCenter about changes in the user's location
     // Since we want to track this throughout the application, we initialize it here.
     self.tracker = [[BusinessLocationsTracker alloc] init];
@@ -33,7 +64,7 @@
     // List view controller, for selecting the location
     MasterViewController *masterViewController = [[MasterViewController alloc] init];
     masterViewController.mapViewController = mapViewController;
-    
+    masterViewController.settings = self.settings;
     // The tab bar, for navigation
     UITabBarController *tabNavigator = [[UITabBarController alloc] init];
     
@@ -70,7 +101,6 @@
                                     nil];
     // TODO: should figure out how to set UITabBarItem images
     masterViewController.tabBarController = tabNavigator;
-    masterViewController.managedObjectContext = [self managedObjectContext];
     tabNavigator.delegate = self;
     [masterViewController setWindow:self.window];
    
@@ -162,6 +192,15 @@
         }
         
         NSLog(@"username:%@, password:%@",username,password);
+        
+        // Cache username and password in our program settings
+        [self.settings setUsername:username];
+        [self.settings setPassword:password];
+        
+        NSError *error = nil;
+        if (! [managedObjectContext save:&error] ) {
+            NSLog(@"%@", error);
+        }
     }
     // User hit 'cancel'
     else if ( buttonIndex == 0 ) {
@@ -250,6 +289,7 @@
     persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel: [self managedObjectModel]];
     
     if (![persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeUrl options:nil error:&error]) {
+        NSLog(@"Could not initiate a persistent store for some reason. %@", error);
         // Handle the error.
     }    
 

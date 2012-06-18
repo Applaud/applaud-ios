@@ -72,8 +72,8 @@
 //                           [self GETStringFromDict:getDict]];
 
 //    NSURL *url = [NSURL URLWithString:urlString];
-//    NSURL *url=[NSURL URLWithString:@"http://ec2-107-22-6-55.compute-1.amazonaws.com/example3"];
-    NSString *urlString = [NSString stringWithFormat:SERVER_URL, @"/example3"];
+
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVER_URL, @"/example3"];
     NSURL *url = [NSURL URLWithString:urlString];
 
 //    NSLog(@"Making request with URL: %@",[url description]);

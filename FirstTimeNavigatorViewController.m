@@ -8,11 +8,9 @@
 
 #import "FirstTimeNavigatorViewController.h"
 
-@interface FirstTimeNavigatorViewController ()
-
-@end
-
 @implementation FirstTimeNavigatorViewController
+
+@synthesize tabBarController = _tabBarController;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

@@ -11,6 +11,8 @@
 
 @implementation ApplaudProgramSettingsModel
 
-@dynamic firstTimeRunning;
+@dynamic username;
+@dynamic password;
+@dynamic firstTimeLaunching;
 
 @end

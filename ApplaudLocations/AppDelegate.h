@@ -10,6 +10,7 @@
 #import <CoreData/CoreData.h>
 #import "BusinessLocationsTracker.h"
 #import "GeneralFeedbackViewController.h"
+#import "ApplaudProgramSettingsModel.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, UITabBarControllerDelegate, UIAlertViewDelegate, NSURLConnectionDelegate> {
     NSMutableData *connectionData;
@@ -17,6 +18,12 @@
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) BusinessLocationsTracker *tracker;
+
+
+/**
+ * Stores the user's settings
+ */
+@property (nonatomic, strong, readonly) ApplaudProgramSettingsModel *settings;
 
 
 /**

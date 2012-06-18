@@ -12,6 +12,8 @@
 
 @interface ApplaudProgramSettingsModel : NSManagedObject
 
-@property (nonatomic) BOOL firstTimeRunning;
+@property (nonatomic, copy) NSString *username;
+@property (nonatomic, copy) NSString *password;
+@property (nonatomic) BOOL firstTimeLaunching;
 
 @end
