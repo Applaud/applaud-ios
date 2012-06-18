@@ -64,10 +64,8 @@
 		1BA358E71582F05E00EB8F32 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		1BA358E91582F05E00EB8F32 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1BA358EB1582F05E00EB8F32 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		1BA358EF1582F05E00EB8F32 /* ApplaudLocations-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ApplaudLocations-Info.plist"; sourceTree = "<group>"; };
 		1BA358F11582F05E00EB8F32 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1BA358F31582F05E00EB8F32 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		1BA358F51582F05E00EB8F32 /* ApplaudLocations-Prefix.pch */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; lineEnding = 0; path = "ApplaudLocations-Prefix.pch"; sourceTree = "<group>"; };
 		1BA358F61582F05E00EB8F32 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1BA358F71582F05E00EB8F32 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		1BFF2E7B158D9CDB00753F94 /* EmployeeListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmployeeListViewController.h; sourceTree = "<group>"; };
@@ -84,6 +82,8 @@
 		6F40324F158BA4C400024402 /* SurveyField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SurveyField.m; sourceTree = "<group>"; };
 		6F462621158A8BDE007EA86E /* NFItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NFItem.h; sourceTree = "<group>"; };
 		6F462622158A8BDE007EA86E /* NFItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NFItem.m; sourceTree = "<group>"; };
+		6F809438158EF7E800961971 /* ApplaudIOS-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "ApplaudIOS-Info.plist"; sourceTree = "<group>"; };
+		6F809439158EF7E800961971 /* ApplaudIOS-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ApplaudIOS-Prefix.pch"; sourceTree = "<group>"; };
 		6F8C8A29158C03DB00BB4BA0 /* Employee.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Employee.h; sourceTree = "<group>"; };
 		6F8C8A2A158C03DB00BB4BA0 /* Employee.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Employee.m; sourceTree = "<group>"; };
 		6FAB079E1587BF0700C9F1DF /* BusinessAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessAnnotation.h; sourceTree = "<group>"; };
@@ -224,10 +224,10 @@
 		1BA358EE1582F05E00EB8F32 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				1BA358EF1582F05E00EB8F32 /* ApplaudLocations-Info.plist */,
+				6F809438158EF7E800961971 /* ApplaudIOS-Info.plist */,
+				6F809439158EF7E800961971 /* ApplaudIOS-Prefix.pch */,
 				1BA358F01582F05E00EB8F32 /* InfoPlist.strings */,
 				1BA358F31582F05E00EB8F32 /* main.m */,
-				1BA358F51582F05E00EB8F32 /* ApplaudLocations-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";

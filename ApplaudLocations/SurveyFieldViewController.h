@@ -14,5 +14,5 @@
 
 @interface SurveyFieldViewController : UIViewController
 @property (strong, nonatomic) SurveyField *field;
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *questionLabel;
 @end
