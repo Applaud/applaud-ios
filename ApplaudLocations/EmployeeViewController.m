@@ -18,6 +18,7 @@
 @synthesize scrollView = _scrollView;
 @synthesize image;
 @synthesize nameLabel;
+@synthesize bioLabel;
 @synthesize bioField;
 
 
@@ -36,15 +37,20 @@
     [self.nameLabel setText:[NSString stringWithFormat:@"%@ %@",
                              self.employee.firstName, self.employee.lastName]];
 
+    // The y-coordinate of the first rating field
+    int dimensionStart = RATING_FIELDS_BEGIN;
     if ( self.employee.bio != (id)[NSNull null] && self.employee.bio.length > 0 ) {
         [self.bioField setText:self.employee.bio];
     }
     else {
-        NSLog(@"Null bio for %@.",self.employee);
+        int spaceGained = bioField.bounds.size.height + bioLabel.bounds.size.height;
+        [self.bioField removeFromSuperview];
+        [self.bioLabel removeFromSuperview];
+        dimensionStart -= spaceGained;
     }
     
     // Keeps track of where we're putting labels/sliders
-    int curr_y = RATING_FIELDS_BEGIN;
+    int curr_y = dimensionStart;
     
     // Parse all of the rating dimensions
     for ( NSString *dimension in self.employee.ratingDimensions ) {

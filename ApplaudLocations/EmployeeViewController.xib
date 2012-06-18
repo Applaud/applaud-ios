@@ -34,7 +34,7 @@
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 			</object>
 			<object class="IBUIScrollView" id="287712516">
-				<nil key="NSNextResponder"/>
+				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">268</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="IBUIImageView" id="862614923">
@@ -42,6 +42,7 @@
 						<int key="NSvFlags">274</int>
 						<string key="NSFrame">{{20, 20}, {148, 211}}</string>
 						<reference key="NSSuperview" ref="287712516"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="562342298"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
@@ -52,6 +53,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{180, 20}, {124, 21}}</string>
 						<reference key="NSSuperview" ref="287712516"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="817701107"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
@@ -82,6 +84,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{20, 177}, {42, 21}}</string>
 						<reference key="NSSuperview" ref="287712516"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="675948573"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
@@ -109,6 +112,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{20, 206}, {284, 89}}</string>
 						<reference key="NSSuperview" ref="287712516"/>
+						<reference key="NSWindow"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">1</int>
@@ -135,6 +139,8 @@
 					</object>
 				</array>
 				<string key="NSFrameSize">{320, 480}</string>
+				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="862614923"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<bool key="IBUIClipsSubviews">YES</bool>
@@ -178,6 +184,14 @@
 						<reference key="destination" ref="287712516"/>
 					</object>
 					<int key="connectionID">23</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">bioLabel</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="817701107"/>
+					</object>
+					<int key="connectionID">41</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -247,7 +261,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">40</int>
+			<int key="maxID">41</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -256,6 +270,7 @@
 					<string key="superclassName">UIViewController</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="bioField">UITextView</string>
+						<string key="bioLabel">UILabel</string>
 						<string key="image">UIImageView</string>
 						<string key="nameLabel">UILabel</string>
 						<string key="scrollView">UIScrollView</string>
@@ -264,6 +279,10 @@
 						<object class="IBToOneOutletInfo" key="bioField">
 							<string key="name">bioField</string>
 							<string key="candidateClassName">UITextView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="bioLabel">
+							<string key="name">bioLabel</string>
+							<string key="candidateClassName">UILabel</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="image">
 							<string key="name">image</string>

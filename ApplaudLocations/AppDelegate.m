@@ -87,6 +87,12 @@
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
+    // Authenticate the user
+    UIAlertView *loginAlert = [[UIAlertView alloc] initWithTitle:@"Login to Applaud" message:@"Please enter your login information." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
+    loginAlert.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
+    [loginAlert show];
+    
     return YES;
 }
 
@@ -117,6 +123,9 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+#pragma mark -
+#pragma mark Tabbar delegate
+
 /*
  * make sure we can't select the empty view controller in the space between evaluations and everything else
  */
@@ -124,6 +133,55 @@
     if([viewController isEqual:[tabBarController.viewControllers objectAtIndex:1]])
         return NO;
     return YES;
+}
 
+#pragma mark -
+#pragma mark UIAlertView Delegate
+
+/**
+ * The user entered in login credentials. Send to the server securely somehow.
+ */
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    // The OK button
+    if ( buttonIndex == 1 ) {
+        NSString *username = [alertView textFieldAtIndex:0].text;
+        NSString *password = [alertView textFieldAtIndex:1].text;
+        
+        NSURL *url = [NSURL URLWithString:@"http://ec2-107-22-6-55.compute-1.amazonaws.com/accounts/login/"];
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
+        [request setHTTPMethod:@"POST"];
+        NSString *postString = [NSString stringWithFormat:@"username=%@&password=%@", username, password];
+        [request setHTTPBody:[NSData dataWithBytes:[postString UTF8String] length:postString.length]];
+        
+        NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:YES];
+        
+        if ( connection ) {
+            connectionData = [[NSMutableData alloc] init];
+        }
+        
+        NSLog(@"username:%@, password:%@",username,password);
+    }
+    // User hit 'cancel'
+    else if ( buttonIndex == 0 ) {
+        NSLog(@"User did not authenticate. Exiting...");
+        exit(0);
+    }
+}
+
+#pragma mark -
+#pragma mark NSURLConnectionDelegate Methods
+
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+    NSLog(@"%@",error);
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+    [connectionData appendData:data];
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+    NSLog(@"%@", [[NSString alloc] initWithData:connectionData encoding:NSUTF8StringEncoding]);
+    connectionData = nil;
+    // proceed with application based on whether authentication worked or not.
 }
 @end

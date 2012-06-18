@@ -18,6 +18,7 @@
 @property (nonatomic, strong) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) IBOutlet UIImageView *image;
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
+@property (strong, nonatomic) IBOutlet UILabel *bioLabel;
 @property (strong, nonatomic) IBOutlet UITextView *bioField;
 
 - (id)initWithEmployee:(Employee *)e;

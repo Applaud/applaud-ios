@@ -10,7 +10,9 @@
 #import "BusinessLocationsTracker.h"
 #import "GeneralFeedbackViewController.h"
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, UITabBarControllerDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, UITabBarControllerDelegate, UIAlertViewDelegate, NSURLConnectionDelegate> {
+    NSMutableData *connectionData;
+}
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) BusinessLocationsTracker *tracker;
