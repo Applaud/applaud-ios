@@ -56,7 +56,7 @@
 	
 	// Finally GeneralFeedbackViewController
 	GeneralFeedbackViewController *gfvc = [[GeneralFeedbackViewController alloc] init];
-	[gfvc setTitle:@"General Feedback"];
+	[gfvc setTitle:@"Leave Comment"];
 	UINavigationController *generalNav = [[UINavigationController alloc] initWithRootViewController:gfvc];
 	gfvc.navigationController = generalNav;
 	
