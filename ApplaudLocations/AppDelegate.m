@@ -39,7 +39,6 @@
     // Creating the view controllers in the tab bar
     // EmployeeListViewController first
     EmployeeListViewController *elvc = [[EmployeeListViewController alloc] init];
-    [elvc setTitle:@"Employees"];
     UINavigationController *employeeNav = [[UINavigationController alloc] initWithRootViewController:elvc];
     elvc.navigationController = employeeNav;
     
