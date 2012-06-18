@@ -54,7 +54,8 @@
  * the server is ready.
  */
 - (void)sendResponse:(NSString *)response {
-    NSURL *url = [[NSURL alloc] initWithString:@"http://127.0.0.1:8000/general_feedback"];
+    NSString *urlString = [NSString stringWithFormat:SERVER_URL, @"/general_feedback"];
+    NSURL *url = [[NSURL alloc] initWithString:urlString];      
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
     NSArray *keys = [[NSArray alloc] initWithObjects:@"answer", nil];
     NSArray *objs = [[NSArray alloc] initWithObjects:self.textField.text, nil];

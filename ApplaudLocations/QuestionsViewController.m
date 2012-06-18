@@ -72,7 +72,8 @@
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [self.questionsTable dequeueReusableCellWithIdentifier:CellIdentifier];
     if ( nil == cell ) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UITableViewCell"];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"UITableViewCell"];
+        cell.detailTextLabel.text = @"Unanswered";
     }
     SurveyField *field = [self.survey.fields objectAtIndex:indexPath.row];
     cell.textLabel.text = field.label;
@@ -80,7 +81,6 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    // ¿Should write a SurveyFieldViewController first?
     SurveyFieldViewController *sfvc = [[SurveyFieldViewController alloc] init];
     sfvc.field = [self.survey.fields objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:sfvc animated:YES];
@@ -89,7 +89,8 @@
 #pragma mark -
 #pragma Other Methods
 -(void)getSurveys {
-    NSURL *url = [[NSURL alloc] initWithString:@"http://127.0.0.1:8000/get_survey"];
+    NSString *urlString = [NSString stringWithFormat:SERVER_URL, @"/get_survey"];
+    NSURL *url = [[NSURL alloc] initWithString:urlString];
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
     [NSURLConnection sendAsynchronousRequest:request
                                        queue:[NSOperationQueue mainQueue]

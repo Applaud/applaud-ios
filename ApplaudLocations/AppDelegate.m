@@ -148,8 +148,8 @@
     if ( buttonIndex == 1 ) {
         NSString *username = [alertView textFieldAtIndex:0].text;
         NSString *password = [alertView textFieldAtIndex:1].text;
-        
-        NSURL *url = [NSURL URLWithString:@"http://ec2-107-22-6-55.compute-1.amazonaws.com/accounts/login/"];
+        NSString *urlString = [NSString stringWithFormat:SERVER_URL, @"/accounts/login"];
+        NSURL *url = [NSURL URLWithString:urlString];
         NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
         [request setHTTPMethod:@"POST"];
         NSString *postString = [NSString stringWithFormat:@"username=%@&password=%@", username, password];

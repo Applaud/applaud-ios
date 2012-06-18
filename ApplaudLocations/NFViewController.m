@@ -96,8 +96,8 @@
  * this is called when we load up the news feed is selected
  */
 - (void) getNewsFeeds {
-    //    NSURL *url = [[NSURL alloc] initWithString:@"http://ec2-107-22-6-55.compute-1.amazonaws.com/newsfeed"];
-    NSURL *url = [[NSURL alloc] initWithString:@"http://127.0.0.1:8000/newsfeed"];
+    NSString *urlString = [NSString stringWithFormat:SERVER_URL, @"/newsfeed"];
+    NSURL *url = [[NSURL alloc] initWithString:urlString];
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
     [NSURLConnection sendAsynchronousRequest:request
                                        queue:[NSOperationQueue mainQueue]
