@@ -156,14 +156,15 @@
     NSError *err = nil;
     NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&err];
     NSString *html = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    NSError *regexerr= nil;
-    NSRegularExpression *regex = [[NSRegularExpression alloc] initWithPattern:@"value='(.*)'"
-                                                                      options:0
-                                                                        error:&regexerr];
-    NSTextCheckingResult *match = [regex firstMatchInString:html
-                                                    options:0
-                                                      range:NSMakeRange(0, [html length])];
-    return [html substringWithRange:[match rangeAtIndex:1]];
+//    NSError *regexerr= nil;
+//    NSRegularExpression *regex = [[NSRegularExpression alloc] initWithPattern:@"value='(.*)'"
+//                                                                      options:0
+//                                                                        error:&regexerr];
+//    NSTextCheckingResult *match = [regex firstMatchInString:html
+//                                                    options:0
+//                                                      range:NSMakeRange(0, [html length])];
+//    return [html substringWithRange:[match rangeAtIndex:1]];
+    return html;
 }
 
 @end

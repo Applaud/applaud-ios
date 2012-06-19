@@ -7,6 +7,7 @@
 //
 
 #import "GeneralFeedbackViewController.h"
+#import "ConnectionManager.h"
 
 @interface GeneralFeedbackViewController ()
 
@@ -95,7 +96,13 @@
 }
 
 - (IBAction)doneEditing:(UITextField *)sender {
-    [self sendResponse:sender.text];
+    NSArray *keys = [[NSArray alloc] initWithObjects:@"answer", nil];
+    NSArray *objs = [[NSArray alloc] initWithObjects:self.textField.text, nil];
+    NSDictionary *dict = [[NSDictionary alloc] initWithObjects:objs forKeys:keys];
+    
+    [ConnectionManager serverRequest:@"POST" withParams:dict url:@"/general_feedback/"];
+    
+ //   [self sendResponse:sender.text];
     [sender resignFirstResponder];
 }
 @end
