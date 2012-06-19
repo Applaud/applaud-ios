@@ -11,6 +11,7 @@
 
 #define RATING_FIELD_HEIGHT 70
 #define RATING_FIELDS_BEGIN 300
+#define RATING_FIELD_SPACING 20
 
 @interface EmployeeViewController : UIViewController
 
@@ -20,7 +21,12 @@
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *bioLabel;
 @property (strong, nonatomic) IBOutlet UITextView *bioField;
+@property (strong, nonatomic) NSMutableDictionary *ratingDimensions;
 
 - (id)initWithEmployee:(Employee *)e;
+
+@property (weak, nonatomic) IBOutlet UIButton *submitButton;
+
+- (IBAction)submitButtonPressed:(UIButton *)sender;
 
 @end
