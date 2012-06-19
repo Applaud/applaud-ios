@@ -13,5 +13,6 @@
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *summary;
 @property (nonatomic, strong) NSMutableArray *fields;
+@property (nonatomic, strong) NSMutableArray *answers;
 -(id)initWithTitle:(NSString *)title summary:(NSString *)summary fields:(NSMutableArray *)fields;
 @end

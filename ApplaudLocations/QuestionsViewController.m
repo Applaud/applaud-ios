@@ -18,6 +18,7 @@
 @synthesize summaryText = _summaryText;
 @synthesize questionsTable = _questionsTable;
 @synthesize navigationController = _navigationController;
+@synthesize submitButton = _submitButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -47,6 +48,7 @@
     [self setSummaryText:nil];
     [self setQuestionsTable:nil];
     [self setNavigationController:nil];
+    [self setSubmitButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -140,5 +142,20 @@
                                    self.titleLabel.text = self.survey.title;
                                }
                            }];
+}
+
+- (BOOL)checkAnswers {
+    for(id object in self.survey.answers) {
+        if([object isKindOfClass:[NSNull class]]) {
+            return NO;
+        }
+    }
+    return YES;
+}
+
+- (IBAction)buttonPressed:(UIButton *)sender {
+    if([self checkAnswers]) {
+        
+    }
 }
 @end

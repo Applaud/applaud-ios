@@ -18,12 +18,14 @@
 
 @synthesize field = _field;
 @synthesize questionLabel = _questionLabel;
+@synthesize labels = _labels; // For relating checkbox groups to their labels.
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        _labels = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -73,12 +75,20 @@
 }
 
 /*
- * Called when the back button is pressed. This allows us to set the answer to this question.
+ * Called when the back button is pressed. This allows us to set the answer to this question in the Survey object.
  */
 - (void)viewWillDisappear:(BOOL)animated {
     UINavigationController *parent = (UINavigationController *)self.parentViewController;
-    NSLog(@"%@", [parent.viewControllers objectAtIndex:0]);
+    QuestionsViewController *qvc = [parent.viewControllers objectAtIndex:0];
+    // Find the index at which this question is located.
+    NSUInteger row = [qvc.survey.fields indexOfObject:self.field];
+    [qvc.survey.answers removeObjectAtIndex:row];
+    NSArray *answer = [self getAnswer];
+    if(answer) {
+        [qvc.survey.answers insertObject:answer atIndex:row];
+    }
 }
+
 
 #pragma mark -
 #pragma Adding Views
@@ -132,6 +142,7 @@
  */
 - (void)addCheckBoxGroup {
     int currenty = WIDGET_BEGIN;
+    int i = 0;
     for(NSString *option in self.field.options) {
 /*        UIButton *checkButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         checkButton.frame = CGRectMake(20,
@@ -151,6 +162,9 @@
         label.text = option;
 //        checkButton.backgroundColor = [UIColor greenColor];
         currenty += WIDGET_HEIGHT + 10;
+        // Associate the checkbox with its question string.
+        checkbox.tag = i++;
+        [self.labels addObject:label.text];
 //        [self.view addSubview:checkButton];
         [self.view addSubview:label];
         [self.view addSubview:checkbox];
@@ -158,11 +172,84 @@
 }
 
 #pragma mark -
+#pragma Getting answers
+
+/*
+ * Gets the user's answers, based on the type of widget that this question uses.
+ * This returns an NSArray because the server is expecting that in JSON, plus
+ * the checkboxes may have multiple answers.
+ */
+- (NSArray *)getAnswer {
+    switch(self.field.type) {
+        case TEXTAREA:
+        {
+            UITextView *textView;
+            for(UIView *view in self.view.subviews) {
+                if([view isKindOfClass:[UITextView class]]) {
+                    textView = (UITextView *)view;
+                    if(textView.text) {
+                        return [NSArray arrayWithObject:textView.text];
+                    }
+                }
+            }
+        }
+            break;
+        case TEXTFIELD:
+        {
+            UITextField *textField;
+            for(UIView *view in self.view.subviews) {
+                if([view isKindOfClass:[UITextField class]]) {
+                    textField = (UITextField *)view;
+                    if(textField.text) {
+                        return [NSArray arrayWithObject:textField.text];
+                    }
+                }
+            }
+        }
+            break;
+        case RADIO:
+        {
+            UISegmentedControl *radioGroup;
+            for(UIView *view in self.view.subviews) {
+                if([view isKindOfClass:[UISegmentedControl class]]) {
+                    radioGroup = (UISegmentedControl *)view;
+                    if(radioGroup.selected) {
+                        return [NSArray arrayWithObject:[radioGroup titleForSegmentAtIndex:radioGroup.selectedSegmentIndex]];
+                    }
+                }
+            }
+        }
+            break;
+        case CHECKBOX:
+        {
+            NSMutableArray *checkboxen = [[NSMutableArray alloc] init];
+            for(UIView *view in self.view.subviews) {
+                if([view isKindOfClass:[UISwitch class]]) {
+                    [checkboxen addObject:(UISwitch *)view];
+                }
+            }
+            NSMutableArray *answers = [[NSMutableArray alloc] init];
+            for(UISwitch *box in checkboxen) {
+                // If the box is checked, find its associated label and put it into the answers array.
+                if(box.isOn) {
+                    [answers addObject:[self.labels objectAtIndex:box.tag]];
+                }
+            }
+            if(answers.count) {
+                return answers;
+            }
+        }
+            break;
+    }
+    return nil; // If we don't have an answer.
+}
+
+#pragma mark -
 #pragma Checkbox delegate
 
 /*
  * When the button is pressed, change its background color.
- */
+ *
 - (void)buttonChecked:(id)sender {
     UIButton *button = (UIButton *)sender;
     if([button.backgroundColor isEqual:[UIColor greenColor]]) {
@@ -171,5 +258,5 @@
     else {
         button.backgroundColor = [UIColor greenColor];   
     }
-}
+}*/
 @end
