@@ -55,6 +55,7 @@
  */
 - (void)sendResponse:(NSString *)response {
     NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVER_URL, @"/general_feedback/"];
+    NSString *token = [BusinessLocationsTracker getCSRFTokenFromURL:urlString];
     NSURL *url = [[NSURL alloc] initWithString:urlString];      
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
     NSArray *keys = [[NSArray alloc] initWithObjects:@"answer", nil];
@@ -64,11 +65,11 @@
                                                    options:0
                                                      error:nil];
     request.HTTPBody = data;
+    [request addValue:token forHTTPHeaderField:@"X-CSRFToken"]; // Put the CSRF token into the HTTP request. Kinda important.
     request.HTTPMethod = @"POST";
     [NSURLConnection sendAsynchronousRequest:request
                                        queue:[NSOperationQueue mainQueue]
                            completionHandler:^(NSURLResponse *response, NSData *d, NSError *err) {
-                               NSLog(@"%@", response);
                                if(err) {
                                    [[[UIAlertView alloc] initWithTitle:@"Connection Error"
                                                                message:[err description]
@@ -77,14 +78,16 @@
                                                      otherButtonTitles:nil] show];
                                }
                                else {
+                                   NSLog(@"%@", [[NSString alloc] initWithData:d encoding:NSUTF8StringEncoding]);
                                    [[[UIAlertView alloc] initWithTitle:@"Success!"
-                                                               message:[response description]
+                                                               message:@"All went well."
                                                               delegate:nil
                                                      cancelButtonTitle:@"OK"
                                                      otherButtonTitles:nil] show];
                                }
                            }];
 }
+
 
 - (BOOL)textFieldShouldReturn:(UITextField *)field {
     [field resignFirstResponder];

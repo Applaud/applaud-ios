@@ -191,7 +191,7 @@
             connectionData = [[NSMutableData alloc] init];
         }
         
-        NSLog(@"username:%@, password:%@",username,password);
+//        NSLog(@"username:%@, password:%@",username,password);
         
         // Cache username and password in our program settings
         [self.settings setUsername:username];
@@ -221,7 +221,7 @@
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-    NSLog(@"%@", [[NSString alloc] initWithData:connectionData encoding:NSUTF8StringEncoding]);
+//    NSLog(@"%@", [[NSString alloc] initWithData:connectionData encoding:NSUTF8StringEncoding]);
     connectionData = nil;
     // proceed with application based on whether authentication worked or not.
 }

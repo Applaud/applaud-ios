@@ -145,4 +145,25 @@
     return [ret substringToIndex:(ret.length-1)];
 }
 
+
+/*
+ * Sends a GET to the server and grabs a CSRF token. I really hope this works.
+ */
++ (NSString *)getCSRFTokenFromURL:(NSString *)urlString {
+    NSURL *url = [[NSURL alloc] initWithString:urlString];
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+    NSURLResponse *response = nil;
+    NSError *err = nil;
+    NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&err];
+    NSString *html = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSError *regexerr= nil;
+    NSRegularExpression *regex = [[NSRegularExpression alloc] initWithPattern:@"value='(.*)'"
+                                                                      options:0
+                                                                        error:&regexerr];
+    NSTextCheckingResult *match = [regex firstMatchInString:html
+                                                    options:0
+                                                      range:NSMakeRange(0, [html length])];
+    return [html substringWithRange:[match rangeAtIndex:1]];
+}
+
 @end

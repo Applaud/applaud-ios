@@ -134,30 +134,29 @@
 - (void) sendEvaluations:(NSDictionary *)dict{
     NSData *data = [NSJSONSerialization dataWithJSONObject:dict options:0 error:nil];
     NSLog(@"%@", data);
-    NSString *URLString = [NSString stringWithFormat:@"%@%@" SERVER_URL, @"/evaluate"];
-    
+    NSString *URLString = [NSString stringWithFormat:@"%@%@", SERVER_URL, @"/evaluate/"];
+    NSString *token = [BusinessLocationsTracker getCSRFTokenFromURL:URLString];
     NSURL *postURL = [[NSURL alloc] initWithString:URLString];
     
     NSMutableURLRequest *req = [[NSMutableURLRequest alloc] initWithURL:postURL];
-    
+    req.HTTPMethod = @"POST";
     req.HTTPBody = data;
-    
-    [NSURLConnection
-     sendAsynchronousRequest:req
-     queue:[NSOperationQueue mainQueue]
-     completionHandler:^(NSURLResponse *URLResponse, NSData *URLData, NSError *error){
-         if(error){
-             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Connection problem" message:@"Responses couldn't be posted" delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles: nil];
-             
-             [alert show];
-             
-         }
-         else {
-             
-             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Thanks!" message:@"Your data was successfully posted!" delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles: nil];
-        
-             [alert show];
-         }
-     }];
+    [req addValue:token forHTTPHeaderField:@"X-CSRFToken"];
+    [NSURLConnection sendAsynchronousRequest:req
+                                       queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *URLResponse, NSData *URLData, NSError *error){
+                               if(error){
+                                   UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Connection problem" message:@"Responses couldn't be posted" delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles: nil];
+                                   NSLog(@"%@", error);
+                                   [alert show];
+                                   
+                               }
+                               else {
+                                   
+                                   UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Thanks!" message:@"Your data was successfully posted!" delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles: nil];
+                                   
+                                   [alert show];
+                               }
+                           }];
 }
 @end

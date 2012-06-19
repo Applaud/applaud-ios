@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Employee.h"
+#import "BusinessLocationsTracker.h"
 
 #define RATING_FIELD_HEIGHT 70
 #define RATING_FIELDS_BEGIN 300

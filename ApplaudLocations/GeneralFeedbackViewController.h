@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BusinessLocationsTracker.h"
 
 @interface GeneralFeedbackViewController : UIViewController <UITextFieldDelegate>
 @property (weak, nonatomic) UINavigationController *navigationController;
