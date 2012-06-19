@@ -12,8 +12,14 @@
 
 // requestType : either GET or POST
 // params : arguments to pass to the server
+// url : where to make the request to, relative to SERVER_URL
+// callback : a block to call when data is received asynchronously
 // returns : the server's response to the request
++ (NSData *)serverRequest:(NSString *)requestType withParams:(NSDictionary *)params url:(NSString *)url callback:(void(^)(NSData *))callback;
+
 + (NSData *)serverRequest:(NSString *)requestType withParams:(NSDictionary *)params url:(NSString *)url;
+
+
 
 // dict : dictionary of parameters to use in a GET string
 // returns : the GET string encoded with the parameters, starting with '?'

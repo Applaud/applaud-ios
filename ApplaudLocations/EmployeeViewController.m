@@ -8,6 +8,7 @@
 
 #import "EmployeeViewController.h"
 #import "Employee.h"
+#import "ConnectionManager.h"
 
 @interface EmployeeViewController ()
 
@@ -127,36 +128,9 @@
     NSMutableDictionary *ret = [[NSMutableDictionary alloc] init];
     [ret setObject:em forKey:@"employee"];
     [ret setObject:ratings forKey:@"ratings"];
-    [self sendEvaluations:ret];
     
+    [ConnectionManager serverRequest:@"POST" withParams:ret url:@"/evaluate/"];
+
 }
 
-- (void) sendEvaluations:(NSDictionary *)dict{
-    NSData *data = [NSJSONSerialization dataWithJSONObject:dict options:0 error:nil];
-    NSLog(@"%@", data);
-    NSString *URLString = [NSString stringWithFormat:@"%@%@", SERVER_URL, @"/evaluate/"];
-    NSString *token = [BusinessLocationsTracker getCSRFTokenFromURL:URLString];
-    NSURL *postURL = [[NSURL alloc] initWithString:URLString];
-    
-    NSMutableURLRequest *req = [[NSMutableURLRequest alloc] initWithURL:postURL];
-    req.HTTPMethod = @"POST";
-    req.HTTPBody = data;
-    [req addValue:token forHTTPHeaderField:@"X-CSRFToken"];
-    [NSURLConnection sendAsynchronousRequest:req
-                                       queue:[NSOperationQueue mainQueue]
-                           completionHandler:^(NSURLResponse *URLResponse, NSData *URLData, NSError *error){
-                               if(error){
-                                   UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Connection problem" message:@"Responses couldn't be posted" delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles: nil];
-                                   NSLog(@"%@", error);
-                                   [alert show];
-                                   
-                               }
-                               else {
-                                   
-                                   UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Thanks!" message:@"Your data was successfully posted!" delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles: nil];
-                                   
-                                   [alert show];
-                               }
-                           }];
-}
 @end

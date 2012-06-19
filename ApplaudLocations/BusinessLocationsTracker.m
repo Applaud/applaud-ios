@@ -8,6 +8,7 @@
 
 #import "BusinessLocationsTracker.h"
 #import "Business.h"
+#import "ConnectionManager.h"
 
 @implementation BusinessLocationsTracker
 
@@ -69,7 +70,7 @@
 //    NSString *urlString = [NSString stringWithFormat:
 //                           @"http://ec2-107-22-6-55.compute-1.amazonaws.com/checkin%@",
 //                           @"http://127.0.0.1:8000/checkin%@",
-//                           [self GETStringFromDict:getDict]];
+//                           [ConnectionManager GETStringFromDict:getDict]];
 
 //    NSURL *url = [NSURL URLWithString:urlString];
 
@@ -133,18 +134,6 @@
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Applaud" message:msg delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
     [alert show];
 }
-
-/**
- * Turns a dictionary into a GET request url format, starting with the &
- */
-- (NSString *)GETStringFromDict:(NSDictionary *)dict {
-    NSMutableString *ret = [[NSMutableString alloc] initWithString:@"?"];
-    [dict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-        [ret appendString:[NSString stringWithFormat:@"%@=%@&",key,obj]];
-    }];
-    return [ret substringToIndex:(ret.length-1)];
-}
-
 
 /*
  * Sends a GET to the server and grabs a CSRF token. I really hope this works.

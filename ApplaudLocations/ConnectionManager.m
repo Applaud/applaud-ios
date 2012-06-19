@@ -16,18 +16,21 @@
  * params : arguments to pass to the server
  * returns : the server's response to the request
  */
-+ (NSData *)serverRequest:(NSString *)requestType withParams:(NSDictionary *)params url:(NSString *)url {
++ (NSData *)serverRequest:(NSString *)requestType withParams:(NSDictionary *)params url:(NSString *)url callback:(void(^)(NSData *))callback {
+    
     __block NSData *ret;
-    NSData *sendData = nil;
+    NSData *sendData = [[NSData alloc] init];
     NSString *urlPostfix = url;
+    NSMutableURLRequest *request = nil;
 
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init]; 
-   
     if ( [requestType isEqualToString:@"GET"] ) {
-        if ( params.count > 0 )
+        if ( nil != params && params.count > 0 )
             urlPostfix = [NSString stringWithFormat:@"%@%@",urlPostfix,[ConnectionManager GETStringFromDict:params]];
+        request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", SERVER_URL, urlPostfix]]];
+        
     }
     else if ( [requestType isEqualToString:@"POST"] ) {
+        request = [[NSMutableURLRequest alloc] init];
         sendData = [NSJSONSerialization dataWithJSONObject:params
                                                    options:0
                                                      error:nil];
@@ -35,12 +38,14 @@
         
         // Put the CSRF token into the HTTP request. Kinda important.
         [request addValue:token forHTTPHeaderField:@"X-CSRFToken"]; 
+        request.HTTPBody = sendData;
+        request.HTTPMethod = requestType;
+        request.URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", SERVER_URL, url]];
     }
 
-    request.HTTPBody = sendData;
-    request.HTTPMethod = requestType;
-    request.URL = [NSURL URLWithString:urlPostfix relativeToURL:[NSURL URLWithString:SERVER_URL]];
 
+    NSLog(@"Requesting from %@", [request.URL description]);
+    
     [NSURLConnection sendAsynchronousRequest:request
                                        queue:[NSOperationQueue mainQueue]
                            completionHandler:^(NSURLResponse *response, NSData *d, NSError *err) {
@@ -50,12 +55,23 @@
                                                               delegate:nil
                                                      cancelButtonTitle:@"OK"
                                                      otherButtonTitles:nil] show];
+                                   NSLog(@"%@", err);
                                }
                                else {
+//                                   ret = d;
+//                                   NSLog(@"Just received: %@", [[NSString alloc] initWithData:d encoding:NSUTF8StringEncoding]);
                                    ret = d;
+                                   if ( callback ) {
+                                       callback(d);
+                                   }
+
                                }
                            }];
     return ret;
+}
+
++ (NSData *)serverRequest:(NSString *)requestType withParams:(NSDictionary *)params url:(NSString *)url {
+    return [ConnectionManager serverRequest:requestType withParams:params url:url callback:nil];
 }
 
 /**
