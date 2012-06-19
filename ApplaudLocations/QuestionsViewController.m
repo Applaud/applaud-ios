@@ -144,6 +144,9 @@
                            }];
 }
 
+/*
+ * Make sure we've answered all the questions.
+ */
 - (BOOL)checkAnswers {
     for(id object in self.survey.answers) {
         if([object isKindOfClass:[NSNull class]]) {
@@ -155,7 +158,23 @@
 
 - (IBAction)buttonPressed:(UIButton *)sender {
     if([self checkAnswers]) {
-        
+        NSMutableArray *answers = [[NSMutableArray alloc] init];
+        int i;
+        for(i = 0; i < self.survey.fields.count; i++) {
+            NSDictionary *responseDict = [[NSDictionary alloc] initWithObjectsAndKeys:[self.survey.answers objectAtIndex:i],
+                                          @"response",
+                                          [[self.survey.fields objectAtIndex:i] label],
+                                          @"label",
+                                          nil];
+            [answers addObject:responseDict];
+        }
+        NSDictionary *params = [[NSDictionary alloc] initWithObjectsAndKeys:answers, @"answers", nil];
+        [ConnectionManager serverRequest:@"POST"
+                              withParams:params
+                                     url:@"/survey_respond/"
+                                callback:^(NSData *data) {
+                                    NSLog(@"%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+                                }];
     }
 }
 @end

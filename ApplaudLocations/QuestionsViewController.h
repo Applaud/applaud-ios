@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Survey.h"
 #import "SurveyFieldViewController.h"
+#import "ConnectionManager.h"
 
 @interface QuestionsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, strong) Survey *survey;

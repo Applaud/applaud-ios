@@ -24,6 +24,7 @@
         for(i = 0; i < _fields.count; i++) {
             [_answers addObject:[[NSNull alloc] init]];
         }
+        NSLog(@"Fields: %d, Answers: %d", self.fields.count, self.answers.count);
     }
     return self;
 }

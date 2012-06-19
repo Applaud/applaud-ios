@@ -82,10 +82,10 @@
     QuestionsViewController *qvc = [parent.viewControllers objectAtIndex:0];
     // Find the index at which this question is located.
     NSUInteger row = [qvc.survey.fields indexOfObject:self.field];
-    [qvc.survey.answers removeObjectAtIndex:row];
     NSArray *answer = [self getAnswer];
     if(answer) {
-        [qvc.survey.answers insertObject:answer atIndex:row];
+        [qvc.survey.answers replaceObjectAtIndex:row withObject:answer];
+        
     }
 }
 
@@ -213,7 +213,7 @@
             for(UIView *view in self.view.subviews) {
                 if([view isKindOfClass:[UISegmentedControl class]]) {
                     radioGroup = (UISegmentedControl *)view;
-                    if(radioGroup.selected) {
+                    if(radioGroup.selectedSegmentIndex != UISegmentedControlNoSegment) {
                         return [NSArray arrayWithObject:[radioGroup titleForSegmentAtIndex:radioGroup.selectedSegmentIndex]];
                     }
                 }
