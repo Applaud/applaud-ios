@@ -54,7 +54,7 @@
  * the server is ready.
  */
 - (void)sendResponse:(NSString *)response {
-    NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVER_URL, @"/general_feedback"];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVER_URL, @"/general_feedback/"];
     NSURL *url = [[NSURL alloc] initWithString:urlString];      
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
     NSArray *keys = [[NSArray alloc] initWithObjects:@"answer", nil];
@@ -64,13 +64,21 @@
                                                    options:0
                                                      error:nil];
     request.HTTPBody = data;
+    request.HTTPMethod = @"POST";
     [NSURLConnection sendAsynchronousRequest:request
                                        queue:[NSOperationQueue mainQueue]
                            completionHandler:^(NSURLResponse *response, NSData *d, NSError *err) {
                                NSLog(@"%@", response);
                                if(err) {
                                    [[[UIAlertView alloc] initWithTitle:@"Connection Error"
-                                                               message:@"Couldn't send response."
+                                                               message:[err description]
+                                                              delegate:nil
+                                                     cancelButtonTitle:@"OK"
+                                                     otherButtonTitles:nil] show];
+                               }
+                               else {
+                                   [[[UIAlertView alloc] initWithTitle:@"Success!"
+                                                               message:[response description]
                                                               delegate:nil
                                                      cancelButtonTitle:@"OK"
                                                      otherButtonTitles:nil] show];

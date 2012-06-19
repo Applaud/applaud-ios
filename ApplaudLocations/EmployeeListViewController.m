@@ -77,7 +77,7 @@
 #pragma mark Other Methods
 
 - (void)getEmployees {
-    NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVER_URL, @"/employees"];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVER_URL, @"/employees/"];
     NSURL *url = [[NSURL alloc] initWithString:urlString];
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
     [NSURLConnection sendAsynchronousRequest:request
@@ -113,7 +113,8 @@
                                                           bio:[dict objectForKey:@"bio"]
                                                         image:[[UIImage alloc] init]
                                                    dimensions:[[dict objectForKey:@"ratings"]
-                                                               objectForKey:@"dimensions"]];
+                                                               objectForKey:@"dimensions"]
+                                                           employee_id:[[dict objectForKey:@"id"] intValue]];
 //            NSLog(@"%@",e);
             
             // employeeArray will hold all the employees

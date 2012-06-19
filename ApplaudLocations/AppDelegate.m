@@ -178,7 +178,7 @@
     if ( buttonIndex == 1 ) {
         NSString *username = [alertView textFieldAtIndex:0].text;
         NSString *password = [alertView textFieldAtIndex:1].text;
-        NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVER_URL, @"/accounts/login"];
+        NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVER_URL, @"/accounts/login/"];
         NSURL *url = [NSURL URLWithString:urlString];
         NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
         [request setHTTPMethod:@"POST"];

@@ -108,6 +108,7 @@
     NSMutableDictionary *em = [[NSMutableDictionary alloc] init];
     [em setObject:self.employee.firstName forKey:@"first_name"];
     [em setObject:self.employee.lastName forKey:@"last_name"];
+    [em setObject:[NSNumber numberWithInt: self.employee.employee_id] forKey:@"id"];
     
     NSMutableDictionary *ratings = [[NSMutableDictionary alloc] init];
     for( UIView *view in self.view.subviews){
