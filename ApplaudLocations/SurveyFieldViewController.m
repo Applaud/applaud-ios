@@ -85,7 +85,6 @@
     NSArray *answer = [self getAnswer];
     if(answer) {
         [qvc.survey.answers replaceObjectAtIndex:row withObject:answer];
-        
     }
 }
 

@@ -156,9 +156,13 @@
     return YES;
 }
 
+/*
+ * Sends our survey data to the server.
+ */
 - (IBAction)buttonPressed:(UIButton *)sender {
     if([self checkAnswers]) {
         NSMutableArray *answers = [[NSMutableArray alloc] init];
+        // Grab the data, put it in dictionaries and array for JSON.
         int i;
         for(i = 0; i < self.survey.fields.count; i++) {
             NSDictionary *responseDict = [[NSDictionary alloc] initWithObjectsAndKeys:[self.survey.answers objectAtIndex:i],
@@ -173,6 +177,7 @@
                               withParams:params
                                      url:@"/survey_respond/"
                                 callback:^(NSData *data) {
+                                    // Be sure we've posted correctly.
                                     NSLog(@"%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
                                 }];
     }
