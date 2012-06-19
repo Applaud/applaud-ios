@@ -7,6 +7,7 @@
 //
 
 #import "NFViewController.h"
+#import "ConnectionManager.h"
 
 @interface NFViewController ()
 
@@ -96,36 +97,23 @@
  * this is called when we load up the news feed is selected
  */
 - (void) getNewsFeeds {
-    NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVER_URL, @"/newsfeed"];
-    NSURL *url = [[NSURL alloc] initWithString:urlString];
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
-    [NSURLConnection sendAsynchronousRequest:request
-                                       queue:[NSOperationQueue mainQueue]
-                           completionHandler:^(NSURLResponse *response, NSData *d, NSError *err) {
-                               if(err) { // couldn't get data, warn the user
-                                   [[[UIAlertView alloc] initWithTitle:@"Connection error"
-                                                               message:[err description]
-                                                              delegate:nil
-                                                     cancelButtonTitle:@"OK"
-                                                     otherButtonTitles:nil] show];
-                               }
-                               else {
-                                   NSError *e = [[NSError alloc] init]; // for debugging, probably not needed anymore
-                                   NSDictionary *data = [NSJSONSerialization JSONObjectWithData:d
-                                                                                        options:NSJSONReadingAllowFragments
-                                                                                          error:&e];
-                                   NSArray *items = [data objectForKey:@"newsfeed_items"];
-                                   NSDateFormatter *format = [[NSDateFormatter alloc] init];
-                                   [format setDateFormat:@"yyyy-MM-dd hh:mm"];
-                                   for(NSDictionary *feed in items) {
-                                       [self.newsFeeds addObject:[[NFItem alloc] initWithTitle:[feed objectForKey:@"title"]
-                                                                                      subtitle:[feed objectForKey:@"subtitle"]
-                                                                                          body:[feed objectForKey:@"body"]
-                                                                                          date:[format dateFromString:[feed objectForKey:@"date"]]]];
-                                   }
-                                   [self.tableView reloadData];
-                               }
-                           }];
+    [ConnectionManager serverRequest:@"GET" withParams:nil url:@"/newsfeed/" callback:^(NSData *data) {
+        NSError *e;
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data
+                                                             options:NSJSONReadingAllowFragments
+                                                               error:&e];
+        
+        NSArray *items = [dict objectForKey:@"newsfeed_items"];
+        NSDateFormatter *format = [[NSDateFormatter alloc] init];
+        [format setDateFormat:@"yyyy-MM-dd hh:mm"];
+        for(NSDictionary *feed in items) {
+            [self.newsFeeds addObject:[[NFItem alloc] initWithTitle:[feed objectForKey:@"title"]
+                                                           subtitle:[feed objectForKey:@"subtitle"]
+                                                               body:[feed objectForKey:@"body"]
+                                                               date:[format dateFromString:[feed objectForKey:@"date"]]]];
+        }
+        [self.tableView reloadData];        
+    }];
 }
 
 @end

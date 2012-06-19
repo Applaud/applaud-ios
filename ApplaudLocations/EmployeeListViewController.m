@@ -9,6 +9,7 @@
 #import "EmployeeListViewController.h"
 #import "EmployeeViewController.h"
 #import "Employee.h"
+#import "ConnectionManager.h"
 
 @implementation EmployeeListViewController
 
@@ -77,31 +78,9 @@
 #pragma mark Other Methods
 
 - (void)getEmployees {
-    NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVER_URL, @"/employees/"];
-    NSURL *url = [[NSURL alloc] initWithString:urlString];
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
-    [NSURLConnection sendAsynchronousRequest:request
-                                       queue:[NSOperationQueue mainQueue]
-                           completionHandler:^(NSURLResponse *response, NSData *d, NSError *err) {
-                               [self handleEmployeeResponse:response data:d error:err];
-                           }];
-}
-
-/**
- * This handles the employee data fetched from the server
- */
-- (void)handleEmployeeResponse:(NSURLResponse *)response data:(NSData *)d error:(NSError *)err {
-    if(err) {
-        [[[UIAlertView alloc] initWithTitle:@"Connection error"
-                                    message:[[NSString alloc] initWithFormat:@"Couldn't get employee: %@", [err description]]
-                                   delegate:nil
-                          cancelButtonTitle:@"OK"
-                          otherButtonTitles:nil] show];
-    }
-    else {
-        
+    [ConnectionManager serverRequest:@"GET" withParams:nil url:@"/employees/" callback:^(NSData *dat) {
         NSError *err = [[NSError alloc] init]; // for debugging, probably not needed anymore
-        NSArray *employeeData = [NSJSONSerialization JSONObjectWithData:d
+        NSArray *employeeData = [NSJSONSerialization JSONObjectWithData:dat
                                                                 options:NSJSONReadingAllowFragments
                                                                   error:&err];
         self.employeeArray = [[NSMutableArray alloc] init];
@@ -114,8 +93,7 @@
                                                         image:[[UIImage alloc] init]
                                                    dimensions:[[dict objectForKey:@"ratings"]
                                                                objectForKey:@"dimensions"]
-                                                           employee_id:[[dict objectForKey:@"id"] intValue]];
-//            NSLog(@"%@",e);
+                                                  employee_id:[[dict objectForKey:@"id"] intValue]];
             
             // employeeArray will hold all the employees
             [self.employeeArray addObject:e];
@@ -124,9 +102,7 @@
         
         // reload the table view to display all the employees
         [self.tableView reloadData];
-    }
+    }];
 }
-
-
 
 @end

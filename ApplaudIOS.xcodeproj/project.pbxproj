@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1B301C5715884FD90038A5BE /* TabBarNavigatorIphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B301C5615884FD90038A5BE /* TabBarNavigatorIphone.xib */; };
 		1B301C621588580E0038A5BE /* NFViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B301C601588580E0038A5BE /* NFViewController.m */; };
 		1B301C631588580E0038A5BE /* NFViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B301C611588580E0038A5BE /* NFViewController.xib */; };
 		1B301C67158858430038A5BE /* EmployeeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B301C65158858430038A5BE /* EmployeeViewController.m */; };
@@ -24,6 +23,7 @@
 		1B9389AA1583CB460088F468 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B9389A91583CB460088F468 /* MapKit.framework */; };
 		1B9389B01583EB110088F468 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B9389AF1583EB110088F468 /* CoreLocation.framework */; };
 		1B9389BB1584EF010088F468 /* BusinessLocationsTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B9389BA1584EF010088F468 /* BusinessLocationsTracker.m */; };
+		1B9528C01590D87500103723 /* ConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B9528BF1590D87500103723 /* ConnectionManager.m */; };
 		1BA358E81582F05E00EB8F32 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BA358E71582F05E00EB8F32 /* UIKit.framework */; };
 		1BA358EA1582F05E00EB8F32 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BA358E91582F05E00EB8F32 /* Foundation.framework */; };
 		1BA358EC1582F05E00EB8F32 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BA358EB1582F05E00EB8F32 /* CoreGraphics.framework */; };
@@ -47,7 +47,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1B301C5615884FD90038A5BE /* TabBarNavigatorIphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TabBarNavigatorIphone.xib; sourceTree = "<group>"; };
 		1B301C5F1588580E0038A5BE /* NFViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NFViewController.h; sourceTree = "<group>"; };
 		1B301C601588580E0038A5BE /* NFViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NFViewController.m; sourceTree = "<group>"; };
 		1B301C611588580E0038A5BE /* NFViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NFViewController.xib; sourceTree = "<group>"; };
@@ -72,6 +71,8 @@
 		1B9389AF1583EB110088F468 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		1B9389B91584EF010088F468 /* BusinessLocationsTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessLocationsTracker.h; sourceTree = "<group>"; };
 		1B9389BA1584EF010088F468 /* BusinessLocationsTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessLocationsTracker.m; sourceTree = "<group>"; };
+		1B9528BE1590D87500103723 /* ConnectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectionManager.h; sourceTree = "<group>"; };
+		1B9528BF1590D87500103723 /* ConnectionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionManager.m; sourceTree = "<group>"; };
 		1BA358E31582F05E00EB8F32 /* ApplaudLocations.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ApplaudLocations.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BA358E71582F05E00EB8F32 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		1BA358E91582F05E00EB8F32 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -243,7 +244,8 @@
 				6F2A39161587B2AB0024FB52 /* Business.m */,
 				1B9389B91584EF010088F468 /* BusinessLocationsTracker.h */,
 				1B9389BA1584EF010088F468 /* BusinessLocationsTracker.m */,
-				1B301C5615884FD90038A5BE /* TabBarNavigatorIphone.xib */,
+				1B9528BE1590D87500103723 /* ConnectionManager.h */,
+				1B9528BF1590D87500103723 /* ConnectionManager.m */,
 				1BA358EE1582F05E00EB8F32 /* Supporting Files */,
 			);
 			path = ApplaudLocations;
@@ -322,7 +324,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1BA358F21582F05E00EB8F32 /* InfoPlist.strings in Resources */,
-				1B301C5715884FD90038A5BE /* TabBarNavigatorIphone.xib in Resources */,
 				1B301C631588580E0038A5BE /* NFViewController.xib in Resources */,
 				1B301C68158858430038A5BE /* EmployeeViewController.xib in Resources */,
 				1B301C6E158858560038A5BE /* QuestionsViewController.xib in Resources */,
@@ -362,6 +363,7 @@
 				1B514013158F9441008CB057 /* ApplaudProgramState.xcdatamodeld in Sources */,
 				1B514016158FA233008CB057 /* ApplaudProgramSettingsModel.m in Sources */,
 				1B51401A158FA478008CB057 /* FirstTimeNavigatorViewController.m in Sources */,
+				1B9528C01590D87500103723 /* ConnectionManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
