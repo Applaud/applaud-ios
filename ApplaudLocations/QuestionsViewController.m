@@ -74,7 +74,7 @@
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [self.questionsTable dequeueReusableCellWithIdentifier:CellIdentifier];
     if ( nil == cell ) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"UITableViewCell"];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
         cell.detailTextLabel.text = @"Unanswered";
     }
     SurveyField *field = [self.survey.fields objectAtIndex:indexPath.row];

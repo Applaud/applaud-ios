@@ -37,6 +37,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.bioField setText:self.employee.bio];
     // Do any additional setup after loading the view from its nib.
     [self.nameLabel setText:[NSString stringWithFormat:@"%@ %@",
                              self.employee.firstName, self.employee.lastName]];
