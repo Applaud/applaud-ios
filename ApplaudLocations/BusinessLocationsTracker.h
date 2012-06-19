@@ -16,13 +16,10 @@
     NSURLConnection *urlConnection; // Connection to our backend
     NSMutableData *serverData;   // Data received from the server
 }
-+ (NSString *)getCSRFTokenFromURL:(NSString *)url;
+
 // Convenient method to show an alert to the user with only an "OK" button
 - (void)showAlertView:(NSString *)msg;
 
 - (void)findBusinessesWithLocation:(CLLocationCoordinate2D)location;
-
-- (NSString *)GETStringFromDict:(NSDictionary *)dict;
-
 
 @end
