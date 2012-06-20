@@ -9,12 +9,12 @@
 #import <Foundation/Foundation.h>
 
 @interface Business : NSObject
-@property (nonatomic, strong) NSString *name;
-@property (nonatomic, strong) NSString *type;
-@property (nonatomic) int business_id;
-@property (nonatomic, strong) NSNumber *latitude;
-@property (nonatomic, strong) NSNumber *longitude;
+@property (nonatomic, copy) NSString *name;
+@property (nonatomic, copy) NSString *type;
+@property (nonatomic, copy) NSString *business_id;
+@property (nonatomic, copy) NSNumber *latitude;
+@property (nonatomic, copy) NSNumber *longitude;
 
--(id) initWithName:(NSString *)name type:(NSString *)type business_id:(int)business_id
+-(id) initWithName:(NSString *)name type:(NSString *)type business_id:(NSString *)business_id
           latitude:(NSNumber *) latitude longitude:(NSNumber *) longitude;
 @end

@@ -12,6 +12,7 @@
 #import "Business.h"
 #import "ApplaudProgramSettingsModel.h"
 #import "FirstTimeNavigatorViewController.h"
+#import "ConnectionManager.h"
 
 @implementation MasterViewController
 
@@ -144,6 +145,32 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    __block Business *bus = [locationsArray objectAtIndex:indexPath.row];
+    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
+                          bus.latitude, @"latitude",
+                          bus.longitude, @"longitude",
+                          bus.business_id, @"goog_id",
+                          bus.name, @"name"];
+    [ConnectionManager serverRequest:@"POST" withParams:dict url:@"/checkin/" callback:^(NSData *data) {
+        NSError *err = nil;
+        NSDictionary *busDict = [NSJSONSerialization JSONObjectWithData:data options:nil error:&err];
+        if ( err ) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Checkin Error"
+                                                            message:err.description 
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
+        else {
+            bus = [[Business alloc] initWithName:[busDict objectForKey:@"name"]
+                                            type:bus.type
+                                     business_id:[busDict objectForKey:@"id"]
+                                        latitude:[busDict objectForKey:@"latitude"]
+                                       longitude:[busDict objectForKey:@"longitude"]];
+        }
+    }];
+    
     if ( self.settings.firstTimeLaunching ) {
         FirstTimeNavigatorViewController *ftnvc = [[FirstTimeNavigatorViewController alloc] initWithNibName:@"FirstTimeNavigatorViewControllerIphone" bundle:nil];
         ftnvc.tabBarController = self.tabBarController;
