@@ -11,6 +11,7 @@
 #import "BusinessLocationsTracker.h"
 #import "GeneralFeedbackViewController.h"
 #import "ApplaudProgramSettingsModel.h"
+#import "Business.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, UITabBarControllerDelegate, UIAlertViewDelegate, NSURLConnectionDelegate> {
     NSMutableData *connectionData;
@@ -18,6 +19,7 @@
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) BusinessLocationsTracker *tracker;
+@property (strong, nonatomic) Business *currentBusiness;
 
 
 /**
