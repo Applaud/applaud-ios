@@ -69,7 +69,7 @@
         for(NSDictionary *dict in [businesses objectForKey:@"nearby_businesses"]) {
             Business *bus = [[Business alloc] initWithName:[dict objectForKey:@"name"]
                                                       type:[dict objectForKey:@"type"]
-                                                   business_id:[[dict objectForKey:@"id"] floatValue]
+                                               business_id:[dict objectForKey:@"goog_id"]
                                                   latitude:[dict objectForKey:@"latitude"]
                                                  longitude:[dict objectForKey:@"longitude"]];
             [businessArray addObject:bus];
@@ -79,17 +79,17 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:@"BUSINESS_RECEIVED" object:businessArray]; 
     };
 
-//    NSArray *keyArray = [[NSArray alloc] initWithObjects:@"latitude", @"longitude", nil];
-//    NSArray *valArray = [[NSArray alloc] initWithObjects:
-//                         [NSNumber numberWithFloat:location.latitude], 
-//                         [NSNumber numberWithFloat:location.longitude], nil];
-//    NSDictionary *getDict = [[NSDictionary alloc] initWithObjects:valArray forKeys:keyArray];
+    NSArray *keyArray = [[NSArray alloc] initWithObjects:@"latitude", @"longitude", nil];
+    NSArray *valArray = [[NSArray alloc] initWithObjects:
+                         [NSNumber numberWithFloat:location.latitude], 
+                         [NSNumber numberWithFloat:location.longitude], nil];
+    NSDictionary *getDict = [[NSDictionary alloc] initWithObjects:valArray forKeys:keyArray];
 
     // dummy businesses for debugging
     [ConnectionManager serverRequest:@"GET" withParams:nil url:@"/example3/" callback:callback];
     
     // actual businesses
-    //[ConnectionManager serverRequest:@"GET" withParams:getDict url:@"/checkin" callback:callback];
+//    [ConnectionManager serverRequest:@"GET" withParams:getDict url:@"/whereami" callback:callback];
 }
 
 /**

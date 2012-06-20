@@ -15,14 +15,14 @@
 @synthesize latitude = _latitude;
 @synthesize longitude = _longitude;
 
--(id) initWithName:(NSString *)name type:(NSString *)type business_id:(int)business_id
+-(id) initWithName:(NSString *)name type:(NSString *)type business_id:(NSString *)business_id
           latitude:(NSNumber *) latitude longitude:(NSNumber *) longitude {
   if(self = [super init]) {
-    self.name = name;
-    self.type = type;
-    self.business_id = business_id;
-    self.latitude = latitude;
-    self.longitude = longitude;
+    _name = name;
+    _type = type;
+    _business_id = business_id;
+    _latitude = latitude;
+    _longitude = longitude;
   }
   return self;
 }
