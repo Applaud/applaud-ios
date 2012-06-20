@@ -69,9 +69,11 @@
         for(NSDictionary *dict in [businesses objectForKey:@"nearby_businesses"]) {
             Business *bus = [[Business alloc] initWithName:[dict objectForKey:@"name"]
                                                       type:[dict objectForKey:@"type"]
-                                               business_id:[dict objectForKey:@"goog_id"]
+                                                   goog_id:[dict objectForKey:@"goog_id"]
                                                   latitude:[dict objectForKey:@"latitude"]
                                                  longitude:[dict objectForKey:@"longitude"]];
+            NSLog(@"Got business: %@", bus.description);
+            
             [businessArray addObject:bus];
         }
         
@@ -89,7 +91,7 @@
     [ConnectionManager serverRequest:@"GET" withParams:nil url:@"/example3/" callback:callback];
     
     // actual businesses
-//    [ConnectionManager serverRequest:@"GET" withParams:getDict url:@"/whereami" callback:callback];
+    //[ConnectionManager serverRequest:@"GET" withParams:getDict url:@"/whereami" callback:callback];
 }
 
 /**

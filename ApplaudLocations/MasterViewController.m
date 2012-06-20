@@ -146,10 +146,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     __block Business *bus = [locationsArray objectAtIndex:indexPath.row];
+    
+    NSLog(@"Checking in at business: %@", bus.description);
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
                           bus.latitude, @"latitude",
                           bus.longitude, @"longitude",
-                          bus.business_id, @"goog_id",
+                          bus.goog_id, @"goog_id",
                           bus.name, @"name",
                           nil];
     [ConnectionManager serverRequest:@"POST" withParams:dict url:@"/checkin/" callback:^(NSData *data) {
@@ -167,7 +169,7 @@
         else {
             bus = [[Business alloc] initWithName:[busDict objectForKey:@"name"]
                                             type:bus.type
-                                     business_id:[busDict objectForKey:@"id"]
+                                     business_id:[[busDict objectForKey:@"id"] intValue]
                                         latitude:[busDict objectForKey:@"latitude"]
                                        longitude:[busDict objectForKey:@"longitude"]];
         }
