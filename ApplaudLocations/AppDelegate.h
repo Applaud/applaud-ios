@@ -11,14 +11,16 @@
 #import "BusinessLocationsTracker.h"
 #import "GeneralFeedbackViewController.h"
 #import "ApplaudProgramSettingsModel.h"
+#import "FBConnect.h"
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, UITabBarControllerDelegate, UIAlertViewDelegate, NSURLConnectionDelegate> {
+@interface AppDelegate : UIResponder <UIApplicationDelegate, UITabBarControllerDelegate, UIAlertViewDelegate, NSURLConnectionDelegate, FBSessionDelegate> {
     NSMutableData *connectionData;
+    Facebook *facebook;
 }
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) BusinessLocationsTracker *tracker;
-
+@property (nonatomic, retain) Facebook *facebook;
 
 /**
  * Stores the user's settings

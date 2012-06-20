@@ -13,12 +13,14 @@
 #import "EmployeeListViewController.h"
 #import "QuestionsViewController.h"
 
+
 @implementation AppDelegate
 
 @synthesize window = _window;
 @synthesize tracker;
 @synthesize managedObjectContext, managedObjectModel, persistentStoreCoordinator, applicationDocumentPath;
 @synthesize settings = _settings;
+@synthesize facebook;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 { 
@@ -50,6 +52,7 @@
         }
     }
     
+    
 
     //
     // Set up view controllers and class members
@@ -57,6 +60,7 @@
     // The "tracker" updates the NotificationCenter about changes in the user's location
     // Since we want to track this throughout the application, we initialize it here.
     self.tracker = [[BusinessLocationsTracker alloc] init];
+    
     
     // Map view, for finding user location
     MapViewController *mapViewController = [[MapViewController alloc] init];
@@ -119,6 +123,35 @@
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
+    
+    
+    // Facebook login: create instance of facebook class
+    facebook = [[Facebook alloc] initWithAppId:@"257939124306263" andDelegate:self];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults objectForKey:@"FBAccessTokenKey"] 
+        && [defaults objectForKey:@"FBExpirationDateKey"]) {
+        facebook.accessToken = [defaults objectForKey:@"FBAccessTokenKey"];
+        facebook.expirationDate = [defaults objectForKey:@"FBExpirationDateKey"];
+    }
+    
+    if (![facebook isSessionValid]) {
+        [facebook authorize:nil];
+    }
+    
+    
+    // Facebook logout call button
+    // Add the logout button
+    UIButton *logoutButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    logoutButton.frame = CGRectMake(10, 25, 70, 35);
+    [logoutButton setTitle:@"Log Out" forState:UIControlStateNormal];
+    [logoutButton addTarget:self action:@selector(logoutButtonClicked)
+           forControlEvents:UIControlEventTouchUpInside];
+    // need to display logoutButton
+    [self.window.rootViewController.view addSubview:logoutButton];
+    
+
     
     // Authenticate the user
     UIAlertView *loginAlert = [[UIAlertView alloc] initWithTitle:@"Login to Applaud" message:@"Please enter your login information." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
@@ -208,6 +241,65 @@
         exit(0);
     }
 }
+
+
+// Redirecting the user to the facebook app for login
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    return [facebook handleOpenURL:url]; 
+}
+
+// Saves the user credentials, ie facebook access token and expiration date.
+- (void)fbDidLogin {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:[facebook accessToken] forKey:@"FBAccessTokenKey"];
+    [defaults setObject:[facebook expirationDate] forKey:@"FBExpirationDateKey"];
+    [defaults synchronize];
+    
+}
+
+
+
+// Method that gets called when the Facebook logout button is pressed
+- (void) logoutButtonClicked:(id)sender {
+    [facebook logout];
+}
+
+
+// Remove saved authorization information if it exists
+- (void) fbDidLogout {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults objectForKey:@"FBAccessTokenKey"]) {
+        [defaults removeObjectForKey:@"FBAccessTokenKey"];
+        [defaults removeObjectForKey:@"FBExpirationDateKey"];
+        [defaults synchronize];
+    }
+}
+
+/**
+ * Called when the user dismissed the dialog without logging in.
+ */
+- (void)fbDidNotLogin: (BOOL) cancelled{}
+
+/**
+ * Called after the access token was extended. If your application has any
+ * references to the previous access token (for example, if your application
+ * stores the previous access token in persistent storage), your application
+ * should overwrite the old access token with the new one in this method.
+ * See extendAccessToken for more details.
+ */
+- (void)fbDidExtendToken:(NSString*)accessToken
+               expiresAt:(NSDate*)expiresAt{}
+
+/**
+ * Called when the current session has expired. This might happen when:
+ *  - the access token expired
+ *  - the app has been disabled
+ *  - the user revoked the app's permissions
+ *  - the user changed his or her password
+ */
+- (void)fbSessionInvalidated{}
+
 
 #pragma mark -
 #pragma mark NSURLConnectionDelegate Methods
