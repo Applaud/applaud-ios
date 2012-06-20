@@ -40,7 +40,10 @@
     }
     
     // Include our session cookie
-    [request addValue:[self.staticInstance sessionCookie] forHTTPHeaderField:@"Cookie"];
+    //[request addValue:[self.staticInstance sessionCookie] forHTTPHeaderField:@"Cookie"];
+    NSString *token = [ConnectionManager getCSRFTokenFromURL:[NSString stringWithFormat:@"%@%@",SERVER_URL,url]];
+    [request addValue:[NSString stringWithFormat:@"csrftoken=%@; @", token, [[ConnectionManager staticInstance] sessionCookie]] forHTTPHeaderField:@"Cookie"];
+
     
     NSLog(@"Requesting from %@", [request.URL description]);
     
@@ -114,6 +117,7 @@
     NSError *err = nil;
     NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&err];
     NSString *html = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSLog(@"CSRF token is %@",html);
     return html;
 }
 

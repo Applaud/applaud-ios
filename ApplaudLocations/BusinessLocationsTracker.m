@@ -69,7 +69,7 @@
         for(NSDictionary *dict in [businesses objectForKey:@"nearby_businesses"]) {
             Business *bus = [[Business alloc] initWithName:[dict objectForKey:@"name"]
                                                       type:[dict objectForKey:@"type"]
-                                                   business_id:[[dict objectForKey:@"id"] floatValue]
+                                               business_id:[dict objectForKey:@"goog_id"]
                                                   latitude:[dict objectForKey:@"latitude"]
                                                  longitude:[dict objectForKey:@"longitude"]];
             [businessArray addObject:bus];

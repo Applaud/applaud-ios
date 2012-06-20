@@ -150,8 +150,10 @@
                           bus.latitude, @"latitude",
                           bus.longitude, @"longitude",
                           bus.business_id, @"goog_id",
-                          bus.name, @"name"];
+                          bus.name, @"name",
+                          nil];
     [ConnectionManager serverRequest:@"POST" withParams:dict url:@"/checkin/" callback:^(NSData *data) {
+        NSLog(@"here is my checkin data: %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
         NSError *err = nil;
         NSDictionary *busDict = [NSJSONSerialization JSONObjectWithData:data options:nil error:&err];
         if ( err ) {
