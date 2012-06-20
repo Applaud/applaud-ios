@@ -16,34 +16,29 @@
  * params : arguments to pass to the server
  * returns : the server's response to the request
  */
-+ (NSData *)serverRequest:(NSString *)requestType withParams:(NSDictionary *)params url:(NSString *)url callback:(void(^)(NSData *))callback {
++ (NSData *)serverRequest:(NSString *)requestType withData:(NSData *)data url:(NSString *)url callback:(void(^)(NSData *))callback {
     
     __block NSData *ret;
-    NSData *sendData = [[NSData alloc] init];
     NSString *urlPostfix = url;
     NSMutableURLRequest *request = nil;
-
+    
     if ( [requestType isEqualToString:@"GET"] ) {
-        if ( nil != params && params.count > 0 )
-            urlPostfix = [NSString stringWithFormat:@"%@%@",urlPostfix,[ConnectionManager GETStringFromDict:params]];
         request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", SERVER_URL, urlPostfix]]];
-        
+        [request setHTTPBody:data];
     }
     else if ( [requestType isEqualToString:@"POST"] ) {
         request = [[NSMutableURLRequest alloc] init];
-        sendData = [NSJSONSerialization dataWithJSONObject:params
-                                                   options:0
-                                                     error:nil];
         NSString *token = [ConnectionManager getCSRFTokenFromURL:[NSString stringWithFormat:@"%@%@",SERVER_URL,url]];
         
         // Put the CSRF token into the HTTP request. Kinda important.
-        [request addValue:token forHTTPHeaderField:@"X-CSRFToken"]; 
-        request.HTTPBody = sendData;
+        [request addValue:token forHTTPHeaderField:@"X-CSRFToken"];
+
+        [request setHTTPBody:data];
         request.HTTPMethod = requestType;
         request.URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", SERVER_URL, url]];
     }
-
-
+    
+    
     NSLog(@"Requesting from %@", [request.URL description]);
     
     [NSURLConnection sendAsynchronousRequest:request
@@ -58,16 +53,37 @@
                                    NSLog(@"%@", err);
                                }
                                else {
-//                                   ret = d;
-//                                   NSLog(@"Just received: %@", [[NSString alloc] initWithData:d encoding:NSUTF8StringEncoding]);
+                                   //                                   ret = d;
+                                   //                                   NSLog(@"Just received: %@", [[NSString alloc] initWithData:d encoding:NSUTF8StringEncoding]);
                                    ret = d;
                                    if ( callback ) {
                                        callback(d);
                                    }
-
+                                   
                                }
                            }];
     return ret;
+}
+
++ (NSData *)serverRequest:(NSString *)requestType withData:(NSData *)data url:(NSString *)url {
+    return [ConnectionManager serverRequest:requestType withData:data url:url callback:nil];
+}
+
+/**
+ * requestType : either GET or POST
+ * params : arguments to pass to the server
+ * returns : the server's response to the request
+ */
++ (NSData *)serverRequest:(NSString *)requestType withParams:(NSDictionary *)params url:(NSString *)url callback:(void(^)(NSData *))callback {
+    NSData *data = nil;
+    
+    if ( [requestType isEqualToString:@"POST"] ) {
+        data = [NSJSONSerialization dataWithJSONObject:params
+                                               options:0
+                                                 error:nil];
+    }
+    
+    return [ConnectionManager serverRequest:requestType withData:data url:url callback:callback];
 }
 
 + (NSData *)serverRequest:(NSString *)requestType withParams:(NSDictionary *)params url:(NSString *)url {
