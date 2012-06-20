@@ -16,7 +16,6 @@
 		1B51400F158F93F4008CB057 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B51400E158F93F4008CB057 /* CoreData.framework */; };
 		1B514013158F9441008CB057 /* ApplaudProgramState.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1B514011158F9441008CB057 /* ApplaudProgramState.xcdatamodeld */; };
 		1B514016158FA233008CB057 /* ApplaudProgramSettingsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B514015158FA233008CB057 /* ApplaudProgramSettingsModel.m */; };
-		1B51401A158FA478008CB057 /* FirstTimeNavigatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B514019158FA478008CB057 /* FirstTimeNavigatorViewController.m */; };
 		1B51401C158FA4A9008CB057 /* FirstTimeNavigatorViewControllerIphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B51401B158FA4A9008CB057 /* FirstTimeNavigatorViewControllerIphone.xib */; };
 		1B9389A41583C9D30088F468 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B9389A31583C9D30088F468 /* MasterViewController.m */; };
 		1B9389A81583CB170088F468 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B9389A71583CB170088F468 /* MapViewController.m */; };
@@ -38,6 +37,7 @@
 		6F40324C158BA1B700024402 /* Survey.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F40324B158BA1B700024402 /* Survey.m */; };
 		6F403250158BA4C400024402 /* SurveyField.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F40324F158BA4C400024402 /* SurveyField.m */; };
 		6F462623158A8BDE007EA86E /* NFItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F462622158A8BDE007EA86E /* NFItem.m */; };
+		6F875EF61591594600555390 /* FirstTimeNavigatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F875EF51591594600555390 /* FirstTimeNavigatorViewController.m */; };
 		6F8C8A2B158C03DB00BB4BA0 /* Employee.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F8C8A2A158C03DB00BB4BA0 /* Employee.m */; };
 		6FAB07A01587BF0700C9F1DF /* BusinessAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FAB079F1587BF0700C9F1DF /* BusinessAnnotation.m */; };
 		6FE182A7158E957A00FF78E7 /* GeneralFeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FE182A5158E957A00FF78E7 /* GeneralFeedbackViewController.m */; };
@@ -60,8 +60,6 @@
 		1B514012158F9441008CB057 /* ApplaudProgramState.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ApplaudProgramState.xcdatamodel; sourceTree = "<group>"; };
 		1B514014158FA233008CB057 /* ApplaudProgramSettingsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplaudProgramSettingsModel.h; sourceTree = "<group>"; };
 		1B514015158FA233008CB057 /* ApplaudProgramSettingsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplaudProgramSettingsModel.m; sourceTree = "<group>"; };
-		1B514018158FA478008CB057 /* FirstTimeNavigatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FirstTimeNavigatorViewController.h; path = ../FirstTimeNavigatorViewController.h; sourceTree = "<group>"; };
-		1B514019158FA478008CB057 /* FirstTimeNavigatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FirstTimeNavigatorViewController.m; path = ../FirstTimeNavigatorViewController.m; sourceTree = "<group>"; };
 		1B51401B158FA4A9008CB057 /* FirstTimeNavigatorViewControllerIphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FirstTimeNavigatorViewControllerIphone.xib; sourceTree = "<group>"; };
 		1B9389A21583C9D30088F468 /* MasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
 		1B9389A31583C9D30088F468 /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
@@ -97,6 +95,8 @@
 		6F462622158A8BDE007EA86E /* NFItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NFItem.m; sourceTree = "<group>"; };
 		6F809438158EF7E800961971 /* ApplaudIOS-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "ApplaudIOS-Info.plist"; sourceTree = "<group>"; };
 		6F809439158EF7E800961971 /* ApplaudIOS-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ApplaudIOS-Prefix.pch"; sourceTree = "<group>"; };
+		6F875EF41591594600555390 /* FirstTimeNavigatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstTimeNavigatorViewController.h; sourceTree = "<group>"; };
+		6F875EF51591594600555390 /* FirstTimeNavigatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirstTimeNavigatorViewController.m; sourceTree = "<group>"; };
 		6F8C8A29158C03DB00BB4BA0 /* Employee.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Employee.h; sourceTree = "<group>"; };
 		6F8C8A2A158C03DB00BB4BA0 /* Employee.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Employee.m; sourceTree = "<group>"; };
 		6FAB079E1587BF0700C9F1DF /* BusinessAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessAnnotation.h; sourceTree = "<group>"; };
@@ -237,8 +237,8 @@
 				1B301C5515884C970038A5BE /* SelectLocations */,
 				1BA358F61582F05E00EB8F32 /* AppDelegate.h */,
 				1BA358F71582F05E00EB8F32 /* AppDelegate.m */,
-				1B514018158FA478008CB057 /* FirstTimeNavigatorViewController.h */,
-				1B514019158FA478008CB057 /* FirstTimeNavigatorViewController.m */,
+				6F875EF41591594600555390 /* FirstTimeNavigatorViewController.h */,
+				6F875EF51591594600555390 /* FirstTimeNavigatorViewController.m */,
 				1B51401B158FA4A9008CB057 /* FirstTimeNavigatorViewControllerIphone.xib */,
 				6F2A39151587B2AB0024FB52 /* Business.h */,
 				6F2A39161587B2AB0024FB52 /* Business.m */,
@@ -362,8 +362,8 @@
 				6FE182A7158E957A00FF78E7 /* GeneralFeedbackViewController.m in Sources */,
 				1B514013158F9441008CB057 /* ApplaudProgramState.xcdatamodeld in Sources */,
 				1B514016158FA233008CB057 /* ApplaudProgramSettingsModel.m in Sources */,
-				1B51401A158FA478008CB057 /* FirstTimeNavigatorViewController.m in Sources */,
 				1B9528C01590D87500103723 /* ConnectionManager.m in Sources */,
+				6F875EF61591594600555390 /* FirstTimeNavigatorViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
