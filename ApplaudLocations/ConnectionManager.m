@@ -10,6 +10,7 @@
 
 @implementation ConnectionManager
 
+@synthesize sessionCookie = _sessionCookie;
 
 /**
  * requestType : either GET or POST
@@ -38,6 +39,8 @@
         request.URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", SERVER_URL, url]];
     }
     
+    // Include our session cookie
+    [request addValue:[self.staticInstance sessionCookie] forHTTPHeaderField:@"Cookie"];
     
     NSLog(@"Requesting from %@", [request.URL description]);
     
@@ -114,5 +117,18 @@
     return html;
 }
 
+/**
+ * This is used to encapsulate variables that cannot be made compile-time.
+ * Tip taken from maniacdev.com/2009/07/global-variables-in-iphone-objective-c/
+ */
++ (ConnectionManager *)staticInstance {
+    static ConnectionManager *myInstance = nil;
+    
+    if ( nil == myInstance ) {
+        myInstance = [[ConnectionManager alloc] init];
+    }
+    
+    return myInstance;
+}
 
 @end
