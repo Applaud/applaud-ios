@@ -19,7 +19,9 @@
 
 + (NSData *)serverRequest:(NSString *)requestType withParams:(NSDictionary *)params url:(NSString *)url;
 
-
+// Same as above method, but takes general data
++ (NSData *)serverRequest:(NSString *)requestType withData:(NSData *)data url:(NSString *)url callback:(void(^)(NSData *))callback;
++ (NSData *)serverRequest:(NSString *)requestType withData:(NSData *)data url:(NSString *)url;
 
 // dict : dictionary of parameters to use in a GET string
 // returns : the GET string encoded with the parameters, starting with '?'

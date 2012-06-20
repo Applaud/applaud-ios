@@ -12,6 +12,7 @@
 #import "NFViewController.h"
 #import "EmployeeListViewController.h"
 #import "QuestionsViewController.h"
+#import "ConnectionManager.h"
 
 @implementation AppDelegate
 
@@ -178,30 +179,46 @@
  * The user entered in login credentials. Send to the server securely somehow.
  */
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    NSString *username = [alertView textFieldAtIndex:0].text;
+    NSString *password = [alertView textFieldAtIndex:1].text;
+    
     // The OK button
     if ( buttonIndex == 1 ) {
-        NSString *username = [alertView textFieldAtIndex:0].text;
-        NSString *password = [alertView textFieldAtIndex:1].text;
-        NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVER_URL, @"/accounts/login/"];
-        NSURL *url = [NSURL URLWithString:urlString];
-        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
-        [request setHTTPMethod:@"POST"];
         NSString *postString = [NSString stringWithFormat:@"username=%@&password=%@", username, password];
+        NSString *csrfToken = [ConnectionManager getCSRFTokenFromURL:[NSString stringWithFormat:@"%@%@", SERVER_URL, @"/csrf/"]];
+
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", SERVER_URL, @"/accounts/login/"]]];
         [request setHTTPBody:[NSData dataWithBytes:[postString UTF8String] length:postString.length]];
+        // Put the CSRF token into the HTTP request. Kinda important.
+        [request addValue:csrfToken forHTTPHeaderField:@"X-CSRFToken"];
+        [request setHTTPMethod:@"POST"];
         
-        NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:YES];
+        NSError *error = nil;
+        [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue]
+                               completionHandler:^(NSURLResponse *response, NSData *data, NSError *err) {
+                                   if ( err ) {
+                                       NSLog(@"login error: %@",error.description);
+                                       NSLog(@"LOGIN: %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+                                   }
+                                   else {
+                                       NSLog(@"LOGIN: %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+                                   }
+                               }];
         
-        if ( connection ) {
-            connectionData = [[NSMutableData alloc] init];
-        }
-        
-//        NSLog(@"username:%@, password:%@",username,password);
+        if (error)
+            NSLog(@"%@", error.description);
+//        
+//        [ConnectionManager serverRequest:@"POST" 
+//                                withData:[NSData dataWithBytes:[postString UTF8String] length:postString.length]
+//                                     url:@"/accounts/login/" 
+//                                callback:^(NSData *dat) {
+//                                    NSLog(@"LOGIN: %@", [[NSString alloc] initWithData:dat encoding:NSUTF8StringEncoding]);
+//                                }];
         
         // Cache username and password in our program settings
         [self.settings setUsername:username];
         [self.settings setPassword:password];
-        
-        NSError *error = nil;
+
         if (! [managedObjectContext save:&error] ) {
             NSLog(@"%@", error);
         }
@@ -234,13 +251,9 @@
 #pragma mark CoreData Methods
 
 /**
- 
  Returns the managed object context for the application.
- 
  If the context doesn't already exist, it is created and bound to the persistent store coordinator for the application.
- 
  */
-
 - (NSManagedObjectContext *) managedObjectContext {
     if (managedObjectContext != nil) {
         return managedObjectContext;
@@ -257,13 +270,9 @@
 }
 
 /**
- 
  Returns the managed object model for the application.
- 
  If the model doesn't already exist, it is created by merging all of the models found in the application bundle.
- 
  */
-
 - (NSManagedObjectModel *)managedObjectModel {
     if (managedObjectModel != nil) {
         return managedObjectModel;
@@ -280,7 +289,6 @@
  Returns the persistent store coordinator for the application.
  If the coordinator doesn't already exist, it is created and the application's store added to it.
  */
-
 - (NSPersistentStoreCoordinator *)persistentStoreCoordinator {
     
     if (persistentStoreCoordinator != nil) {
@@ -300,13 +308,9 @@
     return persistentStoreCoordinator;
 }
 
-#pragma mark -
-#pragma mark Application's documents directory
-
 /**
  Returns the path to the application's documents directory.
  */
-
 - (NSString *)applicationDocumentsDirectory {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *basePath = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
