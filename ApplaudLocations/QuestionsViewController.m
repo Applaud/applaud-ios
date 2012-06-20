@@ -99,62 +99,55 @@
 #pragma mark -
 #pragma Other Methods
 -(void)getSurveys {
-    NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVER_URL, @"/get_survey/"];
-    NSURL *url = [[NSURL alloc] initWithString:urlString];
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
-    [NSURLConnection sendAsynchronousRequest:request
-                                       queue:[NSOperationQueue mainQueue]
-                           completionHandler:^(NSURLResponse *response, NSData *d, NSError *err) {
-                               if(err) {
-                                   [[[UIAlertView alloc] initWithTitle:@"Connection error"
-                                                               message:[[NSString alloc] initWithFormat:@"Couldn't get survey: %@", [err description]]
-                                                              delegate:nil
-                                                     cancelButtonTitle:@"OK"
-                                                     otherButtonTitles:nil] show];
-                               }
-                               else {
-                                   NSError *e = [[NSError alloc] init];
-                                   NSDictionary *surveyData = [NSJSONSerialization JSONObjectWithData:d
-                                                                                              options:NSJSONReadingAllowFragments
-                                                                                                error:&e];
-                                   NSMutableArray *fields = [[NSMutableArray alloc] init];
-                                   for(NSDictionary *dict in [surveyData objectForKey:@"questions"]) {
-                                       NSString *type = [dict objectForKey:@"type"];
-                                       QuestionType widgetType;
-                                       if([type isEqualToString:@"TF"]) {
-                                           widgetType = TEXTFIELD;
-                                       }
-                                       else if([type isEqualToString:@"TA"]) {
-                                           widgetType = TEXTAREA;
-                                       }
-                                       else if([type isEqualToString:@"CG"]) {
-                                           widgetType = CHECKBOX;
-                                       }
-                                       else {
-                                           widgetType = RADIO;
-                                       }
-                                       SurveyField *sf = [[SurveyField alloc] initWithLabel:[dict objectForKey:@"label"]
-                                                                                   required:NO
-                                                                                         id:0
-                                                                                       type:widgetType
-                                                                                    options:[dict objectForKey:@"options"]
-                                                          ];
-                                       [fields addObject:sf];
-                                   }
-                                   Survey *survey = [[Survey alloc] initWithTitle:[surveyData objectForKey:@"title"]
-                                                                          summary:[surveyData objectForKey:@"description"]
-                                                                               business_id:self.appDelegate.currentBusiness.business_id
-                                                                           fields:fields];
-                                   self.survey = survey;
-                                   [self.questionsTable reloadData];
-                                   self.summaryText.text = self.survey.summary;
-                                   self.titleLabel.text = self.survey.title;
-                                   int i;
-                                   for(i = 0; i < self.survey.answers.count; i++) {
-                                       [_surveyControllers addObject:[[NSNull alloc] init]];
-                                   }
-                               }
-                           }];
+    [ConnectionManager serverRequest:@"GET"
+                            withData:nil
+                                 url:@"/get_survey/"
+                            callback: ^(NSData *d) {
+                                [self handleSurveyData:d];
+                            }];
+}
+
+- (void)handleSurveyData:(NSData *)d {
+    NSError *e = [[NSError alloc] init];
+    NSDictionary *surveyData = [NSJSONSerialization JSONObjectWithData:d
+                                                               options:NSJSONReadingAllowFragments
+                                                                 error:&e];
+    NSMutableArray *fields = [[NSMutableArray alloc] init];
+    for(NSDictionary *dict in [surveyData objectForKey:@"questions"]) {
+        NSString *type = [dict objectForKey:@"type"];
+        QuestionType widgetType;
+        if([type isEqualToString:@"TF"]) {
+            widgetType = TEXTFIELD;
+        }
+        else if([type isEqualToString:@"TA"]) {
+            widgetType = TEXTAREA;
+        }
+        else if([type isEqualToString:@"CG"]) {
+            widgetType = CHECKBOX;
+        }
+        else {
+            widgetType = RADIO;
+        }
+        SurveyField *sf = [[SurveyField alloc] initWithLabel:[dict objectForKey:@"label"]
+                                                    required:NO
+                                                          id:0
+                                                        type:widgetType
+                                                     options:[dict objectForKey:@"options"]
+                           ];
+        [fields addObject:sf];
+    }
+    Survey *survey = [[Survey alloc] initWithTitle:[surveyData objectForKey:@"title"]
+                                           summary:[surveyData objectForKey:@"description"]
+                                       business_id:self.appDelegate.currentBusiness.business_id
+                                            fields:fields];
+    self.survey = survey;
+    [self.questionsTable reloadData];
+    self.summaryText.text = self.survey.summary;
+    self.titleLabel.text = self.survey.title;
+    int i;
+    for(i = 0; i < self.survey.answers.count; i++) {
+        [_surveyControllers addObject:[[NSNull alloc] init]];
+    }
 }
 
 /*

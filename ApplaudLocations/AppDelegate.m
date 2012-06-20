@@ -89,6 +89,7 @@
     [nfvc setTitle:@"News Feed"];
     UINavigationController *newsNav = [[UINavigationController alloc] initWithRootViewController:nfvc];
     nfvc.navigationController = newsNav;
+    nfvc.appDelegate = self;
 	
 	// Finally GeneralFeedbackViewController
 	GeneralFeedbackViewController *gfvc = [[GeneralFeedbackViewController alloc] init];

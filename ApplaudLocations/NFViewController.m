@@ -8,6 +8,7 @@
 
 #import "NFViewController.h"
 #import "ConnectionManager.h"
+#import "AppDelegate.h"
 
 @interface NFViewController ()
 
@@ -15,6 +16,7 @@
 
 @implementation NFViewController
 
+@synthesize appDelegate = _appDelegate;
 @synthesize newsFeeds = _newsFeeds;
 @synthesize navigationController = _navigationController;
 @synthesize tableView = _tableView;
@@ -97,7 +99,18 @@
  * this is called when we load up the news feed is selected
  */
 - (void) getNewsFeeds {
-    [ConnectionManager serverRequest:@"GET" withParams:nil url:@"/newsfeed/" callback:^(NSData *data) {
+    NSDictionary *dict = [[NSDictionary alloc]
+                          initWithObjectsAndKeys:[NSNumber numberWithInt:self.appDelegate.currentBusiness.business_id],
+                          @"business_id", nil];
+    NSError *error = nil;
+    NSData *data = [NSJSONSerialization dataWithJSONObject:dict
+                                                   options:0
+                                                     error:&error];
+    if(error) {
+        NSLog(@"%@", error);
+    }
+    [ConnectionManager serverRequest:@"POST" withData:data url:@"/newsfeed/" callback:^(NSData *data) {
+//        NSLog(@"%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
         NSError *e;
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data
                                                              options:NSJSONReadingAllowFragments
