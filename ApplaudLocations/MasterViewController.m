@@ -155,7 +155,7 @@
     [ConnectionManager serverRequest:@"POST" withParams:dict url:@"/checkin/" callback:^(NSData *data) {
         NSLog(@"here is my checkin data: %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
         NSError *err = nil;
-        NSDictionary *busDict = [NSJSONSerialization JSONObjectWithData:data options:nil error:&err];
+        NSDictionary *busDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&err];
         if ( err ) {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Checkin Error"
                                                             message:err.description 
