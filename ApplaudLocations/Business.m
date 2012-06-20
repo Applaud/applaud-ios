@@ -27,4 +27,8 @@
   return self;
 }
 
+- (NSString *)description {
+    return [NSString stringWithFormat:@"%@ (%d)", self.name, self.business_id];
+}
+
 @end

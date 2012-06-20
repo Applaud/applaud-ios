@@ -115,27 +115,18 @@
     [em setObject:self.employee.firstName forKey:@"first_name"];
     [em setObject:self.employee.lastName forKey:@"last_name"];
     [em setObject:[NSNumber numberWithInt: self.employee.employee_id] forKey:@"id"];
-    
     NSMutableDictionary *ratings = [[NSMutableDictionary alloc] init];
     for( UIView *view in self.view.subviews){
-        
         if([view isKindOfClass:[UISlider class]]){
             UISlider *slider = (UISlider *) view;
-            
             NSString *dimension = [self.ratingDimensions objectForKey:[NSNumber numberWithInt:slider.tag]];
-            
-            
             [ratings setObject:[NSNumber numberWithFloat: slider.value] forKey:dimension];
         }
-        
     }
-    
     NSMutableDictionary *ret = [[NSMutableDictionary alloc] init];
     [ret setObject:em forKey:@"employee"];
     [ret setObject:ratings forKey:@"ratings"];
-    
     [ConnectionManager serverRequest:@"POST" withParams:ret url:@"/evaluate/"];
-
 }
 
 @end

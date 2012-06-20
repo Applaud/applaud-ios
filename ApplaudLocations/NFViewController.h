@@ -10,8 +10,10 @@
 #import "BusinessLocationsTracker.h"
 #import "NFItemViewController.h"
 #import "NFItem.h"
+@class AppDelegate;
 
 @interface NFViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@property (nonatomic, weak) AppDelegate *appDelegate;
 @property (nonatomic, strong) NSMutableArray *newsFeeds;
 @property (nonatomic, weak) UINavigationController *navigationController;
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
