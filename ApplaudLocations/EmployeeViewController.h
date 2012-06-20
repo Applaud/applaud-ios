@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Employee.h"
 #import "BusinessLocationsTracker.h"
+@class AppDelegate;
 
 #define RATING_FIELD_HEIGHT 70
 #define RATING_FIELDS_BEGIN 300
@@ -16,6 +17,7 @@
 
 @interface EmployeeViewController : UIViewController
 
+@property (nonatomic, weak) AppDelegate *appDelegate;
 @property (nonatomic, strong) Employee *employee;
 @property (nonatomic, strong) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) IBOutlet UIImageView *image;

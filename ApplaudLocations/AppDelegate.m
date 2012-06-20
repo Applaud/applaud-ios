@@ -76,6 +76,7 @@
     EmployeeListViewController *elvc = [[EmployeeListViewController alloc] init];
     UINavigationController *employeeNav = [[UINavigationController alloc] initWithRootViewController:elvc];
     elvc.navigationController = employeeNav;
+    elvc.appDelegate = self;
     
     // QuestionsViewController next
     QuestionsViewController *qvc = [[QuestionsViewController alloc] init];

@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+@class AppDelegate;
 
 @interface EmployeeListViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
+@property (weak, nonatomic) AppDelegate *appDelegate;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray *employeeArray;
 @property (weak, nonatomic) UINavigationController *navigationController;

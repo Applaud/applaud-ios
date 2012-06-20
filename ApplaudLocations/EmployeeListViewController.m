@@ -10,9 +10,11 @@
 #import "EmployeeViewController.h"
 #import "Employee.h"
 #import "ConnectionManager.h"
+#import "AppDelegate.h"
 
 @implementation EmployeeListViewController
 
+@synthesize appDelegate = _appDelegate;
 @synthesize employeeArray = _employeeArray;
 @synthesize tableView = _tableView;
 @synthesize navigationController = _navigationController;
@@ -71,6 +73,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     EmployeeViewController *evc = [[EmployeeViewController alloc] initWithEmployee:[self.employeeArray objectAtIndex:indexPath.row]];
+    evc.appDelegate = self.appDelegate;
     [self.navigationController pushViewController:evc animated:YES];
 }
 
@@ -78,7 +81,11 @@
 #pragma mark Other Methods
 
 - (void)getEmployees {
-    [ConnectionManager serverRequest:@"GET" withParams:nil url:@"/employees/" callback:^(NSData *dat) {
+    NSDictionary *dict = [[NSDictionary alloc]
+                          initWithObjectsAndKeys:[NSNumber numberWithInt:self.appDelegate.currentBusiness.business_id],
+                          @"business_id", nil];
+    [ConnectionManager serverRequest:@"POST" withParams:dict url:@"/employees/" callback:^(NSData *dat) {
+        NSLog(@"%@", [[NSString alloc] initWithData:dat encoding:NSUTF8StringEncoding]);
         NSError *err = [[NSError alloc] init]; // for debugging, probably not needed anymore
         NSArray *employeeData = [NSJSONSerialization JSONObjectWithData:dat
                                                                 options:NSJSONReadingAllowFragments

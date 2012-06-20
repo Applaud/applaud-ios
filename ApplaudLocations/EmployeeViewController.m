@@ -15,6 +15,7 @@
 @end
 
 @implementation EmployeeViewController
+@synthesize appDelegate = _appDelegate;
 @synthesize submitButton;
 @synthesize employee = _employee;
 @synthesize scrollView = _scrollView;
