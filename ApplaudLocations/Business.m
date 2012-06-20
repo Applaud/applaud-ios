@@ -11,16 +11,16 @@
 @implementation Business
 @synthesize name = _name;
 @synthesize type = _type;
-@synthesize goog_id = _goog_id;
+@synthesize business_id = _business_id;
 @synthesize latitude = _latitude;
 @synthesize longitude = _longitude;
 
--(id) initWithName:(NSString *)name type:(NSString *)type goog_id:(NSString *)goog_id
+-(id) initWithName:(NSString *)name type:(NSString *)type business_id:(int)business_id
           latitude:(NSNumber *) latitude longitude:(NSNumber *) longitude {
   if(self = [super init]) {
     self.name = name;
     self.type = type;
-    self.goog_id = goog_id;
+    self.business_id = business_id;
     self.latitude = latitude;
     self.longitude = longitude;
   }

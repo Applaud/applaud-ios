@@ -20,6 +20,7 @@
 @synthesize tracker;
 @synthesize managedObjectContext, managedObjectModel, persistentStoreCoordinator, applicationDocumentPath;
 @synthesize settings = _settings;
+@synthesize currentBusiness = _currentBusiness;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 { 

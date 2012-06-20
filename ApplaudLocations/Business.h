@@ -11,10 +11,10 @@
 @interface Business : NSObject
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *type;
-@property (nonatomic, strong) NSString *goog_id;
+@property (nonatomic) int business_id;
 @property (nonatomic, strong) NSNumber *latitude;
 @property (nonatomic, strong) NSNumber *longitude;
 
--(id) initWithName:(NSString *)name type:(NSString *)type goog_id:(NSString *)goog_id
+-(id) initWithName:(NSString *)name type:(NSString *)type business_id:(int)business_id
           latitude:(NSNumber *) latitude longitude:(NSNumber *) longitude;
 @end
