@@ -31,4 +31,10 @@
 // returns : the CSRF token encoded in a UTF8String
 + (NSString *)getCSRFTokenFromURL:(NSString *)urlString;
 
+// Container for class variables.
++ (ConnectionManager *)staticInstance;
+
+/*** CLASS MEMBERS ***/
+@property (nonatomic, copy) NSString *sessionCookie;
+
 @end
