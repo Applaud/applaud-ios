@@ -14,6 +14,7 @@
 
 @implementation QuestionsViewController
 @synthesize survey = _survey;
+@synthesize surveyControllers = _surveyControllers; // For caching SurveyFieldViewControllers.
 @synthesize titleLabel = _titleLabel;
 @synthesize summaryText = _summaryText;
 @synthesize questionsTable = _questionsTable;
@@ -24,12 +25,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
-/*        SurveyField *sf1 = [[SurveyField alloc] initWithLabel:@"q1" required:YES id:1 type:DROPDOWN options:nil];
-        SurveyField *sf2 = [[SurveyField alloc] initWithLabel:@"q2" required:YES id:2 type:CHECKBOX options:nil];
-        _survey = [[Survey alloc] initWithTitle:@"Survey" summary:@"test survey" fields:[[NSMutableArray alloc]
-                                                                                         initWithObjects:sf1, sf2, nil]];*/
-    }
+        _surveyControllers = [[NSMutableArray alloc] init];    }
     return self;
 }
 
@@ -83,8 +79,19 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    SurveyFieldViewController *sfvc = [[SurveyFieldViewController alloc] initWithNibName:@"SurveyFieldViewController" bundle:nil];
-    sfvc.field = [self.survey.fields objectAtIndex:indexPath.row];
+    NSLog(@"%@", [self.survey.answers objectAtIndex:indexPath.row]);
+/*    switch([[self.survey.fields objectAtIndex:indexPath.row] type]) {
+        case TEXTAREA:
+    }*/
+    SurveyFieldViewController *sfvc;
+    if([[self.surveyControllers objectAtIndex:indexPath.row] isKindOfClass:[NSNull class]]) {
+        sfvc = [[SurveyFieldViewController alloc] initWithNibName:@"SurveyFieldViewController" bundle:nil];
+        sfvc.field = [self.survey.fields objectAtIndex:indexPath.row];
+        [self.surveyControllers replaceObjectAtIndex:indexPath.row withObject:sfvc];
+    }
+    else {
+        sfvc = [self.surveyControllers objectAtIndex:indexPath.row];
+    }
     [self.navigationController pushViewController:sfvc animated:YES];
 }
 
@@ -140,6 +147,10 @@
                                    [self.questionsTable reloadData];
                                    self.summaryText.text = self.survey.summary;
                                    self.titleLabel.text = self.survey.title;
+                                   int i;
+                                   for(i = 0; i < self.survey.answers.count; i++) {
+                                       [_surveyControllers addObject:[[NSNull alloc] init]];
+                                   }
                                }
                            }];
 }
@@ -180,6 +191,13 @@
                                     // Be sure we've posted correctly.
                                     NSLog(@"%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
                                 }];
+    }
+    else {
+        [[[UIAlertView alloc] initWithTitle:@"Alert!"
+                                    message:@"You should answer all the questions."
+                                   delegate:nil
+                          cancelButtonTitle:@"OK"
+                          otherButtonTitles:nil] show];
     }
 }
 @end

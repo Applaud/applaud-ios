@@ -26,6 +26,7 @@
     if (self) {
         // Custom initialization
         _labels = [[NSMutableArray alloc] init];
+        NSLog(@"Foo!");
     }
     return self;
 }

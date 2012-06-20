@@ -13,6 +13,7 @@
 
 @interface QuestionsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, strong) Survey *survey;
+@property (nonatomic, strong) NSMutableArray *surveyControllers;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UITextView *summaryText;
 @property (weak, nonatomic) IBOutlet UITableView *questionsTable;
