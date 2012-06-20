@@ -64,6 +64,7 @@
     
     // List view controller, for selecting the location
     MasterViewController *masterViewController = [[MasterViewController alloc] init];
+    masterViewController.appDelegate = self;
     masterViewController.mapViewController = mapViewController;
     masterViewController.settings = self.settings;
     // The tab bar, for navigation
@@ -80,6 +81,7 @@
     [qvc setTitle:@"Dialog"];
     UINavigationController *questionNav = [[UINavigationController alloc] initWithRootViewController:qvc];
     qvc.navigationController = questionNav;
+    qvc.appDelegate = self;
     
     // And then NFViewController
     NFViewController *nfvc = [[NFViewController alloc] init];
@@ -92,6 +94,7 @@
 	[gfvc setTitle:@"Leave Comment"];
 	UINavigationController *generalNav = [[UINavigationController alloc] initWithRootViewController:gfvc];
 	gfvc.navigationController = generalNav;
+    gfvc.appDelegate = self;
 	
     tabNavigator.viewControllers = [NSArray arrayWithObjects:
                                     employeeNav,

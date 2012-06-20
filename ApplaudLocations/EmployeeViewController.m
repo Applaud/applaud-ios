@@ -81,6 +81,10 @@
         [self.view addSubview:dimensionLabel];
         [self.view addSubview:dimensionSlider];
     }
+    self.submitButton.frame = CGRectMake(self.view.frame.size.width - 100,
+                                         curr_y,
+                                         75,
+                                         50);
     // Tell our scroll view how big its contents are, so we can scroll in it.
     self.scrollView.contentSize = CGSizeMake(self.view.frame.size.width,
                                              curr_y+(2*RATING_FIELD_HEIGHT));

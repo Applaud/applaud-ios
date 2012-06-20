@@ -10,8 +10,10 @@
 #import "Survey.h"
 #import "SurveyFieldViewController.h"
 #import "ConnectionManager.h"
+#import "AppDelegate.h"
 
 @interface QuestionsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@property (nonatomic, weak) AppDelegate *appDelegate;
 @property (nonatomic, strong) Survey *survey;
 @property (nonatomic, strong) NSMutableArray *surveyControllers;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;

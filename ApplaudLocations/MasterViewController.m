@@ -17,6 +17,7 @@
 
 @synthesize locationsArray, mapViewController, tableView, titleLabel, tabBarController, window=_window;
 @synthesize settings = _settings;
+@synthesize appDelegate = _appDelegate;
 
 - (id)init {
     self = [super init];
@@ -154,6 +155,7 @@
         [tabBarController setSelectedIndex:3];
         _window.rootViewController = tabBarController;
     }
+    self.appDelegate.currentBusiness = [self.locationsArray objectAtIndex:indexPath.row];
 }
 
 

@@ -13,6 +13,7 @@
 @end
 
 @implementation QuestionsViewController
+@synthesize appDelegate = _appDelegate;
 @synthesize survey = _survey;
 @synthesize surveyControllers = _surveyControllers; // For caching SurveyFieldViewControllers.
 @synthesize titleLabel = _titleLabel;
@@ -98,7 +99,7 @@
 #pragma mark -
 #pragma Other Methods
 -(void)getSurveys {
-    NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVER_URL, @"/get_survey"];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", SERVER_URL, @"/get_survey/"];
     NSURL *url = [[NSURL alloc] initWithString:urlString];
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
     [NSURLConnection sendAsynchronousRequest:request
@@ -142,6 +143,7 @@
                                    }
                                    Survey *survey = [[Survey alloc] initWithTitle:[surveyData objectForKey:@"title"]
                                                                           summary:[surveyData objectForKey:@"description"]
+                                                                               business_id:self.appDelegate.currentBusiness.business_id
                                                                            fields:fields];
                                    self.survey = survey;
                                    [self.questionsTable reloadData];

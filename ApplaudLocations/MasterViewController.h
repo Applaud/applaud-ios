@@ -10,6 +10,7 @@
 #import <CoreData/CoreData.h>
 #import "MapViewController.h"
 #import "ApplaudProgramSettingsModel.h"
+#import "AppDelegate.h"
 
 @interface MasterViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
@@ -18,6 +19,7 @@
 @property (nonatomic, strong) MapViewController *mapViewController;
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, weak) UIWindow *window;
+@property (nonatomic, weak) AppDelegate *appDelegate;
 
 // Program settings
 @property (nonatomic, strong) ApplaudProgramSettingsModel *settings;

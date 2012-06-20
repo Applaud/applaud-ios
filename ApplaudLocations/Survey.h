@@ -12,7 +12,8 @@
 @interface Survey : NSObject
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *summary;
+@property (nonatomic) int business_id;
 @property (nonatomic, strong) NSMutableArray *fields;
 @property (nonatomic, strong) NSMutableArray *answers;
--(id)initWithTitle:(NSString *)title summary:(NSString *)summary fields:(NSMutableArray *)fields;
+-(id)initWithTitle:(NSString *)title summary:(NSString *)summary business_id:(int)business_id fields:(NSMutableArray *)fields;
 @end

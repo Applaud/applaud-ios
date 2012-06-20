@@ -8,12 +8,14 @@
 
 #import "GeneralFeedbackViewController.h"
 #import "ConnectionManager.h"
+#import "AppDelegate.h"
 
 @interface GeneralFeedbackViewController ()
 
 @end
 
 @implementation GeneralFeedbackViewController
+@synthesize appDelegate = _appDelegate;
 @synthesize navigationController = _navigationController;
 @synthesize questionLabel;
 @synthesize textField;
@@ -56,13 +58,16 @@
 }
 
 - (IBAction)doneEditing:(UITextField *)sender {
-    NSArray *keys = [[NSArray alloc] initWithObjects:@"answer", nil];
-    NSArray *objs = [[NSArray alloc] initWithObjects:self.textField.text, nil];
+    NSArray *keys = [[NSArray alloc] initWithObjects:@"answer", @"business_id", nil];
+    NSArray *objs = [[NSArray alloc] initWithObjects:self.textField.text,
+                     [NSNumber numberWithInt:self.appDelegate.currentBusiness.business_id], nil];
     NSDictionary *dict = [[NSDictionary alloc] initWithObjects:objs forKeys:keys];
-    
-    [ConnectionManager serverRequest:@"POST" withParams:dict url:@"/general_feedback/"];
-    
- //   [self sendResponse:sender.text];
+    [ConnectionManager serverRequest:@"POST"
+                          withParams:dict
+                                 url:@"/general_feedback/"
+                            callback:^(NSData *d) {
+                                NSLog(@"%@", [[NSString alloc] initWithData:d encoding:NSUTF8StringEncoding]);
+                            }];
     [sender resignFirstResponder];
 }
 @end

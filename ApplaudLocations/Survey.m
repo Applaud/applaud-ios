@@ -13,13 +13,15 @@
 @synthesize summary = _summary;
 @synthesize fields = _fields;
 @synthesize answers = _answers;
+@synthesize business_id = _business_id;
 
--(id) initWithTitle:(NSString *)title summary:(NSString *)summary fields:(NSMutableArray *)fields {
+-(id) initWithTitle:(NSString *)title summary:(NSString *)summary business_id:(int)business_id fields:(NSMutableArray *)fields {
     if(self = [super init]) {
         _title = title;
         _summary = summary;
         _fields = fields;
         _answers = [[NSMutableArray alloc] initWithCapacity:fields.count];
+        _business_id = business_id;
         int i;
         for(i = 0; i < _fields.count; i++) {
             [_answers addObject:[[NSNull alloc] init]];
