@@ -81,11 +81,11 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:@"BUSINESS_RECEIVED" object:businessArray]; 
     };
 
-    NSArray *keyArray = [[NSArray alloc] initWithObjects:@"latitude", @"longitude", nil];
+/*    NSArray *keyArray = [[NSArray alloc] initWithObjects:@"latitude", @"longitude", nil];
     NSArray *valArray = [[NSArray alloc] initWithObjects:
                          [NSNumber numberWithFloat:location.latitude], 
-                         [NSNumber numberWithFloat:location.longitude], nil];
-    NSDictionary *getDict = [[NSDictionary alloc] initWithObjects:valArray forKeys:keyArray];
+                         [NSNumber numberWithFloat:location.longitude], nil];*/
+//    NSDictionary *getDict = [[NSDictionary alloc] initWithObjects:valArray forKeys:keyArray];
 
     // dummy businesses for debugging
     [ConnectionManager serverRequest:@"GET" withParams:nil url:@"/example3/" callback:callback];
