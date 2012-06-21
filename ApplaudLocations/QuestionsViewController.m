@@ -135,7 +135,7 @@
         }
         SurveyField *sf = [[SurveyField alloc] initWithLabel:[dict objectForKey:@"label"]
                                                     required:NO
-                                                          id:0
+                                                          id:[[dict objectForKey:@"id"] intValue]
                                                         type:widgetType
                                                      options:[dict objectForKey:@"options"]
                            ];
@@ -180,6 +180,8 @@
                                           @"response",
                                           [[self.survey.fields objectAtIndex:i] label],
                                           @"label",
+                                          [NSNumber numberWithInt:[[self.survey.fields objectAtIndex:i] id]],
+                                          @"id",
                                           nil];
             [answers addObject:responseDict];
         }
