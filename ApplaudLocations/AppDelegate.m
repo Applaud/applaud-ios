@@ -128,9 +128,16 @@
     [self.window makeKeyAndVisible];
     
     // Authenticate the user
+    NSString *username, *password;
     UIAlertView *loginAlert = [[UIAlertView alloc] initWithTitle:@"Login to Applaud" message:@"Please enter your login information." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
     loginAlert.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
-    [loginAlert show];
+    if ( (username = self.settings.username) && (password = self.settings.password) ) {
+        if (! [self authenticateWithUsername:username password:password] ) 
+            [loginAlert show];
+    }
+    else {
+        [loginAlert show];
+    }
     
     return YES;
 }
