@@ -125,6 +125,52 @@
 }
 
 /**
+ * logins and logouts
+ */
++ (BOOL)authenticateWithUsername:(NSString *)username password:(NSString *)password {
+    NSString *postString = [NSString stringWithFormat:@"username=%@&password=%@", username, password];
+    NSString *csrfToken = [ConnectionManager getCSRFTokenFromURL:[NSString stringWithFormat:@"%@%@", SERVER_URL, @"/csrf/"]];
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", SERVER_URL, @"/accounts/mobilelogin/"]]];
+    [request setHTTPBody:[NSData dataWithBytes:[postString UTF8String] length:postString.length]];
+    // Put the CSRF token into the HTTP request. Kinda important.
+    [request addValue:csrfToken forHTTPHeaderField:@"X-CSRFToken"];
+    [request setHTTPMethod:@"POST"];
+    
+    NSError *error = nil;
+    __block NSString *cookieString = nil;
+    NSURLResponse *response;
+    NSData * data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+    NSHTTPURLResponse *r = (NSHTTPURLResponse *)response;
+    if ( error ) {
+        NSLog(@"login error: %@",error.description);
+        NSLog(@"LOGIN: %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+    }
+    else {
+        if ( 200 == r.statusCode ) {
+            NSLog(@"%@",@"Login success!");
+            NSError *regexError = nil;
+            cookieString = [r.allHeaderFields objectForKey:@"Set-Cookie"];
+            NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"sessionid=[a-f0-9]+;"
+                                                                                   options:0
+                                                                                     error:&regexError];
+            NSRange regexRange = [regex rangeOfFirstMatchInString:cookieString
+                                                          options:0
+                                                            range:NSMakeRange(0, cookieString.length)];
+            // Finds the sessionID in the cookie string
+            cookieString = [cookieString substringWithRange:regexRange];
+            [[ConnectionManager staticInstance] setSessionCookie:cookieString];
+            NSLog(@"%@", cookieString);
+            
+            return YES;
+        }
+    }
+    
+    return NO;
+}
+
+
+/**
  * This is used to encapsulate variables that cannot be made compile-time.
  * Tip taken from maniacdev.com/2009/07/global-variables-in-iphone-objective-c/
  */

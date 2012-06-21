@@ -34,6 +34,9 @@
 // Container for class variables.
 + (ConnectionManager *)staticInstance;
 
+// Manage logins and logouts
++ (BOOL)authenticateWithUsername:(NSString *)username password:(NSString *)password;
+
 /*** CLASS MEMBERS ***/
 @property (nonatomic, copy) NSString *sessionCookie;
 
