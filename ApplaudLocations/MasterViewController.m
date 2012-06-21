@@ -169,11 +169,15 @@
         else {
             bus = [[Business alloc] initWithName:[busDict objectForKey:@"name"]
                                             type:bus.type
-                                     business_id:[[busDict objectForKey:@"id"] intValue]
+                                     business_id:[[busDict objectForKey:@"business_id"] intValue]
                                         latitude:[busDict objectForKey:@"latitude"]
                                        longitude:[busDict objectForKey:@"longitude"]];
         }
     }];
+    
+    // Set app delegate's current business from what was returned by the server
+    NSLog(@"Business from server: %@",bus.description);
+    self.appDelegate.currentBusiness = bus;
     
     if ( self.settings.firstTimeLaunching ) {
         FirstTimeNavigatorViewController *ftnvc = [[FirstTimeNavigatorViewController alloc] initWithNibName:@"FirstTimeNavigatorViewControllerIphone" bundle:nil];
@@ -186,7 +190,6 @@
         [tabBarController setSelectedIndex:3];
         _window.rootViewController = tabBarController;
     }
-    self.appDelegate.currentBusiness = [self.locationsArray objectAtIndex:indexPath.row];
 }
 
 
