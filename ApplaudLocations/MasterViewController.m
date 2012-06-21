@@ -154,7 +154,7 @@
                           bus.goog_id, @"goog_id",
                           bus.name, @"name",
                           nil];
-    [ConnectionManager serverRequest:@"POST" withParams:dict url:@"/checkin/" callback:^(NSData *data) {
+/*    [ConnectionManager serverRequest:@"POST" withParams:dict url:@"/checkin/" callback:^(NSData *data) {
         NSLog(@"here is my checkin data: %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
         NSError *err = nil;
         NSDictionary *busDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&err];
@@ -177,8 +177,37 @@
             NSLog(@"Business from server: %@",bus.description);
             self.appDelegate.currentBusiness = bus;
         }
-    }];
-    
+    }];*/
+    NSString *urlString = [[NSString alloc] initWithFormat:@"%@%@", SERVER_URL, @"/checkin/"];
+    NSURL *url = [[NSURL alloc] initWithString:urlString];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
+    request.HTTPMethod = @"POST";
+    request.HTTPBody = [NSJSONSerialization dataWithJSONObject:dict options:0 error:nil];
+    [request addValue:[ConnectionManager getCSRFTokenFromURL:urlString] forHTTPHeaderField:@"X-CSRFToken"];
+    NSError *err;
+    NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:&err];
+    NSLog(@"here is my checkin data: %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+    NSError *e = nil;
+    NSDictionary *busDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&e];
+    if ( err ) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Checkin Error"
+                                                        message:err.description 
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
+    else {
+        bus = [[Business alloc] initWithName:[busDict objectForKey:@"name"]
+                                        type:bus.type
+                                 business_id:[[busDict objectForKey:@"business_id"] intValue]
+                                    latitude:[busDict objectForKey:@"latitude"]
+                                   longitude:[busDict objectForKey:@"longitude"]];
+        
+        // Set app delegate's current business from what was returned by the server
+        NSLog(@"Business from server: %@",bus.description);
+        self.appDelegate.currentBusiness = bus;
+    }
     if ( self.settings.firstTimeLaunching ) {
         FirstTimeNavigatorViewController *ftnvc = [[FirstTimeNavigatorViewController alloc] initWithNibName:@"FirstTimeNavigatorViewControllerIphone" bundle:nil];
         ftnvc.tabBarController = self.tabBarController;

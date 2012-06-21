@@ -89,7 +89,12 @@
 
     // dummy businesses for debugging
     [ConnectionManager serverRequest:@"GET" withParams:nil url:@"/example3/" callback:callback];
-    
+/*    NSString *urlString = [[NSString alloc] initWithFormat:@"%@%@", SERVER_URL, @"/example3"];
+    NSURL *url = [[NSURL alloc] initWithString:urlString];
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+    NSError *e;
+    NSData *d = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:&e];
+    callback(d);*/
     // actual businesses
     //[ConnectionManager serverRequest:@"GET" withParams:getDict url:@"/whereami" callback:callback];
 }
