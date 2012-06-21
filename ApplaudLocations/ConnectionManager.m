@@ -59,8 +59,11 @@
                                    NSLog(@"%@", err);
                                }
                                else {
-                                   //                                   ret = d;
-                                   //                                   NSLog(@"Just received: %@", [[NSString alloc] initWithData:d encoding:NSUTF8StringEncoding]);
+                                   NSHTTPURLResponse *r = (NSHTTPURLResponse *)response;
+                                   if ( r.statusCode == 500 ) {
+                                       NSLog(@"========== SERVER ERROR ===========\n --> %@ <--",
+                                             [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+                                   }
                                    ret = d;
                                    if ( callback ) {
                                        callback(d);
