@@ -81,8 +81,14 @@
  */
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     if([[self.surveyControllers objectAtIndex:indexPath.row] isKindOfClass:[SurveyFieldViewController class]] &&
-       [(SurveyFieldViewController *)[self.surveyControllers objectAtIndex:indexPath.row] getAnswer]) {
+       [(SurveyFieldViewController *)[self.surveyControllers objectAtIndex:indexPath.row] getAnswer].count &&
+       ![[[(SurveyFieldViewController *)[self.surveyControllers objectAtIndex:indexPath.row] getAnswer] objectAtIndex:0] isEqualToString:@""]) {
         cell.backgroundColor = [UIColor greenColor];
+    }
+    // If it's not a survey with an answer, make sure it's reset to white and that its subtitle is "unanswered".
+    else {
+        cell.backgroundColor = [UIColor whiteColor];
+        cell.detailTextLabel.text = @"Unanswered";
     }
 }
 
@@ -219,6 +225,17 @@
                                 callback:^(NSData *data) {
                                     // Be sure we've posted correctly.
                                     NSLog(@"%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+                                    [[[UIAlertView alloc] initWithTitle:@"Thanks!"
+                                                                message:@"We appreciate your feedback."
+                                                               delegate:self
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles:nil] show];
+                                    // Reset all the questions and change to the news feed.
+                                    int i;
+                                    for(i = 0; i < self.surveyControllers.count; i++) {
+                                        [self.surveyControllers replaceObjectAtIndex:i withObject:[[NSNull alloc] init]];
+                                    }
+                                    [self.questionsTable reloadData];
                                 }];
     }
     else {
@@ -228,5 +245,12 @@
                           cancelButtonTitle:@"OK"
                           otherButtonTitles:nil] show];
     }
+}
+
+/*
+ * When the user dismisses the "thanks!" alert view, go to the news feed screen.
+ */
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    [self.navigationController.tabBarController setSelectedIndex:4];
 }
 @end

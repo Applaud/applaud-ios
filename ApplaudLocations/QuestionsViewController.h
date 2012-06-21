@@ -12,7 +12,7 @@
 #import "ConnectionManager.h"
 #import "AppDelegate.h"
 
-@interface QuestionsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface QuestionsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
 @property (nonatomic, weak) AppDelegate *appDelegate;
 @property (nonatomic, strong) Survey *survey;
 @property (nonatomic, strong) NSMutableArray *surveyControllers;

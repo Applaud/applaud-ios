@@ -79,6 +79,7 @@
  * Called when the back button is pressed. This allows us to set the answer to this question in the Survey object.
  */
 - (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
     UINavigationController *parent = (UINavigationController *)self.parentViewController;
     QuestionsViewController *qvc = [parent.viewControllers objectAtIndex:0];
     // Find the index at which this question is located.
@@ -89,8 +90,8 @@
         UITableViewCell *answerCell = [qvc.questionsTable cellForRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0]];
         answerCell.detailTextLabel.text = [answer componentsJoinedByString:@", "];
         answerCell.contentView.backgroundColor = [UIColor greenColor];
-        [qvc.questionsTable reloadData];        
     }
+    [qvc.questionsTable reloadData];        
 }
 
 
