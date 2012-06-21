@@ -19,5 +19,5 @@
 @property (weak, nonatomic) IBOutlet UITextView *summaryText;
 @property (weak, nonatomic) IBOutlet UITableView *questionsTable;
 @property (strong, nonatomic) UINavigationController *navigationController;
-- (IBAction)buttonPressed:(UIButton *)sender;
+- (void)buttonPressed;
 @end
