@@ -18,4 +18,5 @@
 @property (strong, nonatomic) SurveyField *field;
 @property (weak, nonatomic) IBOutlet UILabel *questionLabel;
 @property (strong, nonatomic) NSMutableArray *labels;
+-(NSArray *)getAnswer;
 @end

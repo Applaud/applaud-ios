@@ -87,13 +87,9 @@
     if(answer) {
         [qvc.survey.answers replaceObjectAtIndex:row withObject:answer];
         UITableViewCell *answerCell = [qvc.questionsTable cellForRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0]];
-        if([[answer objectAtIndex:0] length] > 50) {
-            answerCell.detailTextLabel.text = [NSString stringWithFormat:@"%@...", [[answer objectAtIndex:0] substringToIndex:50]];
-        }
-        else {
-            answerCell.detailTextLabel.text = [answer objectAtIndex:0];
-        }
-        [qvc.questionsTable reloadData];
+        answerCell.detailTextLabel.text = [answer componentsJoinedByString:@", "];
+        answerCell.contentView.backgroundColor = [UIColor greenColor];
+        [qvc.questionsTable reloadData];        
     }
 }
 
