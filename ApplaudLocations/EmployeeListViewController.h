@@ -14,6 +14,7 @@
 @property (weak, nonatomic) AppDelegate *appDelegate;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray *employeeArray;
+@property (strong, nonatomic) NSMutableArray *employeeControllers;
 @property (weak, nonatomic) UINavigationController *navigationController;
 
 // Fetches the list of employees from the business

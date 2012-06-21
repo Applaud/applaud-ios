@@ -89,9 +89,6 @@
     // Tell our scroll view how big its contents are, so we can scroll in it.
     self.scrollView.contentSize = CGSizeMake(self.view.frame.size.width,
                                              curr_y+(2*RATING_FIELD_HEIGHT));
-    
-
-    
 }
 
 - (void)viewDidUnload
@@ -127,7 +124,9 @@
     NSMutableDictionary *ret = [[NSMutableDictionary alloc] init];
     [ret setObject:em forKey:@"employee"];
     [ret setObject:ratings forKey:@"ratings"];
-    [ConnectionManager serverRequest:@"POST" withParams:ret url:@"/evaluate/"];
+    [ConnectionManager serverRequest:@"POST" withParams:ret url:@"/evaluate/" callback:^(NSData *d) {
+        NSLog(@"%@", [[NSString alloc] initWithData:d encoding:NSUTF8StringEncoding]);        
+    }];
 }
 
 @end

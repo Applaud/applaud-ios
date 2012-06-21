@@ -18,12 +18,14 @@
 @synthesize employeeArray = _employeeArray;
 @synthesize tableView = _tableView;
 @synthesize navigationController = _navigationController;
+@synthesize employeeControllers = _employeeControllers;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         [self setTitle:@"Employees"];
+        _employeeControllers = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -72,8 +74,15 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    EmployeeViewController *evc = [[EmployeeViewController alloc] initWithEmployee:[self.employeeArray objectAtIndex:indexPath.row]];
-    evc.appDelegate = self.appDelegate;
+    EmployeeViewController *evc;
+    if([[self.employeeControllers objectAtIndex:indexPath.row] isKindOfClass:[NSNull class]]) {
+        evc = [[EmployeeViewController alloc] initWithEmployee:[self.employeeArray objectAtIndex:indexPath.row]];
+        evc.appDelegate = self.appDelegate;
+        [self.employeeControllers replaceObjectAtIndex:indexPath.row withObject:evc];
+    }
+    else {
+        evc = [self.employeeControllers objectAtIndex:indexPath.row];
+    }
     [self.navigationController pushViewController:evc animated:YES];
 }
 
@@ -106,7 +115,11 @@
             [self.employeeArray addObject:e];
             
         }
-        
+        // set up our array of view controllers with NSNulls, so that we know whether or not we have one cached for a particular employee        
+        int i;
+        for(i = 0; i < self.employeeArray.count; i++) {
+            [self.employeeControllers addObject:[[NSNull alloc] init]];
+        }
         // reload the table view to display all the employees
         [self.tableView reloadData];
     }];
