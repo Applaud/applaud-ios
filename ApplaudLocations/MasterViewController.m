@@ -172,12 +172,12 @@
                                      business_id:[[busDict objectForKey:@"business_id"] intValue]
                                         latitude:[busDict objectForKey:@"latitude"]
                                        longitude:[busDict objectForKey:@"longitude"]];
+            
+            // Set app delegate's current business from what was returned by the server
+            NSLog(@"Business from server: %@",bus.description);
+            self.appDelegate.currentBusiness = bus;
         }
     }];
-    
-    // Set app delegate's current business from what was returned by the server
-    NSLog(@"Business from server: %@",bus.description);
-    self.appDelegate.currentBusiness = bus;
     
     if ( self.settings.firstTimeLaunching ) {
         FirstTimeNavigatorViewController *ftnvc = [[FirstTimeNavigatorViewController alloc] initWithNibName:@"FirstTimeNavigatorViewControllerIphone" bundle:nil];
