@@ -221,7 +221,11 @@
                                            NSLog(@"%@", cookieString);
                                        }
                                        else {
-                                           UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Failure" message:@"Login credentials invalid." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                                           UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Failure" 
+                                                                                           message:@"Login credentials invalid." 
+                                                                                          delegate:nil
+                                                                                 cancelButtonTitle:@"OK" 
+                                                                                 otherButtonTitles:nil];
                                            [alert show];
                                            
                                            //TODO: Repeat login sequence until success or cancel.
