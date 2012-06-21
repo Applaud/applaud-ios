@@ -132,19 +132,22 @@
     UIAlertView *loginAlert = [[UIAlertView alloc] initWithTitle:@"Login to Applaud" message:@"Please enter your login information." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
     loginAlert.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
     if ( (username = self.settings.username) && (password = self.settings.password) ) {
-        if (! [ConnectionManager authenticateWithUsername:username password:password] ) 
-            [loginAlert show];
+        BOOL loginSuccess = [ConnectionManager authenticateWithUsername:username password:password];
+        if ( loginSuccess ) {
+            // Cache username and password in our program settings
+            [self.settings setUsername:username];
+            [self.settings setPassword:password];
+            NSError *err;
+            [self.managedObjectContext save:&err]; 
+        }
+        else {
+            [loginAlert show];    
+        }
     }
     else {
         [loginAlert show];
     }
-    
-    // Cache username and password in our program settings
-    [self.settings setUsername:username];
-    [self.settings setPassword:password];
-    NSError *err;
-    [self.managedObjectContext save:&err];
-    
+       
     return YES;
 }
 
@@ -208,6 +211,13 @@
             tryAgain.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
             alertView = nil;
             [tryAgain show];
+        }
+        else {
+            // Cache username and password in our program settings
+            [self.settings setUsername:username];
+            [self.settings setPassword:password];
+            NSError *err;
+            [self.managedObjectContext save:&err]; 
         }
     }
     // User hit 'cancel'

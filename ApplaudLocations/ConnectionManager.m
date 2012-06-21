@@ -7,6 +7,7 @@
 //
 
 #import "ConnectionManager.h"
+#import <CoreData/CoreData.h>
 
 @implementation ConnectionManager
 
