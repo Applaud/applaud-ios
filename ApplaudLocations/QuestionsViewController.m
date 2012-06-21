@@ -16,17 +16,16 @@
 @synthesize appDelegate = _appDelegate;
 @synthesize survey = _survey;
 @synthesize surveyControllers = _surveyControllers; // For caching SurveyFieldViewControllers.
-@synthesize titleLabel = _titleLabel;
 @synthesize summaryText = _summaryText;
 @synthesize questionsTable = _questionsTable;
 @synthesize navigationController = _navigationController;
-@synthesize submitButton = _submitButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        _surveyControllers = [[NSMutableArray alloc] init];    }
+        _surveyControllers = [[NSMutableArray alloc] init];
+    }
     return self;
 }
 
@@ -41,11 +40,9 @@
 
 - (void)viewDidUnload
 {
-    [self setTitleLabel:nil];
     [self setSummaryText:nil];
     [self setQuestionsTable:nil];
     [self setNavigationController:nil];
-    [self setSubmitButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -111,12 +108,21 @@
                             }];
 }
 
+/**
+ * This handles the response from the server (that is, the received survey in JSON format).
+ * 
+ * This sets up our view to render all the widgets in the survey, as well as creating a
+ * 'submit' button and setting our title.
+ */
 - (void)handleSurveyData:(NSData *)d {
+    // Grabbing the JSON data from the server's response
     NSLog(@"%@", [[NSString alloc] initWithData:d encoding:NSUTF8StringEncoding]);
     NSError *e = [[NSError alloc] init];
     NSDictionary *surveyData = [NSJSONSerialization JSONObjectWithData:d
                                                                options:NSJSONReadingAllowFragments
                                                                  error:&e];
+    
+    // Creating the fields of the survey
     NSMutableArray *fields = [[NSMutableArray alloc] init];
     for(NSDictionary *dict in [surveyData objectForKey:@"questions"]) {
         NSString *type = [dict objectForKey:@"type"];
@@ -141,14 +147,25 @@
                            ];
         [fields addObject:sf];
     }   
+
+    // Creating the survey model
     Survey *survey = [[Survey alloc] initWithTitle:[surveyData objectForKey:@"title"]
                                            summary:[surveyData objectForKey:@"description"]
                                        business_id:self.appDelegate.currentBusiness.business_id
                                             fields:fields];
+
+    // Setting up the rest of the view: survey, title, submit button
     self.survey = survey;
     [self.questionsTable reloadData];
     self.summaryText.text = self.survey.summary;
-    self.titleLabel.text = self.survey.title;
+    [[self navigationItem] setTitle:self.survey.title];
+    
+    UIBarButtonItem *submitButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Submit"
+                                                                         style:UIBarButtonItemStyleBordered
+                                                                        target:self
+                                                                        action:@selector(buttonPressed)];
+    submitButtonItem.tintColor = [UIColor colorWithRed:0.2 green:0.8 blue:0.0 alpha:1.0];
+    [[self navigationItem] setRightBarButtonItem:submitButtonItem];
     int i;
     for(i = 0; i < self.survey.answers.count; i++) {
         [_surveyControllers addObject:[[NSNull alloc] init]];
@@ -170,7 +187,7 @@
 /*
  * Sends our survey data to the server.
  */
-- (IBAction)buttonPressed:(UIButton *)sender {
+- (void)buttonPressed {
     if([self checkAnswers]) {
         NSMutableArray *answers = [[NSMutableArray alloc] init];
         // Grab the data, put it in dictionaries and array for JSON.

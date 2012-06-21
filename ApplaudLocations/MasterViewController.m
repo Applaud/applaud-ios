@@ -216,7 +216,7 @@
     }
     else {
         // This corresponds to the newsfeed.
-        [tabBarController setSelectedIndex:3];
+        [tabBarController setSelectedIndex:4];
         _window.rootViewController = tabBarController;
     }
 }

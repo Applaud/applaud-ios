@@ -16,10 +16,8 @@
 @property (nonatomic, weak) AppDelegate *appDelegate;
 @property (nonatomic, strong) Survey *survey;
 @property (nonatomic, strong) NSMutableArray *surveyControllers;
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UITextView *summaryText;
 @property (weak, nonatomic) IBOutlet UITableView *questionsTable;
 @property (strong, nonatomic) UINavigationController *navigationController;
-@property (weak, nonatomic) IBOutlet UIButton *submitButton;
 - (IBAction)buttonPressed:(UIButton *)sender;
 @end
