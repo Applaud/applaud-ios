@@ -99,8 +99,12 @@
 #pragma mark -
 #pragma Other Methods
 -(void)getSurveys {
-    [ConnectionManager serverRequest:@"GET"
-                            withData:nil
+    NSDictionary *dict = [[NSDictionary alloc]
+                          initWithObjectsAndKeys:[NSNumber numberWithInt:self.appDelegate.currentBusiness.business_id],
+                          @"business_id",
+                          nil];
+    [ConnectionManager serverRequest:@"POST"
+                            withParams:dict
                                  url:@"/get_survey/"
                             callback: ^(NSData *d) {
                                 [self handleSurveyData:d];
@@ -108,6 +112,7 @@
 }
 
 - (void)handleSurveyData:(NSData *)d {
+    NSLog(@"%@", [[NSString alloc] initWithData:d encoding:NSUTF8StringEncoding]);
     NSError *e = [[NSError alloc] init];
     NSDictionary *surveyData = [NSJSONSerialization JSONObjectWithData:d
                                                                options:NSJSONReadingAllowFragments
@@ -135,7 +140,7 @@
                                                      options:[dict objectForKey:@"options"]
                            ];
         [fields addObject:sf];
-    }
+    }   
     Survey *survey = [[Survey alloc] initWithTitle:[surveyData objectForKey:@"title"]
                                            summary:[surveyData objectForKey:@"description"]
                                        business_id:self.appDelegate.currentBusiness.business_id
