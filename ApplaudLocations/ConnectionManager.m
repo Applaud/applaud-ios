@@ -42,8 +42,8 @@
     // Include our session cookie
     //[request addValue:[self.staticInstance sessionCookie] forHTTPHeaderField:@"Cookie"];
     NSString *token = [ConnectionManager getCSRFTokenFromURL:[NSString stringWithFormat:@"%@%@",SERVER_URL,url]];
-    [request addValue:[NSString stringWithFormat:@"csrftoken=%@; @", token, [[ConnectionManager staticInstance] sessionCookie]] forHTTPHeaderField:@"Cookie"];
-
+    [request addValue:[NSString stringWithFormat:@"csrftoken=%@; %@", token, [[ConnectionManager staticInstance] sessionCookie]] forHTTPHeaderField:@"Cookie"];
+    NSLog(@"Sending the following cookie: %@", [request.allHTTPHeaderFields objectForKey:@"Cookie"]);
     
     NSLog(@"Requesting from %@", [request.URL description]);
     

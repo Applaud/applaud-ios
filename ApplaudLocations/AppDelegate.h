@@ -38,6 +38,11 @@
 
 
 - (NSString *)applicationDocumentsDirectory;
-- (void)saveContext;
+
+/**
+ * Authenticates the user.
+ * Returns YES when the user is authenticated. NO otherwise.
+ */
+- (BOOL)authenticateWithUsername:(NSString *)username password:(NSString *)password;
 
 @end

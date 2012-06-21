@@ -339,8 +339,64 @@
     return basePath;
 }
 
-- (void)saveContext {
+- (BOOL)authenticateWithUsername:(NSString *)username password:(NSString *)password {
+    NSString *postString = [NSString stringWithFormat:@"username=%@&password=%@", username, password];
+    NSString *csrfToken = [ConnectionManager getCSRFTokenFromURL:[NSString stringWithFormat:@"%@%@", SERVER_URL, @"/csrf/"]];
     
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", SERVER_URL, @"/accounts/mobilelogin/"]]];
+    [request setHTTPBody:[NSData dataWithBytes:[postString UTF8String] length:postString.length]];
+    // Put the CSRF token into the HTTP request. Kinda important.
+    [request addValue:csrfToken forHTTPHeaderField:@"X-CSRFToken"];
+    [request setHTTPMethod:@"POST"];
+    
+    NSError *error = nil;
+    __block NSString *cookieString = nil;
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *err) {
+                               NSHTTPURLResponse *r = (NSHTTPURLResponse *)response;
+                               if ( err ) {
+                                   NSLog(@"login error: %@",error.description);
+                                   NSLog(@"LOGIN: %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+                               }
+                               else {
+                                   if ( 200 == r.statusCode ) {
+                                       NSLog(@"%@",@"Login success!");
+                                       NSError *regexError = nil;
+                                       cookieString = [r.allHeaderFields objectForKey:@"Set-Cookie"];
+                                       NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"sessionid=[a-f0-9]+;"
+                                                                                                              options:0
+                                                                                                                error:&regexError];
+                                       NSRange regexRange = [regex rangeOfFirstMatchInString:cookieString
+                                                                                     options:0
+                                                                                       range:NSMakeRange(0, cookieString.length)];
+                                       // Finds the sessionID in the cookie string
+                                       cookieString = [cookieString substringWithRange:regexRange];
+                                       [[ConnectionManager staticInstance] setSessionCookie:cookieString];
+                                       NSLog(@"%@", cookieString);
+                                   }
+                                   else {
+                                       UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Failure" 
+                                                                                       message:@"Login credentials invalid." 
+                                                                                      delegate:nil
+                                                                             cancelButtonTitle:@"OK" 
+                                                                             otherButtonTitles:nil];
+                                       [alert show];
+                                   }
+                               }
+                           }];
+    
+    if (error)
+        NSLog(@"%@", error.description);
+    
+    // If we logged in (and thus have a session, and thus have a session cookie), return YES
+    if ( cookieString ) {
+        // Cache username and password in our program settings
+        [self.settings setUsername:username];
+        [self.settings setPassword:password];
+        return YES;
+    }
+    
+    return NO;
 }
 
 @end
