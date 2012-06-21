@@ -333,15 +333,18 @@
             cookieString = [cookieString substringWithRange:regexRange];
             [[ConnectionManager staticInstance] setSessionCookie:cookieString];
             NSLog(@"%@", cookieString);
+            
+            // If we logged in (and thus have a session, and thus have a session cookie), return YES
+            if ( cookieString ) {
+                // Cache username and password in our program settings
+                [self.settings setUsername:username];
+                [self.settings setPassword:password];
+                NSError *err;
+                [self.managedObjectContext save:&err];
+                return YES;
+            }
+
         }
-    }
-    
-    // If we logged in (and thus have a session, and thus have a session cookie), return YES
-    if ( cookieString ) {
-        // Cache username and password in our program settings
-        [self.settings setUsername:username];
-        [self.settings setPassword:password];
-        return YES;
     }
     
     return NO;
