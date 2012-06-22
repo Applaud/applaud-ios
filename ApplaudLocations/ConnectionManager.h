@@ -8,6 +8,17 @@
 
 #import <Foundation/Foundation.h>
 
+#define EXAMPLE_URL @"/mobile/example3"
+#define WHEREAMI_URL @"/mobile/whereami"
+#define EMPLOYEES_URL @"/mobile/employees"
+#define EVALUATE_URL @"/mobile/evaluate"
+#define FEEDBACK_URL @"/mobile/general_feedback"
+#define CHECKIN_URL @"/mobile/checkin"
+#define NEWSFEED_URL @"/business/newsfeed"
+#define SURVEY_URL @"/business/get_survey"
+#define RESPONSE_URL @"/mobile/survey_respond"
+#define LOGIN_URL @"/accounts/mobilelogin/"
+
 @interface ConnectionManager : NSObject
 
 // requestType : either GET or POST

@@ -132,7 +132,9 @@
     NSString *postString = [NSString stringWithFormat:@"username=%@&password=%@", username, password];
     NSString *csrfToken = [ConnectionManager getCSRFTokenFromURL:[NSString stringWithFormat:@"%@%@", SERVER_URL, @"/csrf/"]];
     
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", SERVER_URL, @"/accounts/mobilelogin/"]]];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]
+                                    initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",
+                                                                      SERVER_URL, LOGIN_URL]]];
     [request setHTTPBody:[NSData dataWithBytes:[postString UTF8String] length:postString.length]];
     // Put the CSRF token into the HTTP request. Kinda important.
     [request addValue:csrfToken forHTTPHeaderField:@"X-CSRFToken"];

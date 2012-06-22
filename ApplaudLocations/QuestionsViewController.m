@@ -118,7 +118,7 @@
                           nil];
     [ConnectionManager serverRequest:@"POST"
                             withParams:dict
-                                 url:@"/get_survey/"
+                                 url:SURVEY_URL
                             callback: ^(NSData *d) {
                                 [self handleSurveyData:d];
                             }];
@@ -221,7 +221,7 @@
         NSDictionary *params = [[NSDictionary alloc] initWithObjectsAndKeys:answers, @"answers", nil];
         [ConnectionManager serverRequest:@"POST"
                               withParams:params
-                                     url:@"/survey_respond/"
+                                     url:RESPONSE_URL
                                 callback:^(NSData *data) {
                                     // Be sure we've posted correctly.
                                     NSLog(@"%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);

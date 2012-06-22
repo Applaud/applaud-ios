@@ -109,7 +109,7 @@
     if(error) {
         NSLog(@"%@", error);
     }
-    [ConnectionManager serverRequest:@"POST" withData:data url:@"/newsfeed/" callback:^(NSData *data) {
+    [ConnectionManager serverRequest:@"POST" withData:data url:NEWSFEED_URL callback:^(NSData *data) {
 //        NSLog(@"%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
         NSError *e;
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data

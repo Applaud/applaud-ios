@@ -126,7 +126,7 @@
     NSMutableDictionary *ret = [[NSMutableDictionary alloc] init];
     [ret setObject:em forKey:@"employee"];
     [ret setObject:ratings forKey:@"ratings"];
-    [ConnectionManager serverRequest:@"POST" withParams:ret url:@"/evaluate/" callback:^(NSData *d) {
+    [ConnectionManager serverRequest:@"POST" withParams:ret url:EVALUATE_URL callback:^(NSData *d) {
         NSLog(@"%@", [[NSString alloc] initWithData:d encoding:NSUTF8StringEncoding]);        
     }];
 }

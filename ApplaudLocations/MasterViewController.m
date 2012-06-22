@@ -154,7 +154,7 @@
                           bus.goog_id, @"goog_id",
                           bus.name, @"name",
                           nil];
-/*    [ConnectionManager serverRequest:@"POST" withParams:dict url:@"/checkin/" callback:^(NSData *data) {
+/*    [ConnectionManager serverRequest:@"POST" withParams:dict url:CHECKIN_URL callback:^(NSData *data) {
         NSLog(@"here is my checkin data: %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
         NSError *err = nil;
         NSDictionary *busDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&err];
@@ -178,7 +178,7 @@
             self.appDelegate.currentBusiness = bus;
         }
     }];*/
-    NSString *urlString = [[NSString alloc] initWithFormat:@"%@%@", SERVER_URL, @"/checkin/"];
+    NSString *urlString = [[NSString alloc] initWithFormat:@"%@%@", SERVER_URL, CHECKIN_URL];
     NSURL *url = [[NSURL alloc] initWithString:urlString];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
     request.HTTPMethod = @"POST";

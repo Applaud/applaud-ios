@@ -64,7 +64,7 @@
     NSDictionary *dict = [[NSDictionary alloc] initWithObjects:objs forKeys:keys];
     [ConnectionManager serverRequest:@"POST"
                           withParams:dict
-                                 url:@"/general_feedback/"
+                                 url:FEEDBACK_URL
                             callback:^(NSData *d) {
                                 NSLog(@"%@", [[NSString alloc] initWithData:d encoding:NSUTF8StringEncoding]);
                             }];

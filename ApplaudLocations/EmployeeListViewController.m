@@ -93,7 +93,7 @@
     NSDictionary *dict = [[NSDictionary alloc]
                           initWithObjectsAndKeys:[NSNumber numberWithInt:self.appDelegate.currentBusiness.business_id],
                           @"business_id", nil];
-    [ConnectionManager serverRequest:@"POST" withParams:dict url:@"/employees/" callback:^(NSData *dat) {
+    [ConnectionManager serverRequest:@"POST" withParams:dict url:EMPLOYEES_URL callback:^(NSData *dat) {
         NSLog(@"%@", [[NSString alloc] initWithData:dat encoding:NSUTF8StringEncoding]);
         NSError *err = [[NSError alloc] init]; // for debugging, probably not needed anymore
         NSArray *employeeData = [NSJSONSerialization JSONObjectWithData:dat
