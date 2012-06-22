@@ -38,6 +38,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.image.image = self.employee.image;
     [self.bioField setText:self.employee.bio];
     // Do any additional setup after loading the view from its nib.
     [self.nameLabel setText:[NSString stringWithFormat:@"%@ %@",
@@ -93,11 +94,11 @@
 
 - (void)viewDidUnload
 {
-    [self setImage:nil];
     [self setNameLabel:nil];
     [self setBioField:nil];
     [self setScrollView:nil];
     [self setSubmitButton:nil];
+    [self setImage:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;

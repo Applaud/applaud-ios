@@ -23,7 +23,9 @@
         _bio = bio;
         _image = image;
         _ratingDimensions = dims;
-        _employee_id = employee_id; 
+        _employee_id = employee_id;
+        // A test!
+        _image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[[NSURL alloc] initWithString:@"https://secure.gravatar.com/avatar/c0dd9f3e474c7172c4dd254608d8bc6a?s=32&d=identicon&r=PG"]]];
     }
     return self;
 }
