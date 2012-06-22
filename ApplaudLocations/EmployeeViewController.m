@@ -90,6 +90,7 @@
     // Tell our scroll view how big its contents are, so we can scroll in it.
     self.scrollView.contentSize = CGSizeMake(self.view.frame.size.width,
                                              curr_y+(2*RATING_FIELD_HEIGHT));
+//    self.scrollView.pagingEnabled = NO;
 }
 
 - (void)viewDidUnload

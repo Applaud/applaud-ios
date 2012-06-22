@@ -40,7 +40,8 @@
 {
     [super viewDidLoad];
     NSDateFormatter *format = [[NSDateFormatter alloc] init];
-    [format setDateFormat:@"hh:mm eeee dd LLLL yyyy"]; // see the documentation on NSDateFormatter to make sense of the format string
+//    [format setDateFormat:@"eeee LLLL dd hh:mm"]; // see the documentation on NSDateFormatter to make sense of the format string
+    format.dateStyle = NSDateFormatterLongStyle;
     self.titleLabel.text = self.item.title;
     self.bodyText.text = self.item.body;
     self.subtitleLabel.text = self.item.subtitle;

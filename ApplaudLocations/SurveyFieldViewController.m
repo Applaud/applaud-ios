@@ -161,9 +161,10 @@
                                                                       50,
                                                                       WIDGET_HEIGHT)];
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(100,
-                                                                   currenty - 10,
+                                                                   currenty - 15,
                                                                    self.view.frame.size.width - 120,
                                                                    WIDGET_HEIGHT/2)];
+        label.textAlignment = UITextAlignmentCenter;
         label.text = option;
 //        checkButton.backgroundColor = [UIColor greenColor];
         currenty += WIDGET_HEIGHT + 10;
