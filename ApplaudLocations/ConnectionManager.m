@@ -130,7 +130,7 @@
  */
 + (BOOL)authenticateWithUsername:(NSString *)username password:(NSString *)password {
     NSString *postString = [NSString stringWithFormat:@"username=%@&password=%@", username, password];
-    NSString *csrfToken = [ConnectionManager getCSRFTokenFromURL:[NSString stringWithFormat:@"%@%@", SERVER_URL, @"/csrf/"]];
+    NSString *csrfToken = [ConnectionManager getCSRFTokenFromURL:[NSString stringWithFormat:@"%@%@", SERVER_URL, CSRF_URL]];
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc]
                                     initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",

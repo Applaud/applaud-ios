@@ -14,10 +14,11 @@
 #define EVALUATE_URL @"/mobile/evaluate"
 #define FEEDBACK_URL @"/mobile/general_feedback"
 #define CHECKIN_URL @"/mobile/checkin"
-#define NEWSFEED_URL @"/business/newsfeed"
+#define NEWSFEED_URL @"/mobile/newsfeed"
 #define SURVEY_URL @"/business/get_survey"
 #define RESPONSE_URL @"/mobile/survey_respond"
 #define LOGIN_URL @"/accounts/mobilelogin/"
+#define CSRF_URL @"/mobile/csrf/"
 
 @interface ConnectionManager : NSObject
 
