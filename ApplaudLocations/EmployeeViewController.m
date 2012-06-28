@@ -9,6 +9,7 @@
 #import "EmployeeViewController.h"
 #import "Employee.h"
 #import "ConnectionManager.h"
+#import "AppDelegate.h"
 
 @interface EmployeeViewController ()
 
@@ -127,7 +128,16 @@
     [ret setObject:em forKey:@"employee"];
     [ret setObject:ratings forKey:@"ratings"];
     [ConnectionManager serverRequest:@"POST" withParams:ret url:EVALUATE_URL callback:^(NSData *d) {
-        NSLog(@"%@", [[NSString alloc] initWithData:d encoding:NSUTF8StringEncoding]);        
+        NSString *result = [[NSString alloc] initWithData:d encoding:NSUTF8StringEncoding];
+        if([result isEqualToString:@"foo"]) {
+            [[[UIAlertView alloc] initWithTitle:@"Thanks!"
+                                        message:@"We appreciate your feedback."
+                                       delegate:nil
+                              cancelButtonTitle:nil
+                              otherButtonTitles:@"OK", nil] show];
+            NSLog(@"%@", self.parentViewController);
+            [(UITabBarController *)self.appDelegate.window.rootViewController setSelectedIndex:4];
+        }
     }];
 }
 
