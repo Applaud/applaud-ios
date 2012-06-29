@@ -103,6 +103,7 @@
         
         // employeeArray is a list of dictionaries, each containing information about an employee
         for ( NSDictionary *dict in employeeData ) {
+            
             Employee *e = [[Employee alloc] initWithFirstName:[dict objectForKey:@"first_name"]
                                                      lastName:[dict objectForKey:@"last_name"]
                                                           bio:[dict objectForKey:@"bio"]

@@ -62,7 +62,8 @@
     // i will be used as a tag for UISliders, so we can identify which one is which later.
     int i = 0;
     // Parse all of the rating dimensions
-    for ( NSString *dimension in self.employee.ratingDimensions ) {
+    for ( NSDictionary *dimension_dict in self.employee.ratingDimensions ) {
+        NSString *dimension = [dimension_dict objectForKey:@"title"];
         // Create a label
         UILabel *dimensionLabel = [[UILabel alloc] 
                                    initWithFrame:CGRectMake(RATING_FIELD_SPACING,
@@ -120,8 +121,8 @@
     for( UIView *view in self.view.subviews){
         if([view isKindOfClass:[UISlider class]]){
             UISlider *slider = (UISlider *) view;
-            NSString *dimension = [self.ratingDimensions objectForKey:[NSNumber numberWithInt:slider.tag]];
-            [ratings setObject:[NSNumber numberWithFloat: slider.value] forKey:dimension];
+            NSDictionary *dimension_dict = [self.ratingDimensions objectForKey:[NSNumber numberWithInt:slider.tag]];
+            [ratings setObject:[NSNumber numberWithFloat: slider.value] forKey:[dimension_dict objectForKey:@"id"]];
         }
     }
     NSMutableDictionary *ret = [[NSMutableDictionary alloc] init];
