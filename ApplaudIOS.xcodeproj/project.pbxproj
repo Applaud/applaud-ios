@@ -174,11 +174,11 @@
 			children = (
 				1B301C6A158858560038A5BE /* QuestionsViewController.h */,
 				1B301C6B158858560038A5BE /* QuestionsViewController.m */,
-				6F40324B158BA1B700024402 /* Survey.m */,
 				6FFAD3DE158E60A5000CE190 /* SurveyFieldViewController.h */,
 				6FFAD3DF158E60A5000CE190 /* SurveyFieldViewController.m */,
 				6FFAD3E0158E60A5000CE190 /* SurveyFieldViewController.xib */,
 				6F40324A158BA1B700024402 /* Survey.h */,
+				6F40324B158BA1B700024402 /* Survey.m */,
 				6F40324E158BA4C400024402 /* SurveyField.h */,
 				6F40324F158BA4C400024402 /* SurveyField.m */,
 				1B301C6C158858560038A5BE /* QuestionsViewController.xib */,
