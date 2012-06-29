@@ -121,8 +121,8 @@
     for( UIView *view in self.view.subviews){
         if([view isKindOfClass:[UISlider class]]){
             UISlider *slider = (UISlider *) view;
-            NSDictionary *dimension_dict = [self.ratingDimensions objectForKey:[NSNumber numberWithInt:slider.tag]];
-            [ratings setObject:[NSNumber numberWithFloat: slider.value] forKey:[dimension_dict objectForKey:@"id"]];
+//            NSString *dimension = [self.ratingDimensions objectForKey:[NSNumber numberWithInt:slider.tag]];
+            [ratings setObject:[NSNumber numberWithFloat: slider.value] forKey:[[[self.employee.ratingDimensions objectAtIndex:slider.tag] objectForKey:@"id"] description]];
         }
     }
     NSMutableDictionary *ret = [[NSMutableDictionary alloc] init];
@@ -130,7 +130,8 @@
     [ret setObject:ratings forKey:@"ratings"];
     [ConnectionManager serverRequest:@"POST" withParams:ret url:EVALUATE_URL callback:^(NSData *d) {
         NSString *result = [[NSString alloc] initWithData:d encoding:NSUTF8StringEncoding];
-        if([result isEqualToString:@"foo"]) {
+        NSLog(@"%@", result);
+        if([result isEqualToString:@""]) {
             [[[UIAlertView alloc] initWithTitle:@"Thanks!"
                                         message:@"We appreciate your feedback."
                                        delegate:nil
