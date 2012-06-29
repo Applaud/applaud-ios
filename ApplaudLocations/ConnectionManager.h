@@ -18,7 +18,6 @@
 #define SURVEY_URL @"/mobile/get_survey/"
 #define RESPONSE_URL @"/mobile/survey_respond/"
 #define LOGIN_URL @"/accounts/mobilelogin/"
-#define CSRF_URL @"/mobile/csrf/"
 
 @interface ConnectionManager : NSObject
 

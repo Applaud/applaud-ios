@@ -133,8 +133,7 @@
     
     // Get the CSRF token from the login url itself
     NSString *csrfToken = [ConnectionManager getCSRFTokenFromURL:[NSString stringWithFormat:@"%@%@", SERVER_URL, LOGIN_URL]];
-//    NSString *csrfToken = [ConnectionManager getCSRFTokenFromURL:[NSString stringWithFormat:@"%@%@", SERVER_URL, CSRF_URL]];
-    
+
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc]
                                     initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",
                                                                       SERVER_URL, LOGIN_URL]]];
