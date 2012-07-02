@@ -24,7 +24,6 @@
         _image = image;
         _ratingDimensions = dims;
         _employee_id = employee_id;
-        // A test!
         _image = image;
     }
     return self;

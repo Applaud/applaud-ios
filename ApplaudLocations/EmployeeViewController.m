@@ -121,8 +121,8 @@
     for( UIView *view in self.view.subviews){
         if([view isKindOfClass:[UISlider class]]){
             UISlider *slider = (UISlider *) view;
-            NSDictionary *dimension_dict = [self.ratingDimensions objectForKey:[NSNumber numberWithInt:slider.tag]];
-            [ratings setObject:[NSNumber numberWithFloat: slider.value] forKey:[dimension_dict objectForKey:@"id"]];
+            [ratings setObject:[NSNumber numberWithFloat:slider.value]
+                        forKey:[[[self.employee.ratingDimensions objectAtIndex:slider.tag] objectForKey:@"id"] description]];
         }
     }
     NSMutableDictionary *ret = [[NSMutableDictionary alloc] init];
