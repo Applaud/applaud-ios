@@ -123,7 +123,9 @@
             [self.newsFeeds addObject:[[NFItem alloc] initWithTitle:[feed objectForKey:@"title"]
                                                            subtitle:[feed objectForKey:@"subtitle"]
                                                                body:[feed objectForKey:@"body"]
-                                                               date:[format dateFromString:[feed objectForKey:@"date"]]]];
+                                                               date:[format dateFromString:[feed objectForKey:@"date"]]
+                                                              image:[UIImage imageWithData:[NSData dataWithContentsOfURL:
+                                                                                            [[NSURL alloc] initWithString:[feed objectForKey:@"image"]]]]]];
         }
         [self.tableView reloadData];        
     }];

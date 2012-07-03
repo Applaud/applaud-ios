@@ -107,7 +107,7 @@
             Employee *e = [[Employee alloc] initWithFirstName:[dict objectForKey:@"first_name"]
                                                      lastName:[dict objectForKey:@"last_name"]
                                                           bio:[dict objectForKey:@"bio"]
-                                                        image:[[UIImage alloc] init]
+                                                        image:[UIImage imageWithData:[NSData dataWithContentsOfURL:[[NSURL alloc] initWithString:[dict objectForKey:@"image"]]]]
                                                    dimensions:[[dict objectForKey:@"ratings"]
                                                                objectForKey:@"dimensions"]
                                                   employee_id:[[dict objectForKey:@"id"] intValue]];

@@ -19,6 +19,7 @@
 @synthesize bodyText = _bodyText;
 @synthesize subtitleLabel = _subtitleLabel;
 @synthesize dateLabel = _dateLabel;
+@synthesize image = _image;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -38,6 +39,9 @@
  */
 - (void)viewDidLoad
 {
+    if(self.item) {
+        self.image.image = self.item.image;
+    }
     [super viewDidLoad];
     NSDateFormatter *format = [[NSDateFormatter alloc] init];
 //    [format setDateFormat:@"eeee LLLL dd hh:mm"]; // see the documentation on NSDateFormatter to make sense of the format string
@@ -53,6 +57,7 @@
     [self setBodyText:nil];
     [self setSubtitleLabel:nil];
     [self setDateLabel:nil];
+    [self setImage:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
