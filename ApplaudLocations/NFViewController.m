@@ -72,6 +72,7 @@
     }
     // set the label text to the corresponding NFItem title
     cell.textLabel.text = [[self.newsFeeds objectAtIndex:indexPath.row] title];
+    cell.imageView.image = [[self.newsFeeds objectAtIndex:indexPath.row] image];
     return cell;
 }
 
@@ -125,7 +126,8 @@
                                                                body:[feed objectForKey:@"body"]
                                                                date:[format dateFromString:[feed objectForKey:@"date"]]
                                                               image:[UIImage imageWithData:[NSData dataWithContentsOfURL:
-                                                                                            [[NSURL alloc] initWithString:[feed objectForKey:@"image"]]]]]];
+                                                                                            [[NSURL alloc] initWithString:
+                                                                                             [NSString stringWithFormat:@"%@%@", SERVER_URL, [feed objectForKey:@"image"]]]]]]];
         }
         [self.tableView reloadData];        
     }];
