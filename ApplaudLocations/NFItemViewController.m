@@ -69,15 +69,12 @@
 }
 
 /*
- * dismisses the current item detail, and deselects the corresponding row in the table.
- *
- * kinda gross way of finding the right row to deselect; oh well.
- *
-- (IBAction)buttonPressed:(id)sender {
-    UITabBarController *presenting = (UITabBarController *)self.presentingViewController;
-    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-    UITableView *tableView = [[presenting.viewControllers objectAtIndex:3] tableView];
+ * Deselects the corresponding row in the NFViewController when the back button is pressed.
+ */
+- (void)viewWillDisappear:(BOOL)animated {
+    UINavigationController *parent = (UINavigationController *)self.parentViewController;
+    UITableView *tableView = [[parent.viewControllers objectAtIndex:0] tableView];
     NSIndexPath *path = [tableView indexPathForSelectedRow];
     [tableView deselectRowAtIndexPath:path animated:YES];
-}*/
+}
 @end

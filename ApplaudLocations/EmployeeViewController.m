@@ -107,6 +107,16 @@
     // e.g. self.myOutlet = nil;
 }
 
+/*
+ * Deselects the corresponding row in the NFViewController when the back button is pressed.
+ */
+- (void)viewWillDisappear:(BOOL)animated {
+    UINavigationController *parent = (UINavigationController *)self.parentViewController;
+    UITableView *tableView = [[parent.viewControllers objectAtIndex:0] tableView];
+    NSIndexPath *path = [tableView indexPathForSelectedRow];
+    [tableView deselectRowAtIndexPath:path animated:YES];
+}
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
