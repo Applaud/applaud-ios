@@ -40,7 +40,7 @@
 - (void)viewDidLoad
 {
     if(self.item) {
-        self.image.image = self.item.image;
+        self.image.image = [self.item.image scaleToSize:130.0];
     }
     [super viewDidLoad];
     NSDateFormatter *format = [[NSDateFormatter alloc] init];

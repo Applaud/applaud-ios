@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "NFItem.h"
+#import "UIImage+Scale.h"
 
 @interface NFItemViewController : UIViewController
 @property (nonatomic, strong) NFItem *item;

@@ -72,7 +72,7 @@
     }
     // set the label text to the corresponding NFItem title
     cell.textLabel.text = [[self.newsFeeds objectAtIndex:indexPath.row] title];
-    cell.imageView.image = [[self.newsFeeds objectAtIndex:indexPath.row] image];
+    cell.imageView.image = [[[self.newsFeeds objectAtIndex:indexPath.row] image] scaleToSize:35.0];
     return cell;
 }
 
