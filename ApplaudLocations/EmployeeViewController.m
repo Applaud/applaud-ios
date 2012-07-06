@@ -71,19 +71,33 @@
                                                             self.view.frame.size.width-(2*RATING_FIELD_SPACING),
                                                             RATING_FIELD_HEIGHT/2)];
         [dimensionLabel setText:dimension];
-        // Create a slider
-        UISlider *dimensionSlider = [[UISlider alloc] 
-                                     initWithFrame:CGRectMake(RATING_FIELD_SPACING, 
-                                                              curr_y + 20,
-                                                              self.view.frame.size.width-(2*RATING_FIELD_SPACING),                                                                  RATING_FIELD_HEIGHT)];
-        [dimensionSlider setMinimumValue:0.0f];
-        [dimensionSlider setMaximumValue:1.0f];
-        curr_y += RATING_FIELD_HEIGHT;
-        dimensionSlider.tag = i++;
-        [self.ratingDimensions setObject:dimension forKey:[NSNumber numberWithInt:dimensionSlider.tag]]; // NSNumbers let us put an int into the dictionary
-        
         [self.view addSubview:dimensionLabel];
-        [self.view addSubview:dimensionSlider];
+        // Create a slider
+        if([[dimension_dict objectForKey:@"is_text"] boolValue]) {
+            UITextField *dimensionText = [[UITextField alloc]
+                                          initWithFrame:CGRectMake(RATING_FIELD_SPACING,
+                                                                   curr_y + 30,
+                                                                   self.view.frame.size.width-(2*RATING_FIELD_SPACING),
+                                                                   RATING_FIELD_HEIGHT/2)];
+            dimensionText.borderStyle = UITextBorderStyleRoundedRect;
+            dimensionText.tag = i++;
+            [self.ratingDimensions setObject:dimension forKey:[NSNumber numberWithInt:dimensionText.tag]];
+            [self.view addSubview:dimensionText];
+        }
+        else {
+            UISlider *dimensionSlider = [[UISlider alloc] 
+                                         initWithFrame:CGRectMake(RATING_FIELD_SPACING, 
+                                                                  curr_y + 20,
+                                                                  self.view.frame.size.width-(2*RATING_FIELD_SPACING),
+                                                                  RATING_FIELD_HEIGHT)];
+            [dimensionSlider setMinimumValue:0.0f];
+            [dimensionSlider setMaximumValue:1.0f];
+
+            dimensionSlider.tag = i++;
+            [self.ratingDimensions setObject:dimension forKey:[NSNumber numberWithInt:dimensionSlider.tag]]; // NSNumbers let us put an int into the dictionary
+            [self.view addSubview:dimensionSlider];
+        }
+        curr_y += RATING_FIELD_HEIGHT;
     }
     self.submitButton.frame = CGRectMake(self.view.frame.size.width - 100,
                                          curr_y,
@@ -130,9 +144,14 @@
     NSMutableDictionary *ratings = [[NSMutableDictionary alloc] init];
     for( UIView *view in self.view.subviews){
         if([view isKindOfClass:[UISlider class]]){
-            UISlider *slider = (UISlider *) view;
+            UISlider *slider = (UISlider *)view;
             [ratings setObject:[NSNumber numberWithFloat:slider.value]
                         forKey:[[[self.employee.ratingDimensions objectAtIndex:slider.tag] objectForKey:@"id"] description]];
+        }
+        else if([view isKindOfClass:[UITextField class]]) {
+            UITextField *field = (UITextField *)view;
+            [ratings setObject:field.text
+                        forKey:[[[self.employee.ratingDimensions objectAtIndex:field.tag] objectForKey:@"id"] description]];
         }
     }
     NSMutableDictionary *ret = [[NSMutableDictionary alloc] init];
