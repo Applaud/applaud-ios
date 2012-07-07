@@ -10,7 +10,7 @@
 #import "BusinessLocationsTracker.h"
 @class AppDelegate;
 
-@interface GeneralFeedbackViewController : UIViewController <UITextFieldDelegate>
+@interface GeneralFeedbackViewController : UIViewController <UITextFieldDelegate, UIAlertViewDelegate>
 @property (weak, nonatomic) AppDelegate *appDelegate;
 @property (weak, nonatomic) UINavigationController *navigationController;
 @property (weak, nonatomic) IBOutlet UILabel *questionLabel;

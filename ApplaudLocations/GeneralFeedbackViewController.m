@@ -67,7 +67,19 @@
                                  url:FEEDBACK_URL
                             callback:^(NSData *d) {
                                 NSLog(@"%@", [[NSString alloc] initWithData:d encoding:NSUTF8StringEncoding]);
+                                [[[UIAlertView alloc] initWithTitle:@"Thanks!"
+                                                            message:@"We appreciate your feedback."
+                                                           delegate:self
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil] show];
                             }];
     [sender resignFirstResponder];
+}
+
+/*
+ * When the "Thanks!" alert view is dismissed, go back to the newsfeed.
+ */
+-(void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    [self.parentViewController.tabBarController setSelectedIndex:4];
 }
 @end
