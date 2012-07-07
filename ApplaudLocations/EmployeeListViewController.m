@@ -26,15 +26,26 @@
     if (self) {
         [self setTitle:@"Employees"];
         _employeeControllers = [[NSMutableArray alloc] init];
+        NSLog(@"elvc registering for notification");
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(notificationReceived:)
+                                                     name:@"BUSINESS_SET"
+                                                   object:nil];
     }
     return self;
+}
+
+-(void)notificationReceived:(NSNotification *)notification {
+    if([notification.name isEqualToString:@"BUSINESS_SET"]) {
+        [self getEmployees];
+    }
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    [self getEmployees];
+//    [self getEmployees];
 }
 
 - (void)viewDidUnload

@@ -41,6 +41,7 @@
         lastCoordinate = newLocation.coordinate;
         [self findBusinessesWithLocation:newLocation.coordinate];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"LOCATION_CHANGE" object:newLocation];
+        NSLog(@"<----------> CHANGING LOCATION <---------->");
     }
     
 }
@@ -76,9 +77,9 @@
             
             [businessArray addObject:bus];
         }
-        
+        NSLog(@"sent BUSINESS_RECEIVED");
         // put some info in the notificationcenter
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"BUSINESS_RECEIVED" object:businessArray]; 
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"BUSINESS_RECEIVED" object:businessArray];
     };
 
 /*    NSArray *keyArray = [[NSArray alloc] initWithObjects:@"latitude", @"longitude", nil];

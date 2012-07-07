@@ -19,5 +19,5 @@
 
 // Fetches the list of employees from the business
 - (void)getEmployees;
-
+- (void)notificationReceived:(NSNotification *)notification;
 @end

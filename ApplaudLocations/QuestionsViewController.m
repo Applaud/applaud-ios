@@ -25,14 +25,25 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         _surveyControllers = [[NSMutableArray alloc] init];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(notificationReceived:)
+                                                     name:@"BUSINESS_SET"
+                                                   object:nil];
     }
     return self;
+}
+
+-(void)notificationReceived:(NSNotification *)notification {
+    if([notification.name isEqualToString:@"BUSINESS_SET"]) {
+        [self getSurveys];
+    }
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    self.summaryText.text = self.survey.summary;
 	if(nil == _survey) {
         [self getSurveys];
 	}

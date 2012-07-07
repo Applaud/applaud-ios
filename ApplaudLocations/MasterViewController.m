@@ -207,6 +207,8 @@
         // Set app delegate's current business from what was returned by the server
         NSLog(@"Business from server: %@",bus.description);
         self.appDelegate.currentBusiness = bus;
+        // Let everyone know that we have a real business now
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"BUSINESS_SET" object:nil];
     }
     if ( self.settings.firstTimeLaunching ) {
         FirstTimeNavigatorViewController *ftnvc = [[FirstTimeNavigatorViewController alloc] initWithNibName:@"FirstTimeNavigatorViewControllerIphone" bundle:nil];

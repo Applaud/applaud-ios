@@ -20,4 +20,6 @@
 @property (weak, nonatomic) IBOutlet UITableView *questionsTable;
 @property (strong, nonatomic) UINavigationController *navigationController;
 - (void)buttonPressed;
+-(void)getSurveys;
+-(void)notificationReceived:(NSNotification *)notification;
 @end
