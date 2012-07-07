@@ -79,6 +79,8 @@
                                                                    curr_y + 30,
                                                                    self.view.frame.size.width-(2*RATING_FIELD_SPACING),
                                                                    RATING_FIELD_HEIGHT/2)];
+            dimensionText.returnKeyType = UIReturnKeyDone;
+            dimensionText.delegate = self;
             dimensionText.borderStyle = UITextBorderStyleRoundedRect;
             dimensionText.tag = i++;
             [self.ratingDimensions setObject:dimension forKey:[NSNumber numberWithInt:dimensionText.tag]];
@@ -158,8 +160,6 @@
     [ret setObject:em forKey:@"employee"];
     [ret setObject:ratings forKey:@"ratings"];
     [ConnectionManager serverRequest:@"POST" withParams:ret url:EVALUATE_URL callback:^(NSData *d) {
-//        NSString *result = [[NSString alloc] initWithData:d encoding:NSUTF8StringEncoding];
-//        if([result isEqualToString:@"foo"]) {
             [[[UIAlertView alloc] initWithTitle:@"Thanks!"
                                         message:@"We appreciate your feedback."
                                        delegate:nil
@@ -167,8 +167,14 @@
                               otherButtonTitles:@"OK", nil] show];
             NSLog(@"%@", self.parentViewController);
             [(UITabBarController *)self.appDelegate.window.rootViewController setSelectedIndex:4];
-//        }
     }];
+}
+
+#pragma mark -
+#pragma UITextFieldDelegate methods
+-(BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
 }
 
 @end

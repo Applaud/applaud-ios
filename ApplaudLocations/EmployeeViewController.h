@@ -15,7 +15,7 @@
 #define RATING_FIELDS_BEGIN 300
 #define RATING_FIELD_SPACING 20
 
-@interface EmployeeViewController : UIViewController
+@interface EmployeeViewController : UIViewController <UITextFieldDelegate>
 
 @property (nonatomic, weak) AppDelegate *appDelegate;
 @property (nonatomic, strong) Employee *employee;
