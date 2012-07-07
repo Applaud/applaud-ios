@@ -158,8 +158,8 @@
     [ret setObject:em forKey:@"employee"];
     [ret setObject:ratings forKey:@"ratings"];
     [ConnectionManager serverRequest:@"POST" withParams:ret url:EVALUATE_URL callback:^(NSData *d) {
-        NSString *result = [[NSString alloc] initWithData:d encoding:NSUTF8StringEncoding];
-        if([result isEqualToString:@"foo"]) {
+//        NSString *result = [[NSString alloc] initWithData:d encoding:NSUTF8StringEncoding];
+//        if([result isEqualToString:@"foo"]) {
             [[[UIAlertView alloc] initWithTitle:@"Thanks!"
                                         message:@"We appreciate your feedback."
                                        delegate:nil
@@ -167,7 +167,7 @@
                               otherButtonTitles:@"OK", nil] show];
             NSLog(@"%@", self.parentViewController);
             [(UITabBarController *)self.appDelegate.window.rootViewController setSelectedIndex:4];
-        }
+//        }
     }];
 }
 
