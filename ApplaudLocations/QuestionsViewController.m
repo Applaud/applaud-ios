@@ -234,13 +234,6 @@
                               withParams:params
                                      url:RESPONSE_URL
                                 callback:^(NSData *data) {
-                                    // Be sure we've posted correctly.
-                                    NSLog(@"%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
-                                    [[[UIAlertView alloc] initWithTitle:@"Thanks!"
-                                                                message:@"We appreciate your feedback."
-                                                               delegate:self
-                                                      cancelButtonTitle:@"OK"
-                                                      otherButtonTitles:nil] show];
                                     // Reset all the questions and change to the news feed.
                                     int i;
                                     for(i = 0; i < self.surveyControllers.count; i++) {
@@ -248,6 +241,12 @@
                                     }
                                     [self.questionsTable reloadData];
                                 }];
+        [[[UIAlertView alloc] initWithTitle:@"Thanks!"
+                                    message:@"We appreciate your feedback."
+                                   delegate:self
+                          cancelButtonTitle:@"OK"
+                          otherButtonTitles:nil] show];
+
     }
     else {
         [[[UIAlertView alloc] initWithTitle:@"Alert!"

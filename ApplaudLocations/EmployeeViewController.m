@@ -159,15 +159,14 @@
     NSMutableDictionary *ret = [[NSMutableDictionary alloc] init];
     [ret setObject:em forKey:@"employee"];
     [ret setObject:ratings forKey:@"ratings"];
-    [ConnectionManager serverRequest:@"POST" withParams:ret url:EVALUATE_URL callback:^(NSData *d) {
-            [[[UIAlertView alloc] initWithTitle:@"Thanks!"
-                                        message:@"We appreciate your feedback."
-                                       delegate:nil
-                              cancelButtonTitle:nil
-                              otherButtonTitles:@"OK", nil] show];
-            NSLog(@"%@", self.parentViewController);
-            [(UITabBarController *)self.appDelegate.window.rootViewController setSelectedIndex:4];
-    }];
+    [ConnectionManager serverRequest:@"POST" withParams:ret url:EVALUATE_URL callback:nil];
+    [[[UIAlertView alloc] initWithTitle:@"Thanks!"
+                                message:@"We appreciate your feedback."
+                               delegate:nil
+                      cancelButtonTitle:nil
+                      otherButtonTitles:@"OK", nil] show];
+    NSLog(@"%@", self.parentViewController);
+    [(UITabBarController *)self.appDelegate.window.rootViewController setSelectedIndex:4];
 }
 
 #pragma mark -
