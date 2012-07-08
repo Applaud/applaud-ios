@@ -246,7 +246,6 @@
                                    delegate:self
                           cancelButtonTitle:@"OK"
                           otherButtonTitles:nil] show];
-
     }
     else {
         [[[UIAlertView alloc] initWithTitle:@"Alert!"
