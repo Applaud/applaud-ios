@@ -7,6 +7,7 @@
 //
 
 #import "EmployeeViewController.h"
+#import "EmployeeListViewController.h"
 #import "Employee.h"
 #import "ConnectionManager.h"
 #import "AppDelegate.h"
@@ -167,6 +168,11 @@
                       otherButtonTitles:@"OK", nil] show];
     NSLog(@"%@", self.parentViewController);
     [(UITabBarController *)self.appDelegate.window.rootViewController setSelectedIndex:4];
+    UINavigationController *parent = (UINavigationController *)self.parentViewController;
+    [parent popViewControllerAnimated:NO];
+    EmployeeListViewController *elvc = [parent.viewControllers objectAtIndex:0];
+//    [elvc.employeeControllers replaceObjectAtIndex:[[elvc.tableView indexPathForSelectedRow] row]
+    [elvc.employeeControllers replaceObjectAtIndex:[[elvc.tableView indexPathForSelectedRow] row] withObject:[[NSNull alloc] init]];
 }
 
 #pragma mark -
