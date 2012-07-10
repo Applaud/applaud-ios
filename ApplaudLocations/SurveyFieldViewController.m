@@ -249,20 +249,4 @@
     }
     return nil; // If we don't have an answer.
 }
-
-#pragma mark -
-#pragma Checkbox delegate
-
-/*
- * When the button is pressed, change its background color.
- *
-- (void)buttonChecked:(id)sender {
-    UIButton *button = (UIButton *)sender;
-    if([button.backgroundColor isEqual:[UIColor greenColor]]) {
-        button.backgroundColor = [UIColor blueColor];
-    }
-    else {
-        button.backgroundColor = [UIColor greenColor];   
-    }
-}*/
 @end

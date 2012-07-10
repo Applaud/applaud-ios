@@ -38,6 +38,7 @@
     // Check distance
     if ( [[[CLLocation alloc] initWithLatitude:lastCoordinate.latitude longitude:lastCoordinate.longitude] distanceFromLocation:newLocation] > BUSINESS_RADIUS_EXIT) {
         // We left the business, or are starting up
+        NSLog(@"<----- OLD: %@     NEW:%@  ----->", newLocation, oldLocation);
         lastCoordinate = newLocation.coordinate;
         [self findBusinessesWithLocation:newLocation.coordinate];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"LOCATION_CHANGE" object:newLocation];
