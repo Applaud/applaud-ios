@@ -15,9 +15,12 @@
 @property (nonatomic, copy) NSString *goog_id;
 @property (nonatomic, copy) NSNumber *latitude;
 @property (nonatomic, copy) NSNumber *longitude;
+@property (nonatomic, strong) UIColor *primaryColor;
+@property (nonatomic, strong) UIColor *secondaryColor;
 
 -(id) initWithName:(NSString *)name type:(NSString *)type goog_id:(NSString *)goog_id
-          latitude:(NSNumber *) latitude longitude:(NSNumber *) longitude;
+          latitude:(NSNumber *) latitude longitude:(NSNumber *) longitude
+      primaryColor:(NSString *)primaryColor secondaryColor:(NSString *)secondaryColor;
 
 -(id) initWithName:(NSString *)name type:(NSString *)type business_id:(int)bus_id
           latitude:(NSNumber *) latitude longitude:(NSNumber *) longitude;

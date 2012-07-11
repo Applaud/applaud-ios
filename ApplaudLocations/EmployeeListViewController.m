@@ -38,6 +38,10 @@
 -(void)notificationReceived:(NSNotification *)notification {
     if([notification.name isEqualToString:@"BUSINESS_SET"]) {
         [self getEmployees];
+        self.navigationController.navigationBar.tintColor = self.appDelegate.currentBusiness.primaryColor;
+        self.tableView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+        self.view.opaque = NO;
+        self.view.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
     }
 }
 
@@ -80,7 +84,10 @@
     
     // Configure the cell...
     [cell.textLabel setText:[[self.employeeArray objectAtIndex:indexPath.row] description]];
-    
+    cell.contentView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+    cell.textLabel.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+    cell.detailTextLabel.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+    tableView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
     return cell;
 }
 
@@ -90,6 +97,7 @@
         evc = [[EmployeeViewController alloc] initWithEmployee:[self.employeeArray objectAtIndex:indexPath.row]];
         evc.appDelegate = self.appDelegate;
         [self.employeeControllers replaceObjectAtIndex:indexPath.row withObject:evc];
+        evc.view.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
     }
     else {
         evc = [self.employeeControllers objectAtIndex:indexPath.row];

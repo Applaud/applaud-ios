@@ -42,6 +42,7 @@
     [super viewDidLoad];
     self.image.image = self.employee.image;
     [self.bioField setText:self.employee.bio];
+    self.bioField.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
     // Do any additional setup after loading the view from its nib.
     [self.nameLabel setText:[NSString stringWithFormat:@"%@ %@",
                              self.employee.firstName, self.employee.lastName]];
@@ -72,8 +73,8 @@
                                                             self.view.frame.size.width-(2*RATING_FIELD_SPACING),
                                                             RATING_FIELD_HEIGHT/2)];
         [dimensionLabel setText:dimension];
+        dimensionLabel.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
         [self.view addSubview:dimensionLabel];
-        // Create a slider
         if([[dimension_dict objectForKey:@"is_text"] boolValue]) {
             UITextField *dimensionText = [[UITextField alloc]
                                           initWithFrame:CGRectMake(RATING_FIELD_SPACING,
@@ -90,12 +91,13 @@
         else {
             UISlider *dimensionSlider = [[UISlider alloc] 
                                          initWithFrame:CGRectMake(RATING_FIELD_SPACING, 
-                                                                  curr_y + 20,
+                                                                  curr_y + 30,
                                                                   self.view.frame.size.width-(2*RATING_FIELD_SPACING),
                                                                   RATING_FIELD_HEIGHT)];
+            curr_y += 20;
             [dimensionSlider setMinimumValue:0.0f];
             [dimensionSlider setMaximumValue:1.0f];
-
+            dimensionSlider.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
             dimensionSlider.tag = i++;
             [self.ratingDimensions setObject:dimension forKey:[NSNumber numberWithInt:dimensionSlider.tag]]; // NSNumbers let us put an int into the dictionary
             [self.view addSubview:dimensionSlider];
@@ -103,7 +105,7 @@
         curr_y += RATING_FIELD_HEIGHT;
     }
     self.submitButton.frame = CGRectMake(self.view.frame.size.width - 100,
-                                         curr_y,
+                                         curr_y + 20,
                                          75,
                                          50);
     // Tell our scroll view how big its contents are, so we can scroll in it.

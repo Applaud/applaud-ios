@@ -25,8 +25,21 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(notificationReceived:)
+                                                     name:@"BUSINESS_SET"
+                                                   object:nil];
+
     }
     return self;
+}
+
+-(void)notificationReceived:(NSNotification *)notification {
+    if([notification.name isEqualToString:@"BUSINESS_SET"]) {
+        self.navigationController.navigationBar.tintColor = self.appDelegate.currentBusiness.primaryColor;
+        self.view.opaque = NO;
+        self.view.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+    }
 }
 
 - (void)viewDidLoad

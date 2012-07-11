@@ -36,6 +36,13 @@
 -(void)notificationReceived:(NSNotification *)notification {
     if([notification.name isEqualToString:@"BUSINESS_SET"]) {
         [self getSurveys];
+        self.view.opaque = YES;
+        self.navigationController.navigationBar.tintColor = self.appDelegate.currentBusiness.primaryColor;
+        self.questionsTable.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+        self.summaryText.opaque = NO;
+        self.summaryText.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+        self.view.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+        NSLog(@"color!: %@", self.appDelegate.currentBusiness.primaryColor);
     }
 }
 
@@ -82,6 +89,10 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
         cell.detailTextLabel.text = @"Unanswered";
     }
+    cell.contentView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+    cell.textLabel.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+    cell.detailTextLabel.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+    tableView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
     SurveyField *field = [self.survey.fields objectAtIndex:indexPath.row];
     cell.textLabel.text = field.label;
     return cell;
@@ -98,8 +109,10 @@
     }
     // If it's not a survey with an answer, make sure it's reset to white and that its subtitle is "unanswered".
     else {
-        cell.backgroundColor = [UIColor whiteColor];
+        cell.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
         cell.detailTextLabel.text = @"Unanswered";
+        cell.detailTextLabel.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+        cell.textLabel.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
     }
 }
 
@@ -113,6 +126,8 @@
         sfvc = [[SurveyFieldViewController alloc] initWithNibName:@"SurveyFieldViewController" bundle:nil];
         sfvc.field = [self.survey.fields objectAtIndex:indexPath.row];
         [self.surveyControllers replaceObjectAtIndex:indexPath.row withObject:sfvc];
+        // Give the SurveyViewController the right background color.
+        sfvc.view.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
     }
     else {
         sfvc = [self.surveyControllers objectAtIndex:indexPath.row];
@@ -188,10 +203,11 @@
     [[self navigationItem] setTitle:self.survey.title];
     
     UIBarButtonItem *submitButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Submit"
-                                                                         style:UIBarButtonItemStyleBordered
+                                                                         style:UIBarButtonItemStylePlain
                                                                         target:self
                                                                         action:@selector(buttonPressed)];
-    submitButtonItem.tintColor = [UIColor colorWithRed:0.2 green:0.8 blue:0.0 alpha:1.0];
+    submitButtonItem.tintColor = self.appDelegate.currentBusiness.secondaryColor;
+//    submitButtonItem.
     [[self navigationItem] setRightBarButtonItem:submitButtonItem];
     int i;
     for(i = 0; i < self.survey.answers.count; i++) {

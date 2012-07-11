@@ -11,6 +11,7 @@
 #import "SurveyFieldViewController.h"
 #import "ConnectionManager.h"
 #import "AppDelegate.h"
+#import "Business.h"
 
 @interface QuestionsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
 @property (nonatomic, weak) AppDelegate *appDelegate;

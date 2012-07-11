@@ -25,20 +25,27 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-
         // Let us know about updates from the newsfeed.
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newfeedReceived:) name:@"NEWSFEED_RECEIVED" object:nil];
+        // [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newfeedReceived:) name:@"NEWSFEED_RECEIVED" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notificationReceived:) name:@"BUSINESS_SET" object:nil];
         _newsFeeds = [[NSMutableArray alloc] init];
         [self setTitle:@"Newsfeed"];
     }
     return self;
 }
 
+-(void)notificationReceived:(NSNotification *)notification {
+    if([notification.name isEqualToString:@"BUSINESS_SET"]) {
+        [self getNewsFeeds];
+        self.navigationController.navigationBar.tintColor = self.appDelegate.currentBusiness.primaryColor;
+        self.tableView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+    }
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    [self getNewsFeeds];
 }
 
 - (void)viewDidUnload
@@ -73,6 +80,10 @@
     // set the label text to the corresponding NFItem title
     cell.textLabel.text = [[self.newsFeeds objectAtIndex:indexPath.row] title];
     cell.imageView.image = [[[self.newsFeeds objectAtIndex:indexPath.row] image] scaleToSize:35.0];
+    cell.contentView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+    cell.textLabel.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+    cell.detailTextLabel.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+    tableView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
     return cell;
 }
 
@@ -85,6 +96,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NFItemViewController *nfivc = [[NFItemViewController alloc] initWithNibName:@"NFItemViewController" bundle:nil];
     nfivc.item = [self.newsFeeds objectAtIndex:indexPath.row];
+    nfivc.view.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+    nfivc.bodyText.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
     [self.navigationController pushViewController:nfivc animated:YES];
 }
 

@@ -187,8 +187,8 @@
     NSError *err;
     NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:&err];
     NSLog(@"here is my checkin data: %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
-    NSError *e = nil;
-    NSDictionary *busDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&e];
+    // NSError *e = nil;
+    // NSDictionary *busDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&e];
     if ( err ) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Checkin Error"
                                                         message:err.description 
@@ -198,17 +198,18 @@
         [alert show];
     }
     else {
-        bus = [[Business alloc] initWithName:[busDict objectForKey:@"name"]
+/*        bus = [[Business alloc] initWithName:[busDict objectForKey:@"name"]
                                         type:bus.type
                                  business_id:[[busDict objectForKey:@"business_id"] intValue]
                                     latitude:[busDict objectForKey:@"latitude"]
-                                   longitude:[busDict objectForKey:@"longitude"]];
+                                   longitude:[busDict objectForKey:@"longitude"]];*/
+        bus = [self.locationsArray objectAtIndex:indexPath.row];
         
         // Set app delegate's current business from what was returned by the server
         NSLog(@"Business from server: %@",bus.description);
         self.appDelegate.currentBusiness = bus;
         // Let everyone know that we have a real business now
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"BUSINESS_SET" object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"BUSINESS_SET" object:bus];
     }
     if ( self.settings.firstTimeLaunching ) {
         FirstTimeNavigatorViewController *ftnvc = [[FirstTimeNavigatorViewController alloc] initWithNibName:@"FirstTimeNavigatorViewControllerIphone" bundle:nil];

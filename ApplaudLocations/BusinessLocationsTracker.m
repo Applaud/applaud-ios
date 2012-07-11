@@ -73,9 +73,12 @@
                                                       type:[dict objectForKey:@"type"]
                                                    goog_id:[dict objectForKey:@"goog_id"]
                                                   latitude:[dict objectForKey:@"latitude"]
-                                                 longitude:[dict objectForKey:@"longitude"]];
+                                                 longitude:[dict objectForKey:@"longitude"]
+                                              primaryColor:[dict objectForKey:@"primary"]
+                                            secondaryColor:[dict objectForKey:@"secondary"]];
+            bus.business_id = [[dict objectForKey:@"id"] intValue];
             NSLog(@"Got business: %@", bus.description);
-            
+            NSLog(@"%@", [dict objectForKey:@"primary"]);
             [businessArray addObject:bus];
         }
         NSLog(@"sent BUSINESS_RECEIVED");
