@@ -148,13 +148,6 @@
     int currenty = WIDGET_BEGIN;
     int i = 0;
     for(NSString *option in self.field.options) {
-/*        UIButton *checkButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        checkButton.frame = CGRectMake(20,
-                                       currenty,
-                                       50,
-                                       WIDGET_HEIGHT/2);*/
-        /* Lets us change the background on click. */
-//        [checkButton addTarget:self action:@selector(buttonChecked:) forControlEvents:UIControlEventTouchUpInside];
         UISwitch *checkbox = [[UISwitch alloc] initWithFrame:CGRectMake(20,
                                                                       currenty,
                                                                       50,
@@ -163,14 +156,15 @@
                                                                    currenty - 15,
                                                                    self.view.frame.size.width - 120,
                                                                    WIDGET_HEIGHT/2)];
+        // Give it the right color.
+        label.opaque = YES;
+        label.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
         label.textAlignment = UITextAlignmentCenter;
         label.text = option;
-//        checkButton.backgroundColor = [UIColor greenColor];
         currenty += WIDGET_HEIGHT + 10;
         // Associate the checkbox with its question string.
         checkbox.tag = i++;
         [self.labels addObject:label.text];
-//        [self.view addSubview:checkButton];
         [self.view addSubview:label];
         [self.view addSubview:checkbox];
     }

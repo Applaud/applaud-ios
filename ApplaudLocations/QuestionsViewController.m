@@ -127,6 +127,7 @@
         sfvc.field = [self.survey.fields objectAtIndex:indexPath.row];
         [self.surveyControllers replaceObjectAtIndex:indexPath.row withObject:sfvc];
         // Give the SurveyViewController the right background color.
+        sfvc.view.opaque = YES;
         sfvc.view.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
     }
     else {
