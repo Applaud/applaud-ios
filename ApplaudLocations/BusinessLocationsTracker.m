@@ -41,7 +41,7 @@
         NSLog(@"<----- OLD: %@     NEW:%@  ----->", newLocation, oldLocation);
         lastCoordinate = newLocation.coordinate;
         [self findBusinessesWithLocation:newLocation.coordinate];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"LOCATION_CHANGE" object:newLocation];
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"LOCATION_CHANGE" object:newLocation];
         NSLog(@"<----------> CHANGING LOCATION <---------->");
     }
     
@@ -76,7 +76,7 @@
                                                  longitude:[dict objectForKey:@"longitude"]
                                               primaryColor:[dict objectForKey:@"primary"]
                                             secondaryColor:[dict objectForKey:@"secondary"]];
-            bus.business_id = [[dict objectForKey:@"id"] intValue];
+            bus.business_id = [[dict objectForKey:@"business_id"] intValue];
             NSLog(@"Got business: %@", bus.description);
             NSLog(@"%@", [dict objectForKey:@"primary"]);
             [businessArray addObject:bus];

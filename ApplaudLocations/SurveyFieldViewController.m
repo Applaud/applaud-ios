@@ -88,7 +88,7 @@
         [qvc.survey.answers replaceObjectAtIndex:row withObject:answer];
         UITableViewCell *answerCell = [qvc.questionsTable cellForRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0]];
         answerCell.detailTextLabel.text = [answer componentsJoinedByString:@", "];
-        answerCell.contentView.backgroundColor = [UIColor greenColor];
+//        answerCell.contentView.backgroundColor = [UIColor greenColor];
     }
     [qvc.questionsTable reloadData];        
 }

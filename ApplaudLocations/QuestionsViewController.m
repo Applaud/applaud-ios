@@ -105,7 +105,7 @@
     if([[self.surveyControllers objectAtIndex:indexPath.row] isKindOfClass:[SurveyFieldViewController class]] &&
        [(SurveyFieldViewController *)[self.surveyControllers objectAtIndex:indexPath.row] getAnswer].count &&
        ![[[(SurveyFieldViewController *)[self.surveyControllers objectAtIndex:indexPath.row] getAnswer] objectAtIndex:0] isEqualToString:@""]) {
-        cell.backgroundColor = [UIColor greenColor];
+       // cell.backgroundColor = [UIColor greenColor];
     }
     // If it's not a survey with an answer, make sure it's reset to white and that its subtitle is "unanswered".
     else {
