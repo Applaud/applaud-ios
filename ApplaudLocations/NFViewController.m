@@ -45,7 +45,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    
+    [self.tableView setBackgroundColor:self.appDelegate.currentBusiness.secondaryColor];
 }
 
 - (void)viewDidUnload
@@ -65,8 +66,12 @@
 #pragma mark -
 #pragma UITableView data source methods
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return self.newsFeeds.count;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -77,13 +82,16 @@
                                       reuseIdentifier:CellIdentifier];
         cell.editing = NO;
     }
+        
     // set the label text to the corresponding NFItem title
-    cell.textLabel.text = [[self.newsFeeds objectAtIndex:indexPath.row] title];
-    cell.imageView.image = [[[self.newsFeeds objectAtIndex:indexPath.row] image] scaleToSize:35.0];
-    cell.contentView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
-    cell.textLabel.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
-    cell.detailTextLabel.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
-    tableView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+    cell.textLabel.text = [[self.newsFeeds objectAtIndex:indexPath.section] title];
+    cell.textLabel.numberOfLines = 0;
+    cell.textLabel.lineBreakMode = UILineBreakModeWordWrap;
+    cell.imageView.image = [[[self.newsFeeds objectAtIndex:indexPath.section] image] scaleToSize:35.0];
+//    cell.contentView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+//    cell.textLabel.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+//    cell.detailTextLabel.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+
     return cell;
 }
 
