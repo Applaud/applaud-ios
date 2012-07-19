@@ -148,6 +148,7 @@
                                  url:SURVEY_URL
                             callback: ^(NSData *d) {
                                 [self handleSurveyData:d];
+                                [[NSNotificationCenter defaultCenter] postNotificationName:@"DOWNLOAD_FINISHED" object:nil];
                             }];
 }
 

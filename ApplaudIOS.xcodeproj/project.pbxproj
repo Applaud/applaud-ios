@@ -250,9 +250,9 @@
 				6F2A39161587B2AB0024FB52 /* Business.m */,
 				1B9389B91584EF010088F468 /* BusinessLocationsTracker.h */,
 				1B9389BA1584EF010088F468 /* BusinessLocationsTracker.m */,
-				1B9528BE1590D87500103723 /* ConnectionManager.h */,
 				6F0B5C3115A3CB030060D1B5 /* UIImage+Scale.h */,
 				6F0B5C3215A3CB030060D1B5 /* UIImage+Scale.m */,
+				1B9528BE1590D87500103723 /* ConnectionManager.h */,
 				1B9528BF1590D87500103723 /* ConnectionManager.m */,
 				1BA358EE1582F05E00EB8F32 /* Supporting Files */,
 			);

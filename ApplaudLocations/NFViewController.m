@@ -142,7 +142,8 @@
                                                                                             [[NSURL alloc] initWithString:
                                                                                              [NSString stringWithFormat:@"%@%@", SERVER_URL, [feed objectForKey:@"image"]]]]]]];
         }
-        [self.tableView reloadData];        
+        [self.tableView reloadData];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"DOWNLOAD_FINISHED" object:nil];
     }];
 }
 

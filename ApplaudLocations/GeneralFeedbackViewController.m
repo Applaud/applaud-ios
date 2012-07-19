@@ -39,6 +39,8 @@
         self.navigationController.navigationBar.tintColor = self.appDelegate.currentBusiness.primaryColor;
         self.view.opaque = NO;
         self.view.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"DOWNLOAD_FINISHED" object:nil];
     }
 }
 

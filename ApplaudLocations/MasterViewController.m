@@ -26,6 +26,8 @@
     if (self) {
         self.locationsArray = [[NSMutableArray alloc] init];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(businessReceived:) name:@"BUSINESS_RECEIVED" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(downloadFinished:) name:@"DOWNLOAD_FINISHED" object:nil];
+
     }
     return self;
 }
@@ -93,6 +95,9 @@
 {
     __block Business *bus = [locationsArray objectAtIndex:indexPath.row];
     
+    // Show the activity indicator in the status bar
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    
     NSLog(@"Checking in at business: %@", bus.description);
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
                           bus.latitude, @"latitude",
@@ -100,41 +105,29 @@
                           bus.goog_id, @"goog_id",
                           bus.name, @"name",
                           nil];
-    NSString *urlString = [[NSString alloc] initWithFormat:@"%@%@", SERVER_URL, CHECKIN_URL];
-    NSURL *url = [[NSURL alloc] initWithString:urlString];
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
-    request.HTTPMethod = @"POST";
-    request.HTTPBody = [NSJSONSerialization dataWithJSONObject:dict options:0 error:nil];
-    [request addValue:[ConnectionManager getCSRFTokenFromURL:urlString] forHTTPHeaderField:@"X-CSRFToken"];
-    NSError *err;
-    NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:&err];
-    NSLog(@"here is my checkin data: %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
-    if ( err ) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Checkin Error"
-                                                        message:err.description 
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
-    }
-    else {
-        // Set app delegate's current business from what was returned by the server
-        NSLog(@"Business from server: %@",bus.description);
-        self.appDelegate.currentBusiness = bus;
-        // Let everyone know that we have a real business now
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"BUSINESS_SET" object:bus];
-    }
-    if ( self.settings.firstTimeLaunching ) {
-        FirstTimeNavigatorViewController *ftnvc = [[FirstTimeNavigatorViewController alloc] initWithNibName:@"FirstTimeNavigatorViewControllerIphone" bundle:nil];
-        ftnvc.tabBarController = self.tabBarController;
-        ftnvc.window = _window;
-        _window.rootViewController = ftnvc;
-    }
-    else {
-        // This corresponds to the newsfeed.
-        [tabBarController setSelectedIndex:4];
-        _window.rootViewController = tabBarController;
-    }
+
+//    NSURL *url = [[NSURL alloc] initWithString:urlString];
+//    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
+//    request.HTTPMethod = @"POST";
+//    request.HTTPBody = [NSJSONSerialization dataWithJSONObject:dict options:0 error:nil];
+//    [request addValue:[ConnectionManager getCSRFTokenFromURL:urlString] forHTTPHeaderField:@"X-CSRFToken"];
+
+    NSData *data = [ConnectionManager serverRequest:@"POST" 
+                                           withData:[NSJSONSerialization dataWithJSONObject:dict options:0 error:nil] 
+                                                url:CHECKIN_URL
+                                           callback:^(NSData *dat){
+                                               NSLog(@"here is my checkin data: %@", [[NSString alloc] initWithData:dat encoding:NSUTF8StringEncoding]);
+                                               
+                                               // Set app delegate's current business from what was returned by the server
+                                               NSLog(@"Business from server: %@",bus.description);
+                                               self.appDelegate.currentBusiness = bus;
+                                               
+                                               
+                                               
+                                               // Let everyone know that we have a real business now
+                                               [[NSNotificationCenter defaultCenter] postNotificationName:@"BUSINESS_SET" object:bus];
+                                           }];
+
 }
 
 
@@ -148,6 +141,29 @@
 - (void) businessReceived:(NSNotification *)notification {
     self.locationsArray = [notification object];
     [tableView reloadData];
+}
+
+- (void) downloadFinished:(NSNotification *)notification {
+    static int notificationCount = 0;
+    notificationCount++;
+    
+    // N.B. Change this number with how many views must download information from the server
+    // on startup.
+    if (notificationCount == 4) {
+        if ( self.settings.firstTimeLaunching ) {
+            FirstTimeNavigatorViewController *ftnvc = [[FirstTimeNavigatorViewController alloc] initWithNibName:@"FirstTimeNavigatorViewControllerIphone" bundle:nil];
+            ftnvc.tabBarController = self.tabBarController;
+            ftnvc.window = _window;
+            _window.rootViewController = ftnvc;
+        }
+        else {
+            // This corresponds to the newsfeed.
+            [tabBarController setSelectedIndex:4];
+            _window.rootViewController = tabBarController;
+        }
+        
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    }
 }
 
 @end
