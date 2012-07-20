@@ -12,6 +12,11 @@
 #import "NFItem.h"
 #import "UIImage+Scale.h"
 
+#define IMAGE_SIZE 50.0f            // how big the image is
+#define CELL_PADDING 5.0f           // how much space between things inside of the cell
+#define CELL_ELEMENT_MARGIN 10.0f   // space between cell wall and anything else
+#define CELL_MARGIN 22.0f           // space between outside of the cell and edge of the screen
+
 @class AppDelegate;
 
 @interface NFViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
