@@ -26,8 +26,6 @@
     if (self) {
         self.locationsArray = [[NSMutableArray alloc] init];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(businessReceived:) name:@"BUSINESS_RECEIVED" object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(downloadFinished:) name:@"DOWNLOAD_FINISHED" object:nil];
-
     }
     return self;
 }
@@ -121,8 +119,9 @@
                                                // Set app delegate's current business from what was returned by the server
                                                NSLog(@"Business from server: %@",bus.description);
                                                self.appDelegate.currentBusiness = bus;
-                                               
-                                               
+
+                                               // Listen for when network downloads have stopped.
+                                               [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(downloadFinished:) name:@"DOWNLOAD_FINISHED" object:nil];
                                                
                                                // Let everyone know that we have a real business now
                                                [[NSNotificationCenter defaultCenter] postNotificationName:@"BUSINESS_SET" object:bus];
@@ -144,25 +143,16 @@
 }
 
 - (void) downloadFinished:(NSNotification *)notification {
-    static int notificationCount = 0;
-    notificationCount++;
-    
-    // N.B. Change this number with how many views must download information from the server
-    // on startup.
-    if (notificationCount == 4) {
-        if ( self.settings.firstTimeLaunching ) {
-            FirstTimeNavigatorViewController *ftnvc = [[FirstTimeNavigatorViewController alloc] initWithNibName:@"FirstTimeNavigatorViewControllerIphone" bundle:nil];
-            ftnvc.tabBarController = self.tabBarController;
-            ftnvc.window = _window;
-            _window.rootViewController = ftnvc;
-        }
-        else {
-            // This corresponds to the newsfeed.
-            [tabBarController setSelectedIndex:4];
-            _window.rootViewController = tabBarController;
-        }
-        
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    if ( self.settings.firstTimeLaunching ) {
+        FirstTimeNavigatorViewController *ftnvc = [[FirstTimeNavigatorViewController alloc] initWithNibName:@"FirstTimeNavigatorViewControllerIphone" bundle:nil];
+        ftnvc.tabBarController = self.tabBarController;
+        ftnvc.window = _window;
+        _window.rootViewController = ftnvc;
+    }
+    else {
+        // This corresponds to the newsfeed.
+        [tabBarController setSelectedIndex:4];
+        _window.rootViewController = tabBarController;
     }
 }
 

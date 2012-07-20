@@ -142,8 +142,6 @@
         }
         // reload the table view to display all the employees
         [self.tableView reloadData];
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"DOWNLOAD_FINISHED" object:nil];
     }];
 }
 
