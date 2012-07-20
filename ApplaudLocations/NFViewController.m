@@ -78,18 +78,31 @@
     UITableViewCell *cell = [[UITableViewCell alloc] initWithFrame:CGRectZero];
     
     // Maximum size of the title/subtitle
-    CGSize constraintSize = CGSizeMake(self.view.bounds.size.width 
-                                       - 2*CELL_ELEMENT_MARGIN 
-                                       - IMAGE_SIZE 
-                                       - CELL_PADDING
-                                       - 2*CELL_MARGIN, 400);
-                                       
-                                       
-    // Create the image
-    UIImageView *imageView = [[UIImageView alloc] 
-                              initWithImage:[[[self.newsFeeds objectAtIndex:indexPath.section] image] scaleToSize:IMAGE_SIZE]];
-    [imageView setFrame:CGRectMake(CELL_ELEMENT_MARGIN, CELL_ELEMENT_MARGIN, IMAGE_SIZE, IMAGE_SIZE)];
-    [cell.contentView addSubview:imageView];
+    CGSize constraintSize;
+    // Left margin of title/subtitle
+    int titleLeftMargin = 0;
+    if ( [[self.newsFeeds objectAtIndex:indexPath.section] image] ) {
+        constraintSize = CGSizeMake(self.view.bounds.size.width 
+                                    - 2*CELL_ELEMENT_MARGIN 
+                                    - IMAGE_SIZE 
+                                    - CELL_PADDING
+                                    - 2*CELL_MARGIN, 400);
+        
+        // Create the image
+        UIImageView *imageView = [[UIImageView alloc] 
+                                  initWithImage:[[[self.newsFeeds objectAtIndex:indexPath.section] image] scaleToSize:IMAGE_SIZE]];
+        [imageView setFrame:CGRectMake(CELL_ELEMENT_MARGIN, CELL_ELEMENT_MARGIN, IMAGE_SIZE, IMAGE_SIZE)];
+        [cell.contentView addSubview:imageView];
+        
+        titleLeftMargin = CELL_ELEMENT_MARGIN + IMAGE_SIZE + CELL_PADDING;
+        
+    } else {
+        constraintSize = CGSizeMake(self.view.bounds.size.width 
+                                    - 2*CELL_ELEMENT_MARGIN
+                                    - 2*CELL_MARGIN, 400);
+        
+        titleLeftMargin = CELL_ELEMENT_MARGIN;
+    }
     
     // set the label text to the corresponding NFItem title
     UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -102,28 +115,11 @@
                         constrainedToSize:constraintSize 
                         lineBreakMode:UILineBreakModeWordWrap];
     NSLog(@"Title size: %f x %f",titleSize.width,titleSize.height);
-    [textLabel setFrame:CGRectMake(CELL_ELEMENT_MARGIN + IMAGE_SIZE + CELL_PADDING, 
-                                   CELL_ELEMENT_MARGIN, 
-                                   titleSize.width, 
+    [textLabel setFrame:CGRectMake(titleLeftMargin, 
+                                   CELL_ELEMENT_MARGIN,
+                                   constraintSize.width,
                                    titleSize.height)];
     [cell.contentView addSubview:textLabel];
-    
-    // set the subtitle text and size
-    UILabel *detailLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    detailLabel.text = [[self.newsFeeds objectAtIndex:indexPath.section] subtitle];
-    detailLabel.numberOfLines = 0;
-    detailLabel.lineBreakMode = UILineBreakModeWordWrap;
-    [detailLabel setFont:[UIFont systemFontOfSize:SUBTITLE_SIZE]];
-    CGSize detailSize = [[[self.newsFeeds objectAtIndex:indexPath.section] subtitle]
-                         sizeWithFont:[UIFont systemFontOfSize:SUBTITLE_SIZE] 
-                         constrainedToSize:constraintSize 
-                         lineBreakMode:UILineBreakModeWordWrap];
-    NSLog(@"subtitle size: %f x %f",detailSize.width,detailSize.height);
-    [detailLabel setFrame:CGRectMake(CELL_ELEMENT_MARGIN + IMAGE_SIZE + CELL_PADDING, 
-                                     CELL_ELEMENT_MARGIN + titleSize.height + CELL_PADDING, 
-                                     detailSize.width, 
-                                     detailSize.height)];
-    [cell.contentView addSubview:detailLabel];
     
     // body teaser
     NSString *bodyTeaserText = [[[self.newsFeeds objectAtIndex:indexPath.section] body] 
@@ -143,7 +139,7 @@
                                                     400)
                        lineBreakMode:UILineBreakModeWordWrap];
     [bodyLabel setFrame:CGRectMake(CELL_ELEMENT_MARGIN,
-                                   CELL_ELEMENT_MARGIN + titleSize.height + CELL_PADDING + detailSize.height + CELL_PADDING, 
+                                   CELL_ELEMENT_MARGIN + titleSize.height + CELL_PADDING, 
                                    bodySize.width,
                                    bodySize.height)];
     [cell.contentView addSubview:bodyLabel];
@@ -155,19 +151,23 @@
 #pragma mark UITableView delegate methods
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    CGSize constraintSize = CGSizeMake(self.view.bounds.size.width 
-                                       - 2*CELL_ELEMENT_MARGIN
-                                       - IMAGE_SIZE
-                                       - CELL_PADDING
-                                       - 2*CELL_MARGIN, 400);
+    CGSize constraintSize;
+    if ( [[self.newsFeeds objectAtIndex:indexPath.section] image] ) {
+        constraintSize = CGSizeMake(self.view.bounds.size.width 
+                                    - 2*CELL_ELEMENT_MARGIN 
+                                    - IMAGE_SIZE 
+                                    - CELL_PADDING
+                                    - 2*CELL_MARGIN, 400);        
+    } else {
+        constraintSize = CGSizeMake(self.view.bounds.size.width 
+                                    - 2*CELL_ELEMENT_MARGIN
+                                    - 2*CELL_MARGIN, 400);
+    }
+    
     CGSize sizeRectTitle = [[[self.newsFeeds objectAtIndex:indexPath.section] title] 
                             sizeWithFont:[UIFont systemFontOfSize:TITLE_SIZE]
                             constrainedToSize:constraintSize 
                             lineBreakMode:UILineBreakModeWordWrap];
-    CGSize sizeRectSubtitle = [[[self.newsFeeds objectAtIndex:indexPath.section] subtitle] 
-                               sizeWithFont:[UIFont systemFontOfSize:SUBTITLE_SIZE] 
-                               constrainedToSize:constraintSize
-                               lineBreakMode:UILineBreakModeWordWrap];
     NSString *bodyTeaserText = [[[self.newsFeeds objectAtIndex:indexPath.section] body] 
                                 substringToIndex:MIN(TEASER_LENGTH,[[[self.newsFeeds objectAtIndex:indexPath.section] body] length]-1)];
     bodyTeaserText = [NSString stringWithFormat:@"%@...",bodyTeaserText];
@@ -178,7 +178,7 @@
                                                         - 2*CELL_PADDING,
                                                         400)
                            lineBreakMode:UILineBreakModeWordWrap];
-    return sizeRectTitle.height + sizeRectSubtitle.height + sizeRectBody.height + CELL_PADDING + 3*CELL_ELEMENT_MARGIN;
+    return sizeRectTitle.height + sizeRectBody.height + CELL_PADDING + 2*CELL_ELEMENT_MARGIN;
 }
 
 /*
@@ -225,13 +225,18 @@
         NSDateFormatter *format = [[NSDateFormatter alloc] init];
         [format setDateFormat:@"yyyy-MM-dd hh:mm"];
         for(NSDictionary *feed in items) {
+            UIImage *image = nil;
+            NSString *imageURLString = [NSString stringWithFormat:@"%@%@", SERVER_URL, [feed objectForKey:@"image"]];
+            if ( imageURLString.length > 0 ) {
+                image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[[NSURL alloc] initWithString:imageURLString]]];
+            }
+                                            
             [self.newsFeeds addObject:[[NFItem alloc] initWithTitle:[feed objectForKey:@"title"]
                                                            subtitle:[feed objectForKey:@"subtitle"]
                                                                body:[feed objectForKey:@"body"]
                                                                date:[format dateFromString:[feed objectForKey:@"date"]]
-                                                              image:[UIImage imageWithData:[NSData dataWithContentsOfURL:
-                                                                                            [[NSURL alloc] initWithString:
-                                                                                             [NSString stringWithFormat:@"%@%@", SERVER_URL, [feed objectForKey:@"image"]]]]]]];
+                                                              image:image]];
+            
         }
         [self.tableView reloadData];
     }];
