@@ -75,11 +75,11 @@
 #pragma Table View data source methods
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return [self.survey.fields count];
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.survey.fields count];
+    return 1;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -93,7 +93,7 @@
     cell.textLabel.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
     cell.detailTextLabel.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
     tableView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
-    SurveyField *field = [self.survey.fields objectAtIndex:indexPath.row];
+    SurveyField *field = [self.survey.fields objectAtIndex:indexPath.section];
     cell.textLabel.text = field.label;
     return cell;
 }
@@ -102,9 +102,9 @@
  * This lets us change the background color of a cell -- if we have a view controller stored at that index and it has an answer, then we set it to green.
  */
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if([[self.surveyControllers objectAtIndex:indexPath.row] isKindOfClass:[SurveyFieldViewController class]] &&
-       [(SurveyFieldViewController *)[self.surveyControllers objectAtIndex:indexPath.row] getAnswer].count &&
-       ![[[(SurveyFieldViewController *)[self.surveyControllers objectAtIndex:indexPath.row] getAnswer] objectAtIndex:0] isEqualToString:@""]) {
+    if([[self.surveyControllers objectAtIndex:indexPath.section] isKindOfClass:[SurveyFieldViewController class]] &&
+       [(SurveyFieldViewController *)[self.surveyControllers objectAtIndex:indexPath.section] getAnswer].count &&
+       ![[[(SurveyFieldViewController *)[self.surveyControllers objectAtIndex:indexPath.section] getAnswer] objectAtIndex:0] isEqualToString:@""]) {
        // cell.backgroundColor = [UIColor greenColor];
     }
     // If it's not a survey with an answer, make sure it's reset to white and that its subtitle is "unanswered".
@@ -117,21 +117,17 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"%@", [self.survey.answers objectAtIndex:indexPath.row]);
-/*    switch([[self.survey.fields objectAtIndex:indexPath.row] type]) {
-        case TEXTAREA:
-    }*/
     SurveyFieldViewController *sfvc;
-    if([[self.surveyControllers objectAtIndex:indexPath.row] isKindOfClass:[NSNull class]]) {
+    if([[self.surveyControllers objectAtIndex:indexPath.section] isKindOfClass:[NSNull class]]) {
         sfvc = [[SurveyFieldViewController alloc] initWithNibName:@"SurveyFieldViewController" bundle:nil];
-        sfvc.field = [self.survey.fields objectAtIndex:indexPath.row];
-        [self.surveyControllers replaceObjectAtIndex:indexPath.row withObject:sfvc];
+        sfvc.field = [self.survey.fields objectAtIndex:indexPath.section];
+        [self.surveyControllers replaceObjectAtIndex:indexPath.section withObject:sfvc];
         // Give the SurveyViewController the right background color.
         sfvc.view.opaque = YES;
         sfvc.view.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
     }
     else {
-        sfvc = [self.surveyControllers objectAtIndex:indexPath.row];
+        sfvc = [self.surveyControllers objectAtIndex:indexPath.section];
     }
     [self.navigationController pushViewController:sfvc animated:YES];
 }
