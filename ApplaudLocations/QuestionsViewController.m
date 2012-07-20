@@ -72,7 +72,7 @@
 }
 
 #pragma mark -
-#pragma Table View data source methods
+#pragma mark Table View data source methods
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return [self.survey.fields count];
@@ -96,6 +96,20 @@
     SurveyField *field = [self.survey.fields objectAtIndex:indexPath.section];
     cell.textLabel.text = field.label;
     return cell;
+}
+
+# pragma mark -
+# pragma mark UITableViewDelegate methods
+
+- (float)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Showing the content of the question upon selection
+    if ( [[tableView cellForRowAtIndexPath:indexPath] isSelected] ) {
+        
+    }
+    // Showing just the title and whether or not the question has been answered
+    else {
+        
+    }
 }
 
 /*
@@ -133,7 +147,8 @@
 }
 
 #pragma mark -
-#pragma Other Methods
+#pragma mark Other Methods
+
 -(void)getSurveys {
     NSDictionary *dict = [[NSDictionary alloc]
                           initWithObjectsAndKeys:[NSNumber numberWithInt:self.appDelegate.currentBusiness.business_id],

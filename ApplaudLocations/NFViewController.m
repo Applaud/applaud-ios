@@ -86,25 +86,25 @@
     int titleLeftMargin = 0;
     if ( [[self.newsFeeds objectAtIndex:indexPath.section] image] ) {
         constraintSize = CGSizeMake(self.view.bounds.size.width 
-                                    - 2*CELL_ELEMENT_MARGIN 
+                                    - 2*CELL_PADDING 
                                     - IMAGE_SIZE 
-                                    - CELL_PADDING
+                                    - CELL_ELEMENT_PADDING
                                     - 2*CELL_MARGIN, 400);
         
         // Create the image
         UIImageView *imageView = [[UIImageView alloc] 
                                   initWithImage:[[[self.newsFeeds objectAtIndex:indexPath.section] image] scaleToSize:IMAGE_SIZE]];
-        [imageView setFrame:CGRectMake(CELL_ELEMENT_MARGIN, CELL_ELEMENT_MARGIN, IMAGE_SIZE, IMAGE_SIZE)];
+        [imageView setFrame:CGRectMake(CELL_PADDING, CELL_PADDING, IMAGE_SIZE, IMAGE_SIZE)];
         [cell.contentView addSubview:imageView];
         
-        titleLeftMargin = CELL_ELEMENT_MARGIN + IMAGE_SIZE + CELL_PADDING;
+        titleLeftMargin = CELL_PADDING + IMAGE_SIZE + CELL_ELEMENT_PADDING;
         
     } else {
         constraintSize = CGSizeMake(self.view.bounds.size.width 
-                                    - 2*CELL_ELEMENT_MARGIN
+                                    - 2*CELL_PADDING
                                     - 2*CELL_MARGIN, 400);
         
-        titleLeftMargin = CELL_ELEMENT_MARGIN;
+        titleLeftMargin = CELL_PADDING;
     }
     
     // set the label text to the corresponding NFItem title
@@ -119,7 +119,7 @@
                         lineBreakMode:UILineBreakModeWordWrap];
     NSLog(@"Title size: %f x %f",titleSize.width,titleSize.height);
     [textLabel setFrame:CGRectMake(titleLeftMargin, 
-                                   CELL_ELEMENT_MARGIN,
+                                   CELL_PADDING,
                                    constraintSize.width,
                                    titleSize.height)];
     [cell.contentView addSubview:textLabel];
@@ -138,11 +138,11 @@
                        sizeWithFont:[UIFont systemFontOfSize:TEASER_SIZE]
                        constrainedToSize:CGSizeMake(self.view.bounds.size.width
                                                     - 2*CELL_MARGIN
-                                                    - 2*CELL_PADDING,
+                                                    - 2*CELL_ELEMENT_PADDING,
                                                     400)
                        lineBreakMode:UILineBreakModeWordWrap];
-    [bodyLabel setFrame:CGRectMake(CELL_ELEMENT_MARGIN,
-                                   CELL_ELEMENT_MARGIN + titleSize.height + CELL_PADDING, 
+    [bodyLabel setFrame:CGRectMake(CELL_PADDING,
+                                   CELL_PADDING + titleSize.height + CELL_ELEMENT_PADDING, 
                                    bodySize.width,
                                    bodySize.height)];
     [cell.contentView addSubview:bodyLabel];
@@ -165,13 +165,13 @@
     CGSize constraintSize;
     if ( [[self.newsFeeds objectAtIndex:indexPath.section] image] ) {
         constraintSize = CGSizeMake(self.view.bounds.size.width 
-                                    - 2*CELL_ELEMENT_MARGIN 
+                                    - 2*CELL_PADDING 
                                     - IMAGE_SIZE 
-                                    - CELL_PADDING
+                                    - CELL_ELEMENT_PADDING
                                     - 2*CELL_MARGIN, 400);        
     } else {
         constraintSize = CGSizeMake(self.view.bounds.size.width 
-                                    - 2*CELL_ELEMENT_MARGIN
+                                    - 2*CELL_PADDING
                                     - 2*CELL_MARGIN, 400);
     }
     
@@ -186,10 +186,10 @@
                            sizeWithFont:[UIFont systemFontOfSize:TEASER_SIZE]
                            constrainedToSize:CGSizeMake(self.view.bounds.size.width
                                                         - 2*CELL_MARGIN
-                                                        - 2*CELL_PADDING,
+                                                        - 2*CELL_ELEMENT_PADDING,
                                                         400)
                            lineBreakMode:UILineBreakModeWordWrap];
-    return sizeRectTitle.height + sizeRectBody.height + CELL_PADDING + 2*CELL_ELEMENT_MARGIN;
+    return sizeRectTitle.height + sizeRectBody.height + CELL_ELEMENT_PADDING + 2*CELL_PADDING;
 }
 
 /*
