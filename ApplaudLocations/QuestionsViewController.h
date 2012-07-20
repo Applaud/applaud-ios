@@ -19,14 +19,18 @@
 #define TITLE_SIZE 18.0f            // size of newsfeed item titles
 #define SUBTITLE_SIZE 12.0f         // size of newsfeed item subtitles
 
-@interface QuestionsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
+@interface QuestionsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate> {
+    // Tracks what questions have been selected.
+    NSMutableArray *questionSelections;
+}
+
 @property (nonatomic, weak) AppDelegate *appDelegate;
 @property (nonatomic, strong) Survey *survey;
 @property (nonatomic, strong) NSMutableArray *surveyControllers;
 @property (weak, nonatomic) IBOutlet UITextView *summaryText;
 @property (weak, nonatomic) IBOutlet UITableView *questionsTable;
 @property (strong, nonatomic) UINavigationController *navigationController;
-- (void)buttonPressed;
+-(void)buttonPressed;
 -(void)getSurveys;
 -(void)notificationReceived:(NSNotification *)notification;
 @end

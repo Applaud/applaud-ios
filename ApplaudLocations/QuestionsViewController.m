@@ -7,6 +7,7 @@
 //
 
 #import "QuestionsViewController.h"
+#import "SurveyAccordionCell.h"
 
 @interface QuestionsViewController ()
 
@@ -61,6 +62,7 @@
     [self setSummaryText:nil];
     [self setQuestionsTable:nil];
     [self setNavigationController:nil];
+    questionSelections = nil;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -85,16 +87,15 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [self.questionsTable dequeueReusableCellWithIdentifier:CellIdentifier];
+    
     if ( nil == cell ) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
-        cell.detailTextLabel.text = @"Unanswered";
+        cell = [[SurveyAccordionCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                          reuseIdentifier:CellIdentifier
+                                                    label:[[self.survey.fields objectAtIndex:indexPath.section]
+                                                           label]
+                                                     type:@"text"];
     }
-    cell.contentView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
-    cell.textLabel.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
-    cell.detailTextLabel.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
-    tableView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
-    SurveyField *field = [self.survey.fields objectAtIndex:indexPath.section];
-    cell.textLabel.text = field.label;
+    
     return cell;
 }
 
@@ -102,13 +103,31 @@
 # pragma mark UITableViewDelegate methods
 
 - (float)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    // dumb max height for testing purposes
+    int expandedHeight = 400;
+    
+    // max size for the title label
+    CGSize constrainedSize = CGSizeMake(self.view.bounds.size.width
+                                        - 2*CELL_MARGIN
+                                        - 2*CELL_PADDING, expandedHeight);
+    
+    
+    SurveyField *field = [self.survey.fields objectAtIndex:indexPath.section];
+    NSString *questionLabel = field.label;
+    
+    // original size of the cell
+    CGSize origSize = [questionLabel
+                       sizeWithFont:[UIFont boldSystemFontOfSize:TITLE_SIZE] 
+                       constrainedToSize:constrainedSize
+                       lineBreakMode:UILineBreakModeWordWrap];
+    
     // Showing the content of the question upon selection
-    if ( [[tableView cellForRowAtIndexPath:indexPath] isSelected] ) {
-        
+    if ( [self cellIsSelectedAtIndexPath:indexPath] ) {
+        return origSize.height * 3 + 2*CELL_PADDING;
     }
     // Showing just the title and whether or not the question has been answered
     else {
-        
+        return origSize.height + 2*CELL_PADDING;
     }
 }
 
@@ -131,19 +150,36 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    SurveyFieldViewController *sfvc;
-    if([[self.surveyControllers objectAtIndex:indexPath.section] isKindOfClass:[NSNull class]]) {
-        sfvc = [[SurveyFieldViewController alloc] initWithNibName:@"SurveyFieldViewController" bundle:nil];
-        sfvc.field = [self.survey.fields objectAtIndex:indexPath.section];
-        [self.surveyControllers replaceObjectAtIndex:indexPath.section withObject:sfvc];
-        // Give the SurveyViewController the right background color.
-        sfvc.view.opaque = YES;
-        sfvc.view.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+    // Collapse all questions
+    for ( int i=0; i<self.survey.fields.count; i++ ){
+        [questionSelections replaceObjectAtIndex:i withObject:[NSNumber numberWithBool:NO]];
+        [(SurveyAccordionCell*)[self.questionsTable 
+                                cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:i]] contract];
     }
-    else {
-        sfvc = [self.surveyControllers objectAtIndex:indexPath.section];
-    }
-    [self.navigationController pushViewController:sfvc animated:YES];
+    // Note selected state of currently selected question
+    [questionSelections replaceObjectAtIndex:indexPath.section withObject:[NSNumber numberWithBool:YES]];
+    [(SurveyAccordionCell*)[self.questionsTable cellForRowAtIndexPath:indexPath] expand];
+   
+    // Set selection state of cell to "NO"
+    [self.questionsTable deselectRowAtIndexPath:indexPath animated:YES];
+
+    // Perform animation
+    [self.questionsTable beginUpdates];
+    [self.questionsTable endUpdates];
+    
+//    SurveyFieldViewController *sfvc;
+//    if([[self.surveyControllers objectAtIndex:indexPath.section] isKindOfClass:[NSNull class]]) {
+//        sfvc = [[SurveyFieldViewController alloc] initWithNibName:@"SurveyFieldViewController" bundle:nil];
+//        sfvc.field = [self.survey.fields objectAtIndex:indexPath.section];
+//        [self.surveyControllers replaceObjectAtIndex:indexPath.section withObject:sfvc];
+//        // Give the SurveyViewController the right background color.
+//        sfvc.view.opaque = YES;
+//        sfvc.view.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+//    }
+//    else {
+//        sfvc = [self.surveyControllers objectAtIndex:indexPath.section];
+//    }
+//    [self.navigationController pushViewController:sfvc animated:YES];
 }
 
 #pragma mark -
@@ -225,6 +261,12 @@
     for(i = 0; i < self.survey.answers.count; i++) {
         [_surveyControllers addObject:[[NSNull alloc] init]];
     }
+    
+    // Set up selection array
+    questionSelections = [[NSMutableArray alloc] init];
+    for ( int i=0; i<survey.fields.count; i++ ){ 
+        [questionSelections addObject:[NSNumber numberWithBool:NO]];
+    }
 }
 
 /*
@@ -289,5 +331,9 @@
  */
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     [self.navigationController.tabBarController setSelectedIndex:4];
+}
+
+- (BOOL)cellIsSelectedAtIndexPath:(NSIndexPath *)indexPath {
+    return [[questionSelections objectAtIndex:indexPath.section] isEqualToNumber:[NSNumber numberWithBool:YES]];
 }
 @end

@@ -25,6 +25,7 @@
 		1B9389BB1584EF010088F468 /* BusinessLocationsTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B9389BA1584EF010088F468 /* BusinessLocationsTracker.m */; };
 		1B9528C01590D87500103723 /* ConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B9528BF1590D87500103723 /* ConnectionManager.m */; };
 		1B9C3A6515B9272A000EEF1A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B9C3A6415B9272A000EEF1A /* QuartzCore.framework */; };
+		1B9C3A6815BA0637000EEF1A /* SurveyAccordionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B9C3A6715BA0637000EEF1A /* SurveyAccordionCell.m */; };
 		1BA358E81582F05E00EB8F32 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BA358E71582F05E00EB8F32 /* UIKit.framework */; };
 		1BA358EA1582F05E00EB8F32 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BA358E91582F05E00EB8F32 /* Foundation.framework */; };
 		1BA358EC1582F05E00EB8F32 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BA358EB1582F05E00EB8F32 /* CoreGraphics.framework */; };
@@ -76,6 +77,8 @@
 		1B9528BE1590D87500103723 /* ConnectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectionManager.h; sourceTree = "<group>"; };
 		1B9528BF1590D87500103723 /* ConnectionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionManager.m; sourceTree = "<group>"; };
 		1B9C3A6415B9272A000EEF1A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		1B9C3A6615BA0637000EEF1A /* SurveyAccordionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SurveyAccordionCell.h; sourceTree = "<group>"; };
+		1B9C3A6715BA0637000EEF1A /* SurveyAccordionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SurveyAccordionCell.m; sourceTree = "<group>"; };
 		1BA358E31582F05E00EB8F32 /* ApplaudLocations.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ApplaudLocations.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BA358E71582F05E00EB8F32 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		1BA358E91582F05E00EB8F32 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -181,6 +184,8 @@
 		1B301C69158858490038A5BE /* Questions */ = {
 			isa = PBXGroup;
 			children = (
+				1B9C3A6615BA0637000EEF1A /* SurveyAccordionCell.h */,
+				1B9C3A6715BA0637000EEF1A /* SurveyAccordionCell.m */,
 				1B301C6A158858560038A5BE /* QuestionsViewController.h */,
 				1B301C6B158858560038A5BE /* QuestionsViewController.m */,
 				6FFAD3DE158E60A5000CE190 /* SurveyFieldViewController.h */,
@@ -378,6 +383,7 @@
 				6F875EF61591594600555390 /* FirstTimeNavigatorViewController.m in Sources */,
 				6F0B5C3315A3CB030060D1B5 /* UIImage+Scale.m in Sources */,
 				1B12763215B89B9600980AA2 /* MasterViewController.m in Sources */,
+				1B9C3A6815BA0637000EEF1A /* SurveyAccordionCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
