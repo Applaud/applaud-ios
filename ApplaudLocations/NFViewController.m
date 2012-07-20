@@ -9,6 +9,7 @@
 #import "NFViewController.h"
 #import "ConnectionManager.h"
 #import "AppDelegate.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface NFViewController ()
 
@@ -47,6 +48,8 @@
     [super viewDidLoad];
     
     [self.tableView setBackgroundColor:self.appDelegate.currentBusiness.secondaryColor];
+    
+    NSLog(@"Number of cells? %d",self.tableView.visibleCells.count);
 }
 
 - (void)viewDidUnload
@@ -143,6 +146,14 @@
                                    bodySize.width,
                                    bodySize.height)];
     [cell.contentView addSubview:bodyLabel];
+    
+//    CALayer *cellLayer = cell.layer;
+//    [cellLayer setFrame:cellFrame];
+//    cellLayer.cornerRadius = 10.0f;
+//    cellLayer.shadowOpacity = 0.25f;
+//    cellLayer.shadowRadius = 5.0f;
+//    cellLayer.shadowOffset = CGSizeMake(1,1);
+//    cellLayer.shadowColor = [[UIColor blackColor] CGColor];
     
     return cell;
 }
