@@ -91,9 +91,7 @@
     if ( nil == cell ) {
         cell = [[SurveyAccordionCell alloc] initWithStyle:UITableViewCellStyleDefault
                                           reuseIdentifier:CellIdentifier
-                                                    label:[[self.survey.fields objectAtIndex:indexPath.section]
-                                                           label]
-                                                     type:@"text"];
+                                                    field:[self.survey.fields objectAtIndex:indexPath.section]];
     }
     
     return cell;

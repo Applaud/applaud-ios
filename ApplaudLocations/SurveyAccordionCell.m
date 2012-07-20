@@ -14,13 +14,12 @@
 
 @synthesize questionLabel, questionWidget, hrView;
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier label:(NSString *)label type:(NSString *)widgetType
-{
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier field:(SurveyField *)field {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         containerView = [[UIView alloc] initWithFrame:CGRectZero];
         questionLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        questionLabel.text = label;
+        questionLabel.text = field.label;
         questionLabel.numberOfLines = 0;
         questionLabel.lineBreakMode = UILineBreakModeWordWrap;
         questionLabel.font = [UIFont boldSystemFontOfSize:TITLE_SIZE];

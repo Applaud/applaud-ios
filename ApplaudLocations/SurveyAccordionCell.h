@@ -9,6 +9,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SurveyField.h"
 
 #define CELL_ELEMENT_PADDING 5.0f   // how much space between things inside of the cell
 #define CELL_PADDING 10.0f          // space between cell wall and anything else
@@ -20,7 +21,7 @@
     UIView *containerView;  // Wrapper around stuff inside of the cell. Goes inside contentView.
 }
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier label:(NSString *)label type:(NSString *)widgetType;
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier field:(SurveyField *)field;
 - (void)expand;
 - (void)contract;
 
