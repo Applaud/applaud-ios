@@ -130,10 +130,6 @@
                                 substringToIndex:MIN(TEASER_LENGTH,
                                                      [[[self.newsFeeds objectAtIndex:indexPath.section] body] length]-1)];
     bodyTeaserText = [NSString stringWithFormat:@"%@...",bodyTeaserText];
-    
-    // debug
-    NSLog(@"Body teaser text:%@",bodyTeaserText);
-    
     UILabel *bodyLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     bodyLabel.text = bodyTeaserText;
     bodyLabel.numberOfLines = 2;
@@ -146,8 +142,8 @@
                                                     - 2*CELL_PADDING,
                                                     400)
                        lineBreakMode:UILineBreakModeWordWrap];
-    [bodyLabel setFrame:CGRectMake(CELL_PADDING,
-                                   CELL_ELEMENT_MARGIN + titleSize.height + CELL_ELEMENT_MARGIN + detailSize.height + CELL_ELEMENT_MARGIN, 
+    [bodyLabel setFrame:CGRectMake(CELL_ELEMENT_MARGIN,
+                                   CELL_ELEMENT_MARGIN + titleSize.height + CELL_PADDING + detailSize.height + CELL_PADDING, 
                                    bodySize.width,
                                    bodySize.height)];
     [cell.contentView addSubview:bodyLabel];
