@@ -45,7 +45,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    
+    [self.tableView setBackgroundColor:self.appDelegate.currentBusiness.secondaryColor];
 }
 
 - (void)viewDidUnload
@@ -63,39 +64,133 @@
 }
 
 #pragma mark -
-#pragma UITableView data source methods
+#pragma mark UITableView data source methods
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return self.newsFeeds.count;
 }
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 1;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if(nil == cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                      reuseIdentifier:CellIdentifier];
-        cell.editing = NO;
-    }
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithFrame:CGRectZero];
+    
+    // Maximum size of the title/subtitle
+    CGSize constraintSize = CGSizeMake(self.view.bounds.size.width 
+                                       - 2*CELL_ELEMENT_MARGIN 
+                                       - IMAGE_SIZE 
+                                       - CELL_PADDING
+                                       - 2*CELL_MARGIN, 400);
+                                       
+                                       
+    // Create the image
+    UIImageView *imageView = [[UIImageView alloc] 
+                              initWithImage:[[[self.newsFeeds objectAtIndex:indexPath.section] image] scaleToSize:IMAGE_SIZE]];
+    [imageView setFrame:CGRectMake(CELL_ELEMENT_MARGIN, CELL_ELEMENT_MARGIN, IMAGE_SIZE, IMAGE_SIZE)];
+    [cell.contentView addSubview:imageView];
+    
     // set the label text to the corresponding NFItem title
-    cell.textLabel.text = [[self.newsFeeds objectAtIndex:indexPath.row] title];
-    cell.imageView.image = [[[self.newsFeeds objectAtIndex:indexPath.row] image] scaleToSize:35.0];
-    cell.contentView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
-    cell.textLabel.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
-    cell.detailTextLabel.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
-    tableView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+    UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    textLabel.text = [[self.newsFeeds objectAtIndex:indexPath.section] title];
+    textLabel.numberOfLines = 0;
+    textLabel.lineBreakMode = UILineBreakModeWordWrap;
+    [textLabel setFont:[UIFont boldSystemFontOfSize:TITLE_SIZE]];
+    CGSize titleSize = [[[self.newsFeeds objectAtIndex:indexPath.section] title]
+                        sizeWithFont:[UIFont systemFontOfSize:TITLE_SIZE] 
+                        constrainedToSize:constraintSize 
+                        lineBreakMode:UILineBreakModeWordWrap];
+    NSLog(@"Title size: %f x %f",titleSize.width,titleSize.height);
+    [textLabel setFrame:CGRectMake(CELL_ELEMENT_MARGIN + IMAGE_SIZE + CELL_PADDING, 
+                                   CELL_ELEMENT_MARGIN, 
+                                   titleSize.width, 
+                                   titleSize.height)];
+    [cell.contentView addSubview:textLabel];
+    
+    // set the subtitle text and size
+    UILabel *detailLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    detailLabel.text = [[self.newsFeeds objectAtIndex:indexPath.section] subtitle];
+    detailLabel.numberOfLines = 0;
+    detailLabel.lineBreakMode = UILineBreakModeWordWrap;
+    [detailLabel setFont:[UIFont systemFontOfSize:SUBTITLE_SIZE]];
+    CGSize detailSize = [[[self.newsFeeds objectAtIndex:indexPath.section] subtitle]
+                         sizeWithFont:[UIFont systemFontOfSize:SUBTITLE_SIZE] 
+                         constrainedToSize:constraintSize 
+                         lineBreakMode:UILineBreakModeWordWrap];
+    NSLog(@"subtitle size: %f x %f",detailSize.width,detailSize.height);
+    [detailLabel setFrame:CGRectMake(CELL_ELEMENT_MARGIN + IMAGE_SIZE + CELL_PADDING, 
+                                     CELL_ELEMENT_MARGIN + titleSize.height + CELL_PADDING, 
+                                     detailSize.width, 
+                                     detailSize.height)];
+    [cell.contentView addSubview:detailLabel];
+    
+    // body teaser
+    NSString *bodyTeaserText = [[[self.newsFeeds objectAtIndex:indexPath.section] body] 
+                                substringToIndex:MIN(TEASER_LENGTH,
+                                                     [[[self.newsFeeds objectAtIndex:indexPath.section] body] length]-1)];
+    bodyTeaserText = [NSString stringWithFormat:@"%@...",bodyTeaserText];
+    
+    // debug
+    NSLog(@"Body teaser text:%@",bodyTeaserText);
+    
+    UILabel *bodyLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    bodyLabel.text = bodyTeaserText;
+    bodyLabel.numberOfLines = 2;
+    bodyLabel.lineBreakMode = UILineBreakModeWordWrap;
+    [bodyLabel setFont:[UIFont systemFontOfSize:TEASER_SIZE]];
+    CGSize bodySize = [bodyTeaserText
+                       sizeWithFont:[UIFont systemFontOfSize:TEASER_SIZE]
+                       constrainedToSize:CGSizeMake(self.view.bounds.size.width
+                                                    - 2*CELL_MARGIN
+                                                    - 2*CELL_PADDING,
+                                                    400)
+                       lineBreakMode:UILineBreakModeWordWrap];
+    [bodyLabel setFrame:CGRectMake(CELL_PADDING,
+                                   CELL_ELEMENT_MARGIN + titleSize.height + CELL_ELEMENT_MARGIN + detailSize.height + CELL_ELEMENT_MARGIN, 
+                                   bodySize.width,
+                                   bodySize.height)];
+    [cell.contentView addSubview:bodyLabel];
+    
     return cell;
 }
 
 #pragma mark -
-#pragma UITableView delegate methods
+#pragma mark UITableView delegate methods
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    CGSize constraintSize = CGSizeMake(self.view.bounds.size.width 
+                                       - 2*CELL_ELEMENT_MARGIN
+                                       - IMAGE_SIZE
+                                       - CELL_PADDING
+                                       - 2*CELL_MARGIN, 400);
+    CGSize sizeRectTitle = [[[self.newsFeeds objectAtIndex:indexPath.section] title] 
+                            sizeWithFont:[UIFont systemFontOfSize:TITLE_SIZE]
+                            constrainedToSize:constraintSize 
+                            lineBreakMode:UILineBreakModeWordWrap];
+    CGSize sizeRectSubtitle = [[[self.newsFeeds objectAtIndex:indexPath.section] subtitle] 
+                               sizeWithFont:[UIFont systemFontOfSize:SUBTITLE_SIZE] 
+                               constrainedToSize:constraintSize
+                               lineBreakMode:UILineBreakModeWordWrap];
+    NSString *bodyTeaserText = [[[self.newsFeeds objectAtIndex:indexPath.section] body] 
+                                substringToIndex:MIN(TEASER_LENGTH,[[[self.newsFeeds objectAtIndex:indexPath.section] body] length]-1)];
+    bodyTeaserText = [NSString stringWithFormat:@"%@...",bodyTeaserText];
+    CGSize sizeRectBody = [bodyTeaserText
+                           sizeWithFont:[UIFont systemFontOfSize:TEASER_SIZE]
+                           constrainedToSize:CGSizeMake(self.view.bounds.size.width
+                                                        - 2*CELL_MARGIN
+                                                        - 2*CELL_PADDING,
+                                                        400)
+                           lineBreakMode:UILineBreakModeWordWrap];
+    return sizeRectTitle.height + sizeRectSubtitle.height + sizeRectBody.height + CELL_PADDING + 3*CELL_ELEMENT_MARGIN;
+}
 
 /*
  * create a new detail view controller and show it
  */
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NFItemViewController *nfivc = [[NFItemViewController alloc] initWithNibName:@"NFItemViewController" bundle:nil];
-    nfivc.item = [self.newsFeeds objectAtIndex:indexPath.row];
+    nfivc.item = [self.newsFeeds objectAtIndex:indexPath.section];
     nfivc.view.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
     nfivc.bodyText.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
     [self.navigationController pushViewController:nfivc animated:YES];
