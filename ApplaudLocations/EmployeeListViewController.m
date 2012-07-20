@@ -123,6 +123,8 @@
         // employeeArray is a list of dictionaries, each containing information about an employee
         for ( NSDictionary *dict in employeeData ) {
             NSLog(@"Employee with id:%d",(int)[[dict objectForKey:@"id"] intValue]);
+            
+            //TODO: cache images
             Employee *e = [[Employee alloc] initWithFirstName:[dict objectForKey:@"first_name"]
                                                      lastName:[dict objectForKey:@"last_name"]
                                                           bio:[dict objectForKey:@"bio"]

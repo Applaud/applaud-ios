@@ -96,9 +96,9 @@
     textLabel.text = [[self.newsFeeds objectAtIndex:indexPath.section] title];
     textLabel.numberOfLines = 0;
     textLabel.lineBreakMode = UILineBreakModeWordWrap;
-    [textLabel setFont:[UIFont boldSystemFontOfSize:18.0f]];
+    [textLabel setFont:[UIFont boldSystemFontOfSize:TITLE_SIZE]];
     CGSize titleSize = [[[self.newsFeeds objectAtIndex:indexPath.section] title]
-                        sizeWithFont:[UIFont systemFontOfSize:18.0f] 
+                        sizeWithFont:[UIFont systemFontOfSize:TITLE_SIZE] 
                         constrainedToSize:constraintSize 
                         lineBreakMode:UILineBreakModeWordWrap];
     NSLog(@"Title size: %f x %f",titleSize.width,titleSize.height);
@@ -113,9 +113,9 @@
     detailLabel.text = [[self.newsFeeds objectAtIndex:indexPath.section] subtitle];
     detailLabel.numberOfLines = 0;
     detailLabel.lineBreakMode = UILineBreakModeWordWrap;
-    [detailLabel setFont:[UIFont systemFontOfSize:12.0f]];
+    [detailLabel setFont:[UIFont systemFontOfSize:SUBTITLE_SIZE]];
     CGSize detailSize = [[[self.newsFeeds objectAtIndex:indexPath.section] subtitle]
-                         sizeWithFont:[UIFont systemFontOfSize:12.0f] 
+                         sizeWithFont:[UIFont systemFontOfSize:SUBTITLE_SIZE] 
                          constrainedToSize:constraintSize 
                          lineBreakMode:UILineBreakModeWordWrap];
     NSLog(@"subtitle size: %f x %f",detailSize.width,detailSize.height);
@@ -124,6 +124,33 @@
                                      detailSize.width, 
                                      detailSize.height)];
     [cell.contentView addSubview:detailLabel];
+    
+    // body teaser
+    NSString *bodyTeaserText = [[[self.newsFeeds objectAtIndex:indexPath.section] body] 
+                                substringToIndex:MIN(TEASER_LENGTH,
+                                                     [[[self.newsFeeds objectAtIndex:indexPath.section] body] length]-1)];
+    bodyTeaserText = [NSString stringWithFormat:@"%@...",bodyTeaserText];
+    
+    // debug
+    NSLog(@"Body teaser text:%@",bodyTeaserText);
+    
+    UILabel *bodyLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    bodyLabel.text = bodyTeaserText;
+    bodyLabel.numberOfLines = 2;
+    bodyLabel.lineBreakMode = UILineBreakModeWordWrap;
+    [bodyLabel setFont:[UIFont systemFontOfSize:TEASER_SIZE]];
+    CGSize bodySize = [bodyTeaserText
+                       sizeWithFont:[UIFont systemFontOfSize:TEASER_SIZE]
+                       constrainedToSize:CGSizeMake(self.view.bounds.size.width
+                                                    - 2*CELL_MARGIN
+                                                    - 2*CELL_PADDING,
+                                                    400)
+                       lineBreakMode:UILineBreakModeWordWrap];
+    [bodyLabel setFrame:CGRectMake(CELL_PADDING,
+                                   CELL_ELEMENT_MARGIN + titleSize.height + CELL_ELEMENT_MARGIN + detailSize.height + CELL_ELEMENT_MARGIN, 
+                                   bodySize.width,
+                                   bodySize.height)];
+    [cell.contentView addSubview:bodyLabel];
     
     return cell;
 }
@@ -138,14 +165,24 @@
                                        - CELL_PADDING
                                        - 2*CELL_MARGIN, 400);
     CGSize sizeRectTitle = [[[self.newsFeeds objectAtIndex:indexPath.section] title] 
-                            sizeWithFont:[UIFont systemFontOfSize:18.0f]
+                            sizeWithFont:[UIFont systemFontOfSize:TITLE_SIZE]
                             constrainedToSize:constraintSize 
                             lineBreakMode:UILineBreakModeWordWrap];
     CGSize sizeRectSubtitle = [[[self.newsFeeds objectAtIndex:indexPath.section] subtitle] 
-                               sizeWithFont:[UIFont systemFontOfSize:12.0f] 
+                               sizeWithFont:[UIFont systemFontOfSize:SUBTITLE_SIZE] 
                                constrainedToSize:constraintSize
                                lineBreakMode:UILineBreakModeWordWrap];
-    return sizeRectTitle.height + sizeRectSubtitle.height + CELL_PADDING + 2*CELL_ELEMENT_MARGIN;
+    NSString *bodyTeaserText = [[[self.newsFeeds objectAtIndex:indexPath.section] body] 
+                                substringToIndex:MIN(TEASER_LENGTH,[[[self.newsFeeds objectAtIndex:indexPath.section] body] length]-1)];
+    bodyTeaserText = [NSString stringWithFormat:@"%@...",bodyTeaserText];
+    CGSize sizeRectBody = [bodyTeaserText
+                           sizeWithFont:[UIFont systemFontOfSize:TEASER_SIZE]
+                           constrainedToSize:CGSizeMake(self.view.bounds.size.width
+                                                        - 2*CELL_MARGIN
+                                                        - 2*CELL_PADDING,
+                                                        400)
+                           lineBreakMode:UILineBreakModeWordWrap];
+    return sizeRectTitle.height + sizeRectSubtitle.height + sizeRectBody.height + CELL_PADDING + 3*CELL_ELEMENT_MARGIN;
 }
 
 /*
