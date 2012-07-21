@@ -121,7 +121,8 @@
     
     // Showing the content of the question upon selection
     if ( [self cellIsSelectedAtIndexPath:indexPath] ) {
-        return origSize.height * 3 + 2*CELL_PADDING;
+//        return origSize.height * 3 + 2*CELL_PADDING;
+        return [[questionSelections objectAtIndex:indexPath.section] floatValue];
     }
     // Showing just the title and whether or not the question has been answered
     else {
@@ -154,9 +155,10 @@
         [(SurveyAccordionCell*)[self.questionsTable 
                                 cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:i]] contract];
     }
-    // Note selected state of currently selected question
-    [questionSelections replaceObjectAtIndex:indexPath.section withObject:[NSNumber numberWithBool:YES]];
-    [(SurveyAccordionCell*)[self.questionsTable cellForRowAtIndexPath:indexPath] expand];
+    // Note selected state of currently selected question by putting adjusted height (expanded height)
+    // into the questinoSelections array.
+    [questionSelections replaceObjectAtIndex:indexPath.section 
+                                  withObject:[NSNumber numberWithFloat:[(SurveyAccordionCell*)[self.questionsTable cellForRowAtIndexPath:indexPath] adjustedHeight]]];
    
     // Set selection state of cell to "NO"
     [self.questionsTable deselectRowAtIndexPath:indexPath animated:YES];
@@ -164,6 +166,9 @@
     // Perform animation
     [self.questionsTable beginUpdates];
     [self.questionsTable endUpdates];
+    
+    // Show question body
+    [(SurveyAccordionCell*)[self.questionsTable cellForRowAtIndexPath:indexPath] expand];
     
 //    SurveyFieldViewController *sfvc;
 //    if([[self.surveyControllers objectAtIndex:indexPath.section] isKindOfClass:[NSNull class]]) {
@@ -332,6 +337,6 @@
 }
 
 - (BOOL)cellIsSelectedAtIndexPath:(NSIndexPath *)indexPath {
-    return [[questionSelections objectAtIndex:indexPath.section] isEqualToNumber:[NSNumber numberWithBool:YES]];
+    return ![[questionSelections objectAtIndex:indexPath.section] isEqualToNumber:[NSNumber numberWithBool:NO]];
 }
 @end

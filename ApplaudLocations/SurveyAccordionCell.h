@@ -16,9 +16,10 @@
 #define CELL_MARGIN 22.0f           // space between outside of the cell and edge of the screen
 #define TITLE_SIZE 18.0f            // size of newsfeed item titles
 #define SUBTITLE_SIZE 12.0f         // size of newsfeed item subtitles
+#define WIDGET_HEIGHT 30.0f         // standard height of a widget (like an option)
 
 @interface SurveyAccordionCell : UITableViewCell {
-    UIView *containerView;  // Wrapper around stuff inside of the cell. Goes inside contentView.
+    SurveyField *myField;
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier field:(SurveyField *)field;
@@ -28,5 +29,6 @@
 @property (strong, nonatomic) UILabel *questionLabel;   // The question's text
 @property (strong, nonatomic) UIView *hrView;           // A horizontal rule between the above and ...
 @property (strong, nonatomic) UIView *questionWidget;   // the widget with which the user interacts.
+@property (readonly) CGFloat adjustedHeight;            // How tall this cell should be drawn
 
 @end

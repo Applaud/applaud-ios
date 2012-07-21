@@ -20,7 +20,7 @@
 #define SUBTITLE_SIZE 12.0f         // size of newsfeed item subtitles
 
 @interface QuestionsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate> {
-    // Tracks what questions have been selected.
+    // Tracks what questions have been selected. 
     NSMutableArray *questionSelections;
 }
 
