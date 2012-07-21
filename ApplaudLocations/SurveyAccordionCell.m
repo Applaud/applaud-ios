@@ -79,6 +79,15 @@
         [self.contentView addSubview:questionLabel];
         [self.contentView addSubview:hrView];
         [self.contentView addSubview:questionWidget];
+        
+        // Set our color and shape
+        self.contentView.backgroundColor = [UIColor whiteColor];
+        [self.contentView.layer setCornerRadius:7.0f];
+        [self.contentView.layer setMasksToBounds:YES];
+        // Some nice visual FX
+        [self.contentView.layer setShadowRadius:5.0f];
+        [self.contentView.layer setShadowOpacity:0.2f];
+        [self.contentView.layer setShadowOffset:CGSizeMake(1, 0)];
 
     }
     return self;
