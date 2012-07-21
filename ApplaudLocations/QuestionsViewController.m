@@ -152,8 +152,16 @@
     // Collapse all questions
     for ( int i=0; i<self.survey.fields.count; i++ ){
         [questionSelections replaceObjectAtIndex:i withObject:[NSNumber numberWithBool:NO]];
-        [(SurveyAccordionCell*)[self.questionsTable 
-                                cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:i]] contract];
+        SurveyAccordionCell *cell = (SurveyAccordionCell*)[self.questionsTable 
+                                                           cellForRowAtIndexPath:
+                                                           [NSIndexPath indexPathForRow:0 
+                                                                              inSection:i]];
+        [cell contract];
+        [cell.contentView.layer setShadowPath:
+         [[UIBezierPath bezierPathWithRoundedRect:cell.contentView.bounds
+                                     cornerRadius:5.0f] CGPath]];
+        
+        [cell.contentView setNeedsDisplay];
     }
     // Note selected state of currently selected question by putting adjusted height (expanded height)
     // into the questinoSelections array.
@@ -168,8 +176,21 @@
     [self.questionsTable endUpdates];
     
     // Show question body
-    [(SurveyAccordionCell*)[self.questionsTable cellForRowAtIndexPath:indexPath] expand];
+    SurveyAccordionCell *cell = (SurveyAccordionCell*)[self.questionsTable 
+                                                       cellForRowAtIndexPath:indexPath];
+    [cell expand];
     
+    // Refresh drop-shadows
+    for (int i=0; i<self.survey.fields.count; i++) {
+        SurveyAccordionCell *cell = (SurveyAccordionCell*)[self.questionsTable 
+                                                           cellForRowAtIndexPath:
+                                                           [NSIndexPath indexPathForRow:0 
+                                                                              inSection:i]];
+        [cell.contentView.layer setShadowPath:
+         [[UIBezierPath bezierPathWithRoundedRect:cell.contentView.bounds
+                                     cornerRadius:5.0f] CGPath]];
+        [cell.contentView setNeedsDisplay];
+    }
 //    SurveyFieldViewController *sfvc;
 //    if([[self.surveyControllers objectAtIndex:indexPath.section] isKindOfClass:[NSNull class]]) {
 //        sfvc = [[SurveyFieldViewController alloc] initWithNibName:@"SurveyFieldViewController" bundle:nil];

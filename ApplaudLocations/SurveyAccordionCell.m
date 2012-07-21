@@ -55,11 +55,13 @@
                     UILabel *optionLabel = [[UILabel alloc] init];
                     [optionLabel setTag:100];
                     optionLabel.text = option;
-                    UISwitch *checkBox = [[UISwitch alloc] init];
-                    [checkBox setTag:101];
+                    
+                    UISegmentedControl *yesNo = [[UISegmentedControl alloc] initWithItems:
+                                                 [NSArray arrayWithObjects:@"yes", @"no", nil]];
+                    [yesNo setTag:101];
                     
                     [optionView addSubview:optionLabel];
-                    [optionView addSubview:checkBox];
+                    [optionView addSubview:yesNo];
                     
                     [questionWidget addSubview:optionView];
                 }
@@ -80,15 +82,17 @@
         [self.contentView addSubview:hrView];
         [self.contentView addSubview:questionWidget];
         
+        // Draw visual effects
         // Set our color and shape
         self.contentView.backgroundColor = [UIColor whiteColor];
         [self.contentView.layer setCornerRadius:7.0f];
         [self.contentView.layer setMasksToBounds:YES];
+        [self.contentView.layer setBorderWidth:1.0f];
+        [self.contentView.layer setBorderColor:[[UIColor grayColor] CGColor]];
         // Some nice visual FX
         [self.contentView.layer setShadowRadius:5.0f];
         [self.contentView.layer setShadowOpacity:0.2f];
         [self.contentView.layer setShadowOffset:CGSizeMake(1, 0)];
-
     }
     return self;
 }
