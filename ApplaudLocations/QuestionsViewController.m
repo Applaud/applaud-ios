@@ -134,18 +134,29 @@
  * This lets us change the background color of a cell -- if we have a view controller stored at that index and it has an answer, then we set it to green.
  */
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if([[self.surveyControllers objectAtIndex:indexPath.section] isKindOfClass:[SurveyFieldViewController class]] &&
-       [(SurveyFieldViewController *)[self.surveyControllers objectAtIndex:indexPath.section] getAnswer].count &&
-       ![[[(SurveyFieldViewController *)[self.surveyControllers objectAtIndex:indexPath.section] getAnswer] objectAtIndex:0] isEqualToString:@""]) {
-       // cell.backgroundColor = [UIColor greenColor];
-    }
-    // If it's not a survey with an answer, make sure it's reset to white and that its subtitle is "unanswered".
-    else {
-        cell.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
-        cell.detailTextLabel.text = @"Unanswered";
-        cell.detailTextLabel.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
-        cell.textLabel.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
-    }
+//    if([[self.surveyControllers objectAtIndex:indexPath.section] isKindOfClass:[SurveyFieldViewController class]] &&
+//       [(SurveyFieldViewController *)[self.surveyControllers objectAtIndex:indexPath.section] getAnswer].count &&
+//       ![[[(SurveyFieldViewController *)[self.surveyControllers objectAtIndex:indexPath.section] getAnswer] objectAtIndex:0] isEqualToString:@""]) {
+//       // cell.backgroundColor = [UIColor greenColor];
+//    }
+//    // If it's not a survey with an answer, make sure it's reset to white and that its subtitle is "unanswered".
+//    else {
+//        cell.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+//        cell.detailTextLabel.text = @"Unanswered";
+//        cell.detailTextLabel.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+//        cell.textLabel.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+//    }
+    
+    // Draw visual effects
+    // Set our color and shape
+//    cell.contentView.backgroundColor = [UIColor whiteColor];
+//    [cell.contentView.layer setCornerRadius:7.0f];
+    SurveyAccordionCell *accordionCell = (SurveyAccordionCell*)cell;
+    [accordionCell.containerView.layer setMasksToBounds:YES];
+    [accordionCell.contentView setBackgroundColor:[UIColor whiteColor]];
+
+//    [cell.contentView.layer setBorderWidth:1.0f];
+//    [cell.contentView.layer setBorderColor:[[UIColor grayColor] CGColor]];
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -162,6 +173,7 @@
                                      cornerRadius:5.0f] CGPath]];
         
         [cell.contentView setNeedsDisplay];
+        [cell.containerView setNeedsDisplay];
     }
     // Note selected state of currently selected question by putting adjusted height (expanded height)
     // into the questinoSelections array.
@@ -179,7 +191,6 @@
     SurveyAccordionCell *cell = (SurveyAccordionCell*)[self.questionsTable 
                                                        cellForRowAtIndexPath:indexPath];
     [cell expand];
-    
     // Refresh drop-shadows
     for (int i=0; i<self.survey.fields.count; i++) {
         SurveyAccordionCell *cell = (SurveyAccordionCell*)[self.questionsTable 

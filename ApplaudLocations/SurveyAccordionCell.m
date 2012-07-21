@@ -15,6 +15,7 @@
 
 @synthesize questionLabel, questionWidget, hrView;
 @synthesize adjustedHeight = _adjustedHeight;
+@synthesize containerView = _containerView;
 
 - (id)initWithStyle:(UITableViewCellStyle)style 
     reuseIdentifier:(NSString *)reuseIdentifier 
@@ -22,6 +23,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         myField = field;
+        self.containerView = [[UIView alloc] initWithFrame:CGRectZero];
         
         // Initialize UI elements, starting with the question label...
         questionLabel = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -78,17 +80,17 @@
         [self contract];
         
         // Add all cell content
-        [self.contentView addSubview:questionLabel];
-        [self.contentView addSubview:hrView];
-        [self.contentView addSubview:questionWidget];
+        [self.containerView addSubview:questionLabel];
+        [self.containerView addSubview:hrView];
+        [self.containerView addSubview:questionWidget];
+        [self.contentView addSubview:self.containerView];
         
         // Draw visual effects
-        // Set our color and shape
-        self.contentView.backgroundColor = [UIColor whiteColor];
+        // Set our shape
         [self.contentView.layer setCornerRadius:7.0f];
-        [self.contentView.layer setMasksToBounds:YES];
         [self.contentView.layer setBorderWidth:1.0f];
         [self.contentView.layer setBorderColor:[[UIColor grayColor] CGColor]];
+        
         // Some nice visual FX
         [self.contentView.layer setShadowRadius:5.0f];
         [self.contentView.layer setShadowOpacity:0.2f];
@@ -100,7 +102,7 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    CGRect contentRect = [self.contentView bounds];
+    CGRect contentRect = [self.containerView bounds];
     
     // We will never edit, but it's clean.
     if (! self.editing) {
@@ -180,6 +182,9 @@
         
         _adjustedHeight = questionLabelSize.height + hrView.frame.size.height + questionWidget.frame.size.height + 2*CELL_ELEMENT_PADDING + 2*CELL_PADDING;
     }
+    
+    [self.containerView setFrame:CGRectMake(0, 0, self.contentView.frame.size.width, self.contentView.frame.size.height)];
+          
 }
 
 - (void)expand {

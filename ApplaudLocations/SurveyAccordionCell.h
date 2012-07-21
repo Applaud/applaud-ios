@@ -26,6 +26,7 @@
 - (void)expand;
 - (void)contract;
 
+@property (strong, nonatomic) UIView *containerView;    // Contains all the widgets
 @property (strong, nonatomic) UILabel *questionLabel;   // The question's text
 @property (strong, nonatomic) UIView *hrView;           // A horizontal rule between the above and ...
 @property (strong, nonatomic) UIView *questionWidget;   // the widget with which the user interacts.
