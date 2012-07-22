@@ -18,9 +18,7 @@
 #define SUBTITLE_SIZE 12.0f         // size of newsfeed item subtitles
 #define WIDGET_HEIGHT 30.0f         // standard height of a widget (like an option)
 
-@interface SurveyAccordionCell : UITableViewCell {
-    BOOL isExpanded;
-}
+@interface SurveyAccordionCell : UITableViewCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier field:(SurveyField *)field;
 - (void)expand;

@@ -206,59 +206,15 @@
         }
 
     }
-    //    NSLog(@"Container view: %@",self.containerView);
-    //    NSLog(@"Content view: %@",self.contentView);
-    //    NSLog(@"questionWidget: %@",self.questionWidget);
     
     [self.containerView setFrame:CGRectMake(0, 0, self.contentView.frame.size.width, self.contentView.frame.size.height)];
     
 }
 
-/** touch events override **/
-//- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-//    UITouch *touch = [touches anyObject];
-//    if ( isExpanded && CGRectContainsPoint(self.questionWidget.frame, [touch locationInView:self]) ) {
-//        [self.questionWidget touchesBegan:touches withEvent:event];
-//    } else {
-//        [super touchesBegan:touches withEvent:event];        
-//    }
-//}
-//
-//- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
-//    UITouch *touch = [touches anyObject];
-//    if ( isExpanded && CGRectContainsPoint(self.questionWidget.frame, [touch locationInView:self]) ) {
-//        [self.questionWidget touchesCancelled:touches withEvent:event];
-//    } else {
-//        [super touchesCancelled:touches withEvent:event];
-//    }
-//}
-//
-//- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-//    UITouch *touch = [touches anyObject];
-//    if ( isExpanded && CGRectContainsPoint(self.questionWidget.frame, [touch locationInView:self]) ) {
-//        [self.questionWidget touchesEnded:touches withEvent:event];
-//    } else {
-//        [super touchesEnded:touches withEvent:event];
-//    }
-//}
-//
-//- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
-//    UITouch *touch = [touches anyObject];
-//    if ( isExpanded && CGRectContainsPoint(self.questionWidget.frame, [touch locationInView:self]) ) {
-//        [self.questionWidget touchesMoved:touches withEvent:event];
-//    } else {
-//        [super touchesMoved:touches withEvent:event];
-//    }
-//}
-/** end of touch overrides **/
-
-
 - (void)expand {
     [self.hrView setHidden:NO];
     for ( UIView *widget in questionWidgets )
         [widget setHidden:NO];
-    
-    isExpanded = YES;
 }
 
 - (void)contract {
