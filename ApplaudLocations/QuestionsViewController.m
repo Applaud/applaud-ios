@@ -147,16 +147,11 @@
 //        cell.textLabel.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
 //    }
     
-    // Draw visual effects
-    // Set our color and shape
-//    cell.contentView.backgroundColor = [UIColor whiteColor];
-//    [cell.contentView.layer setCornerRadius:7.0f];
+    // Set color and masking
     SurveyAccordionCell *accordionCell = (SurveyAccordionCell*)cell;
     [accordionCell.containerView.layer setMasksToBounds:YES];
     [accordionCell.contentView setBackgroundColor:[UIColor whiteColor]];
-
-//    [cell.contentView.layer setBorderWidth:1.0f];
-//    [cell.contentView.layer setBorderColor:[[UIColor grayColor] CGColor]];
+    [accordionCell setBackgroundColor:[UIColor whiteColor]];
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -168,13 +163,8 @@
                                                            [NSIndexPath indexPathForRow:0 
                                                                               inSection:i]];
         [cell contract];
-        [cell.contentView.layer setShadowPath:
-         [[UIBezierPath bezierPathWithRoundedRect:cell.contentView.bounds
-                                     cornerRadius:5.0f] CGPath]];
-        
-        [cell.contentView setNeedsDisplay];
-        [cell.containerView setNeedsDisplay];
     }
+    
     // Note selected state of currently selected question by putting adjusted height (expanded height)
     // into the questinoSelections array.
     [questionSelections replaceObjectAtIndex:indexPath.section 
