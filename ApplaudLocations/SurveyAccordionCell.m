@@ -54,8 +54,10 @@
                 break;
             case CHECKBOX:
             {
-                // Create the options
-                int i=0;
+                // Create the options. Options have sequential tags, starting at 1.
+                // UISegmentedControl tags grow in the negative direction, UILabels in the
+                // positive direction.
+                int i=1;
                 for ( NSString *option in [field options] ) {
                     UILabel *optionLabel = [[UILabel alloc] init];
                     optionLabel.text = option;
@@ -63,7 +65,7 @@
                     
                     UISegmentedControl *yesNo = [[UISegmentedControl alloc] initWithItems:
                                                  [NSArray arrayWithObjects:@"yes", @"no", nil]];
-                    yesNo.tag = i;
+                    yesNo.tag = -i;
                     
                     [questionWidgets addObject:optionLabel];
                     [questionWidgets addObject:yesNo];
@@ -119,9 +121,9 @@
                                     sizeWithFont:[UIFont boldSystemFontOfSize:TITLE_SIZE]
                                     constrainedToSize:CGSizeMake(contentRect.size.width - 2*CELL_PADDING,400)
                                     lineBreakMode:UILineBreakModeWordWrap];
-
-	// Set the contracted height based off of just the question label
-	_contractedHeight = questionLabelSize.height + 2*CELL_PADDING + 2*CELL_ELEMENT_PADDING;
+        
+        // Set the contracted height based off of just the question label
+        _contractedHeight = questionLabelSize.height + 2*CELL_PADDING + 2*CELL_ELEMENT_PADDING;
         
         // Question label
         self.questionLabel.frame = CGRectMake(contentRect.origin.x + CELL_PADDING,
@@ -135,9 +137,9 @@
                                        contentRect.size.width - 2*CELL_PADDING,
                                        1);
         
-	// The baseline height of an expanded cell. This will be adjusted in each case of the following switch statement.
+        // The baseline height of an expanded cell. This will be adjusted in each case of the following switch statement.
         _expandedHeight = questionLabelSize.height + hrView.frame.size.height + 2*CELL_ELEMENT_PADDING + 2*CELL_PADDING;
-
+        
         // Question widget
         switch ( self.field.type ) {
             case TEXTAREA:
@@ -148,7 +150,7 @@
                                               .size.height + CELL_ELEMENT_PADDING, 
                                               contentRect.size.width - 2*CELL_PADDING, 
                                               2*WIDGET_HEIGHT)];
-		_expandedHeight += textArea.frame.size.height;
+                _expandedHeight += textArea.frame.size.height;
             }
                 break;
             case TEXTFIELD:
@@ -159,7 +161,7 @@
                                                .size.height + CELL_ELEMENT_PADDING, 
                                                contentRect.size.width - 2*CELL_PADDING, 
                                                WIDGET_HEIGHT)];
-		_expandedHeight += textField.frame.size.height;
+                _expandedHeight += textField.frame.size.height;
             }
                 break;
             case RADIO:
@@ -170,17 +172,17 @@
                                                 .size.height + CELL_ELEMENT_PADDING, 
                                                 contentRect.size.width - 2*CELL_PADDING, 
                                                 WIDGET_HEIGHT)];
-		_expandedHeight += radioGroup.frame.size.height;
+                _expandedHeight += radioGroup.frame.size.height;
             }
                 break;
             case CHECKBOX:
-	    {
-		int boxCount = 0;
+            {
+                int boxCount = 0;
                 // layout for the option views.
                 for ( UIView *widget in questionWidgets ) {
                     if ( [widget isKindOfClass:[UILabel class]] ) {
                         [widget setFrame:CGRectMake(CELL_PADDING, 
-                                                    widget.tag*(CELL_ELEMENT_PADDING + WIDGET_HEIGHT)
+                                                    (widget.tag-1)*(CELL_ELEMENT_PADDING + WIDGET_HEIGHT)
                                                     + hrView.frame.origin.y + hrView.frame.size.height + CELL_ELEMENT_PADDING,
                                                     (contentRect.size.width - 2*CELL_PADDING)/2, 
                                                     WIDGET_HEIGHT)];
@@ -188,20 +190,20 @@
                     else if ( [widget isKindOfClass:[UISegmentedControl class]] ) {
                         [widget setFrame:CGRectMake((contentRect.size.width - 2*CELL_PADDING)/2
                                                     + CELL_ELEMENT_PADDING, 
-                                                    widget.tag*(CELL_ELEMENT_PADDING + WIDGET_HEIGHT)
+                                                    ((-widget.tag)-1)*(CELL_ELEMENT_PADDING + WIDGET_HEIGHT)
                                                     + hrView.frame.origin.y + hrView.frame.size.height + CELL_ELEMENT_PADDING,
                                                     (contentRect.size.width - 2*CELL_PADDING)/2 
                                                     - CELL_ELEMENT_PADDING, 
                                                     WIDGET_HEIGHT)];
-			boxCount++;
+                        boxCount++;
                     }
                 }
-
-		_expandedHeight += (boxCount-1) * (WIDGET_HEIGHT + CELL_ELEMENT_PADDING) + WIDGET_HEIGHT;
-	    }
+                
+                _expandedHeight += (boxCount-1) * (WIDGET_HEIGHT + CELL_ELEMENT_PADDING) + WIDGET_HEIGHT;
+            }
                 break;
         }
-
+        
     }
     
     [self.containerView setFrame:CGRectMake(0, 0, self.contentView.frame.size.width, self.contentView.frame.size.height)];
@@ -221,5 +223,53 @@
         [widget resignFirstResponder];
     }
 }
+
+/*
+ * Gets the user's answers, based on the type of widget that this question uses.
+ * This returns an NSArray because the server is expecting that in JSON, plus
+ * the checkboxes may have multiple answers.
+ */
+- (NSArray *)getAnswer {
+    switch(self.field.type) {
+        case TEXTAREA:
+        {
+            UITextView *textView = (UITextView*)[self.questionWidgets objectAtIndex:0];
+            return [NSArray arrayWithObject:textView.text];
+        }
+            break;
+        case TEXTFIELD:
+        {
+            UITextField *textField = (UITextField*)[self.questionWidgets objectAtIndex:0];
+            return [NSArray arrayWithObject:textField.text];
+        }
+            break;
+        case RADIO:
+        {
+            UISegmentedControl *radioGroup = (UISegmentedControl*)[self.questionWidgets objectAtIndex:0];
+            if(radioGroup.selectedSegmentIndex != UISegmentedControlNoSegment) {
+                return [NSArray arrayWithObject:[radioGroup titleForSegmentAtIndex:radioGroup.selectedSegmentIndex]];
+            }
+        }
+            break;
+        case CHECKBOX:
+        {
+            NSMutableArray *answers = [[NSMutableArray alloc] init];
+            for ( UIView *widget in self.questionWidgets ) {
+                if ( [widget isKindOfClass:[UISegmentedControl class]] ) {
+                    UISegmentedControl *widgetControl = (UISegmentedControl*)widget;
+                    if ( POSITIVE_RESPONSE == [widgetControl selectedSegmentIndex] ) {
+                        UILabel *response = (UILabel*)[self.containerView viewWithTag:-widgetControl.tag]; 
+                        [answers addObject:response.text];
+                    }
+                }
+            }
+            if ( answers.count )
+                return answers;
+        }
+            break;
+    }
+    return nil; // If we don't have an answer.
+}
+
 
 @end

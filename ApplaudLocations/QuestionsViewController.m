@@ -307,45 +307,52 @@
  * Sends our survey data to the server.
  */
 - (void)buttonPressed {
-    if([self checkAnswers]) {
-        NSMutableArray *answers = [[NSMutableArray alloc] init];
-        // Grab the data, put it in dictionaries and array for JSON.
-        int i;
-        for(i = 0; i < self.survey.fields.count; i++) {
-            NSDictionary *responseDict = [[NSDictionary alloc] initWithObjectsAndKeys:[self.survey.answers objectAtIndex:i],
-                                          @"response",
-                                          [[self.survey.fields objectAtIndex:i] label],
-                                          @"label",
-                                          [NSNumber numberWithInt:[[self.survey.fields objectAtIndex:i] id]],
-                                          @"id",
-                                          nil];
-            [answers addObject:responseDict];
-        }
-        NSDictionary *params = [[NSDictionary alloc] initWithObjectsAndKeys:answers, @"answers", nil];
-        [ConnectionManager serverRequest:@"POST"
-                              withParams:params
-                                     url:RESPONSE_URL
-                                callback:^(NSData *data) {
-                                    // Reset all the questions and change to the news feed.
-                                    int i;
-                                    for(i = 0; i < self.surveyControllers.count; i++) {
-                                        [self.surveyControllers replaceObjectAtIndex:i withObject:[[NSNull alloc] init]];
-                                    }
-                                    [self.questionsTable reloadData];
-                                }];
-        [[[UIAlertView alloc] initWithTitle:@"Thanks!"
-                                    message:@"We appreciate your feedback."
-                                   delegate:self
-                          cancelButtonTitle:@"OK"
-                          otherButtonTitles:nil] show];
+    for (int i=0; i<self.questionsTable.numberOfSections; i++) {
+        SurveyAccordionCell *cell = (SurveyAccordionCell*)[self.questionsTable cellForRowAtIndexPath:
+                                                           [NSIndexPath indexPathForRow:0 inSection:i]];
+        NSLog(@"Answer for question %@ is %@",
+              cell.field.label,
+              [cell getAnswer]);
     }
-    else {
-        [[[UIAlertView alloc] initWithTitle:@"Alert!"
-                                    message:@"You should answer all the questions."
-                                   delegate:nil
-                          cancelButtonTitle:@"OK"
-                          otherButtonTitles:nil] show];
-    }
+//    if([self checkAnswers]) {
+//        NSMutableArray *answers = [[NSMutableArray alloc] init];
+//        // Grab the data, put it in dictionaries and array for JSON.
+//        int i;
+//        for(i = 0; i < self.survey.fields.count; i++) {
+//            NSDictionary *responseDict = [[NSDictionary alloc] initWithObjectsAndKeys:[self.survey.answers objectAtIndex:i],
+//                                          @"response",
+//                                          [[self.survey.fields objectAtIndex:i] label],
+//                                          @"label",
+//                                          [NSNumber numberWithInt:[[self.survey.fields objectAtIndex:i] id]],
+//                                          @"id",
+//                                          nil];
+//            [answers addObject:responseDict];
+//        }
+//        NSDictionary *params = [[NSDictionary alloc] initWithObjectsAndKeys:answers, @"answers", nil];
+//        [ConnectionManager serverRequest:@"POST"
+//                              withParams:params
+//                                     url:RESPONSE_URL
+//                                callback:^(NSData *data) {
+//                                    // Reset all the questions and change to the news feed.
+//                                    int i;
+//                                    for(i = 0; i < self.surveyControllers.count; i++) {
+//                                        [self.surveyControllers replaceObjectAtIndex:i withObject:[[NSNull alloc] init]];
+//                                    }
+//                                    [self.questionsTable reloadData];
+//                                }];
+//        [[[UIAlertView alloc] initWithTitle:@"Thanks!"
+//                                    message:@"We appreciate your feedback."
+//                                   delegate:self
+//                          cancelButtonTitle:@"OK"
+//                          otherButtonTitles:nil] show];
+//    }
+//    else {
+//        [[[UIAlertView alloc] initWithTitle:@"Alert!"
+//                                    message:@"You should answer all the questions."
+//                                   delegate:nil
+//                          cancelButtonTitle:@"OK"
+//                          otherButtonTitles:nil] show];
+//    }
 }
 
 /*

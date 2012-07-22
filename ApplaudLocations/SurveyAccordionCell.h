@@ -18,11 +18,15 @@
 #define SUBTITLE_SIZE 12.0f         // size of newsfeed item subtitles
 #define WIDGET_HEIGHT 30.0f         // standard height of a widget (like an option)
 
+#define POSITIVE_RESPONSE 0         // What index a UISegmentedControl is in that indicates a "yes"
+                                    // response under a checkbox group
+
 @interface SurveyAccordionCell : UITableViewCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier field:(SurveyField *)field;
 - (void)expand;
 - (void)contract;
+- (NSArray *)getAnswer;
 
 @property (strong, nonatomic) UIView *containerView;    // Contains all the widgets
 @property (strong, nonatomic) UILabel *questionLabel;   // The question's text
