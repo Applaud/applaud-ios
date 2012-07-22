@@ -93,9 +93,6 @@
                                           reuseIdentifier:CellIdentifier
                                                     field:[self.survey.fields objectAtIndex:indexPath.section]];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        UIView *backgroundView = [[UIView alloc] init];
-//        backgroundView.backgroundColor = [UIColor whiteColor];
-//        cell.selectedBackgroundView = backgroundView;
     }
     
     return cell;
@@ -167,18 +164,20 @@
     
     // Collapse all questions
     for ( int i=0; i<self.survey.fields.count; i++ ){
-        [questionSelections replaceObjectAtIndex:i withObject:[NSNumber numberWithBool:NO]];
         SurveyAccordionCell *cell = (SurveyAccordionCell*)[self.questionsTable 
                                                            cellForRowAtIndexPath:
                                                            [NSIndexPath indexPathForRow:0 
                                                                               inSection:i]];
+        
         [cell contract];
+               
+        [questionSelections replaceObjectAtIndex:i withObject:[NSNumber numberWithBool:NO]];
     }
     
     // Note selected state of currently selected question by putting adjusted height (expanded height)
     // into the questinoSelections array.
     [questionSelections replaceObjectAtIndex:indexPath.section 
-                                  withObject:[NSNumber numberWithFloat:[cell adjustedHeight]]];
+                                  withObject:[NSNumber numberWithFloat:[cell expandedHeight]]];
    
     // Set selection state of cell to "NO"
 //    [self.questionsTable deselectRowAtIndexPath:indexPath animated:YES];
@@ -189,18 +188,6 @@
     
     // Show question body
     [cell expand];
-    
-    // Refresh drop-shadows
-    for (int i=0; i<self.survey.fields.count; i++) {
-        SurveyAccordionCell *cell = (SurveyAccordionCell*)[self.questionsTable 
-                                                           cellForRowAtIndexPath:
-                                                           [NSIndexPath indexPathForRow:0 
-                                                                              inSection:i]];
-        [cell.contentView.layer setShadowPath:
-         [[UIBezierPath bezierPathWithRoundedRect:cell.contentView.bounds
-                                     cornerRadius:5.0f] CGPath]];
-        [cell.contentView setNeedsDisplay];
-    }
     
 //    SurveyFieldViewController *sfvc;
 //    if([[self.surveyControllers objectAtIndex:indexPath.section] isKindOfClass:[NSNull class]]) {

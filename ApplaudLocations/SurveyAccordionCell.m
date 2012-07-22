@@ -14,15 +14,16 @@
 @implementation SurveyAccordionCell
 
 @synthesize questionLabel, questionWidgets, hrView;
-@synthesize adjustedHeight = _adjustedHeight;
+@synthesize expandedHeight = _expandedHeight, contractedHeight = _contractedHeight;
 @synthesize containerView = _containerView;
+@synthesize field = _field;
 
 - (id)initWithStyle:(UITableViewCellStyle)style 
     reuseIdentifier:(NSString *)reuseIdentifier 
               field:(SurveyField *)field {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        myField = field;
+        self.field = field;
         self.containerView = [[UIView alloc] initWithFrame:CGRectZero];
         
         // Initialize UI elements, starting with the question label...
@@ -121,6 +122,9 @@
                                     sizeWithFont:[UIFont boldSystemFontOfSize:TITLE_SIZE]
                                     constrainedToSize:CGSizeMake(contentRect.size.width - 2*CELL_PADDING,400)
                                     lineBreakMode:UILineBreakModeWordWrap];
+
+	// Set the contracted height based off of just the question label
+	_contractedHeight = questionLabelSize.height + 2*CELL_PADDING + 2*CELL_ELEMENT_PADDING;
         
         // Question label
         self.questionLabel.frame = CGRectMake(contentRect.origin.x + CELL_PADDING,
@@ -135,10 +139,10 @@
                                        1);
         
 	// The baseline height of an expanded cell. This will be adjusted in each case of the following switch statement.
-        _adjustedHeight = questionLabelSize.height + hrView.frame.size.height + 2*CELL_ELEMENT_PADDING + 2*CELL_PADDING;
+        _expandedHeight = questionLabelSize.height + hrView.frame.size.height + 2*CELL_ELEMENT_PADDING + 2*CELL_PADDING;
 
         // Question widget
-        switch ( myField.type ) {
+        switch ( self.field.type ) {
             case TEXTAREA:
             {
                 UIView *textArea = [questionWidgets objectAtIndex:0];
@@ -147,7 +151,7 @@
                                               .size.height + CELL_ELEMENT_PADDING, 
                                               contentRect.size.width - 2*CELL_PADDING, 
                                               2*WIDGET_HEIGHT)];
-		_adjustedHeight += textArea.frame.size.height;
+		_expandedHeight += textArea.frame.size.height;
             }
                 break;
             case TEXTFIELD:
@@ -158,7 +162,7 @@
                                                .size.height + CELL_ELEMENT_PADDING, 
                                                contentRect.size.width - 2*CELL_PADDING, 
                                                WIDGET_HEIGHT)];
-		_adjustedHeight += textField.frame.size.height;
+		_expandedHeight += textField.frame.size.height;
             }
                 break;
             case RADIO:
@@ -169,7 +173,7 @@
                                                 .size.height + CELL_ELEMENT_PADDING, 
                                                 contentRect.size.width - 2*CELL_PADDING, 
                                                 WIDGET_HEIGHT)];
-		_adjustedHeight += radioGroup.frame.size.height;
+		_expandedHeight += radioGroup.frame.size.height;
             }
                 break;
             case CHECKBOX:
@@ -196,7 +200,7 @@
                     }
                 }
 
-		_adjustedHeight += (boxCount-1) * (WIDGET_HEIGHT + CELL_ELEMENT_PADDING) + WIDGET_HEIGHT;
+		_expandedHeight += (boxCount-1) * (WIDGET_HEIGHT + CELL_ELEMENT_PADDING) + WIDGET_HEIGHT;
 	    }
                 break;
         }

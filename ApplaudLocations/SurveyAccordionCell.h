@@ -19,7 +19,6 @@
 #define WIDGET_HEIGHT 30.0f         // standard height of a widget (like an option)
 
 @interface SurveyAccordionCell : UITableViewCell {
-    SurveyField *myField;
     BOOL isExpanded;
 }
 
@@ -31,6 +30,8 @@
 @property (strong, nonatomic) UILabel *questionLabel;   // The question's text
 @property (strong, nonatomic) UIView *hrView;           // A horizontal rule between the above and ...
 @property (strong, nonatomic) NSMutableArray *questionWidgets;  // Widgets with which the user interacts
-@property (readonly) CGFloat adjustedHeight;            // How tall this cell should be drawn
+@property (readonly) CGFloat expandedHeight;            // How tall this cell should be drawn when expanded
+@property (readonly) CGFloat contractedHeight;		// How tall this cell should be drawn when contracted
+@property (strong, nonatomic) SurveyField *field;	// Field that this cell represents
 
 @end
