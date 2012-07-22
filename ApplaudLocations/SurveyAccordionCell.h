@@ -20,6 +20,7 @@
 
 @interface SurveyAccordionCell : UITableViewCell {
     SurveyField *myField;
+    BOOL isExpanded;
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier field:(SurveyField *)field;
@@ -29,7 +30,7 @@
 @property (strong, nonatomic) UIView *containerView;    // Contains all the widgets
 @property (strong, nonatomic) UILabel *questionLabel;   // The question's text
 @property (strong, nonatomic) UIView *hrView;           // A horizontal rule between the above and ...
-@property (strong, nonatomic) UIView *questionWidget;   // the widget with which the user interacts.
+@property (strong, nonatomic) NSMutableArray *questionWidgets;  // Widgets with which the user interacts
 @property (readonly) CGFloat adjustedHeight;            // How tall this cell should be drawn
 
 @end
