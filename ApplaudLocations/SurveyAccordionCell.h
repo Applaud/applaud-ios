@@ -30,7 +30,6 @@
 
 @property (strong, nonatomic) UIView *containerView;    // Contains all the widgets
 @property (strong, nonatomic) UILabel *questionLabel;   // The question's text
-@property (strong, nonatomic) UIView *hrView;           // A horizontal rule between the above and ...
 @property (strong, nonatomic) NSMutableArray *questionWidgets;  // Widgets with which the user interacts
 @property (readonly) CGFloat expandedHeight;            // How tall this cell should be drawn when expanded
 @property (readonly) CGFloat contractedHeight;		// How tall this cell should be drawn when contracted

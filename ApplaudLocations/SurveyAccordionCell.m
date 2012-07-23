@@ -13,7 +13,7 @@
 
 @implementation SurveyAccordionCell
 
-@synthesize questionLabel, questionWidgets, hrView;
+@synthesize questionLabel, questionWidgets;
 @synthesize expandedHeight = _expandedHeight, contractedHeight = _contractedHeight;
 @synthesize containerView = _containerView;
 @synthesize field = _field;
@@ -32,10 +32,6 @@
         questionLabel.numberOfLines = 0;
         questionLabel.lineBreakMode = UILineBreakModeWordWrap;
         questionLabel.font = [UIFont boldSystemFontOfSize:TITLE_SIZE];
-        hrView = [[UIView alloc] initWithFrame:CGRectZero];
-        
-        // ...and then the horizontal rule
-        hrView.backgroundColor = [UIColor grayColor];
         
         // ...and then the question widgets
         questionWidgets = [[NSMutableArray alloc] init];
@@ -94,7 +90,6 @@
         
         // Add all cell content
         [self.containerView addSubview:questionLabel];
-        [self.containerView addSubview:hrView];
         for ( UIView *widget in questionWidgets ) {
             [self.containerView addSubview:widget];
         }
@@ -135,14 +130,8 @@
                                               contentRect.size.width - 2*CELL_PADDING,
                                               questionLabelSize.height);
         
-        // Horizontal rule
-        self.hrView.frame = CGRectMake(contentRect.origin.x + CELL_PADDING,
-                                       contentRect.origin.y + CELL_PADDING + questionLabelSize.height + CELL_ELEMENT_PADDING,
-                                       contentRect.size.width - 2*CELL_PADDING,
-                                       1);
-        
         // The baseline height of an expanded cell. This will be adjusted in each case of the following switch statement.
-        _expandedHeight = questionLabelSize.height + hrView.frame.size.height + 2*CELL_ELEMENT_PADDING + 2*CELL_PADDING;
+        _expandedHeight = questionLabelSize.height + 2*CELL_ELEMENT_PADDING + 2*CELL_PADDING;
         
         // Question widget
         switch ( self.field.type ) {
@@ -150,8 +139,8 @@
             {
                 UIView *textArea = [questionWidgets objectAtIndex:0];
                 [textArea setFrame:CGRectMake(CELL_PADDING, 
-                                              hrView.frame.origin.y + hrView.frame
-                                              .size.height + CELL_ELEMENT_PADDING, 
+                                              questionLabel.frame.origin.y + questionLabel.frame
+                                              .size.height + 2*CELL_ELEMENT_PADDING, 
                                               contentRect.size.width - 2*CELL_PADDING, 
                                               2*WIDGET_HEIGHT)];
                 _expandedHeight += textArea.frame.size.height;
@@ -161,8 +150,8 @@
             {
                 UIView *textField = [questionWidgets objectAtIndex:0];
                 [textField setFrame:CGRectMake(CELL_PADDING, 
-                                               hrView.frame.origin.y + hrView.frame
-                                               .size.height + CELL_ELEMENT_PADDING, 
+                                               questionLabel.frame.origin.y + questionLabel.frame
+                                               .size.height + 2*CELL_ELEMENT_PADDING, 
                                                contentRect.size.width - 2*CELL_PADDING, 
                                                WIDGET_HEIGHT)];
                 _expandedHeight += textField.frame.size.height;
@@ -172,8 +161,8 @@
             {
                 UIView *radioGroup = [questionWidgets objectAtIndex:0];
                 [radioGroup setFrame:CGRectMake(CELL_PADDING, 
-                                                hrView.frame.origin.y + hrView.frame
-                                                .size.height + CELL_ELEMENT_PADDING, 
+                                                questionLabel.frame.origin.y + questionLabel.frame
+                                                .size.height + 2*CELL_ELEMENT_PADDING, 
                                                 contentRect.size.width - 2*CELL_PADDING, 
                                                 WIDGET_HEIGHT)];
                 _expandedHeight += radioGroup.frame.size.height;
@@ -187,7 +176,7 @@
                     if ( [widget isKindOfClass:[UILabel class]] ) {
                         [widget setFrame:CGRectMake(CELL_PADDING, 
                                                     (widget.tag-1)*(CELL_ELEMENT_PADDING + WIDGET_HEIGHT)
-                                                    + hrView.frame.origin.y + hrView.frame.size.height + CELL_ELEMENT_PADDING,
+                                                    + questionLabel.frame.origin.y + questionLabel.frame.size.height + 2*CELL_ELEMENT_PADDING,
                                                     (contentRect.size.width - 2*CELL_PADDING)/2, 
                                                     WIDGET_HEIGHT)];
                     }
@@ -195,7 +184,7 @@
                         [widget setFrame:CGRectMake((contentRect.size.width - 2*CELL_PADDING)/2
                                                     + CELL_ELEMENT_PADDING, 
                                                     ((-widget.tag)-1)*(CELL_ELEMENT_PADDING + WIDGET_HEIGHT)
-                                                    + hrView.frame.origin.y + hrView.frame.size.height + CELL_ELEMENT_PADDING,
+                                                    + questionLabel.frame.origin.y + questionLabel.frame.size.height + 2*CELL_ELEMENT_PADDING,
                                                     (contentRect.size.width - 2*CELL_PADDING)/2 
                                                     - CELL_ELEMENT_PADDING, 
                                                     WIDGET_HEIGHT)];
@@ -215,13 +204,12 @@
 }
 
 - (void)expand {
-    [self.hrView setHidden:NO];
-    for ( UIView *widget in questionWidgets )
+    for ( UIView *widget in questionWidgets ) {
         [widget setHidden:NO];
+    }
 }
 
 - (void)contract {
-    [self.hrView setHidden:YES];
     for ( UIView *widget in questionWidgets ) {
         [widget setHidden:YES];
         [widget resignFirstResponder];
