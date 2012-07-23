@@ -48,6 +48,7 @@
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
+    NSLog(@"Location is.... %f, %f",manager.location.coordinate.latitude, manager.location.coordinate.longitude );
     UIAlertView *connection_problem = [[UIAlertView alloc] initWithTitle:@"Connection error"
                                                                  message:@"Couldn't get business data"
                                                                 delegate:nil
@@ -64,6 +65,8 @@
  * What we do when we want to find businesses around a certain location.
  */
 - (void)findBusinessesWithLocation:(CLLocationCoordinate2D)location {
+    NSLog(@"Location is.... %f, %f",location.latitude, location.longitude );
+    
     void (^callback)(NSData *) = ^(NSData *dat){
         NSError *e;
         NSMutableDictionary *businesses = [NSJSONSerialization JSONObjectWithData:dat options:NSJSONReadingMutableLeaves | NSJSONReadingMutableContainers error:&e];
@@ -86,22 +89,29 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:@"BUSINESS_RECEIVED" object:businessArray];
     };
 
-/*    NSArray *keyArray = [[NSArray alloc] initWithObjects:@"latitude", @"longitude", nil];
+    NSArray *keyArray = [[NSArray alloc] initWithObjects:@"latitude", @"longitude", nil];
     NSArray *valArray = [[NSArray alloc] initWithObjects:
                          [NSNumber numberWithFloat:location.latitude], 
-                         [NSNumber numberWithFloat:location.longitude], nil];*/
-//    NSDictionary *getDict = [[NSDictionary alloc] initWithObjects:valArray forKeys:keyArray];
+                         [NSNumber numberWithFloat:location.longitude], nil];
+    NSDictionary *getDict = [[NSDictionary alloc] initWithObjects:valArray forKeys:keyArray];
+    
+    // Python equivalent to the above
+    // dict = {"latitude":location.latitude, "longitude":location.logitude}
 
     // dummy businesses for debugging
-    [ConnectionManager serverRequest:@"GET" withParams:nil url:EXAMPLE_URL callback:callback];
-/*    NSString *urlString = [[NSString alloc] initWithFormat:@"%@%@", SERVER_URL, EXAMPLE_URL];
-    NSURL *url = [[NSURL alloc] initWithString:urlString];
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
-    NSError *e;
-    NSData *d = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:&e];
-    callback(d);*/
+    // [ConnectionManager serverRequest:@"GET" withParams:nil url:EXAMPLE_URL callback:callback];
+//    NSString *urlString = [[NSString alloc] initWithFormat:@"%@%@", SERVER_URL, WHEREAMI_URL];
+//    NSLog(@"%@", urlString);
+//    NSURL *url = [[NSURL alloc] initWithString:urlString];
+//    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+//    NSError *e;
+//    NSData *d = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:&e];
+//    NSLog(@"data is: %@", d.description);
+//    callback(d);
     // actual businesses
-    //[ConnectionManager serverRequest:@"GET" withParams:getDict url:WHEREAMI_URL callback:callback];
+    NSLog(@"latitude is.....%@", [getDict objectForKey:@"latitude"]);
+    NSLog(@"longitude is.....%@", [getDict objectForKey:@"longitude"]);
+    [ConnectionManager serverRequest:@"GET" withParams:getDict url:WHEREAMI_URL callback:callback];
 }
 
 /**
