@@ -98,12 +98,14 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    Employee *employee = [self.employeeArray objectAtIndex:indexPath.row];
     EmployeeViewController *evc;
     if([[self.employeeControllers objectAtIndex:indexPath.row] isKindOfClass:[NSNull class]]) {
-        evc = [[EmployeeViewController alloc] initWithEmployee:[self.employeeArray objectAtIndex:indexPath.row]];
+        evc = [[EmployeeViewController alloc] initWithEmployee:employee];
         evc.appDelegate = self.appDelegate;
         [self.employeeControllers replaceObjectAtIndex:indexPath.row withObject:evc];
         evc.view.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+        evc.title = [NSString stringWithFormat:@"%@ %@",employee.firstName,employee.lastName];
     }
     else {
         evc = [self.employeeControllers objectAtIndex:indexPath.row];

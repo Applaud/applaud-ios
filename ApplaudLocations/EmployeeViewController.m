@@ -41,7 +41,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.image setImageWithURL:self.employee.imageURL];
+    [self.image setImageWithURL:self.employee.imageURL
+               placeholderImage:[UIImage imageNamed:@"blankPerson.jpg"]];
     [self.bioField setText:self.employee.bio];
     self.bioField.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
     // Do any additional setup after loading the view from its nib.
