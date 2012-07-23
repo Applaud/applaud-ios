@@ -72,7 +72,7 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     NSDateFormatter *format = [[NSDateFormatter alloc] init];
     format.dateStyle = NSDateFormatterLongStyle;
-    return [format stringFromDate:[[self.newsFeeds objectAtIndex:section] date]];
+    return [format stringFromDate:[[[self.newsFeeds objectAtIndex:section] objectAtIndex:0] date]];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -80,17 +80,19 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
+    return [[self.newsFeeds objectAtIndex:section] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [[UITableViewCell alloc] initWithFrame:CGRectZero];
     
+    NFItem *nfItem = [[self.newsFeeds objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    
     // Maximum size of the title/subtitle
     CGSize constraintSize;
     // Left margin of title/subtitle
     int titleLeftMargin = 0;
-    if ( [[self.newsFeeds objectAtIndex:indexPath.section] image] ) {
+    if ( nfItem.image ) {
         constraintSize = CGSizeMake(self.view.bounds.size.width 
                                     - 2*CELL_PADDING 
                                     - IMAGE_SIZE 
@@ -99,7 +101,7 @@
         
         // Create the image
         UIImageView *imageView = [[UIImageView alloc] 
-                                  initWithImage:[[[self.newsFeeds objectAtIndex:indexPath.section] image] scaleToSize:IMAGE_SIZE]];
+                                  initWithImage:[nfItem.image scaleToSize:IMAGE_SIZE]];
         [imageView setFrame:CGRectMake(CELL_PADDING, CELL_PADDING, IMAGE_SIZE, IMAGE_SIZE)];
         [cell.contentView addSubview:imageView];
         
@@ -115,11 +117,11 @@
     
     // set the label text to the corresponding NFItem title
     UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    textLabel.text = [[self.newsFeeds objectAtIndex:indexPath.section] title];
+    textLabel.text = nfItem.title;
     textLabel.numberOfLines = 0;
     textLabel.lineBreakMode = UILineBreakModeWordWrap;
     [textLabel setFont:[UIFont boldSystemFontOfSize:TITLE_SIZE]];
-    CGSize titleSize = [[[self.newsFeeds objectAtIndex:indexPath.section] title]
+    CGSize titleSize = [nfItem.title
                         sizeWithFont:[UIFont systemFontOfSize:TITLE_SIZE] 
                         constrainedToSize:constraintSize 
                         lineBreakMode:UILineBreakModeWordWrap];
@@ -131,9 +133,9 @@
     [cell.contentView addSubview:textLabel];
     
     // body teaser
-    NSString *bodyTeaserText = [[[self.newsFeeds objectAtIndex:indexPath.section] body] 
+    NSString *bodyTeaserText = [nfItem.body
                                 substringToIndex:MIN(TEASER_LENGTH,
-                                                     [[[self.newsFeeds objectAtIndex:indexPath.section] body] length]-1)];
+                                                     nfItem.body.length-1)];
     bodyTeaserText = [NSString stringWithFormat:@"%@...",bodyTeaserText];
     UILabel *bodyLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     bodyLabel.text = bodyTeaserText;
@@ -165,8 +167,6 @@
     cell.backgroundColor = [UIColor whiteColor];
     cell.contentView.backgroundColor = [UIColor whiteColor];
     cell.contentView.layer.cornerRadius = 7.0f;
-    cell.contentView.layer.borderWidth = 1.0f;
-    cell.contentView.layer.borderColor = [[UIColor grayColor] CGColor];
     
     // Some nice visual FX
     cell.contentView.layer.shadowRadius = 5.0f;
@@ -176,7 +176,8 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     CGSize constraintSize;
-    if ( [[self.newsFeeds objectAtIndex:indexPath.section] image] ) {
+    NFItem *nfItem = [[self.newsFeeds objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    if ( nfItem.image ) {
         constraintSize = CGSizeMake(self.view.bounds.size.width 
                                     - 2*CELL_PADDING 
                                     - IMAGE_SIZE 
@@ -188,12 +189,12 @@
                                     - 2*CELL_MARGIN, 400);
     }
     
-    CGSize sizeRectTitle = [[[self.newsFeeds objectAtIndex:indexPath.section] title] 
+    CGSize sizeRectTitle = [nfItem.title
                             sizeWithFont:[UIFont systemFontOfSize:TITLE_SIZE]
                             constrainedToSize:constraintSize 
                             lineBreakMode:UILineBreakModeWordWrap];
-    NSString *bodyTeaserText = [[[self.newsFeeds objectAtIndex:indexPath.section] body] 
-                                substringToIndex:MIN(TEASER_LENGTH,[[[self.newsFeeds objectAtIndex:indexPath.section] body] length]-1)];
+    NSString *bodyTeaserText = [nfItem.body 
+                                substringToIndex:MIN(TEASER_LENGTH,nfItem.body.length-1)];
     bodyTeaserText = [NSString stringWithFormat:@"%@...",bodyTeaserText];
     CGSize sizeRectBody = [bodyTeaserText
                            sizeWithFont:[UIFont systemFontOfSize:TEASER_SIZE]
@@ -210,7 +211,7 @@
  */
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NFItemViewController *nfivc = [[NFItemViewController alloc] initWithNibName:@"NFItemViewController" bundle:nil];
-    nfivc.item = [self.newsFeeds objectAtIndex:indexPath.section];
+    nfivc.item = [[self.newsFeeds objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     nfivc.view.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
     nfivc.bodyText.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
     [self.navigationController pushViewController:nfivc animated:YES];
@@ -287,9 +288,8 @@
             else {
                 [[dateBuckets objectAtIndex:dateBuckets.count-1] addObject:[self.newsFeeds objectAtIndex:i]];
             }
-            NSLog(@"Date: %@",prevDate);
         }
-        NSLog(@"%@",dateBuckets);
+        self.newsFeeds = dateBuckets;
         
         [self.tableView reloadData];
     }];
