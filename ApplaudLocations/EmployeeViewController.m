@@ -12,12 +12,14 @@
 #import "ConnectionManager.h"
 #import "SDWebImage/UIImageView+WebCache.h"
 #import "AppDelegate.h"
+#import <QuartzCore/QuartzCore.h>
 
 #define RATING_FIELD_HEIGHT 70
 #define RATING_FIELDS_BEGIN 300
 #define RATING_FIELD_SPACING 20
 #define IMAGE_SIZE 130.0f
 #define VIEW_PADDING 10.0f
+#define CELL_ELEMENT_PADDING 5.0f   // how much space between things inside of the cell
 
 @implementation EmployeeViewController
 @synthesize appDelegate = _appDelegate;
@@ -45,28 +47,47 @@
     [super viewDidLoad];
 
     [self.image setImageWithURL:self.employee.imageURL
-               placeholderImage:[UIImage imageNamed:@"blankPerson.jpg"]
-                        success:^(UIImage *image) {
-                            // Resize and position the image when it gets here.
-                            float scaleFactor = self.image.image.size.width * self.image.image.scale / IMAGE_SIZE;
-                            self.image.image = [UIImage imageWithCGImage:self.image.image.CGImage
-                                                                   scale:scaleFactor
-                                                             orientation:UIImageOrientationUp];
-                            [self.image sizeToFit];
-                            CGRect imageRect = self.image.frame;
-                            imageRect.origin.x = VIEW_PADDING;
-                            imageRect.origin.y = VIEW_PADDING;
-                            self.image.frame = imageRect; 
+                        success:^(UIImage *img) {
+                            [self loadViewWithImage:img];
                         } failure:^(NSError *error) {
-                            
+                            [self loadViewWithImage:[UIImage imageNamed:@"blankPerson.jpg"]];
                         }];
+   
+
+}
+
+/*
+ * called by viewDidLoad. This does the view layout. We need
+ * to break up layout into two pieces, since image download happens asynchronously.
+ */
+- (void)loadViewWithImage:(UIImage *)img {
+    // Resize and position the image when it gets here.
+    float scaleFactor = img.size.width * img.scale / IMAGE_SIZE;
+    self.image.image = [UIImage imageWithCGImage:img.CGImage
+                                           scale:scaleFactor
+                                     orientation:UIImageOrientationUp];
+    [self.image sizeToFit];
+    CGRect imageRect = self.image.frame;
+    imageRect.origin.x = VIEW_PADDING;
+    imageRect.origin.y = VIEW_PADDING;
+    self.image.frame = imageRect;
     
-    [self.bioField setText:self.employee.bio];
-    self.bioField.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+    CALayer *imageLayer = self.image.layer;
+    imageLayer.borderWidth = 3.0f;
+    imageLayer.borderColor = [[UIColor darkGrayColor] CGColor];
+    
     // Do any additional setup after loading the view from its nib.
     [self.nameLabel setText:[NSString stringWithFormat:@"%@ %@",
                              self.employee.firstName, self.employee.lastName]];
-
+    CGRect nameTextRect = self.nameLabel.frame;
+    nameTextRect.origin.x = VIEW_PADDING + self.image.frame.size.width + CELL_ELEMENT_PADDING;
+    nameTextRect.origin.y = VIEW_PADDING;
+    self.nameLabel.frame = nameTextRect;
+    
+    [self.bioField setText:self.employee.bio];
+    self.bioField.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+    
+    
     // The y-coordinate of the first rating field
     int dimensionStart = RATING_FIELDS_BEGIN;
     if ( self.employee.bio != (id)[NSNull null] && self.employee.bio.length > 0 ) {
