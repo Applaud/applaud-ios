@@ -13,9 +13,11 @@
 #import "SDWebImage/UIImageView+WebCache.h"
 #import "AppDelegate.h"
 
-@interface EmployeeViewController ()
-
-@end
+#define RATING_FIELD_HEIGHT 70
+#define RATING_FIELDS_BEGIN 300
+#define RATING_FIELD_SPACING 20
+#define IMAGE_SIZE 130.0f
+#define VIEW_PADDING 10.0f
 
 @implementation EmployeeViewController
 @synthesize appDelegate = _appDelegate;
@@ -41,8 +43,24 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
     [self.image setImageWithURL:self.employee.imageURL
-               placeholderImage:[UIImage imageNamed:@"blankPerson.jpg"]];
+               placeholderImage:[UIImage imageNamed:@"blankPerson.jpg"]
+                        success:^(UIImage *image) {
+                            // Resize and position the image when it gets here.
+                            float scaleFactor = self.image.image.size.width * self.image.image.scale / IMAGE_SIZE;
+                            self.image.image = [UIImage imageWithCGImage:self.image.image.CGImage
+                                                                   scale:scaleFactor
+                                                             orientation:UIImageOrientationUp];
+                            [self.image sizeToFit];
+                            CGRect imageRect = self.image.frame;
+                            imageRect.origin.x = VIEW_PADDING;
+                            imageRect.origin.y = VIEW_PADDING;
+                            self.image.frame = imageRect; 
+                        } failure:^(NSError *error) {
+                            
+                        }];
+    
     [self.bioField setText:self.employee.bio];
     self.bioField.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
     // Do any additional setup after loading the view from its nib.

@@ -11,10 +11,6 @@
 #import "BusinessLocationsTracker.h"
 @class AppDelegate;
 
-#define RATING_FIELD_HEIGHT 70
-#define RATING_FIELDS_BEGIN 300
-#define RATING_FIELD_SPACING 20
-
 @interface EmployeeViewController : UIViewController <UITextFieldDelegate>
 
 @property (nonatomic, weak) AppDelegate *appDelegate;
