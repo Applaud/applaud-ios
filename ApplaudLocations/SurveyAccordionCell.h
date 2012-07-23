@@ -11,16 +11,6 @@
 #import <UIKit/UIKit.h>
 #import "SurveyField.h"
 
-#define CELL_ELEMENT_PADDING 5.0f   // how much space between things inside of the cell
-#define CELL_PADDING 10.0f          // space between cell wall and anything else
-#define CELL_MARGIN 22.0f           // space between outside of the cell and edge of the screen
-#define TITLE_SIZE 18.0f            // size of newsfeed item titles
-#define SUBTITLE_SIZE 12.0f         // size of newsfeed item subtitles
-#define WIDGET_HEIGHT 30.0f         // standard height of a widget (like an option)
-
-#define POSITIVE_RESPONSE 0         // What index a UISegmentedControl is in that indicates a "yes"
-                                    // response under a checkbox group
-
 @interface SurveyAccordionCell : UITableViewCell <UITextFieldDelegate, UITextViewDelegate>
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier field:(SurveyField *)field;

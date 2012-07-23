@@ -8,9 +8,10 @@
 
 #import "NFItemViewController.h"
 
-@interface NFItemViewController ()
-
-@end
+#define VIEW_PADDING 10.0f
+#define IMAGE_SIZE 130.0f
+#define ELEMENT_PADDING 10.0f
+#define NAVIGATION_GAP 42.0f    // Gap left for the navigationBar of the UINavigationController
 
 @implementation NFItemViewController
 
@@ -70,8 +71,6 @@
     // Adjusting x-coords of frames here
     else {
         // Size and position the title label
-        CGSize titleTextContraint = CGSizeMake(self.view.frame.size.width - 2*VIEW_PADDING, 
-                                               300);
         titleTextFrame = self.titleLabel.frame;
         titleTextFrame.origin.x = VIEW_PADDING;
         titleTextFrame.origin.y = VIEW_PADDING;
