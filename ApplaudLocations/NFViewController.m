@@ -155,6 +155,7 @@
 #pragma mark UITableView delegate methods
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Set shape and color
     cell.backgroundColor = [UIColor whiteColor];
     cell.contentView.backgroundColor = [UIColor whiteColor];
     cell.contentView.layer.cornerRadius = 7.0f;

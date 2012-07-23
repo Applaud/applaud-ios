@@ -158,11 +158,18 @@
  * This lets us change the background color of a cell -- if we have a view controller stored at that index and it has an answer, then we set it to green.
  */
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Set color and masking
-    SurveyAccordionCell *accordionCell = (SurveyAccordionCell*)cell;
-    [accordionCell.containerView.layer setMasksToBounds:YES];
-    [accordionCell.contentView setBackgroundColor:[UIColor whiteColor]];
-    [accordionCell setBackgroundColor:[UIColor whiteColor]];
+    // Set color and shape
+    cell.backgroundColor = [UIColor whiteColor];
+    cell.contentView.backgroundColor = [UIColor whiteColor];
+    cell.contentView.layer.cornerRadius = 7.0f;
+    cell.contentView.layer.borderWidth = 1.0f;
+    cell.contentView.layer.borderColor = [[UIColor grayColor] CGColor];
+    [[(SurveyAccordionCell*)cell containerView].layer setMasksToBounds:YES];
+    
+    // Some nice visual FX
+    cell.contentView.layer.shadowRadius = 5.0f;
+    cell.contentView.layer.shadowOpacity = 0.2f;
+    cell.contentView.layer.shadowOffset = CGSizeMake(1, 0);
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

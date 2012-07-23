@@ -94,17 +94,6 @@
             [self.containerView addSubview:widget];
         }
         [self.contentView addSubview:self.containerView];
-        
-        // Draw visual effects
-        // Set our shape
-        [self.contentView.layer setCornerRadius:7.0f];
-        [self.contentView.layer setBorderWidth:1.0f];
-        [self.contentView.layer setBorderColor:[[UIColor grayColor] CGColor]];
-        
-        // Some nice visual FX
-        [self.contentView.layer setShadowRadius:5.0f];
-        [self.contentView.layer setShadowOpacity:0.2f];
-        [self.contentView.layer setShadowOffset:CGSizeMake(1, 0)];
     }
     return self;
 }
