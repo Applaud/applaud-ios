@@ -274,6 +274,23 @@
             return NSOrderedSame;
         }];
         
+        // Group together newsfeeds that came out on the same day
+        NSMutableArray *dateBuckets = [[NSMutableArray alloc] init];
+        NSDate *prevDate = nil;
+        for ( int i=0; i<self.newsFeeds.count; i++ ) {
+            if ( 0 == i || ![prevDate isEqualToDate:[[self.newsFeeds objectAtIndex:i] date]] ) {
+                prevDate = [[self.newsFeeds objectAtIndex:i] date];
+                NSMutableArray *newList = [[NSMutableArray alloc] init];
+                [newList addObject:[self.newsFeeds objectAtIndex:i]];
+                [dateBuckets addObject:newList];
+            }
+            else {
+                [[dateBuckets objectAtIndex:dateBuckets.count-1] addObject:[self.newsFeeds objectAtIndex:i]];
+            }
+            NSLog(@"Date: %@",prevDate);
+        }
+        NSLog(@"%@",dateBuckets);
+        
         [self.tableView reloadData];
     }];
 }
