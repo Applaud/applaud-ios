@@ -254,8 +254,21 @@
                                                                body:[feed objectForKey:@"body"]
                                                                date:[format dateFromString:[feed objectForKey:@"date"]]
                                                               image:image]];
-            
         }
+        
+        NSLog(@"Before sort: %@",self.newsFeeds);
+        // Sort the newsfeeds by date
+        [self.newsFeeds sortUsingComparator:^NSComparisonResult(NSObject *a, NSObject *b) {
+            if ( [a isKindOfClass:[NFItem class]] && [b isKindOfClass:[NFItem class]] ) {
+                NFItem *firstItem = (NFItem*)a;
+                NFItem *secondItem = (NFItem*)b;
+                
+                return [firstItem.date compare:secondItem.date];
+            }
+            return NSOrderedSame;
+        }];
+        NSLog(@"After sort: %@",self.newsFeeds);
+        
         [self.tableView reloadData];
     }];
 }

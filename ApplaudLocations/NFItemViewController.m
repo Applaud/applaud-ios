@@ -43,24 +43,33 @@
 
     // Our XIB assumes that we have an image. The x-coordinate of the origin needs to be adjusted
     // only if there is no image.
-    CGRect titleTextFrame;
+    CGRect titleTextFrame, subtitleTextFrame;
     if ( self.item.image ) {
         // Set the image
-        self.image.image = self.item.image;
-        self.image.frame = CGRectMake(VIEW_PADDING,
-                                      VIEW_PADDING + NAVIGATION_GAP, 
-                                      IMAGE_SIZE, 
-                                      IMAGE_SIZE);
+        NSLog(@"Image dimensions: %f, %f",self.item.image.size.width,self.item.image.size.height);
+        float scaleFactor = self.item.image.size.width * self.item.image.scale / IMAGE_SIZE;
+        NSLog(@"Scale factor: %f",scaleFactor);
+        self.image.image = [UIImage imageWithCGImage:self.item.image.CGImage
+                                               scale:scaleFactor
+                                         orientation:UIImageOrientationUp];
+        [self.image sizeToFit];
+        NSLog(@"image view dims: %f, %f",self.image.frame.size.width,self.image.frame.size.height);
+        CGRect imageRect = self.image.frame;
+        imageRect.origin.x = VIEW_PADDING;
+        imageRect.origin.y = VIEW_PADDING;
+        self.image.frame = imageRect;
         
         // Rect for title
-        CGSize titleTextContraint = CGSizeMake(self.view.frame.size.width - 2*VIEW_PADDING - IMAGE_SIZE - ELEMENT_PADDING, 
-                                               300);
         titleTextFrame = self.titleLabel.frame;
-        titleTextFrame.size.height = [self.item.title sizeWithFont:[UIFont boldSystemFontOfSize:17.0f]
-                                                 constrainedToSize:titleTextContraint
-                                                     lineBreakMode:UILineBreakModeWordWrap].height;
         titleTextFrame.origin.y = VIEW_PADDING;
         self.titleLabel.frame = titleTextFrame;
+        
+        // Size and position the subtitle label
+        subtitleTextFrame = self.subtitleLabel.frame;
+        subtitleTextFrame.origin.y = VIEW_PADDING + imageRect.size.height + ELEMENT_PADDING;
+        subtitleTextFrame.origin.x = VIEW_PADDING;
+        subtitleTextFrame.size.width = self.view.frame.size.width - 2*VIEW_PADDING;
+        self.subtitleLabel.frame = subtitleTextFrame;
     } 
     // Adjusting x-coords of frames here
     else {
@@ -69,22 +78,26 @@
                                                300);
         titleTextFrame = self.titleLabel.frame;
         titleTextFrame.size.height = [self.item.title sizeWithFont:[UIFont boldSystemFontOfSize:17.0f]
-                                                 constrainedToSize:titleTextContraint lineBreakMode:UILineBreakModeWordWrap].height;
+                                                 constrainedToSize:titleTextContraint 
+                                                     lineBreakMode:UILineBreakModeWordWrap].height;
         titleTextFrame.origin.x = VIEW_PADDING;
         titleTextFrame.origin.y = VIEW_PADDING;
         titleTextFrame.size.width = self.view.frame.size.width - 2*VIEW_PADDING;
         self.titleLabel.frame = titleTextFrame;
+        
+        // Size and position the subtitle label
+        subtitleTextFrame = self.subtitleLabel.frame;
+        subtitleTextFrame.origin.y = titleTextFrame.origin.y + titleTextFrame.size.height + ELEMENT_PADDING;
+        subtitleTextFrame.origin.x = VIEW_PADDING;
+        subtitleTextFrame.size.width = self.view.frame.size.width - 2*VIEW_PADDING;
+        self.subtitleLabel.frame = subtitleTextFrame;
     }
     
     // Set the title label
     self.titleLabel.text = self.item.title;
+    [self.titleLabel sizeToFit];
 
-    // Size and position the subtitle label
-    CGRect subtitleTextFrame = self.subtitleLabel.frame;
-    subtitleTextFrame.origin.y = VIEW_PADDING + titleTextFrame.size.height + ELEMENT_PADDING;
-    subtitleTextFrame.origin.x = VIEW_PADDING;
-    subtitleTextFrame.size.width = self.view.frame.size.width - 2*VIEW_PADDING;
-    self.subtitleLabel.frame = subtitleTextFrame;
+
     
     // Set the subtitle label
     self.subtitleLabel.text = self.item.subtitle;
