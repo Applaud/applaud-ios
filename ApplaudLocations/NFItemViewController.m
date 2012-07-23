@@ -39,18 +39,40 @@
  */
 - (void)viewDidLoad
 {
-    if(self.item) {
-        self.image.image = [self.item.image scaleToSize:130.0];
-    }
     [super viewDidLoad];
+
+    // Set the image
+    self.image.image = self.item.image;
+
+    // Format and set the date label
     NSDateFormatter *format = [[NSDateFormatter alloc] init];
-//    [format setDateFormat:@"eeee LLLL dd hh:mm"]; // see the documentation on NSDateFormatter to make sense of the format string
     format.dateStyle = NSDateFormatterLongStyle;
-    self.titleLabel.text = self.item.title;
-    self.bodyText.text = self.item.body;
-    self.subtitleLabel.text = self.item.subtitle;
     self.dateLabel.text = [format stringFromDate:self.item.date];
-    NSLog(@"Constructing NSItemViewController with date:%@ <%@>",self.dateLabel.text,self.item.date);
+    
+    // Set and size the title label
+    self.titleLabel.text = self.item.title;
+    CGSize titleTextContraint = CGSizeMake(self.view.frame.size.width - 2*VIEW_PADDING, 
+                                           300);
+    CGRect titleTextFrame = self.titleLabel.frame;
+    titleTextFrame.size.height = [self.item.title sizeWithFont:[UIFont boldSystemFontOfSize:17.0f]
+                                             constrainedToSize:titleTextContraint lineBreakMode:UILineBreakModeWordWrap].height + 50;
+    self.titleLabel.frame = titleTextFrame;
+    
+    // Set the subtitle label
+    self.subtitleLabel.text = self.item.subtitle;
+    
+    // Adjust frame of the body text according to its content
+    self.bodyText.text = self.item.body;
+    CGSize bodyTextContraint = CGSizeMake(self.view.frame.size.width - 2*VIEW_PADDING,
+                                          2000);
+    CGRect bodyTextFrame = self.bodyText.frame;
+    bodyTextFrame.size.height = [self.item.body sizeWithFont:[UIFont systemFontOfSize:12.0f] 
+                                           constrainedToSize:bodyTextContraint 
+                                               lineBreakMode:UILineBreakModeWordWrap].height + 50;
+    [self.bodyText setFrame:bodyTextFrame];
+    
+    // Set the contentsize of the scrollview
+    [(UIScrollView*)self.view setContentSize:CGSizeMake(self.view.frame.size.width, 300 + bodyTextFrame.size.height)];
 }
 
 - (void)viewDidUnload
