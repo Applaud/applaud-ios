@@ -46,6 +46,8 @@
                 textView.layer.cornerRadius = 5;
                 textView.layer.borderColor = [[[UIColor grayColor] colorWithAlphaComponent:0.5] CGColor];
                 textView.layer.borderWidth = 2.0;
+                [textView setReturnKeyType:UIReturnKeyDone];
+                textView.delegate = self;
                 [questionWidgets addObject:textView];
             }
                 break;
@@ -80,6 +82,8 @@
                 textField.layer.cornerRadius = 5;
                 textField.layer.borderColor = [[[UIColor grayColor] colorWithAlphaComponent:0.5] CGColor];
                 textField.layer.borderWidth = 2.0;
+                [textField setReturnKeyType:UIReturnKeyDone];
+                textField.delegate = self;
                 [questionWidgets addObject:textField];
             }
                 break;
@@ -272,5 +276,26 @@
     return [[NSArray alloc] init ]; // If we don't have an answer.
 }
 
+#pragma mark -
+#pragma mark Delegate Methods from UITextView/Field
+
+/*
+ * resign keyboard on 'return'
+ */
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [(UITextView*)[self.questionWidgets objectAtIndex:0] resignFirstResponder];
+    return NO;
+}
+
+/*
+ * resign keyboard on 'return'
+ */
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    if ( [text isEqualToString:@"\n"] ) {
+        [(UITextView*)[self.questionWidgets objectAtIndex:0] resignFirstResponder];
+        return NO;
+    }
+    return YES;
+}
 
 @end

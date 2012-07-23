@@ -21,7 +21,7 @@
 #define POSITIVE_RESPONSE 0         // What index a UISegmentedControl is in that indicates a "yes"
                                     // response under a checkbox group
 
-@interface SurveyAccordionCell : UITableViewCell
+@interface SurveyAccordionCell : UITableViewCell <UITextFieldDelegate, UITextViewDelegate>
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier field:(SurveyField *)field;
 - (void)expand;
