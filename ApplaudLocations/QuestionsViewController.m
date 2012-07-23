@@ -17,7 +17,6 @@
 @synthesize appDelegate = _appDelegate;
 @synthesize survey = _survey;
 @synthesize surveyControllers = _surveyControllers; // For caching SurveyFieldViewControllers.
-@synthesize summaryText = _summaryText;
 @synthesize questionsTable = _questionsTable;
 @synthesize navigationController = _navigationController;
 
@@ -40,8 +39,6 @@
         self.view.opaque = YES;
         self.navigationController.navigationBar.tintColor = self.appDelegate.currentBusiness.primaryColor;
         self.questionsTable.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
-        self.summaryText.opaque = NO;
-        self.summaryText.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
         self.view.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
         NSLog(@"color!: %@", self.appDelegate.currentBusiness.primaryColor);
     }
@@ -51,7 +48,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.summaryText.text = self.survey.summary;
+
 	if(nil == _survey) {
         [self getSurveys];
 	}
@@ -59,7 +56,6 @@
 
 - (void)viewDidUnload
 {
-    [self setSummaryText:nil];
     [self setQuestionsTable:nil];
     [self setNavigationController:nil];
     questionSelections = nil;
@@ -75,6 +71,33 @@
 
 #pragma mark -
 #pragma mark Table View data source methods
+
+-(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    if ( self.survey.fields.count > 0 && section == 0 ) {
+        return self.survey.summary;
+    }
+    return nil;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    NSString *sectionTitle = [self tableView:tableView titleForHeaderInSection:section];
+    if (sectionTitle == nil) {
+        return nil;
+    }
+    
+    // Create label with section title
+    UILabel *label = [[UILabel alloc] init];
+    label.frame = CGRectMake(20, 6, 300, 30);
+    label.backgroundColor = [UIColor clearColor];
+    label.font = [UIFont systemFontOfSize:14.0f];
+    label.text = sectionTitle;
+    
+    // Create header view and add label as a subview
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 35)];
+    [view addSubview:label];
+    
+    return view;
+}
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return [self.survey.fields count];
@@ -268,7 +291,6 @@
     // Setting up the rest of the view: survey, title, submit button
     self.survey = survey;
     [self.questionsTable reloadData];
-    self.summaryText.text = self.survey.summary;
     [[self navigationItem] setTitle:self.survey.title];
     
     UIBarButtonItem *submitButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Submit"
