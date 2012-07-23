@@ -41,25 +41,68 @@
 {
     [super viewDidLoad];
 
-    // Set the image
-    self.image.image = self.item.image;
+    // Our XIB assumes that we have an image. The x-coordinate of the origin needs to be adjusted
+    // only if there is no image.
+    CGRect titleTextFrame;
+    if ( self.item.image ) {
+        // Set the image
+        self.image.image = self.item.image;
+        self.image.frame = CGRectMake(VIEW_PADDING,
+                                      VIEW_PADDING + NAVIGATION_GAP, 
+                                      IMAGE_SIZE, 
+                                      IMAGE_SIZE);
+        
+        // Rect for title
+        CGSize titleTextContraint = CGSizeMake(self.view.frame.size.width - 2*VIEW_PADDING - IMAGE_SIZE - ELEMENT_PADDING, 
+                                               300);
+        titleTextFrame = self.titleLabel.frame;
+        titleTextFrame.size.height = [self.item.title sizeWithFont:[UIFont boldSystemFontOfSize:17.0f]
+                                                 constrainedToSize:titleTextContraint
+                                                     lineBreakMode:UILineBreakModeWordWrap].height;
+        titleTextFrame.origin.y = VIEW_PADDING;
+        self.titleLabel.frame = titleTextFrame;
+    } 
+    // Adjusting x-coords of frames here
+    else {
+        // Size and position the title label
+        CGSize titleTextContraint = CGSizeMake(self.view.frame.size.width - 2*VIEW_PADDING, 
+                                               300);
+        titleTextFrame = self.titleLabel.frame;
+        titleTextFrame.size.height = [self.item.title sizeWithFont:[UIFont boldSystemFontOfSize:17.0f]
+                                                 constrainedToSize:titleTextContraint lineBreakMode:UILineBreakModeWordWrap].height + 50;
+        titleTextFrame.origin.x = VIEW_PADDING;
+        titleTextFrame.origin.y = VIEW_PADDING;
+        titleTextFrame.size.width = self.view.frame.size.width - 2*VIEW_PADDING;
+        self.titleLabel.frame = titleTextFrame;
+    }
+    
+    // Set the title label
+    self.titleLabel.text = self.item.title;
 
+    // Size and position the subtitle label
+    CGRect subtitleTextFrame = self.subtitleLabel.frame;
+    subtitleTextFrame.origin.y = VIEW_PADDING + titleTextFrame.size.height + ELEMENT_PADDING;
+    subtitleTextFrame.origin.x = VIEW_PADDING;
+    subtitleTextFrame.size.width = self.view.frame.size.width - 2*VIEW_PADDING;
+    self.subtitleLabel.frame = subtitleTextFrame;
+    
+    // Set the subtitle label
+    self.subtitleLabel.text = self.item.subtitle;
+    
     // Format and set the date label
     NSDateFormatter *format = [[NSDateFormatter alloc] init];
     format.dateStyle = NSDateFormatterLongStyle;
     self.dateLabel.text = [format stringFromDate:self.item.date];
-    
-    // Set and size the title label
-    self.titleLabel.text = self.item.title;
-    CGSize titleTextContraint = CGSizeMake(self.view.frame.size.width - 2*VIEW_PADDING, 
-                                           300);
-    CGRect titleTextFrame = self.titleLabel.frame;
-    titleTextFrame.size.height = [self.item.title sizeWithFont:[UIFont boldSystemFontOfSize:17.0f]
-                                             constrainedToSize:titleTextContraint lineBreakMode:UILineBreakModeWordWrap].height + 50;
-    self.titleLabel.frame = titleTextFrame;
-    
-    // Set the subtitle label
-    self.subtitleLabel.text = self.item.subtitle;
+    NSLog(@"Label views:%@",self.dateLabel.subviews);
+    // Put a white rect behind the date label
+    UIView *dateHighlighter = [[UIView alloc]
+                               initWithFrame:CGRectMake(0, 
+                                                        self.dateLabel.frame.origin.y - ELEMENT_PADDING, 
+                                                        self.view.frame.size.width, 
+                                                        self.dateLabel.frame.size.height + 2*ELEMENT_PADDING)];
+    dateHighlighter.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:dateHighlighter];
+    [self.view bringSubviewToFront:self.dateLabel];
     
     // Adjust frame of the body text according to its content
     self.bodyText.text = self.item.body;
