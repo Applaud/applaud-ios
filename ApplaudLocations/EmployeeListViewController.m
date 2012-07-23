@@ -87,6 +87,7 @@
     cell.contentView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
     cell.textLabel.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
     cell.detailTextLabel.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+    cell.imageView.image = [[self.employeeArray objectAtIndex:indexPath.row] image];
     tableView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
     return cell;
 }
@@ -122,7 +123,7 @@
         
         // employeeArray is a list of dictionaries, each containing information about an employee
         for ( NSDictionary *dict in employeeData ) {
-            
+            NSLog(@"fooooo %@",[dict objectForKey:@"image"]);
             Employee *e = [[Employee alloc] initWithFirstName:[dict objectForKey:@"first_name"]
                                                      lastName:[dict objectForKey:@"last_name"]
                                                           bio:[dict objectForKey:@"bio"]

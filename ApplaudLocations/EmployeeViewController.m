@@ -150,7 +150,7 @@
     for( UIView *view in self.view.subviews){
         if([view isKindOfClass:[UISlider class]]){
             UISlider *slider = (UISlider *)view;
-            [ratings setObject:[NSNumber numberWithFloat:slider.value]
+            [ratings setObject:[NSNumber numberWithFloat:slider.value*5.0]
                         forKey:[[[self.employee.ratingDimensions objectAtIndex:slider.tag] objectForKey:@"id"] description]];
         }
         else if([view isKindOfClass:[UITextField class]]) {

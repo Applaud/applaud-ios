@@ -73,7 +73,7 @@
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if(nil == cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle
                                       reuseIdentifier:CellIdentifier];
         cell.editing = NO;
     }
@@ -85,6 +85,10 @@
     cell.detailTextLabel.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
     tableView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
     return cell;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 70.0;
 }
 
 #pragma mark -
