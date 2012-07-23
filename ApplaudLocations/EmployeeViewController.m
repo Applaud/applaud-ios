@@ -10,6 +10,7 @@
 #import "EmployeeListViewController.h"
 #import "Employee.h"
 #import "ConnectionManager.h"
+#import "SDWebImage/UIImageView+WebCache.h"
 #import "AppDelegate.h"
 
 @interface EmployeeViewController ()
@@ -40,7 +41,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.image.image = self.employee.image;
+    [self.image setImageWithURL:self.employee.imageURL];
     [self.bioField setText:self.employee.bio];
     self.bioField.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
     // Do any additional setup after loading the view from its nib.
@@ -111,7 +112,6 @@
     // Tell our scroll view how big its contents are, so we can scroll in it.
     self.scrollView.contentSize = CGSizeMake(self.view.frame.size.width,
                                              curr_y+(2*RATING_FIELD_HEIGHT));
-//    self.scrollView.pagingEnabled = NO;
 }
 
 - (void)viewDidUnload

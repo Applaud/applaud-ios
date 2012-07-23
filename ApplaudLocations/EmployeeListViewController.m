@@ -10,6 +10,7 @@
 #import "EmployeeViewController.h"
 #import "Employee.h"
 #import "ConnectionManager.h"
+#import "SDWebImage/UIImageView+WebCache.h"
 #import "AppDelegate.h"
 
 @implementation EmployeeListViewController
@@ -87,7 +88,12 @@
     cell.contentView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
     cell.textLabel.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
     cell.detailTextLabel.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+    [cell.imageView setImageWithURL:[(Employee*)[self.employeeArray objectAtIndex:indexPath.row] imageURL]
+                   placeholderImage:[UIImage imageNamed:@"blankPerson.jpg"]];
+
     tableView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+    
+    [cell.imageView setNeedsDisplay];    
     return cell;
 }
 
@@ -128,7 +134,7 @@
             Employee *e = [[Employee alloc] initWithFirstName:[dict objectForKey:@"first_name"]
                                                      lastName:[dict objectForKey:@"last_name"]
                                                           bio:[dict objectForKey:@"bio"]
-                                                        image:[UIImage imageWithData:[NSData dataWithContentsOfURL:[[NSURL alloc] initWithString:[dict objectForKey:@"image"]]]]
+                                                     imageURL:[[NSURL alloc] initWithString:[dict objectForKey:@"image"]]
                                                    dimensions:[[dict objectForKey:@"ratings"]
                                                                objectForKey:@"dimensions"]
                                                   employee_id:[[dict objectForKey:@"id"] intValue]];

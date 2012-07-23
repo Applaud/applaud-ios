@@ -1,0 +1,487 @@
+TSDWebImage
+v5
+r1
+cCheck dependencies
+cCompileC build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/SDImageCache.o /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDImageCache.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/SDWebImageDecoder.o /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImageDecoder.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/SDWebImageDownloader.o /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImageDownloader.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/SDWebImageManager.o /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImageManager.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/SDWebImagePrefetcher.o /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImagePrefetcher.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/UIButton+WebCache.o /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/UIButton+WebCache.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/UIImageView+WebCache.o /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/UIImageView+WebCache.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cAnalyze /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDImageCache.m
+cAnalyze /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImageDecoder.m
+cAnalyze /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImageDownloader.m
+cAnalyze /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImageManager.m
+cAnalyze /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImagePrefetcher.m
+cAnalyze /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/UIButton+WebCache.m
+cAnalyze /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/UIImageView+WebCache.m
+cLibtool /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/Debug-iphonesimulator/libSDWebImage.a normal i386
+cCpHeader SDWebImage/SDImageCache.h build/Debug-iphonesimulator/include/SDWebImage/SDImageCache.h
+cCpHeader SDWebImage/SDImageCacheDelegate.h build/Debug-iphonesimulator/include/SDWebImage/SDImageCacheDelegate.h
+cCpHeader SDWebImage/SDWebImageCompat.h build/Debug-iphonesimulator/include/SDWebImage/SDWebImageCompat.h
+cCpHeader SDWebImage/SDWebImageDecoder.h build/Debug-iphonesimulator/include/SDWebImage/SDWebImageDecoder.h
+cCpHeader SDWebImage/SDWebImageDownloader.h build/Debug-iphonesimulator/include/SDWebImage/SDWebImageDownloader.h
+cCpHeader SDWebImage/SDWebImageDownloaderDelegate.h build/Debug-iphonesimulator/include/SDWebImage/SDWebImageDownloaderDelegate.h
+cCpHeader SDWebImage/SDWebImageManager.h build/Debug-iphonesimulator/include/SDWebImage/SDWebImageManager.h
+cCpHeader SDWebImage/SDWebImageManagerDelegate.h build/Debug-iphonesimulator/include/SDWebImage/SDWebImageManagerDelegate.h
+cCpHeader SDWebImage/SDWebImagePrefetcher.h build/Debug-iphonesimulator/include/SDWebImage/SDWebImagePrefetcher.h
+cCpHeader SDWebImage/UIButton+WebCache.h build/Debug-iphonesimulator/include/SDWebImage/UIButton+WebCache.h
+cCpHeader SDWebImage/UIImageView+WebCache.h build/Debug-iphonesimulator/include/SDWebImage/UIImageView+WebCache.h
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator5.1.sdk
+c000000004F453DF80000000000000110
+t1329937912
+s272
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator5.1.sdk/System/Library/Frameworks/CoreGraphics.framework/CoreGraphics
+c000000004FCA4DA00000000000244490
+t1338658208
+s2376848
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator5.1.sdk/System/Library/Frameworks/Foundation.framework/Foundation
+c000000004FCA4DA30000000000353830
+t1338658211
+s3487792
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator5.1.sdk/System/Library/Frameworks/UIKit.framework/UIKit
+c000000004FCA4DAF0000000000905E40
+t1338658223
+s9461312
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator5.1.sdk/usr/include/CommonCrypto/CommonDigest.h
+c000000004FCA4DC30000000000002D96
+t1338658243
+s11670
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator5.1.sdk/usr/include/mach/mach.h
+c000000004FCA4DC40000000000001057
+t1338658244
+s4183
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator5.1.sdk/usr/include/mach/mach_host.h
+c000000004FCA4DC4000000000000538E
+t1338658244
+s21390
+
+N/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDImageCache.h
+c000000004FEE6A400000000000000F92
+t1341024832
+s3986
+
+N/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDImageCache.m
+c000000004FEE6A400000000000003519
+t1341024832
+s13593
+i"SDImageCache.h"
+i"SDWebImageDecoder.h"
+i<CommonCrypto/CommonDigest.h>
+i"SDWebImageDecoder.h"
+i<mach/mach.h>
+i<mach/mach_host.h>
+
+N/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDImageCacheDelegate.h
+c000000004FEE6A400000000000000451
+t1341024832
+s1105
+
+N/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImageCompat.h
+c000000004FEE6A40000000000000091F
+t1341024832
+s2335
+
+N/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImageDecoder.h
+c000000004FEE6A40000000000000070E
+t1341024832
+s1806
+
+N/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImageDecoder.m
+c000000004FEE6A40000000000000110B
+t1341024832
+s4363
+
+N/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImageDownloader.h
+c000000004FEE6A400000000000000A19
+t1341024832
+s2585
+
+N/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImageDownloader.m
+c000000004FEE6A400000000000002B41
+t1341024832
+s11073
+
+N/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImageDownloaderDelegate.h
+c000000004FEE6A40000000000000052C
+t1341024832
+s1324
+
+N/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImageManager.h
+c000000004FEE6A40000000000000184E
+t1341024832
+s6222
+
+N/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImageManager.m
+c000000004FEE6A40000000000000486B
+t1341024832
+s18539
+
+N/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImageManagerDelegate.h
+c000000004FEE6A4000000000000008D1
+t1341024832
+s2257
+
+N/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImagePrefetcher.h
+c000000004FEE6A400000000000000591
+t1341024832
+s1425
+
+N/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImagePrefetcher.m
+c000000004FEE6A400000000000000C6F
+t1341024832
+s3183
+
+N/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/UIButton+WebCache.h
+c000000004FEE6A400000000000001CEB
+t1341024832
+s7403
+
+N/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/UIButton+WebCache.m
+c000000004FEE6A40000000000000180B
+t1341024832
+s6155
+
+N/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/UIImageView+WebCache.h
+c000000004FEE6A400000000000001372
+t1341024832
+s4978
+
+N/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/UIImageView+WebCache.m
+c000000004FEE6A40000000000000096C
+t1341024832
+s2412
+
+N/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/Debug-iphonesimulator/include/SDWebImage/SDImageCache.h
+t1341028917
+s3986
+
+N/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/Debug-iphonesimulator/include/SDWebImage/SDImageCacheDelegate.h
+t1341028917
+s1105
+
+N/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/Debug-iphonesimulator/include/SDWebImage/SDWebImageCompat.h
+t1341028917
+s2335
+
+N/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/Debug-iphonesimulator/include/SDWebImage/SDWebImageDecoder.h
+t1341028917
+s1806
+
+N/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/Debug-iphonesimulator/include/SDWebImage/SDWebImageDownloader.h
+t1341028917
+s2585
+
+N/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/Debug-iphonesimulator/include/SDWebImage/SDWebImageDownloaderDelegate.h
+t1341028917
+s1324
+
+N/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/Debug-iphonesimulator/include/SDWebImage/SDWebImageManager.h
+t1341028917
+s6222
+
+N/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/Debug-iphonesimulator/include/SDWebImage/SDWebImageManagerDelegate.h
+t1341028917
+s2257
+
+N/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/Debug-iphonesimulator/include/SDWebImage/SDWebImagePrefetcher.h
+t1341028917
+s1425
+
+N/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/Debug-iphonesimulator/include/SDWebImage/UIButton+WebCache.h
+t1341028917
+s7403
+
+N/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/Debug-iphonesimulator/include/SDWebImage/UIImageView+WebCache.h
+t1341028917
+s4978
+
+N/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/Debug-iphonesimulator/libSDWebImage.a
+t1343076675
+s297896
+
+N/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/SDImageCache.o
+t1343076674
+s44600
+
+N/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/SDWebImage.LinkFileList
+c00000000500DB941000000000000048E
+t1343076673
+s1166
+
+N/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/SDWebImageDecoder.o
+t1343076674
+s17244
+
+N/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/SDWebImageDownloader.o
+t1343076674
+s44016
+
+N/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/SDWebImageManager.o
+t1343076674
+s47980
+
+N/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/SDWebImagePrefetcher.o
+t1343076674
+s23404
+
+N/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/UIButton+WebCache.o
+t1343076674
+s62516
+
+N/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/UIImageView+WebCache.o
+t1343076674
+s54412
+
+N/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/StaticAnalyzer/normal/i386/SDImageCache.plist
+t1343076675
+s276
+
+N/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/StaticAnalyzer/normal/i386/SDWebImageDecoder.plist
+t1343076675
+s276
+
+N/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/StaticAnalyzer/normal/i386/SDWebImageDownloader.plist
+t1343076675
+s276
+
+N/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/StaticAnalyzer/normal/i386/SDWebImageManager.plist
+t1343076680
+s276
+
+N/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/StaticAnalyzer/normal/i386/SDWebImagePrefetcher.plist
+t1343076675
+s276
+
+N/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/StaticAnalyzer/normal/i386/UIButton+WebCache.plist
+t1343076675
+s276
+
+N/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/StaticAnalyzer/normal/i386/UIImageView+WebCache.plist
+t1343076676
+s276
+
+CAnalyze /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDImageCache.m
+s364769474.731270
+e364769475.177901
+r1
+xAnalyze
+x/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDImageCache.m
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection97"Analyze /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDImageCache.md158bbc2f0bdb541^c2a32dc3f0bdb541^---0#0#0#-19%DVTDocumentLocation2@105"file://localhost/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDImageCache.m0000000000000000^3247"Analyze SDWebImage/SDImageCache.m    cd /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage    setenv LANG en_US.US-ASCII    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -Wno-trigraphs -fpascal-strings -O0 -Werror -Wmissing-field-initializers -Wmissing-prototypes -Wreturn-type -Wno-implicit-atomic-properties -Wformat -Wmissing-braces -Wparentheses -Wswitch -Wunused-function -Wunused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-uninitialized -Wno-unknown-pragmas -Wshadow -Wno-four-char-constants -Wsign-compare -Wshorten-64-to-32 -Wpointer-sign -Wnewline-eof -Wno-selector -Wno-strict-selector-match -Wundeclared-selector -Wno-deprecated-implementations -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator5.1.sdk -fexceptions -fasm-blocks -Wprotocol -Wdeprecated-declarations -mmacosx-version-min=10.6 -g -Wno-conversion -Wno-sign-conversion -fobjc-abi-version=2 -fobjc-legacy-dispatch "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" -Xclang -analyzer-disable-checker -Xclang deadcode.IdempotentOperations -Xclang -analyzer-checker -Xclang osx.cocoa.experimental.SelfInit -D__IPHONE_OS_VERSION_MIN_REQUIRED=30000 -iquote /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-generated-files.hmap -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-own-target-headers.hmap -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-all-target-headers.hmap -iquote /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-project-headers.hmap -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/Debug-iphonesimulator/include -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/DerivedSources/i386 -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/DerivedSources -F/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/Debug-iphonesimulator -MMD -MT dependencies -MF /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/StaticAnalyzer/normal/i386/SDImageCache.d --analyze /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDImageCache.m -o /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/StaticAnalyzer/normal/i386/SDImageCache.plist36"96E749E0-5B5F-4CC2-B5F6-365D13D10385-
+
+CAnalyze /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImageDecoder.m
+s364769474.969305
+e364769475.194394
+r1
+xAnalyze
+x/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImageDecoder.m
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection102"Analyze /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImageDecoder.m414af8c2f0bdb541^c5c531c3f0bdb541^---0#0#0#-19%DVTDocumentLocation2@110"file://localhost/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImageDecoder.m0000000000000000^3267"Analyze SDWebImage/SDWebImageDecoder.m    cd /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage    setenv LANG en_US.US-ASCII    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -Wno-trigraphs -fpascal-strings -O0 -Werror -Wmissing-field-initializers -Wmissing-prototypes -Wreturn-type -Wno-implicit-atomic-properties -Wformat -Wmissing-braces -Wparentheses -Wswitch -Wunused-function -Wunused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-uninitialized -Wno-unknown-pragmas -Wshadow -Wno-four-char-constants -Wsign-compare -Wshorten-64-to-32 -Wpointer-sign -Wnewline-eof -Wno-selector -Wno-strict-selector-match -Wundeclared-selector -Wno-deprecated-implementations -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator5.1.sdk -fexceptions -fasm-blocks -Wprotocol -Wdeprecated-declarations -mmacosx-version-min=10.6 -g -Wno-conversion -Wno-sign-conversion -fobjc-abi-version=2 -fobjc-legacy-dispatch "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" -Xclang -analyzer-disable-checker -Xclang deadcode.IdempotentOperations -Xclang -analyzer-checker -Xclang osx.cocoa.experimental.SelfInit -D__IPHONE_OS_VERSION_MIN_REQUIRED=30000 -iquote /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-generated-files.hmap -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-own-target-headers.hmap -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-all-target-headers.hmap -iquote /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-project-headers.hmap -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/Debug-iphonesimulator/include -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/DerivedSources/i386 -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/DerivedSources -F/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/Debug-iphonesimulator -MMD -MT dependencies -MF /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/StaticAnalyzer/normal/i386/SDWebImageDecoder.d --analyze /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImageDecoder.m -o /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/StaticAnalyzer/normal/i386/SDWebImageDecoder.plist36"114985C2-E2CF-4B55-A392-ACBA4E792181-
+
+CAnalyze /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImageDownloader.m
+s364769475.195683
+e364769475.518433
+r1
+xAnalyze
+x/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImageDownloader.m
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection105"Analyze /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImageDownloader.m003c32c3f0bdb541^02b984c3f0bdb541^---0#0#0#-19%DVTDocumentLocation2@113"file://localhost/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImageDownloader.m0000000000000000^3279"Analyze SDWebImage/SDWebImageDownloader.m    cd /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage    setenv LANG en_US.US-ASCII    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -Wno-trigraphs -fpascal-strings -O0 -Werror -Wmissing-field-initializers -Wmissing-prototypes -Wreturn-type -Wno-implicit-atomic-properties -Wformat -Wmissing-braces -Wparentheses -Wswitch -Wunused-function -Wunused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-uninitialized -Wno-unknown-pragmas -Wshadow -Wno-four-char-constants -Wsign-compare -Wshorten-64-to-32 -Wpointer-sign -Wnewline-eof -Wno-selector -Wno-strict-selector-match -Wundeclared-selector -Wno-deprecated-implementations -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator5.1.sdk -fexceptions -fasm-blocks -Wprotocol -Wdeprecated-declarations -mmacosx-version-min=10.6 -g -Wno-conversion -Wno-sign-conversion -fobjc-abi-version=2 -fobjc-legacy-dispatch "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" -Xclang -analyzer-disable-checker -Xclang deadcode.IdempotentOperations -Xclang -analyzer-checker -Xclang osx.cocoa.experimental.SelfInit -D__IPHONE_OS_VERSION_MIN_REQUIRED=30000 -iquote /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-generated-files.hmap -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-own-target-headers.hmap -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-all-target-headers.hmap -iquote /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-project-headers.hmap -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/Debug-iphonesimulator/include -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/DerivedSources/i386 -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/DerivedSources -F/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/Debug-iphonesimulator -MMD -MT dependencies -MF /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/StaticAnalyzer/normal/i386/SDWebImageDownloader.d --analyze /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImageDownloader.m -o /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/StaticAnalyzer/normal/i386/SDWebImageDownloader.plist36"8BC12D00-FF1A-40C9-9DB5-C67656322452-
+
+CAnalyze /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImageManager.m
+s364769475.234175
+e364769480.847929
+r1
+xAnalyze
+x/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImageManager.m
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection102"Analyze /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImageManager.m728c3cc3f0bdb541^f913d9c8f0bdb541^---0#0#0#-19%DVTDocumentLocation2@110"file://localhost/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImageManager.m0000000000000000^3267"Analyze SDWebImage/SDWebImageManager.m    cd /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage    setenv LANG en_US.US-ASCII    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -Wno-trigraphs -fpascal-strings -O0 -Werror -Wmissing-field-initializers -Wmissing-prototypes -Wreturn-type -Wno-implicit-atomic-properties -Wformat -Wmissing-braces -Wparentheses -Wswitch -Wunused-function -Wunused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-uninitialized -Wno-unknown-pragmas -Wshadow -Wno-four-char-constants -Wsign-compare -Wshorten-64-to-32 -Wpointer-sign -Wnewline-eof -Wno-selector -Wno-strict-selector-match -Wundeclared-selector -Wno-deprecated-implementations -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator5.1.sdk -fexceptions -fasm-blocks -Wprotocol -Wdeprecated-declarations -mmacosx-version-min=10.6 -g -Wno-conversion -Wno-sign-conversion -fobjc-abi-version=2 -fobjc-legacy-dispatch "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" -Xclang -analyzer-disable-checker -Xclang deadcode.IdempotentOperations -Xclang -analyzer-checker -Xclang osx.cocoa.experimental.SelfInit -D__IPHONE_OS_VERSION_MIN_REQUIRED=30000 -iquote /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-generated-files.hmap -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-own-target-headers.hmap -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-all-target-headers.hmap -iquote /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-project-headers.hmap -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/Debug-iphonesimulator/include -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/DerivedSources/i386 -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/DerivedSources -F/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/Debug-iphonesimulator -MMD -MT dependencies -MF /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/StaticAnalyzer/normal/i386/SDWebImageManager.d --analyze /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImageManager.m -o /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/StaticAnalyzer/normal/i386/SDWebImageManager.plist36"6479F488-CA04-447D-A016-45F1B56E51EB-
+
+CAnalyze /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImagePrefetcher.m
+s364769475.519737
+e364769475.760991
+r1
+xAnalyze
+x/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImagePrefetcher.m
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection105"Analyze /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImagePrefetcher.me42f85c3f0bdb541^05ddc2c3f0bdb541^---0#0#0#-19%DVTDocumentLocation2@113"file://localhost/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImagePrefetcher.m0000000000000000^3279"Analyze SDWebImage/SDWebImagePrefetcher.m    cd /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage    setenv LANG en_US.US-ASCII    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -Wno-trigraphs -fpascal-strings -O0 -Werror -Wmissing-field-initializers -Wmissing-prototypes -Wreturn-type -Wno-implicit-atomic-properties -Wformat -Wmissing-braces -Wparentheses -Wswitch -Wunused-function -Wunused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-uninitialized -Wno-unknown-pragmas -Wshadow -Wno-four-char-constants -Wsign-compare -Wshorten-64-to-32 -Wpointer-sign -Wnewline-eof -Wno-selector -Wno-strict-selector-match -Wundeclared-selector -Wno-deprecated-implementations -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator5.1.sdk -fexceptions -fasm-blocks -Wprotocol -Wdeprecated-declarations -mmacosx-version-min=10.6 -g -Wno-conversion -Wno-sign-conversion -fobjc-abi-version=2 -fobjc-legacy-dispatch "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" -Xclang -analyzer-disable-checker -Xclang deadcode.IdempotentOperations -Xclang -analyzer-checker -Xclang osx.cocoa.experimental.SelfInit -D__IPHONE_OS_VERSION_MIN_REQUIRED=30000 -iquote /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-generated-files.hmap -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-own-target-headers.hmap -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-all-target-headers.hmap -iquote /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-project-headers.hmap -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/Debug-iphonesimulator/include -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/DerivedSources/i386 -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/DerivedSources -F/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/Debug-iphonesimulator -MMD -MT dependencies -MF /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/StaticAnalyzer/normal/i386/SDWebImagePrefetcher.d --analyze /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImagePrefetcher.m -o /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/StaticAnalyzer/normal/i386/SDWebImagePrefetcher.plist36"E6C7B896-5E24-44B8-A618-173548979FB8-
+
+CAnalyze /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/UIButton+WebCache.m
+s364769475.762289
+e364769475.982030
+r1
+xAnalyze
+x/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/UIButton+WebCache.m
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection102"Analyze /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/UIButton+WebCache.m0a48c3c3f0bdb541^7f67fbc3f0bdb541^---0#0#0#-19%DVTDocumentLocation2@110"file://localhost/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/UIButton+WebCache.m0000000000000000^3267"Analyze SDWebImage/UIButton+WebCache.m    cd /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage    setenv LANG en_US.US-ASCII    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -Wno-trigraphs -fpascal-strings -O0 -Werror -Wmissing-field-initializers -Wmissing-prototypes -Wreturn-type -Wno-implicit-atomic-properties -Wformat -Wmissing-braces -Wparentheses -Wswitch -Wunused-function -Wunused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-uninitialized -Wno-unknown-pragmas -Wshadow -Wno-four-char-constants -Wsign-compare -Wshorten-64-to-32 -Wpointer-sign -Wnewline-eof -Wno-selector -Wno-strict-selector-match -Wundeclared-selector -Wno-deprecated-implementations -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator5.1.sdk -fexceptions -fasm-blocks -Wprotocol -Wdeprecated-declarations -mmacosx-version-min=10.6 -g -Wno-conversion -Wno-sign-conversion -fobjc-abi-version=2 -fobjc-legacy-dispatch "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" -Xclang -analyzer-disable-checker -Xclang deadcode.IdempotentOperations -Xclang -analyzer-checker -Xclang osx.cocoa.experimental.SelfInit -D__IPHONE_OS_VERSION_MIN_REQUIRED=30000 -iquote /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-generated-files.hmap -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-own-target-headers.hmap -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-all-target-headers.hmap -iquote /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-project-headers.hmap -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/Debug-iphonesimulator/include -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/DerivedSources/i386 -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/DerivedSources -F/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/Debug-iphonesimulator -MMD -MT dependencies -MF /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/StaticAnalyzer/normal/i386/UIButton+WebCache.d --analyze /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/UIButton+WebCache.m -o /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/StaticAnalyzer/normal/i386/UIButton+WebCache.plist36"1021A51D-DF67-4203-A3E7-D6307E7091AB-
+
+CAnalyze /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/UIImageView+WebCache.m
+s364769475.983331
+e364769476.202633
+r1
+xAnalyze
+x/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/UIImageView+WebCache.m
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection105"Analyze /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/UIImageView+WebCache.me0f7fbc3f0bdb541^cee033c4f0bdb541^---0#0#0#-19%DVTDocumentLocation2@113"file://localhost/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/UIImageView+WebCache.m0000000000000000^3279"Analyze SDWebImage/UIImageView+WebCache.m    cd /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage    setenv LANG en_US.US-ASCII    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -Wno-trigraphs -fpascal-strings -O0 -Werror -Wmissing-field-initializers -Wmissing-prototypes -Wreturn-type -Wno-implicit-atomic-properties -Wformat -Wmissing-braces -Wparentheses -Wswitch -Wunused-function -Wunused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-uninitialized -Wno-unknown-pragmas -Wshadow -Wno-four-char-constants -Wsign-compare -Wshorten-64-to-32 -Wpointer-sign -Wnewline-eof -Wno-selector -Wno-strict-selector-match -Wundeclared-selector -Wno-deprecated-implementations -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator5.1.sdk -fexceptions -fasm-blocks -Wprotocol -Wdeprecated-declarations -mmacosx-version-min=10.6 -g -Wno-conversion -Wno-sign-conversion -fobjc-abi-version=2 -fobjc-legacy-dispatch "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" -Xclang -analyzer-disable-checker -Xclang deadcode.IdempotentOperations -Xclang -analyzer-checker -Xclang osx.cocoa.experimental.SelfInit -D__IPHONE_OS_VERSION_MIN_REQUIRED=30000 -iquote /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-generated-files.hmap -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-own-target-headers.hmap -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-all-target-headers.hmap -iquote /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-project-headers.hmap -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/Debug-iphonesimulator/include -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/DerivedSources/i386 -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/DerivedSources -F/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/Debug-iphonesimulator -MMD -MT dependencies -MF /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/StaticAnalyzer/normal/i386/UIImageView+WebCache.d --analyze /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/UIImageView+WebCache.m -o /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/StaticAnalyzer/normal/i386/UIImageView+WebCache.plist36"16EF6470-1380-4442-9266-74E7161A35AB-
+
+CBuild AST from /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDImageCache.m
+r0
+
+CBuild AST from /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImageDecoder.m
+r0
+
+CBuild AST from /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImageDownloader.m
+r0
+
+CBuild AST from /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImageManager.m
+r0
+
+CBuild AST from /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImagePrefetcher.m
+r0
+
+CBuild AST from /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/UIButton+WebCache.m
+r0
+
+CBuild AST from /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/UIImageView+WebCache.m
+r0
+
+CCheck dependencies
+r0
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection18"Check dependencies11e42845f2bdb541^b5362945f2bdb541^---0#1#0#--18"Check dependencies36"8AF84E37-3C01-4F70-B8FC-6BCAF4486883-
+
+CCompileC build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/SDImageCache.o /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDImageCache.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s364769473.675411
+e364769474.116436
+r1
+xCompileC
+xbuild/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/SDImageCache.o
+x/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDImageCache.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection97"Compile /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDImageCache.m170dadc1f0bdb541^20d01dc2f0bdb541^---0#0#0#-19%DVTDocumentLocation2@105"file://localhost/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDImageCache.m0000000000000000^3437"CompileC build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/SDImageCache.o SDWebImage/SDImageCache.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage    setenv LANG en_US.US-ASCII    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -Wno-trigraphs -fpascal-strings -O0 -Werror -Wmissing-field-initializers -Wmissing-prototypes -Wreturn-type -Wno-implicit-atomic-properties -Wformat -Wmissing-braces -Wparentheses -Wswitch -Wunused-function -Wunused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-uninitialized -Wno-unknown-pragmas -Wshadow -Wno-four-char-constants -Wsign-compare -Wshorten-64-to-32 -Wpointer-sign -Wnewline-eof -Wno-selector -Wno-strict-selector-match -Wundeclared-selector -Wno-deprecated-implementations -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator5.1.sdk -fexceptions -fasm-blocks -Wprotocol -Wdeprecated-declarations -mmacosx-version-min=10.6 -g -Wno-conversion -Wno-sign-conversion -fobjc-abi-version=2 -fobjc-legacy-dispatch "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" -D__IPHONE_OS_VERSION_MIN_REQUIRED=30000 -iquote /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-generated-files.hmap -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-own-target-headers.hmap -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-all-target-headers.hmap -iquote /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-project-headers.hmap -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/Debug-iphonesimulator/include -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/DerivedSources/i386 -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/DerivedSources -F/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/Debug-iphonesimulator -MMD -MT dependencies -MF /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/SDImageCache.d --serialize-diagnostics /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/SDImageCache.dia -c /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDImageCache.m -o /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/SDImageCache.o36"79796312-C358-4B11-8B9C-46036FEE4AE8-
+
+CCompileC build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/SDWebImageDecoder.o /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImageDecoder.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s364769473.676089
+e364769474.113148
+r1
+xCompileC
+xbuild/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/SDWebImageDecoder.o
+x/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImageDecoder.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection102"Compile /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImageDecoder.mf832adc1f0bdb541^85071dc2f0bdb541^---0#0#0#-19%DVTDocumentLocation2@110"file://localhost/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImageDecoder.m0000000000000000^3467"CompileC build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/SDWebImageDecoder.o SDWebImage/SDWebImageDecoder.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage    setenv LANG en_US.US-ASCII    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -Wno-trigraphs -fpascal-strings -O0 -Werror -Wmissing-field-initializers -Wmissing-prototypes -Wreturn-type -Wno-implicit-atomic-properties -Wformat -Wmissing-braces -Wparentheses -Wswitch -Wunused-function -Wunused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-uninitialized -Wno-unknown-pragmas -Wshadow -Wno-four-char-constants -Wsign-compare -Wshorten-64-to-32 -Wpointer-sign -Wnewline-eof -Wno-selector -Wno-strict-selector-match -Wundeclared-selector -Wno-deprecated-implementations -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator5.1.sdk -fexceptions -fasm-blocks -Wprotocol -Wdeprecated-declarations -mmacosx-version-min=10.6 -g -Wno-conversion -Wno-sign-conversion -fobjc-abi-version=2 -fobjc-legacy-dispatch "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" -D__IPHONE_OS_VERSION_MIN_REQUIRED=30000 -iquote /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-generated-files.hmap -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-own-target-headers.hmap -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-all-target-headers.hmap -iquote /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-project-headers.hmap -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/Debug-iphonesimulator/include -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/DerivedSources/i386 -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/DerivedSources -F/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/Debug-iphonesimulator -MMD -MT dependencies -MF /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/SDWebImageDecoder.d --serialize-diagnostics /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/SDWebImageDecoder.dia -c /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImageDecoder.m -o /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/SDWebImageDecoder.o36"BB66A38E-9D6F-4B9A-A8E4-DFA9A079E57F-
+
+CCompileC build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/SDWebImageDownloader.o /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImageDownloader.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s364769474.116640
+e364769474.461402
+r1
+xCompileC
+xbuild/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/SDWebImageDownloader.o
+x/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImageDownloader.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection105"Compile /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImageDownloader.m8bfd1dc2f0bdb541^ae2b76c2f0bdb541^---0#0#0#-19%DVTDocumentLocation2@113"file://localhost/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImageDownloader.m0000000000000000^3485"CompileC build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/SDWebImageDownloader.o SDWebImage/SDWebImageDownloader.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage    setenv LANG en_US.US-ASCII    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -Wno-trigraphs -fpascal-strings -O0 -Werror -Wmissing-field-initializers -Wmissing-prototypes -Wreturn-type -Wno-implicit-atomic-properties -Wformat -Wmissing-braces -Wparentheses -Wswitch -Wunused-function -Wunused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-uninitialized -Wno-unknown-pragmas -Wshadow -Wno-four-char-constants -Wsign-compare -Wshorten-64-to-32 -Wpointer-sign -Wnewline-eof -Wno-selector -Wno-strict-selector-match -Wundeclared-selector -Wno-deprecated-implementations -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator5.1.sdk -fexceptions -fasm-blocks -Wprotocol -Wdeprecated-declarations -mmacosx-version-min=10.6 -g -Wno-conversion -Wno-sign-conversion -fobjc-abi-version=2 -fobjc-legacy-dispatch "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" -D__IPHONE_OS_VERSION_MIN_REQUIRED=30000 -iquote /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-generated-files.hmap -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-own-target-headers.hmap -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-all-target-headers.hmap -iquote /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-project-headers.hmap -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/Debug-iphonesimulator/include -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/DerivedSources/i386 -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/DerivedSources -F/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/Debug-iphonesimulator -MMD -MT dependencies -MF /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/SDWebImageDownloader.d --serialize-diagnostics /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/SDWebImageDownloader.dia -c /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImageDownloader.m -o /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/SDWebImageDownloader.o36"804A1384-28E7-49B8-89D9-532320D21C82-
+
+CCompileC build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/SDWebImageManager.o /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImageManager.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s364769474.117320
+e364769474.427773
+r1
+xCompileC
+xbuild/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/SDWebImageManager.o
+x/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImageManager.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection102"Compile /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImageManager.mc32e1ec2f0bdb541^b48f6dc2f0bdb541^---0#0#0#-19%DVTDocumentLocation2@110"file://localhost/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImageManager.m0000000000000000^3467"CompileC build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/SDWebImageManager.o SDWebImage/SDWebImageManager.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage    setenv LANG en_US.US-ASCII    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -Wno-trigraphs -fpascal-strings -O0 -Werror -Wmissing-field-initializers -Wmissing-prototypes -Wreturn-type -Wno-implicit-atomic-properties -Wformat -Wmissing-braces -Wparentheses -Wswitch -Wunused-function -Wunused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-uninitialized -Wno-unknown-pragmas -Wshadow -Wno-four-char-constants -Wsign-compare -Wshorten-64-to-32 -Wpointer-sign -Wnewline-eof -Wno-selector -Wno-strict-selector-match -Wundeclared-selector -Wno-deprecated-implementations -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator5.1.sdk -fexceptions -fasm-blocks -Wprotocol -Wdeprecated-declarations -mmacosx-version-min=10.6 -g -Wno-conversion -Wno-sign-conversion -fobjc-abi-version=2 -fobjc-legacy-dispatch "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" -D__IPHONE_OS_VERSION_MIN_REQUIRED=30000 -iquote /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-generated-files.hmap -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-own-target-headers.hmap -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-all-target-headers.hmap -iquote /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-project-headers.hmap -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/Debug-iphonesimulator/include -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/DerivedSources/i386 -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/DerivedSources -F/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/Debug-iphonesimulator -MMD -MT dependencies -MF /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/SDWebImageManager.d --serialize-diagnostics /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/SDWebImageManager.dia -c /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImageManager.m -o /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/SDWebImageManager.o36"5F6DAA5C-6356-4B1C-9178-145E09D707D6-
+
+CCompileC build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/SDWebImagePrefetcher.o /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImagePrefetcher.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s364769474.430438
+e364769474.694635
+r1
+xCompileC
+xbuild/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/SDWebImagePrefetcher.o
+x/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImagePrefetcher.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection105"Compile /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImagePrefetcher.m3a596ec2f0bdb541^89d3b1c2f0bdb541^---0#0#0#-19%DVTDocumentLocation2@113"file://localhost/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImagePrefetcher.m0000000000000000^3485"CompileC build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/SDWebImagePrefetcher.o SDWebImage/SDWebImagePrefetcher.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage    setenv LANG en_US.US-ASCII    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -Wno-trigraphs -fpascal-strings -O0 -Werror -Wmissing-field-initializers -Wmissing-prototypes -Wreturn-type -Wno-implicit-atomic-properties -Wformat -Wmissing-braces -Wparentheses -Wswitch -Wunused-function -Wunused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-uninitialized -Wno-unknown-pragmas -Wshadow -Wno-four-char-constants -Wsign-compare -Wshorten-64-to-32 -Wpointer-sign -Wnewline-eof -Wno-selector -Wno-strict-selector-match -Wundeclared-selector -Wno-deprecated-implementations -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator5.1.sdk -fexceptions -fasm-blocks -Wprotocol -Wdeprecated-declarations -mmacosx-version-min=10.6 -g -Wno-conversion -Wno-sign-conversion -fobjc-abi-version=2 -fobjc-legacy-dispatch "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" -D__IPHONE_OS_VERSION_MIN_REQUIRED=30000 -iquote /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-generated-files.hmap -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-own-target-headers.hmap -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-all-target-headers.hmap -iquote /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-project-headers.hmap -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/Debug-iphonesimulator/include -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/DerivedSources/i386 -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/DerivedSources -F/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/Debug-iphonesimulator -MMD -MT dependencies -MF /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/SDWebImagePrefetcher.d --serialize-diagnostics /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/SDWebImagePrefetcher.dia -c /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/SDWebImagePrefetcher.m -o /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/SDWebImagePrefetcher.o36"8AEE065F-3B20-4C34-BC96-E9D4DC421926-
+
+CCompileC build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/UIButton+WebCache.o /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/UIButton+WebCache.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s364769474.462713
+e364769474.729888
+r1
+xCompileC
+xbuild/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/UIButton+WebCache.o
+x/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/UIButton+WebCache.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection102"Compile /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/UIButton+WebCache.mfe9876c2f0bdb541^34dabac2f0bdb541^---0#0#0#-19%DVTDocumentLocation2@110"file://localhost/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/UIButton+WebCache.m0000000000000000^3467"CompileC build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/UIButton+WebCache.o SDWebImage/UIButton+WebCache.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage    setenv LANG en_US.US-ASCII    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -Wno-trigraphs -fpascal-strings -O0 -Werror -Wmissing-field-initializers -Wmissing-prototypes -Wreturn-type -Wno-implicit-atomic-properties -Wformat -Wmissing-braces -Wparentheses -Wswitch -Wunused-function -Wunused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-uninitialized -Wno-unknown-pragmas -Wshadow -Wno-four-char-constants -Wsign-compare -Wshorten-64-to-32 -Wpointer-sign -Wnewline-eof -Wno-selector -Wno-strict-selector-match -Wundeclared-selector -Wno-deprecated-implementations -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator5.1.sdk -fexceptions -fasm-blocks -Wprotocol -Wdeprecated-declarations -mmacosx-version-min=10.6 -g -Wno-conversion -Wno-sign-conversion -fobjc-abi-version=2 -fobjc-legacy-dispatch "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" -D__IPHONE_OS_VERSION_MIN_REQUIRED=30000 -iquote /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-generated-files.hmap -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-own-target-headers.hmap -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-all-target-headers.hmap -iquote /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-project-headers.hmap -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/Debug-iphonesimulator/include -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/DerivedSources/i386 -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/DerivedSources -F/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/Debug-iphonesimulator -MMD -MT dependencies -MF /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/UIButton+WebCache.d --serialize-diagnostics /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/UIButton+WebCache.dia -c /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/UIButton+WebCache.m -o /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/UIButton+WebCache.o36"0E371031-95EE-48CC-AFA9-3D91D4E107F6-
+
+CCompileC build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/UIImageView+WebCache.o /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/UIImageView+WebCache.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s364769474.695968
+e364769474.967963
+r1
+xCompileC
+xbuild/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/UIImageView+WebCache.o
+x/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/UIImageView+WebCache.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection105"Compile /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/UIImageView+WebCache.me351b2c2f0bdb541^dae5f7c2f0bdb541^---0#0#0#-19%DVTDocumentLocation2@113"file://localhost/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/UIImageView+WebCache.m0000000000000000^3485"CompileC build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/UIImageView+WebCache.o SDWebImage/UIImageView+WebCache.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage    setenv LANG en_US.US-ASCII    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -Wno-trigraphs -fpascal-strings -O0 -Werror -Wmissing-field-initializers -Wmissing-prototypes -Wreturn-type -Wno-implicit-atomic-properties -Wformat -Wmissing-braces -Wparentheses -Wswitch -Wunused-function -Wunused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-uninitialized -Wno-unknown-pragmas -Wshadow -Wno-four-char-constants -Wsign-compare -Wshorten-64-to-32 -Wpointer-sign -Wnewline-eof -Wno-selector -Wno-strict-selector-match -Wundeclared-selector -Wno-deprecated-implementations -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator5.1.sdk -fexceptions -fasm-blocks -Wprotocol -Wdeprecated-declarations -mmacosx-version-min=10.6 -g -Wno-conversion -Wno-sign-conversion -fobjc-abi-version=2 -fobjc-legacy-dispatch "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" -D__IPHONE_OS_VERSION_MIN_REQUIRED=30000 -iquote /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-generated-files.hmap -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-own-target-headers.hmap -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-all-target-headers.hmap -iquote /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/SDWebImage-project-headers.hmap -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/Debug-iphonesimulator/include -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/DerivedSources/i386 -I/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/DerivedSources -F/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/Debug-iphonesimulator -MMD -MT dependencies -MF /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/UIImageView+WebCache.d --serialize-diagnostics /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/UIImageView+WebCache.dia -c /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/SDWebImage/UIImageView+WebCache.m -o /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/UIImageView+WebCache.o36"535F087C-7DFA-4FEC-ACB4-EF6E3163CCBB-
+
+CCpHeader SDWebImage/SDImageCache.h build/Debug-iphonesimulator/include/SDWebImage/SDImageCache.h
+r0
+
+CCpHeader SDWebImage/SDImageCacheDelegate.h build/Debug-iphonesimulator/include/SDWebImage/SDImageCacheDelegate.h
+r0
+
+CCpHeader SDWebImage/SDWebImageCompat.h build/Debug-iphonesimulator/include/SDWebImage/SDWebImageCompat.h
+r0
+
+CCpHeader SDWebImage/SDWebImageDecoder.h build/Debug-iphonesimulator/include/SDWebImage/SDWebImageDecoder.h
+r0
+
+CCpHeader SDWebImage/SDWebImageDownloader.h build/Debug-iphonesimulator/include/SDWebImage/SDWebImageDownloader.h
+r0
+
+CCpHeader SDWebImage/SDWebImageDownloaderDelegate.h build/Debug-iphonesimulator/include/SDWebImage/SDWebImageDownloaderDelegate.h
+r0
+
+CCpHeader SDWebImage/SDWebImageManager.h build/Debug-iphonesimulator/include/SDWebImage/SDWebImageManager.h
+r0
+
+CCpHeader SDWebImage/SDWebImageManagerDelegate.h build/Debug-iphonesimulator/include/SDWebImage/SDWebImageManagerDelegate.h
+r0
+
+CCpHeader SDWebImage/SDWebImagePrefetcher.h build/Debug-iphonesimulator/include/SDWebImage/SDWebImagePrefetcher.h
+r0
+
+CCpHeader SDWebImage/UIButton+WebCache.h build/Debug-iphonesimulator/include/SDWebImage/UIButton+WebCache.h
+r0
+
+CCpHeader SDWebImage/UIImageView+WebCache.h build/Debug-iphonesimulator/include/SDWebImage/UIImageView+WebCache.h
+r0
+
+CLibtool /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/Debug-iphonesimulator/libSDWebImage.a normal i386
+s364769475.179305
+e364769475.207978
+r1
+xLibtool
+x/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/Debug-iphonesimulator/libSDWebImage.a
+xnormal
+xi386
+o/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/libtool: -dynamic not specified the following flags are invalid: -ObjC 
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection63"Libtool build/Debug-iphonesimulator/libSDWebImage.a normal i386a7022ec3f0bdb541^f0333ac3f0bdb541^-159"/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/libtool: -dynamic not specified the following flags are invalid: -ObjC -0#0#0#--1076"Libtool build/Debug-iphonesimulator/libSDWebImage.a normal i386    cd /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage    setenv MACOSX_DEPLOYMENT_TARGET 10.6    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/libtool -static -arch_only i386 -syslibroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator5.1.sdk -L/Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/Debug-iphonesimulator -filelist /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/SDWebImage.build/Debug-iphonesimulator/SDWebImage.build/Objects-normal/i386/SDWebImage.LinkFileList -ObjC -framework UIKit -framework Foundation -framework CoreGraphics -o /Users/lukelovett/Documents/work/applaud/applaud-ios/SDWebImage/build/Debug-iphonesimulator/libSDWebImage.a36"B0DC1B26-4ADE-4569-BF2F-12BBE7BB5D13-
+
