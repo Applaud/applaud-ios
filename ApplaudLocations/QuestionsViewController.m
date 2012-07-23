@@ -297,8 +297,8 @@
                                                                          style:UIBarButtonItemStylePlain
                                                                         target:self
                                                                         action:@selector(buttonPressed)];
-    submitButtonItem.tintColor = self.appDelegate.currentBusiness.secondaryColor;
-//    submitButtonItem.
+    submitButtonItem.tintColor = self.appDelegate.currentBusiness.primaryColor;
+
     [[self navigationItem] setRightBarButtonItem:submitButtonItem];
     int i;
     for(i = 0; i < self.survey.answers.count; i++) {
