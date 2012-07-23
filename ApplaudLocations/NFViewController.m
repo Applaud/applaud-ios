@@ -69,6 +69,12 @@
 #pragma mark -
 #pragma mark UITableView data source methods
 
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    NSDateFormatter *format = [[NSDateFormatter alloc] init];
+    format.dateStyle = NSDateFormatterLongStyle;
+    return [format stringFromDate:[[self.newsFeeds objectAtIndex:section] date]];
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return self.newsFeeds.count;
 }
@@ -255,19 +261,18 @@
                                                                date:[format dateFromString:[feed objectForKey:@"date"]]
                                                               image:image]];
         }
-        
-        NSLog(@"Before sort: %@",self.newsFeeds);
+     
         // Sort the newsfeeds by date
         [self.newsFeeds sortUsingComparator:^NSComparisonResult(NSObject *a, NSObject *b) {
             if ( [a isKindOfClass:[NFItem class]] && [b isKindOfClass:[NFItem class]] ) {
                 NFItem *firstItem = (NFItem*)a;
                 NFItem *secondItem = (NFItem*)b;
                 
-                return [firstItem.date compare:secondItem.date];
+                // Newer dates first
+                return [secondItem.date compare:firstItem.date];
             }
             return NSOrderedSame;
         }];
-        NSLog(@"After sort: %@",self.newsFeeds);
         
         [self.tableView reloadData];
     }];
