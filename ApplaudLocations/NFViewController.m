@@ -226,7 +226,7 @@
         NSLog(@"%@", error);
     }
     [ConnectionManager serverRequest:@"POST" withData:data url:NEWSFEED_URL callback:^(NSData *data) {
-//        NSLog(@"%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+        NSLog(@"Newsfeeds: %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
         NSError *e;
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data
                                                              options:NSJSONReadingAllowFragments
@@ -234,7 +234,7 @@
         
         NSArray *items = [dict objectForKey:@"newsfeed_items"];
         NSDateFormatter *format = [[NSDateFormatter alloc] init];
-        [format setDateFormat:@"yyyy-MM-dd hh:mm"];
+        [format setDateFormat:@"MM/dd/yyyy"];
         for(NSDictionary *feed in items) {
             UIImage *image = nil;
             NSString *imageURLString = [NSString stringWithFormat:@"%@%@", SERVER_URL, [feed objectForKey:@"image"]];

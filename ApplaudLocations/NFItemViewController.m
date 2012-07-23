@@ -50,6 +50,7 @@
     self.bodyText.text = self.item.body;
     self.subtitleLabel.text = self.item.subtitle;
     self.dateLabel.text = [format stringFromDate:self.item.date];
+    NSLog(@"Constructing NSItemViewController with date:%@ <%@>",self.dateLabel.text,self.item.date);
 }
 
 - (void)viewDidUnload
