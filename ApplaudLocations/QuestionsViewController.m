@@ -9,9 +9,13 @@
 #import "QuestionsViewController.h"
 #import "SurveyAccordionCell.h"
 
-@interface QuestionsViewController ()
-
-@end
+#define CELL_ELEMENT_PADDING 5.0f   // how much space between things inside of the cell
+#define CELL_PADDING 10.0f          // space between cell wall and anything else
+#define CELL_MARGIN 22.0f           // space between outside of the cell and edge of the screen
+#define TITLE_SIZE 18.0f            // size of newsfeed item titles
+#define SUBTITLE_SIZE 12.0f         // size of newsfeed item subtitles
+#define NAVBAR_SIZE 49.0f           // size of the navigation bar (for use in resizing view for keyboard appearance)
+#define SCROLL_LENGTH 0.17f         // # of seconds to scroll the view when keyboard appears
 
 @implementation QuestionsViewController
 @synthesize appDelegate = _appDelegate;
@@ -52,6 +56,17 @@
 	if(nil == _survey) {
         [self getSurveys];
 	}
+    
+    // register for keyboard notifications
+    [[NSNotificationCenter defaultCenter] addObserver:self 
+                                             selector:@selector(keyboardWillShow:) 
+                                                 name:UIKeyboardWillShowNotification 
+                                               object:self.view.window];
+    [[NSNotificationCenter defaultCenter] addObserver:self 
+                                             selector:@selector(keyboardWillHide:) 
+                                                 name:UIKeyboardWillHideNotification 
+                                               object:self.view.window];
+
 }
 
 - (void)viewDidUnload
@@ -59,6 +74,15 @@
     [self setQuestionsTable:nil];
     [self setNavigationController:nil];
     questionSelections = nil;
+    
+    // unregister for keyboard notifications while not visible.
+    [[NSNotificationCenter defaultCenter] removeObserver:self 
+                                                    name:UIKeyboardWillShowNotification 
+                                                  object:nil]; 
+    [[NSNotificationCenter defaultCenter] removeObserver:self 
+                                                    name:UIKeyboardWillHideNotification 
+                                                  object:nil]; 
+    
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -220,6 +244,62 @@
 //    }
 //    [self.navigationController pushViewController:sfvc animated:YES];
 }
+
+#pragma mark -
+#pragma mark Keyboard Handling
+
+- (void)keyboardWillHide:(NSNotification *)n
+{
+    NSDictionary* userInfo = [n userInfo];
+    
+    // get the size of the keyboard
+    CGSize keyboardSize = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    
+    
+    // resize the scrollview
+    CGRect viewFrame = self.view.frame;
+    // I'm also subtracting a constant kTabBarHeight because my UIScrollView was offset by the UITabBar so really only the portion of the keyboard that is leftover pass the UITabBar is obscuring my UIScrollView.
+    viewFrame.size.height += keyboardSize.height - NAVBAR_SIZE;
+    
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+
+    [UIView setAnimationDuration:SCROLL_LENGTH];
+    [self.view setFrame:viewFrame];
+    [UIView commitAnimations];
+    
+    keyboardIsShown = NO;
+}
+
+- (void)keyboardWillShow:(NSNotification *)n
+{
+    if (keyboardIsShown) {
+        return;
+    }
+    
+    NSDictionary* userInfo = [n userInfo];
+    
+    // get the size of the keyboard
+    CGSize keyboardSize = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    
+    // resize the noteView
+    CGRect viewFrame = self.view.frame;
+    viewFrame.size.height -= keyboardSize.height - NAVBAR_SIZE;
+    
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    
+    [UIView setAnimationDuration:SCROLL_LENGTH];
+    [self.view setFrame:viewFrame];
+    [UIView commitAnimations];
+    
+    [self.questionsTable scrollToRowAtIndexPath:[self.questionsTable indexPathForSelectedRow]
+                               atScrollPosition:UITableViewScrollPositionTop
+                                       animated:YES];
+    
+    keyboardIsShown = YES;
+}
+
 
 #pragma mark -
 #pragma mark Other Methods
