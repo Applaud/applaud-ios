@@ -18,6 +18,7 @@
 #define SURVEY_URL @"/mobile/get_survey/"
 #define RESPONSE_URL @"/mobile/survey_respond/"
 #define LOGIN_URL @"/accounts/mobilelogin/"
+#define PHOTO_URL @"/mobile/post_photo"
 
 @interface ConnectionManager : NSObject
 

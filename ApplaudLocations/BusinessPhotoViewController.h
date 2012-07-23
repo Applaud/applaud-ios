@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ConnectionManager.h"
 
-@interface BusinessPhotoViewController : UIViewController
+@class AppDelegate;
 
+@interface BusinessPhotoViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+@property (nonatomic, weak) UINavigationController *navigationController;
+@property (nonatomic, strong) AppDelegate *appDelegate;
+@property (nonatomic, strong) UIImagePickerController *imagePicker;
+@property (weak, nonatomic) IBOutlet UIButton *cameraButton;
+- (IBAction)cameraButtonPressed;
 @end

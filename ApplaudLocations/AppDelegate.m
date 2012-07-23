@@ -13,6 +13,7 @@
 #import "EmployeeListViewController.h"
 #import "QuestionsViewController.h"
 #import "ConnectionManager.h"
+#import "BusinessPhotoViewController.h"
 
 @implementation AppDelegate
 
@@ -98,6 +99,13 @@
 	UINavigationController *generalNav = [[UINavigationController alloc] initWithRootViewController:gfvc];
 	gfvc.navigationController = generalNav;
     gfvc.appDelegate = self;
+    
+    // One more! BusinessPhotoViewController.
+    BusinessPhotoViewController *bpvc = [[BusinessPhotoViewController alloc] init];
+    [bpvc setTitle:@"Take a Photo"];
+    UINavigationController *photoNav = [[UINavigationController alloc] initWithRootViewController:bpvc];
+    bpvc.navigationController = generalNav;
+    bpvc.appDelegate = self;
 	
     tabNavigator.viewControllers = [NSArray arrayWithObjects:
                                     employeeNav,
@@ -105,6 +113,7 @@
 									generalNav,
                                     questionNav,
                                     newsNav,
+                                    photoNav,
                                     nil];
     // TODO: should figure out how to set UITabBarItem images
     masterViewController.tabBarController = tabNavigator;
