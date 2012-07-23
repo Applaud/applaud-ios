@@ -41,19 +41,15 @@
 {
     [super viewDidLoad];
 
-    // Our XIB assumes that we have an image. The x-coordinate of the origin needs to be adjusted
-    // only if there is no image.
+    // Take care of dynamic layout
     CGRect titleTextFrame, subtitleTextFrame;
     if ( self.item.image ) {
         // Set the image
-        NSLog(@"Image dimensions: %f, %f",self.item.image.size.width,self.item.image.size.height);
         float scaleFactor = self.item.image.size.width * self.item.image.scale / IMAGE_SIZE;
-        NSLog(@"Scale factor: %f",scaleFactor);
         self.image.image = [UIImage imageWithCGImage:self.item.image.CGImage
                                                scale:scaleFactor
                                          orientation:UIImageOrientationUp];
         [self.image sizeToFit];
-        NSLog(@"image view dims: %f, %f",self.image.frame.size.width,self.image.frame.size.height);
         CGRect imageRect = self.image.frame;
         imageRect.origin.x = VIEW_PADDING;
         imageRect.origin.y = VIEW_PADDING;
@@ -77,9 +73,6 @@
         CGSize titleTextContraint = CGSizeMake(self.view.frame.size.width - 2*VIEW_PADDING, 
                                                300);
         titleTextFrame = self.titleLabel.frame;
-        titleTextFrame.size.height = [self.item.title sizeWithFont:[UIFont boldSystemFontOfSize:17.0f]
-                                                 constrainedToSize:titleTextContraint 
-                                                     lineBreakMode:UILineBreakModeWordWrap].height;
         titleTextFrame.origin.x = VIEW_PADDING;
         titleTextFrame.origin.y = VIEW_PADDING;
         titleTextFrame.size.width = self.view.frame.size.width - 2*VIEW_PADDING;
@@ -97,8 +90,6 @@
     self.titleLabel.text = self.item.title;
     [self.titleLabel sizeToFit];
 
-
-    
     // Set the subtitle label
     self.subtitleLabel.text = self.item.subtitle;
     
@@ -113,12 +104,8 @@
     
     // Format, set, and position the body text
     self.bodyText.text = self.item.body;
-    CGSize bodyTextContraint = CGSizeMake(self.view.frame.size.width - 2*VIEW_PADDING,
-                                          2000);
+    [self.bodyText sizeToFit];
     CGRect bodyTextFrame = self.bodyText.frame;
-    bodyTextFrame.size.height = [self.item.body sizeWithFont:[UIFont systemFontOfSize:12.0f] 
-                                           constrainedToSize:bodyTextContraint 
-                                               lineBreakMode:UILineBreakModeWordWrap].height + 50;
     bodyTextFrame.origin.y = dateTextFrame.origin.y + dateTextFrame.size.height + ELEMENT_PADDING;
     bodyTextFrame.origin.x = VIEW_PADDING;
     [self.bodyText setFrame:bodyTextFrame];
