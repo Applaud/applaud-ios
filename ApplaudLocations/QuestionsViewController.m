@@ -158,19 +158,6 @@
  * This lets us change the background color of a cell -- if we have a view controller stored at that index and it has an answer, then we set it to green.
  */
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-//    if([[self.surveyControllers objectAtIndex:indexPath.section] isKindOfClass:[SurveyFieldViewController class]] &&
-//       [(SurveyFieldViewController *)[self.surveyControllers objectAtIndex:indexPath.section] getAnswer].count &&
-//       ![[[(SurveyFieldViewController *)[self.surveyControllers objectAtIndex:indexPath.section] getAnswer] objectAtIndex:0] isEqualToString:@""]) {
-//       // cell.backgroundColor = [UIColor greenColor];
-//    }
-//    // If it's not a survey with an answer, make sure it's reset to white and that its subtitle is "unanswered".
-//    else {
-//        cell.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
-//        cell.detailTextLabel.text = @"Unanswered";
-//        cell.detailTextLabel.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
-//        cell.textLabel.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
-//    }
-    
     // Set color and masking
     SurveyAccordionCell *accordionCell = (SurveyAccordionCell*)cell;
     [accordionCell.containerView.layer setMasksToBounds:YES];

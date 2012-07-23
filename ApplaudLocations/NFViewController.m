@@ -134,32 +134,38 @@
     bodyLabel.numberOfLines = 2;
     bodyLabel.lineBreakMode = UILineBreakModeWordWrap;
     [bodyLabel setFont:[UIFont systemFontOfSize:TEASER_SIZE]];
+    CGSize bodyContraintSize = CGSizeMake(self.view.bounds.size.width
+                                          - 2*CELL_MARGIN
+                                          - 2*CELL_PADDING,
+                                          400);
     CGSize bodySize = [bodyTeaserText
                        sizeWithFont:[UIFont systemFontOfSize:TEASER_SIZE]
-                       constrainedToSize:CGSizeMake(self.view.bounds.size.width
-                                                    - 2*CELL_MARGIN
-                                                    - 2*CELL_ELEMENT_PADDING,
-                                                    400)
+                       constrainedToSize:bodyContraintSize
                        lineBreakMode:UILineBreakModeWordWrap];
     [bodyLabel setFrame:CGRectMake(CELL_PADDING,
                                    CELL_PADDING + titleSize.height + CELL_ELEMENT_PADDING, 
-                                   bodySize.width,
+                                   bodyContraintSize.width,
                                    bodySize.height)];
     [cell.contentView addSubview:bodyLabel];
-    
-//    CALayer *cellLayer = cell.layer;
-//    [cellLayer setFrame:cellFrame];
-//    cellLayer.cornerRadius = 10.0f;
-//    cellLayer.shadowOpacity = 0.25f;
-//    cellLayer.shadowRadius = 5.0f;
-//    cellLayer.shadowOffset = CGSizeMake(1,1);
-//    cellLayer.shadowColor = [[UIColor blackColor] CGColor];
     
     return cell;
 }
 
 #pragma mark -
 #pragma mark UITableView delegate methods
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    cell.backgroundColor = [UIColor whiteColor];
+    cell.contentView.backgroundColor = [UIColor whiteColor];
+    cell.contentView.layer.cornerRadius = 7.0f;
+    cell.contentView.layer.borderWidth = 1.0f;
+    cell.contentView.layer.borderColor = [[UIColor grayColor] CGColor];
+    
+    // Some nice visual FX
+    cell.contentView.layer.shadowRadius = 5.0f;
+    cell.contentView.layer.shadowOpacity = 0.2f;
+    cell.contentView.layer.shadowOffset = CGSizeMake(1, 0);
+}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     CGSize constraintSize;
