@@ -69,7 +69,7 @@
                                                300);
         titleTextFrame = self.titleLabel.frame;
         titleTextFrame.size.height = [self.item.title sizeWithFont:[UIFont boldSystemFontOfSize:17.0f]
-                                                 constrainedToSize:titleTextContraint lineBreakMode:UILineBreakModeWordWrap].height + 50;
+                                                 constrainedToSize:titleTextContraint lineBreakMode:UILineBreakModeWordWrap].height;
         titleTextFrame.origin.x = VIEW_PADDING;
         titleTextFrame.origin.y = VIEW_PADDING;
         titleTextFrame.size.width = self.view.frame.size.width - 2*VIEW_PADDING;
@@ -89,22 +89,16 @@
     // Set the subtitle label
     self.subtitleLabel.text = self.item.subtitle;
     
-    // Format and set the date label
+    // Format, set, and position the date label
     NSDateFormatter *format = [[NSDateFormatter alloc] init];
     format.dateStyle = NSDateFormatterLongStyle;
     self.dateLabel.text = [format stringFromDate:self.item.date];
-    NSLog(@"Label views:%@",self.dateLabel.subviews);
-    // Put a white rect behind the date label
-    UIView *dateHighlighter = [[UIView alloc]
-                               initWithFrame:CGRectMake(0, 
-                                                        self.dateLabel.frame.origin.y - ELEMENT_PADDING, 
-                                                        self.view.frame.size.width, 
-                                                        self.dateLabel.frame.size.height + 2*ELEMENT_PADDING)];
-    dateHighlighter.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:dateHighlighter];
-    [self.view bringSubviewToFront:self.dateLabel];
+    CGRect dateTextFrame = self.dateLabel.frame;
+    dateTextFrame.origin.y = subtitleTextFrame.origin.y + subtitleTextFrame.size.height + ELEMENT_PADDING;
+    dateTextFrame.origin.x = VIEW_PADDING;
+    self.dateLabel.frame = dateTextFrame;
     
-    // Adjust frame of the body text according to its content
+    // Format, set, and position the body text
     self.bodyText.text = self.item.body;
     CGSize bodyTextContraint = CGSizeMake(self.view.frame.size.width - 2*VIEW_PADDING,
                                           2000);
@@ -112,10 +106,18 @@
     bodyTextFrame.size.height = [self.item.body sizeWithFont:[UIFont systemFontOfSize:12.0f] 
                                            constrainedToSize:bodyTextContraint 
                                                lineBreakMode:UILineBreakModeWordWrap].height + 50;
+    bodyTextFrame.origin.y = dateTextFrame.origin.y + dateTextFrame.size.height + ELEMENT_PADDING;
+    bodyTextFrame.origin.x = VIEW_PADDING;
     [self.bodyText setFrame:bodyTextFrame];
     
     // Set the contentsize of the scrollview
-    [(UIScrollView*)self.view setContentSize:CGSizeMake(self.view.frame.size.width, 300 + bodyTextFrame.size.height)];
+    [(UIScrollView*)self.view setContentSize:CGSizeMake(self.view.frame.size.width, 
+                                                        2*VIEW_PADDING 
+                                                        + titleTextFrame.size.height
+                                                        + subtitleTextFrame.size.height
+                                                        + dateTextFrame.size.height
+                                                        + bodyTextFrame.size.height
+                                                        + 3*ELEMENT_PADDING)];
 }
 
 - (void)viewDidUnload
