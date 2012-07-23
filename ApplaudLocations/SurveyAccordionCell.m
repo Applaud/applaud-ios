@@ -234,13 +234,14 @@
         case TEXTAREA:
         {
             UITextView *textView = (UITextView*)[self.questionWidgets objectAtIndex:0];
-            return [NSArray arrayWithObject:textView.text];
+            if ( [textView hasText] )
+                return [NSArray arrayWithObject:textView.text];
         }
-            break;
         case TEXTFIELD:
         {
             UITextField *textField = (UITextField*)[self.questionWidgets objectAtIndex:0];
-            return [NSArray arrayWithObject:textField.text];
+            if ( [textField hasText] )
+                return [NSArray arrayWithObject:textField.text];
         }
             break;
         case RADIO:
@@ -268,7 +269,7 @@
         }
             break;
     }
-    return nil; // If we don't have an answer.
+    return [[NSArray alloc] init ]; // If we don't have an answer.
 }
 
 

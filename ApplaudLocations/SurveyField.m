@@ -10,15 +10,13 @@
 
 @implementation SurveyField
 @synthesize label = _label;
-@synthesize required = _required;
 @synthesize id = _id;
 @synthesize type = _type;
 @synthesize options = _options;
 
--(id)initWithLabel:(NSString *)label required:(BOOL)required id:(int)id type:(QuestionType)type options:(NSMutableArray *)options {
+-(id)initWithLabel:(NSString *)label id:(int)id type:(QuestionType)type options:(NSMutableArray *)options {
   if(self = [super init]) {
 	_label = label;
-	_required = required;
 	_id = id;
 	_type = type;
 	_options = options;
