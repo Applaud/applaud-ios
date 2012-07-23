@@ -302,10 +302,6 @@
         if (! response)
             response = [[NSArray alloc] init];
         
-        NSLog(@"Response for question %@ was %@",
-              [[self.survey.fields objectAtIndex:i] label],
-              response);
-        
         NSDictionary *responseDict = [[NSDictionary alloc] initWithObjectsAndKeys:
                                       response, @"response",
                                       [[self.survey.fields objectAtIndex:i] label], @"label",
@@ -321,14 +317,16 @@
     [ConnectionManager serverRequest:@"POST"
                           withParams:params
                                  url:RESPONSE_URL
-                            callback:^(NSData *data) {
-                                // Reset all the questions and change to the news feed.
-                                int i;
-                                for(i = 0; i < self.surveyControllers.count; i++) {
-                                    [self.surveyControllers replaceObjectAtIndex:i withObject:[[NSNull alloc] init]];
+                            callback:^(NSData* dat) {
+                                // Collapse all table cells, but retain responses.
+                                for (int i=0; i<self.questionsTable.numberOfSections; i++) {
+                                    SurveyAccordionCell *cell = (SurveyAccordionCell*)[self.questionsTable cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:i]];
+                                    [cell contract];
+                                    [questionSelections replaceObjectAtIndex:i withObject:[NSNumber numberWithBool:NO]];
+                                    [self.questionsTable reloadData];
                                 }
-                                [self.questionsTable reloadData];
                             }];
+    
     [[[UIAlertView alloc] initWithTitle:@"Thanks!"
                                     message:@"We appreciate your feedback."
                                    delegate:self
