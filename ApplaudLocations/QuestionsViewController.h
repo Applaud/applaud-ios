@@ -13,14 +13,19 @@
 #import "AppDelegate.h"
 #import "Business.h"
 
-@interface QuestionsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
+@interface QuestionsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate> {
+    // Tracks what questions have been selected. 
+    NSMutableArray *questionSelections;
+    // Whether or not the keyboard is displayed at this moment
+    BOOL keyboardIsShown;
+}
+
 @property (nonatomic, weak) AppDelegate *appDelegate;
 @property (nonatomic, strong) Survey *survey;
 @property (nonatomic, strong) NSMutableArray *surveyControllers;
-@property (weak, nonatomic) IBOutlet UITextView *summaryText;
 @property (weak, nonatomic) IBOutlet UITableView *questionsTable;
 @property (strong, nonatomic) UINavigationController *navigationController;
-- (void)buttonPressed;
+-(void)buttonPressed;
 -(void)getSurveys;
 -(void)notificationReceived:(NSNotification *)notification;
 @end

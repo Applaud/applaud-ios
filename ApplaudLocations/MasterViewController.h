@@ -14,10 +14,10 @@
 
 @interface MasterViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
-@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *locationsArray;
 @property (nonatomic, strong) MapViewController *mapViewController;
-@property (nonatomic, strong) UILabel *titleLabel;
+@property (nonatomic, strong) IBOutlet UILabel *titleLabel;
 @property (nonatomic, weak) UIWindow *window;
 @property (nonatomic, weak) AppDelegate *appDelegate;
 

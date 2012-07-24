@@ -13,7 +13,7 @@
 @interface NFItemViewController : UIViewController
 @property (nonatomic, strong) NFItem *item;
 @property IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UITextView *bodyText;
+@property (weak, nonatomic) IBOutlet UILabel *bodyText;
 @property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *image;
