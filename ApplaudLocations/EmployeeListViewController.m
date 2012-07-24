@@ -77,10 +77,11 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"UITableViewCell"];
+    static NSString *cellIdentifier = @"UITableViewCell";
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
     if ( nil == cell ) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"UITableViewCell"];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
     }
     
     // Configure the cell...
@@ -92,8 +93,7 @@
                    placeholderImage:[UIImage imageNamed:@"blankPerson.jpg"]];
 
     tableView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
-    
-    [cell.imageView setNeedsDisplay];    
+
     return cell;
 }
 

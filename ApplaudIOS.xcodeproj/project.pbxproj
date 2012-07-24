@@ -35,6 +35,7 @@
 		1BA358F41582F05E00EB8F32 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BA358F31582F05E00EB8F32 /* main.m */; };
 		1BA358F81582F05E00EB8F32 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BA358F71582F05E00EB8F32 /* AppDelegate.m */; };
 		1BD494EF15BDF786006A01A9 /* blankPerson.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1BD494EE15BDF786006A01A9 /* blankPerson.jpg */; };
+		1BD494F215BF1E05006A01A9 /* NFTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BD494F115BF1E05006A01A9 /* NFTableViewCell.m */; };
 		1BFF2E7E158D9CDC00753F94 /* EmployeeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BFF2E7C158D9CDB00753F94 /* EmployeeListViewController.m */; };
 		1BFF2E7F158D9CDC00753F94 /* EmployeeListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1BFF2E7D158D9CDC00753F94 /* EmployeeListViewController.xib */; };
 		6F0B5C3315A3CB030060D1B5 /* UIImage+Scale.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0B5C3215A3CB030060D1B5 /* UIImage+Scale.m */; };
@@ -124,6 +125,9 @@
 		1BA358F61582F05E00EB8F32 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1BA358F71582F05E00EB8F32 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		1BD494EE15BDF786006A01A9 /* blankPerson.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = blankPerson.jpg; sourceTree = "<group>"; };
+		1BD494F015BF1E05006A01A9 /* NFTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NFTableViewCell.h; sourceTree = "<group>"; };
+		1BD494F115BF1E05006A01A9 /* NFTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NFTableViewCell.m; sourceTree = "<group>"; };
+		1BD494F315BF2AEC006A01A9 /* NFDisplayConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NFDisplayConstants.h; sourceTree = "<group>"; };
 		1BFF2E7B158D9CDB00753F94 /* EmployeeListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmployeeListViewController.h; sourceTree = "<group>"; };
 		1BFF2E7C158D9CDB00753F94 /* EmployeeListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmployeeListViewController.m; sourceTree = "<group>"; };
 		1BFF2E7D158D9CDC00753F94 /* EmployeeListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmployeeListViewController.xib; sourceTree = "<group>"; };
@@ -193,8 +197,11 @@
 		1B301C5B158856470038A5BE /* Newsfeed */ = {
 			isa = PBXGroup;
 			children = (
+				1BD494F315BF2AEC006A01A9 /* NFDisplayConstants.h */,
 				1B301C5F1588580E0038A5BE /* NFViewController.h */,
 				1B301C601588580E0038A5BE /* NFViewController.m */,
+				1BD494F015BF1E05006A01A9 /* NFTableViewCell.h */,
+				1BD494F115BF1E05006A01A9 /* NFTableViewCell.m */,
 				6F37B9381589400D001DD06D /* NFItemViewController.h */,
 				6F37B9391589400D001DD06D /* NFItemViewController.m */,
 				6F462621158A8BDE007EA86E /* NFItem.h */,
@@ -476,6 +483,7 @@
 				6F0B5C3315A3CB030060D1B5 /* UIImage+Scale.m in Sources */,
 				1B12763215B89B9600980AA2 /* MasterViewController.m in Sources */,
 				1B9C3A6815BA0637000EEF1A /* SurveyAccordionCell.m in Sources */,
+				1BD494F215BF1E05006A01A9 /* NFTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

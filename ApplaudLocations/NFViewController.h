@@ -14,7 +14,10 @@
 
 @class AppDelegate;
 
-@interface NFViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface NFViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
+    NSMutableDictionary *cellHeights;
+}
+
 @property (nonatomic, weak) AppDelegate *appDelegate;
 @property (nonatomic, strong) NSMutableArray *newsFeeds;
 @property (nonatomic, weak) UINavigationController *navigationController;
