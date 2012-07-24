@@ -185,11 +185,9 @@
         NSDateFormatter *format = [[NSDateFormatter alloc] init];
         [format setDateFormat:@"MM/dd/yyyy"];
         for(NSDictionary *feed in items) {
-            NSString *imageURLString;
+            NSString *imageURLString = @"";
             if (! [[feed objectForKey:@"image"] isEqualToString:@""] ) {
                 imageURLString = [NSString stringWithFormat:@"%@%@", SERVER_URL, [feed objectForKey:@"image"]];
-            } else {
-                imageURLString = @"";
             }
                                             
             [self.newsFeeds addObject:[[NFItem alloc] initWithTitle:[feed objectForKey:@"title"]
