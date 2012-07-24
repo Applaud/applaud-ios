@@ -20,6 +20,9 @@
  */
 + (NSData *)serverRequest:(NSString *)requestType withData:(NSData *)data url:(NSString *)url callback:(void(^)(NSData *))callback {
     
+    // Keeps track of how many connections we have
+    static int outbound_connections = 0;
+    
     __block NSData *ret;
     NSString *urlPostfix = url;
     NSMutableURLRequest *request = nil;
@@ -48,6 +51,12 @@
     
     NSLog(@"Requesting from %@", [request.URL description]);
     
+    // Display network activity indicator if we are going from 0 --> >0 connections
+    if ( outbound_connections == 0 ) {
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    }
+    outbound_connections++;
+    
     [NSURLConnection sendAsynchronousRequest:request
                                        queue:[NSOperationQueue mainQueue]
                            completionHandler:^(NSURLResponse *response, NSData *d, NSError *err) {
@@ -70,6 +79,15 @@
                                        callback(d);
                                    }
                                    
+                               }
+                               
+                               // Decrement # of connections
+                               outbound_connections--;
+                               // No more connections --> stop showing network activity indicator
+                               if ( outbound_connections == 0 ) {
+                                   [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+                                   // Let interested bodies know that all network comm. is finished.
+                                   [[NSNotificationCenter defaultCenter] postNotificationName:@"DOWNLOAD_FINISHED" object:nil];
                                }
                            }];
     return ret;

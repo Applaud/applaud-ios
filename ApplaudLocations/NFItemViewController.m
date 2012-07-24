@@ -8,9 +8,10 @@
 
 #import "NFItemViewController.h"
 
-@interface NFItemViewController ()
-
-@end
+#define VIEW_PADDING 10.0f
+#define IMAGE_SIZE 130.0f
+#define ELEMENT_PADDING 10.0f
+#define NAVIGATION_GAP 42.0f    // Gap left for the navigationBar of the UINavigationController
 
 @implementation NFItemViewController
 
@@ -39,17 +40,83 @@
  */
 - (void)viewDidLoad
 {
-    if(self.item) {
-        self.image.image = [self.item.image scaleToSize:130.0];
-    }
     [super viewDidLoad];
-    NSDateFormatter *format = [[NSDateFormatter alloc] init];
-//    [format setDateFormat:@"eeee LLLL dd hh:mm"]; // see the documentation on NSDateFormatter to make sense of the format string
-    format.dateStyle = NSDateFormatterLongStyle;
+
+    // Take care of dynamic layout
+    CGRect titleTextFrame, subtitleTextFrame;
+    if ( self.item.image ) {
+        // Set the image
+        float scaleFactor = self.item.image.size.width * self.item.image.scale / IMAGE_SIZE;
+        self.image.image = [UIImage imageWithCGImage:self.item.image.CGImage
+                                               scale:scaleFactor
+                                         orientation:UIImageOrientationUp];
+        [self.image sizeToFit];
+        CGRect imageRect = self.image.frame;
+        imageRect.origin.x = VIEW_PADDING;
+        imageRect.origin.y = VIEW_PADDING;
+        self.image.frame = imageRect;
+        
+        // Rect for title
+        titleTextFrame = self.titleLabel.frame;
+        titleTextFrame.origin.y = VIEW_PADDING;
+        self.titleLabel.frame = titleTextFrame;
+        
+        // Size and position the subtitle label
+        subtitleTextFrame = self.subtitleLabel.frame;
+        subtitleTextFrame.origin.y = VIEW_PADDING + imageRect.size.height + ELEMENT_PADDING;
+        subtitleTextFrame.origin.x = VIEW_PADDING;
+        subtitleTextFrame.size.width = self.view.frame.size.width - 2*VIEW_PADDING;
+        self.subtitleLabel.frame = subtitleTextFrame;
+    } 
+    // Adjusting x-coords of frames here
+    else {
+        // Size and position the title label
+        titleTextFrame = self.titleLabel.frame;
+        titleTextFrame.origin.x = VIEW_PADDING;
+        titleTextFrame.origin.y = VIEW_PADDING;
+        titleTextFrame.size.width = self.view.frame.size.width - 2*VIEW_PADDING;
+        self.titleLabel.frame = titleTextFrame;
+        
+        // Size and position the subtitle label
+        subtitleTextFrame = self.subtitleLabel.frame;
+        subtitleTextFrame.origin.y = titleTextFrame.origin.y + titleTextFrame.size.height + ELEMENT_PADDING;
+        subtitleTextFrame.origin.x = VIEW_PADDING;
+        subtitleTextFrame.size.width = self.view.frame.size.width - 2*VIEW_PADDING;
+        self.subtitleLabel.frame = subtitleTextFrame;
+    }
+    
+    // Set the title label
     self.titleLabel.text = self.item.title;
-    self.bodyText.text = self.item.body;
+    [self.titleLabel sizeToFit];
+
+    // Set the subtitle label
     self.subtitleLabel.text = self.item.subtitle;
+    
+    // Format, set, and position the date label
+    NSDateFormatter *format = [[NSDateFormatter alloc] init];
+    format.dateStyle = NSDateFormatterLongStyle;
     self.dateLabel.text = [format stringFromDate:self.item.date];
+    CGRect dateTextFrame = self.dateLabel.frame;
+    dateTextFrame.origin.y = subtitleTextFrame.origin.y + subtitleTextFrame.size.height + ELEMENT_PADDING;
+    dateTextFrame.origin.x = VIEW_PADDING;
+    self.dateLabel.frame = dateTextFrame;
+    
+    // Format, set, and position the body text
+    self.bodyText.text = self.item.body;
+    [self.bodyText sizeToFit];
+    CGRect bodyTextFrame = self.bodyText.frame;
+    bodyTextFrame.origin.y = dateTextFrame.origin.y + dateTextFrame.size.height + ELEMENT_PADDING;
+    bodyTextFrame.origin.x = VIEW_PADDING;
+    [self.bodyText setFrame:bodyTextFrame];
+    
+    // Set the contentsize of the scrollview
+    [(UIScrollView*)self.view setContentSize:CGSizeMake(self.view.frame.size.width, 
+                                                        2*VIEW_PADDING 
+                                                        + titleTextFrame.size.height
+                                                        + subtitleTextFrame.size.height
+                                                        + dateTextFrame.size.height
+                                                        + bodyTextFrame.size.height
+                                                        + 3*ELEMENT_PADDING)];
 }
 
 - (void)viewDidUnload

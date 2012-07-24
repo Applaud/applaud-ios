@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B12763215B89B9600980AA2 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B12763015B89B9600980AA2 /* MasterViewController.m */; };
+		1B12763315B89B9600980AA2 /* MasterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B12763115B89B9600980AA2 /* MasterViewController.xib */; };
 		1B301C621588580E0038A5BE /* NFViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B301C601588580E0038A5BE /* NFViewController.m */; };
 		1B301C631588580E0038A5BE /* NFViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B301C611588580E0038A5BE /* NFViewController.xib */; };
 		1B301C67158858430038A5BE /* EmployeeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B301C65158858430038A5BE /* EmployeeViewController.m */; };
@@ -17,12 +19,13 @@
 		1B514013158F9441008CB057 /* ApplaudProgramState.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1B514011158F9441008CB057 /* ApplaudProgramState.xcdatamodeld */; };
 		1B514016158FA233008CB057 /* ApplaudProgramSettingsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B514015158FA233008CB057 /* ApplaudProgramSettingsModel.m */; };
 		1B51401C158FA4A9008CB057 /* FirstTimeNavigatorViewControllerIphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B51401B158FA4A9008CB057 /* FirstTimeNavigatorViewControllerIphone.xib */; };
-		1B9389A41583C9D30088F468 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B9389A31583C9D30088F468 /* MasterViewController.m */; };
 		1B9389A81583CB170088F468 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B9389A71583CB170088F468 /* MapViewController.m */; };
 		1B9389AA1583CB460088F468 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B9389A91583CB460088F468 /* MapKit.framework */; };
 		1B9389B01583EB110088F468 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B9389AF1583EB110088F468 /* CoreLocation.framework */; };
 		1B9389BB1584EF010088F468 /* BusinessLocationsTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B9389BA1584EF010088F468 /* BusinessLocationsTracker.m */; };
 		1B9528C01590D87500103723 /* ConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B9528BF1590D87500103723 /* ConnectionManager.m */; };
+		1B9C3A6515B9272A000EEF1A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B9C3A6415B9272A000EEF1A /* QuartzCore.framework */; };
+		1B9C3A6815BA0637000EEF1A /* SurveyAccordionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B9C3A6715BA0637000EEF1A /* SurveyAccordionCell.m */; };
 		1BA358E81582F05E00EB8F32 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BA358E71582F05E00EB8F32 /* UIKit.framework */; };
 		1BA358EA1582F05E00EB8F32 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BA358E91582F05E00EB8F32 /* Foundation.framework */; };
 		1BA358EC1582F05E00EB8F32 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BA358EB1582F05E00EB8F32 /* CoreGraphics.framework */; };
@@ -50,6 +53,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1B12762F15B89B9600980AA2 /* MasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
+		1B12763015B89B9600980AA2 /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
+		1B12763115B89B9600980AA2 /* MasterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MasterViewController.xib; sourceTree = "<group>"; };
 		1B301C5F1588580E0038A5BE /* NFViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NFViewController.h; sourceTree = "<group>"; };
 		1B301C601588580E0038A5BE /* NFViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NFViewController.m; sourceTree = "<group>"; };
 		1B301C611588580E0038A5BE /* NFViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NFViewController.xib; sourceTree = "<group>"; };
@@ -64,8 +70,6 @@
 		1B514014158FA233008CB057 /* ApplaudProgramSettingsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplaudProgramSettingsModel.h; sourceTree = "<group>"; };
 		1B514015158FA233008CB057 /* ApplaudProgramSettingsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplaudProgramSettingsModel.m; sourceTree = "<group>"; };
 		1B51401B158FA4A9008CB057 /* FirstTimeNavigatorViewControllerIphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FirstTimeNavigatorViewControllerIphone.xib; sourceTree = "<group>"; };
-		1B9389A21583C9D30088F468 /* MasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
-		1B9389A31583C9D30088F468 /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
 		1B9389A61583CB170088F468 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		1B9389A71583CB170088F468 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		1B9389A91583CB460088F468 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -74,6 +78,9 @@
 		1B9389BA1584EF010088F468 /* BusinessLocationsTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessLocationsTracker.m; sourceTree = "<group>"; };
 		1B9528BE1590D87500103723 /* ConnectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectionManager.h; sourceTree = "<group>"; };
 		1B9528BF1590D87500103723 /* ConnectionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionManager.m; sourceTree = "<group>"; };
+		1B9C3A6415B9272A000EEF1A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		1B9C3A6615BA0637000EEF1A /* SurveyAccordionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SurveyAccordionCell.h; sourceTree = "<group>"; };
+		1B9C3A6715BA0637000EEF1A /* SurveyAccordionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SurveyAccordionCell.m; sourceTree = "<group>"; };
 		1BA358E31582F05E00EB8F32 /* ApplaudLocations.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ApplaudLocations.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BA358E71582F05E00EB8F32 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		1BA358E91582F05E00EB8F32 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -122,6 +129,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B9C3A6515B9272A000EEF1A /* QuartzCore.framework in Frameworks */,
 				1B51400F158F93F4008CB057 /* CoreData.framework in Frameworks */,
 				1B9389B01583EB110088F468 /* CoreLocation.framework in Frameworks */,
 				1B9389AA1583CB460088F468 /* MapKit.framework in Frameworks */,
@@ -137,8 +145,9 @@
 		1B301C5515884C970038A5BE /* SelectLocations */ = {
 			isa = PBXGroup;
 			children = (
-				1B9389A21583C9D30088F468 /* MasterViewController.h */,
-				1B9389A31583C9D30088F468 /* MasterViewController.m */,
+				1B12762F15B89B9600980AA2 /* MasterViewController.h */,
+				1B12763015B89B9600980AA2 /* MasterViewController.m */,
+				1B12763115B89B9600980AA2 /* MasterViewController.xib */,
 				1B9389A61583CB170088F468 /* MapViewController.h */,
 				1B9389A71583CB170088F468 /* MapViewController.m */,
 				6FAB079E1587BF0700C9F1DF /* BusinessAnnotation.h */,
@@ -180,8 +189,11 @@
 		1B301C69158858490038A5BE /* Questions */ = {
 			isa = PBXGroup;
 			children = (
+				1B9C3A6615BA0637000EEF1A /* SurveyAccordionCell.h */,
+				1B9C3A6715BA0637000EEF1A /* SurveyAccordionCell.m */,
 				1B301C6A158858560038A5BE /* QuestionsViewController.h */,
 				1B301C6B158858560038A5BE /* QuestionsViewController.m */,
+				1B301C6C158858560038A5BE /* QuestionsViewController.xib */,
 				6FFAD3DE158E60A5000CE190 /* SurveyFieldViewController.h */,
 				6FFAD3DF158E60A5000CE190 /* SurveyFieldViewController.m */,
 				6FFAD3E0158E60A5000CE190 /* SurveyFieldViewController.xib */,
@@ -189,7 +201,6 @@
 				6F40324B158BA1B700024402 /* Survey.m */,
 				6F40324E158BA4C400024402 /* SurveyField.h */,
 				6F40324F158BA4C400024402 /* SurveyField.m */,
-				1B301C6C158858560038A5BE /* QuestionsViewController.xib */,
 			);
 			name = Questions;
 			sourceTree = "<group>";
@@ -224,6 +235,7 @@
 		1BA358E61582F05E00EB8F32 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1B9C3A6415B9272A000EEF1A /* QuartzCore.framework */,
 				1B51400E158F93F4008CB057 /* CoreData.framework */,
 				1B9389AF1583EB110088F468 /* CoreLocation.framework */,
 				1B9389A91583CB460088F468 /* MapKit.framework */,
@@ -253,9 +265,9 @@
 				6F2A39161587B2AB0024FB52 /* Business.m */,
 				1B9389B91584EF010088F468 /* BusinessLocationsTracker.h */,
 				1B9389BA1584EF010088F468 /* BusinessLocationsTracker.m */,
-				1B9528BE1590D87500103723 /* ConnectionManager.h */,
 				6F0B5C3115A3CB030060D1B5 /* UIImage+Scale.h */,
 				6F0B5C3215A3CB030060D1B5 /* UIImage+Scale.m */,
+				1B9528BE1590D87500103723 /* ConnectionManager.h */,
 				1B9528BF1590D87500103723 /* ConnectionManager.m */,
 				1BA358EE1582F05E00EB8F32 /* Supporting Files */,
 			);
@@ -354,6 +366,7 @@
 				6FE182A8158E957A00FF78E7 /* GeneralFeedbackViewController.xib in Resources */,
 				1B51401C158FA4A9008CB057 /* FirstTimeNavigatorViewControllerIphone.xib in Resources */,
 				6F3EA47815BE039D006E66A8 /* BusinessPhotoViewController.xib in Resources */,
+				1B12763315B89B9600980AA2 /* MasterViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -366,7 +379,6 @@
 			files = (
 				1BA358F41582F05E00EB8F32 /* main.m in Sources */,
 				1BA358F81582F05E00EB8F32 /* AppDelegate.m in Sources */,
-				1B9389A41583C9D30088F468 /* MasterViewController.m in Sources */,
 				1B9389A81583CB170088F468 /* MapViewController.m in Sources */,
 				1B9389BB1584EF010088F468 /* BusinessLocationsTracker.m in Sources */,
 				6F2A39171587B2AB0024FB52 /* Business.m in Sources */,
@@ -388,6 +400,8 @@
 				6F875EF61591594600555390 /* FirstTimeNavigatorViewController.m in Sources */,
 				6F0B5C3315A3CB030060D1B5 /* UIImage+Scale.m in Sources */,
 				6F3EA47715BE039D006E66A8 /* BusinessPhotoViewController.m in Sources */,
+				1B12763215B89B9600980AA2 /* MasterViewController.m in Sources */,
+				1B9C3A6815BA0637000EEF1A /* SurveyAccordionCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
