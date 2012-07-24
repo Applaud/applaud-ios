@@ -9,6 +9,8 @@
 #import "BusinessPhotoViewController.h"
 #import "AppDelegate.h"
 
+#define BOUNDARY @"----boundary----"
+
 @interface BusinessPhotoViewController ()
 @end
 
@@ -77,17 +79,53 @@
                       cancelButtonTitle:@"OK"
                       otherButtonTitles:nil] show];
     UIImage *userImage = [editingInfo objectForKey:@"UIImagePickerControllerOriginalImage"];
-    // Get the JPEG data for the image. This is really high-quality
-    // now -- might have to scale it down if network stuff is a problem.
-    NSData *imageData = UIImageJPEGRepresentation(userImage, 1.0);
-    [ConnectionManager serverRequest:@"POST"
-                            withData:imageData
-                                 url:PHOTO_URL];
+    [self postPhotoData:userImage];
 }
 // Called when the user presses the cancel button.
 // We'll do nothing for now.
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     [self.imagePicker dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark -
+#pragma Other stuff
+
+// Send an image to the server.
+-(void)postPhotoData:(UIImage *)photo {
+    // The body of the HTTP request.
+    NSMutableData *body = [[NSMutableData alloc] init];
+    // Boundary data strings.
+    NSData *start = [[NSString stringWithFormat:@"--%@\r\n", BOUNDARY] dataUsingEncoding:NSUTF8StringEncoding];
+//    NSData *end = [[NSString stringWithFormat:@"%@\r\n", BOUNDARY] dataUsingEncoding:NSUTF8StringEncoding];
+    // First add the image.
+    [body appendData:start];
+    [body appendData:[@"Content-Disposition: form-data; name=\"image\"; filename=\"image.jpg\"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:[@"Content-Type: image/jpeg\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:UIImageJPEGRepresentation(photo, 1.0)];
+    [body appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    // Then add the rest of the parameters.
+    // These are a dictionary, so we can use a loop.
+    NSDictionary *params = [[NSDictionary alloc]
+                            initWithObjectsAndKeys:[NSNumber numberWithInt:self.appDelegate.currentBusiness.business_id],
+                            @"business_id",
+                            @"[]", // being lazy -- change this to JSON!
+                            @"tags",
+                            nil];
+    for (NSString *param in params) {
+        [body appendData:start];
+        [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", param] dataUsingEncoding:NSUTF8StringEncoding]];
+        [body appendData:[[NSString stringWithFormat:@"%@\r\n", [params objectForKey:param]] dataUsingEncoding:NSUTF8StringEncoding]];
+    }
+    // Now make the request.
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    request.HTTPMethod = @"POST";
+    NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", BOUNDARY];
+    [request setValue:contentType forHTTPHeaderField:@"Content-Type"];
+    request.HTTPBody = body;
+    request.URL = [NSString stringWithFormat:@"%@%@", SERVER_URL, PHOTO_URL];
+    [NSURLConnection sendSynchronousRequest:request
+                          returningResponse:nil
+                                      error:nil];
 }
 
 // Called when the user presses the camera button. Pretty straightforward.
