@@ -29,9 +29,6 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notificationReceived:) name:@"BUSINESS_SET" object:nil];
         _newsFeeds = [[NSMutableArray alloc] init];
         [self setTitle:@"Newsfeed"];
-        
-        // Dictionary for cell height lookups
-        cellHeights = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
