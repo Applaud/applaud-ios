@@ -112,23 +112,22 @@
 //    request.HTTPBody = [NSJSONSerialization dataWithJSONObject:dict options:0 error:nil];
 //    [request addValue:[ConnectionManager getCSRFTokenFromURL:urlString] forHTTPHeaderField:@"X-CSRFToken"];
 
-    NSData *data = [ConnectionManager serverRequest:@"POST" 
-                                           withData:[NSJSONSerialization dataWithJSONObject:dict options:0 error:nil] 
-                                                url:CHECKIN_URL
-                                           callback:^(NSData *dat){
-                                               NSLog(@"here is my checkin data: %@", [[NSString alloc] initWithData:dat encoding:NSUTF8StringEncoding]);
-                                               
-                                               // Set app delegate's current business from what was returned by the server
-                                               NSLog(@"Business from server: %@",bus.description);
-                                               NSLog(@"& The types are: %@",bus.types);
-                                               self.appDelegate.currentBusiness = bus;
-
-                                               // Listen for when network downloads have stopped.
-                                               [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(downloadFinished:) name:@"DOWNLOAD_FINISHED" object:nil];
-                                               
-                                               // Let everyone know that we have a real business now
-                                               [[NSNotificationCenter defaultCenter] postNotificationName:@"BUSINESS_SET" object:bus];
-                                           }];
+    [ConnectionManager serverRequest:@"POST" 
+                            withData:[NSJSONSerialization dataWithJSONObject:dict options:0 error:nil] 
+                                 url:CHECKIN_URL
+                            callback:^(NSData *dat){
+                                NSLog(@"here is my checkin data: %@", [[NSString alloc] initWithData:dat encoding:NSUTF8StringEncoding]);
+                                
+                                // Set app delegate's current business from what was returned by the server
+                                NSLog(@"Business from server: %@",bus.description);
+                                self.appDelegate.currentBusiness = bus;
+                                
+                                // Listen for when network downloads have stopped.
+                                [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(downloadFinished:) name:@"DOWNLOAD_FINISHED" object:nil];
+                                
+                                // Let everyone know that we have a real business now
+                                [[NSNotificationCenter defaultCenter] postNotificationName:@"BUSINESS_SET" object:bus];
+                            }];
 
 }
 

@@ -17,9 +17,8 @@ typedef enum {
 
 @interface SurveyField : NSObject
 @property (nonatomic, copy) NSString *label;
-@property (nonatomic) BOOL required;
 @property (nonatomic) int id;
 @property (nonatomic) QuestionType type;
 @property (nonatomic, strong) NSMutableArray *options;
--(id)initWithLabel:(NSString *)label required:(BOOL)required id:(int)id type:(QuestionType)type options:(NSMutableArray *)options;
+-(id)initWithLabel:(NSString *)label id:(int)id type:(QuestionType)type options:(NSMutableArray *)options;
 @end
