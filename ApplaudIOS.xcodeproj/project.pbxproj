@@ -19,6 +19,8 @@
 		1B514013158F9441008CB057 /* ApplaudProgramState.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1B514011158F9441008CB057 /* ApplaudProgramState.xcdatamodeld */; };
 		1B514016158FA233008CB057 /* ApplaudProgramSettingsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B514015158FA233008CB057 /* ApplaudProgramSettingsModel.m */; };
 		1B51401C158FA4A9008CB057 /* FirstTimeNavigatorViewControllerIphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B51401B158FA4A9008CB057 /* FirstTimeNavigatorViewControllerIphone.xib */; };
+		1B73581D15BDF08F00D87F4E /* libSDWebImageARC.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B73581715BDF03D00D87F4E /* libSDWebImageARC.a */; };
+		1B73582015BDF0A500D87F4E /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B73581F15BDF0A500D87F4E /* ImageIO.framework */; };
 		1B9389A81583CB170088F468 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B9389A71583CB170088F468 /* MapViewController.m */; };
 		1B9389AA1583CB460088F468 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B9389A91583CB460088F468 /* MapKit.framework */; };
 		1B9389B01583EB110088F468 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B9389AF1583EB110088F468 /* CoreLocation.framework */; };
@@ -32,6 +34,8 @@
 		1BA358F21582F05E00EB8F32 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1BA358F01582F05E00EB8F32 /* InfoPlist.strings */; };
 		1BA358F41582F05E00EB8F32 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BA358F31582F05E00EB8F32 /* main.m */; };
 		1BA358F81582F05E00EB8F32 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BA358F71582F05E00EB8F32 /* AppDelegate.m */; };
+		1BD494EF15BDF786006A01A9 /* blankPerson.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1BD494EE15BDF786006A01A9 /* blankPerson.jpg */; };
+		1BD494F215BF1E05006A01A9 /* NFTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BD494F115BF1E05006A01A9 /* NFTableViewCell.m */; };
 		1BFF2E7E158D9CDC00753F94 /* EmployeeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BFF2E7C158D9CDB00753F94 /* EmployeeListViewController.m */; };
 		1BFF2E7F158D9CDC00753F94 /* EmployeeListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1BFF2E7D158D9CDC00753F94 /* EmployeeListViewController.xib */; };
 		6F0B5C3315A3CB030060D1B5 /* UIImage+Scale.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0B5C3215A3CB030060D1B5 /* UIImage+Scale.m */; };
@@ -49,6 +53,37 @@
 		6FFAD3E1158E60A5000CE190 /* SurveyFieldViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FFAD3DF158E60A5000CE190 /* SurveyFieldViewController.m */; };
 		6FFAD3E2158E60A5000CE190 /* SurveyFieldViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6FFAD3E0158E60A5000CE190 /* SurveyFieldViewController.xib */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		1B73581415BDF03D00D87F4E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1B73580B15BDF03C00D87F4E /* SDWebImage.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 53922D6F148C55820056699D;
+			remoteInfo = SDWebImage;
+		};
+		1B73581615BDF03D00D87F4E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1B73580B15BDF03C00D87F4E /* SDWebImage.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 53761325155AD0D5005750A4;
+			remoteInfo = "SDWebImage ARC";
+		};
+		1B73581815BDF03D00D87F4E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1B73580B15BDF03C00D87F4E /* SDWebImage.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 531041E0157EAFA400BBABC3;
+			remoteInfo = "SDWebImage ARC+MKAnnotation";
+		};
+		1B73581B15BDF06300D87F4E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1B73580B15BDF03C00D87F4E /* SDWebImage.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 53761307155AD0D5005750A4;
+			remoteInfo = "SDWebImage ARC";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		1B12762F15B89B9600980AA2 /* MasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
@@ -68,6 +103,8 @@
 		1B514014158FA233008CB057 /* ApplaudProgramSettingsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplaudProgramSettingsModel.h; sourceTree = "<group>"; };
 		1B514015158FA233008CB057 /* ApplaudProgramSettingsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplaudProgramSettingsModel.m; sourceTree = "<group>"; };
 		1B51401B158FA4A9008CB057 /* FirstTimeNavigatorViewControllerIphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FirstTimeNavigatorViewControllerIphone.xib; sourceTree = "<group>"; };
+		1B73580B15BDF03C00D87F4E /* SDWebImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SDWebImage.xcodeproj; path = SDWebImage/SDWebImage.xcodeproj; sourceTree = "<group>"; };
+		1B73581F15BDF0A500D87F4E /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		1B9389A61583CB170088F468 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		1B9389A71583CB170088F468 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		1B9389A91583CB460088F468 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -87,6 +124,10 @@
 		1BA358F31582F05E00EB8F32 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		1BA358F61582F05E00EB8F32 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1BA358F71582F05E00EB8F32 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		1BD494EE15BDF786006A01A9 /* blankPerson.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = blankPerson.jpg; sourceTree = "<group>"; };
+		1BD494F015BF1E05006A01A9 /* NFTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NFTableViewCell.h; sourceTree = "<group>"; };
+		1BD494F115BF1E05006A01A9 /* NFTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NFTableViewCell.m; sourceTree = "<group>"; };
+		1BD494F315BF2AEC006A01A9 /* NFDisplayConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NFDisplayConstants.h; sourceTree = "<group>"; };
 		1BFF2E7B158D9CDB00753F94 /* EmployeeListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmployeeListViewController.h; sourceTree = "<group>"; };
 		1BFF2E7C158D9CDB00753F94 /* EmployeeListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmployeeListViewController.m; sourceTree = "<group>"; };
 		1BFF2E7D158D9CDC00753F94 /* EmployeeListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmployeeListViewController.xib; sourceTree = "<group>"; };
@@ -124,6 +165,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B73582015BDF0A500D87F4E /* ImageIO.framework in Frameworks */,
+				1B73581D15BDF08F00D87F4E /* libSDWebImageARC.a in Frameworks */,
 				1B9C3A6515B9272A000EEF1A /* QuartzCore.framework in Frameworks */,
 				1B51400F158F93F4008CB057 /* CoreData.framework in Frameworks */,
 				1B9389B01583EB110088F468 /* CoreLocation.framework in Frameworks */,
@@ -154,8 +197,11 @@
 		1B301C5B158856470038A5BE /* Newsfeed */ = {
 			isa = PBXGroup;
 			children = (
+				1BD494F315BF2AEC006A01A9 /* NFDisplayConstants.h */,
 				1B301C5F1588580E0038A5BE /* NFViewController.h */,
 				1B301C601588580E0038A5BE /* NFViewController.m */,
+				1BD494F015BF1E05006A01A9 /* NFTableViewCell.h */,
+				1BD494F115BF1E05006A01A9 /* NFTableViewCell.m */,
 				6F37B9381589400D001DD06D /* NFItemViewController.h */,
 				6F37B9391589400D001DD06D /* NFItemViewController.m */,
 				6F462621158A8BDE007EA86E /* NFItem.h */,
@@ -210,9 +256,20 @@
 			name = DBModels;
 			sourceTree = "<group>";
 		};
+		1B73580C15BDF03C00D87F4E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1B73581515BDF03D00D87F4E /* libSDWebImage.a */,
+				1B73581715BDF03D00D87F4E /* libSDWebImageARC.a */,
+				1B73581915BDF03D00D87F4E /* libSDWebImageARC+MKAnnotation.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		1BA358D81582F05E00EB8F32 = {
 			isa = PBXGroup;
 			children = (
+				1B73580B15BDF03C00D87F4E /* SDWebImage.xcodeproj */,
 				1BA358ED1582F05E00EB8F32 /* ApplaudLocations */,
 				1BA358E61582F05E00EB8F32 /* Frameworks */,
 				1BA358E41582F05E00EB8F32 /* Products */,
@@ -230,6 +287,7 @@
 		1BA358E61582F05E00EB8F32 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1B73581F15BDF0A500D87F4E /* ImageIO.framework */,
 				1B9C3A6415B9272A000EEF1A /* QuartzCore.framework */,
 				1B51400E158F93F4008CB057 /* CoreData.framework */,
 				1B9389AF1583EB110088F468 /* CoreLocation.framework */,
@@ -244,6 +302,7 @@
 		1BA358ED1582F05E00EB8F32 /* ApplaudLocations */ = {
 			isa = PBXGroup;
 			children = (
+				1BD494ED15BDF6D3006A01A9 /* Assets */,
 				1B514017158FA3C7008CB057 /* DBModels */,
 				6FE182A2158E955900FF78E7 /* General Feedback */,
 				1B301C69158858490038A5BE /* Questions */,
@@ -279,6 +338,14 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		1BD494ED15BDF6D3006A01A9 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				1BD494EE15BDF786006A01A9 /* blankPerson.jpg */,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
 		6FE182A2158E955900FF78E7 /* General Feedback */ = {
 			isa = PBXGroup;
 			children = (
@@ -303,6 +370,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				1B73581C15BDF06300D87F4E /* PBXTargetDependency */,
 			);
 			name = ApplaudLocations;
 			productName = ApplaudLocations;
@@ -328,12 +396,42 @@
 			mainGroup = 1BA358D81582F05E00EB8F32;
 			productRefGroup = 1BA358E41582F05E00EB8F32 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 1B73580C15BDF03C00D87F4E /* Products */;
+					ProjectRef = 1B73580B15BDF03C00D87F4E /* SDWebImage.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				1BA358E21582F05E00EB8F32 /* ApplaudLocations */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		1B73581515BDF03D00D87F4E /* libSDWebImage.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSDWebImage.a;
+			remoteRef = 1B73581415BDF03D00D87F4E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1B73581715BDF03D00D87F4E /* libSDWebImageARC.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSDWebImageARC.a;
+			remoteRef = 1B73581615BDF03D00D87F4E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1B73581915BDF03D00D87F4E /* libSDWebImageARC+MKAnnotation.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libSDWebImageARC+MKAnnotation.a";
+			remoteRef = 1B73581815BDF03D00D87F4E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		1BA358E11582F05E00EB8F32 /* Resources */ = {
@@ -350,6 +448,7 @@
 				6FE182A8158E957A00FF78E7 /* GeneralFeedbackViewController.xib in Resources */,
 				1B51401C158FA4A9008CB057 /* FirstTimeNavigatorViewControllerIphone.xib in Resources */,
 				1B12763315B89B9600980AA2 /* MasterViewController.xib in Resources */,
+				1BD494EF15BDF786006A01A9 /* blankPerson.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -384,10 +483,19 @@
 				6F0B5C3315A3CB030060D1B5 /* UIImage+Scale.m in Sources */,
 				1B12763215B89B9600980AA2 /* MasterViewController.m in Sources */,
 				1B9C3A6815BA0637000EEF1A /* SurveyAccordionCell.m in Sources */,
+				1BD494F215BF1E05006A01A9 /* NFTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		1B73581C15BDF06300D87F4E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "SDWebImage ARC";
+			targetProxy = 1B73581B15BDF06300D87F4E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		1BA358F01582F05E00EB8F32 /* InfoPlist.strings */ = {
@@ -454,6 +562,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ApplaudLocations/ApplaudIOS-Prefix.pch";
 				INFOPLIST_FILE = "ApplaudLocations/ApplaudIOS-Info.plist";
+				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -465,6 +574,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ApplaudLocations/ApplaudIOS-Prefix.pch";
 				INFOPLIST_FILE = "ApplaudLocations/ApplaudIOS-Info.plist";
+				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

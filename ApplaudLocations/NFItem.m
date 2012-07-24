@@ -17,15 +17,15 @@
 @synthesize title = _title;
 @synthesize subtitle = _subtitle;
 @synthesize date = _date;
-@synthesize image = _image;
+@synthesize imageURL = _imageURL;
 
--(id)initWithTitle:(NSString *)title subtitle:(NSString *)subtitle body:(NSString *)body date:(NSDate *)date image:(UIImage *)image {
+-(id)initWithTitle:(NSString *)title subtitle:(NSString *)subtitle body:(NSString *)body date:(NSDate *)date imageURL:(NSURL *)imageURL {
     if(self = [super init]) {
         _title = title;
         _subtitle = subtitle;
         _body = body;
         _date = date;
-        _image = image;
+        _imageURL = imageURL;
     }
     return self;
 }

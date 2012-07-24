@@ -9,16 +9,9 @@
 #import "NFViewController.h"
 #import "ConnectionManager.h"
 #import "AppDelegate.h"
+#import "NFTableViewCell.h"
+#import "NFDisplayConstants.h"
 #import <QuartzCore/QuartzCore.h>
-
-#define IMAGE_SIZE 50.0f            // how big the image is
-#define CELL_ELEMENT_PADDING 5.0f   // how much space between things inside of the cell
-#define CELL_PADDING 10.0f          // space between cell wall and anything else
-#define CELL_MARGIN 22.0f           // space between outside of the cell and edge of the screen
-#define TITLE_SIZE 18.0f            // size of newsfeed item titles
-#define SUBTITLE_SIZE 12.0f         // size of newsfeed item subtitles
-#define TEASER_SIZE 14.0f           // size of the teaser text (excerpted from the body)
-#define TEASER_LENGTH 60            // number of characters of the body to use for teaser text
 
 @implementation NFViewController
 
@@ -89,85 +82,16 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    // static NSString *CellIdentifier = @"Cell";
-    // UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    // if(nil == cell) {
-    //     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle
-    //                                   reuseIdentifier:CellIdentifier];
-    //     cell.editing = NO;
-	// 	//=======
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithFrame:CGRectZero];
+    static NSString *cellIdentifier = @"NewsfeedCell";
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
-    NFItem *nfItem = [[self.newsFeeds objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-    
-    // Maximum size of the title/subtitle
-    CGSize constraintSize;
-    // Left margin of title/subtitle
-    int titleLeftMargin = 0;
-    if ( nfItem.image ) {
-        constraintSize = CGSizeMake(self.view.bounds.size.width 
-                                    - 2*CELL_PADDING 
-                                    - IMAGE_SIZE 
-                                    - CELL_ELEMENT_PADDING
-                                    - 2*CELL_MARGIN, 400);
-        
-        // Create the image
-        UIImageView *imageView = [[UIImageView alloc] 
-                                  initWithImage:[nfItem.image scaleToSize:IMAGE_SIZE]];
-        [imageView setFrame:CGRectMake(CELL_PADDING, CELL_PADDING, IMAGE_SIZE, IMAGE_SIZE)];
-        [cell.contentView addSubview:imageView];
-        
-        titleLeftMargin = CELL_PADDING + IMAGE_SIZE + CELL_ELEMENT_PADDING;
-        
-    } else {
-        constraintSize = CGSizeMake(self.view.bounds.size.width 
-                                    - 2*CELL_PADDING
-                                    - 2*CELL_MARGIN, 400);
-        
-        titleLeftMargin = CELL_PADDING;
+    if ( nil == cell ) {
+        cell = [[NFTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                      reuseIdentifier:cellIdentifier 
+                                             newsfeed:[[self.newsFeeds objectAtIndex:indexPath.section] 
+                                                       objectAtIndex:indexPath.row]];
     }
-    
-    // set the label text to the corresponding NFItem title
-    UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    textLabel.text = nfItem.title;
-    textLabel.numberOfLines = 0;
-    textLabel.lineBreakMode = UILineBreakModeWordWrap;
-    [textLabel setFont:[UIFont boldSystemFontOfSize:TITLE_SIZE]];
-    CGSize titleSize = [nfItem.title
-                        sizeWithFont:[UIFont systemFontOfSize:TITLE_SIZE] 
-                        constrainedToSize:constraintSize 
-                        lineBreakMode:UILineBreakModeWordWrap];
-    NSLog(@"Title size: %f x %f",titleSize.width,titleSize.height);
-    [textLabel setFrame:CGRectMake(titleLeftMargin, 
-                                   CELL_PADDING,
-                                   constraintSize.width,
-                                   titleSize.height)];
-    [cell.contentView addSubview:textLabel];
-    
-    // body teaser
-    NSString *bodyTeaserText = [nfItem.body
-                                substringToIndex:MIN(TEASER_LENGTH,
-                                                     nfItem.body.length-1)];
-    bodyTeaserText = [NSString stringWithFormat:@"%@...",bodyTeaserText];
-    UILabel *bodyLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    bodyLabel.text = bodyTeaserText;
-    bodyLabel.numberOfLines = 2;
-    bodyLabel.lineBreakMode = UILineBreakModeWordWrap;
-    [bodyLabel setFont:[UIFont systemFontOfSize:TEASER_SIZE]];
-    CGSize bodyContraintSize = CGSizeMake(self.view.bounds.size.width
-                                          - 2*CELL_MARGIN
-                                          - 2*CELL_PADDING,
-                                          400);
-    CGSize bodySize = [bodyTeaserText
-                       sizeWithFont:[UIFont systemFontOfSize:TEASER_SIZE]
-                       constrainedToSize:bodyContraintSize
-                       lineBreakMode:UILineBreakModeWordWrap];
-    [bodyLabel setFrame:CGRectMake(CELL_PADDING,
-                                   CELL_PADDING + titleSize.height + CELL_ELEMENT_PADDING, 
-                                   bodyContraintSize.width,
-                                   bodySize.height)];
-    [cell.contentView addSubview:bodyLabel];
-    
+     
     return cell;
 }
 
@@ -189,7 +113,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     CGSize constraintSize;
     NFItem *nfItem = [[self.newsFeeds objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-    if ( nfItem.image ) {
+    if ( ! [[nfItem.imageURL absoluteString] isEqualToString:@""] ) {
         constraintSize = CGSizeMake(self.view.bounds.size.width 
                                     - 2*CELL_PADDING 
                                     - IMAGE_SIZE 
@@ -215,7 +139,7 @@
                                                         - 2*CELL_ELEMENT_PADDING,
                                                         400)
                            lineBreakMode:UILineBreakModeWordWrap];
-    return sizeRectTitle.height + sizeRectBody.height + CELL_ELEMENT_PADDING + 2*CELL_PADDING;
+    return MAX(sizeRectTitle.height, IMAGE_SIZE) + sizeRectBody.height + CELL_ELEMENT_PADDING + 2*CELL_PADDING;
 }
 
 /*
@@ -231,7 +155,6 @@
 
 #pragma mark -
 #pragma Other methods
-
 
 #pragma mark -
 #pragma URL connection
@@ -262,17 +185,16 @@
         NSDateFormatter *format = [[NSDateFormatter alloc] init];
         [format setDateFormat:@"MM/dd/yyyy"];
         for(NSDictionary *feed in items) {
-            UIImage *image = nil;
-            NSString *imageURLString = [NSString stringWithFormat:@"%@%@", SERVER_URL, [feed objectForKey:@"image"]];
-            if ( imageURLString.length > 0 ) {
-                image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[[NSURL alloc] initWithString:imageURLString]]];
+            NSString *imageURLString = @"";
+            if (! [[feed objectForKey:@"image"] isEqualToString:@""] ) {
+                imageURLString = [NSString stringWithFormat:@"%@%@", SERVER_URL, [feed objectForKey:@"image"]];
             }
                                             
             [self.newsFeeds addObject:[[NFItem alloc] initWithTitle:[feed objectForKey:@"title"]
                                                            subtitle:[feed objectForKey:@"subtitle"]
                                                                body:[feed objectForKey:@"body"]
                                                                date:[format dateFromString:[feed objectForKey:@"date"]]
-                                                              image:image]];
+                                                           imageURL:[NSURL URLWithString:imageURLString]]];
         }
      
         // Sort the newsfeeds by date

@@ -10,6 +10,7 @@
 #import "EmployeeViewController.h"
 #import "Employee.h"
 #import "ConnectionManager.h"
+#import "SDWebImage/UIImageView+WebCache.h"
 #import "AppDelegate.h"
 
 @implementation EmployeeListViewController
@@ -76,10 +77,11 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"UITableViewCell"];
+    static NSString *cellIdentifier = @"UITableViewCell";
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
     if ( nil == cell ) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"UITableViewCell"];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
     }
     
     // Configure the cell...
@@ -87,18 +89,22 @@
     cell.contentView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
     cell.textLabel.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
     cell.detailTextLabel.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
-    cell.imageView.image = [[self.employeeArray objectAtIndex:indexPath.row] image];
+    [cell.imageView setImageWithURL:[(Employee*)[self.employeeArray objectAtIndex:indexPath.row] imageURL]
+                   placeholderImage:[UIImage imageNamed:@"blankPerson.jpg"]];
     tableView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    Employee *employee = [self.employeeArray objectAtIndex:indexPath.row];
     EmployeeViewController *evc;
     if([[self.employeeControllers objectAtIndex:indexPath.row] isKindOfClass:[NSNull class]]) {
-        evc = [[EmployeeViewController alloc] initWithEmployee:[self.employeeArray objectAtIndex:indexPath.row]];
+        evc = [[EmployeeViewController alloc] initWithEmployee:employee];
         evc.appDelegate = self.appDelegate;
         [self.employeeControllers replaceObjectAtIndex:indexPath.row withObject:evc];
         evc.view.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+        evc.title = [NSString stringWithFormat:@"%@ %@",employee.firstName,employee.lastName];
     }
     else {
         evc = [self.employeeControllers objectAtIndex:indexPath.row];
@@ -124,15 +130,20 @@
         // employeeArray is a list of dictionaries, each containing information about an employee
         for ( NSDictionary *dict in employeeData ) {
             NSLog(@"Employee with id:%d",(int)[[dict objectForKey:@"id"] intValue]);
+            NSString *imageURLString = @"";
+            if ( ![[dict objectForKey:@"image"] isEqualToString:@""] ) {
+                imageURLString = [[NSString alloc] initWithFormat:@"%@%@",
+                                  SERVER_URL, [dict objectForKey:@"image"]];
+            }
             //TODO: cache images
             Employee *e = [[Employee alloc] initWithFirstName:[dict objectForKey:@"first_name"]
                                                      lastName:[dict objectForKey:@"last_name"]
                                                           bio:[dict objectForKey:@"bio"]
-                                                        image:[UIImage imageWithData:[NSData dataWithContentsOfURL:[[NSURL alloc] initWithString:[dict objectForKey:@"image"]]]]
+                                                     imageURL:[[NSURL alloc] initWithString:imageURLString]
                                                    dimensions:[[dict objectForKey:@"ratings"]
                                                                objectForKey:@"dimensions"]
                                                   employee_id:[[dict objectForKey:@"id"] intValue]];
-            
+            NSLog(@"Employee image:%@",e.imageURL);
             // employeeArray will hold all the employees
             [self.employeeArray addObject:e];
             
