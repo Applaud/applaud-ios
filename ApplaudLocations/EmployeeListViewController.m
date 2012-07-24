@@ -132,15 +132,20 @@
         for ( NSDictionary *dict in employeeData ) {
             NSLog(@"Employee with id:%d",(int)[[dict objectForKey:@"id"] intValue]);
             
+            NSString *imageURLString = @"";
+            if ( ![[dict objectForKey:@"image"] isEqualToString:@""] ) {
+                imageURLString = [[NSString alloc] initWithFormat:@"%@%@",
+                                  SERVER_URL, [dict objectForKey:@"image"]];
+            }
             //TODO: cache images
             Employee *e = [[Employee alloc] initWithFirstName:[dict objectForKey:@"first_name"]
                                                      lastName:[dict objectForKey:@"last_name"]
                                                           bio:[dict objectForKey:@"bio"]
-                                                     imageURL:[[NSURL alloc] initWithString:[dict objectForKey:@"image"]]
+                                                     imageURL:[[NSURL alloc] initWithString:imageURLString]
                                                    dimensions:[[dict objectForKey:@"ratings"]
                                                                objectForKey:@"dimensions"]
                                                   employee_id:[[dict objectForKey:@"id"] intValue]];
-            
+            NSLog(@"Employee image:%@",e.imageURL);
             // employeeArray will hold all the employees
             [self.employeeArray addObject:e];
             
