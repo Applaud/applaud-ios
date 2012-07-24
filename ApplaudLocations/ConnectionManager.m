@@ -37,8 +37,9 @@
         
         // Put the CSRF token into the HTTP request. Kinda important.
         [request addValue:token forHTTPHeaderField:@"X-CSRFToken"];
-
+        NSLog(@"Here, the data is....%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding ]);
         [request setHTTPBody:data];
+        NSLog(@"The url is....%@", url);
         request.HTTPMethod = requestType;
         request.URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", SERVER_URL, url]];
     }
@@ -106,9 +107,11 @@
     NSData *data = nil;
     
     if ( [requestType isEqualToString:@"POST"] ) {
+        NSLog(@"The params are....%@", params);
         data = [NSJSONSerialization dataWithJSONObject:params
                                                options:0
                                                  error:nil];
+        NSLog(@"Then the JSON object is......%@", [[NSString alloc] initWithData:data encoding: NSUTF8StringEncoding]);
     }
     else if ( [requestType isEqualToString:@"GET"] ) {
         NSString *dictAsString = [self GETStringFromDict:params];

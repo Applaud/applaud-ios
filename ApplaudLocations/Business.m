@@ -10,26 +10,27 @@
 
 @implementation Business
 @synthesize name = _name;
-@synthesize type = _type;
 @synthesize business_id = _business_id;
 @synthesize goog_id = _goog_id;
 @synthesize latitude = _latitude;
 @synthesize longitude = _longitude;
 @synthesize primaryColor = _primaryColor;
 @synthesize secondaryColor = _secondaryColor;
+@synthesize types = _types;
 
-- (id)initWithName:(NSString *)name type:(NSString *)type goog_id:(NSString *)goog_id
+- (id)initWithName:(NSString *)name goog_id:(NSString *)goog_id
           latitude:(NSNumber *) latitude longitude:(NSNumber *) longitude
-      primaryColor:(NSString *)primaryColor secondaryColor:(NSString *)secondaryColor{
+        primaryColor:(NSString *)primaryColor secondaryColor:(NSString *)secondaryColor
+        types: (NSDictionary *)types {
     NSLog(@"%@   %@", primaryColor, secondaryColor);
     if(self = [super init]) {
         _name = name;
-        _type = type;
         _goog_id = goog_id;
         _latitude = latitude;
         _longitude = longitude;
         _primaryColor = [self colorWithHex:primaryColor];
         _secondaryColor = [self colorWithHex:secondaryColor];
+        _types = types;
     }
     return self;
 }
@@ -38,7 +39,6 @@
           latitude:(NSNumber *) latitude longitude:(NSNumber *) longitude {
     if(self = [super init]) {
         _name = name;
-        _type = type;
         _business_id = bus_id;
         _latitude = latitude;
         _longitude = longitude;

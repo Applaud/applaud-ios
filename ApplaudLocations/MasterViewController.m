@@ -83,7 +83,6 @@
     // Configure the cell...
     Business *business = [locationsArray objectAtIndex:indexPath.row];
     [[cell textLabel] setText:business.name];
-    [[cell detailTextLabel] setText:business.type];
     return cell;
 }
 
@@ -97,11 +96,14 @@
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     
     NSLog(@"Checking in at business: %@", bus.description);
+    NSLog(@"Types are.....");
+
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
                           bus.latitude, @"latitude",
                           bus.longitude, @"longitude",
                           bus.goog_id, @"goog_id",
                           bus.name, @"name",
+                          bus.types, @"types",
                           nil];
 
 //    NSURL *url = [[NSURL alloc] initWithString:urlString];
@@ -118,6 +120,7 @@
                                                
                                                // Set app delegate's current business from what was returned by the server
                                                NSLog(@"Business from server: %@",bus.description);
+                                               NSLog(@"& The types are: %@",bus.types);
                                                self.appDelegate.currentBusiness = bus;
 
                                                // Listen for when network downloads have stopped.

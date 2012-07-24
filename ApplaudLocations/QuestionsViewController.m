@@ -52,7 +52,7 @@
     // Do any additional setup after loading the view from its nib.
     self.summaryText.text = self.survey.summary;
 	if(nil == _survey) {
-        [self getSurveys];
+        //[self getSurveys];
 	}
 }
 
@@ -139,10 +139,15 @@
 #pragma mark -
 #pragma Other Methods
 -(void)getSurveys {
-    NSDictionary *dict = [[NSDictionary alloc]
-                          initWithObjectsAndKeys:[NSNumber numberWithInt:self.appDelegate.currentBusiness.business_id],
-                          @"business_id",
-                          nil];
+//    NSDictionary *dict = [[NSDictionary alloc]
+//                          initWithObjectsAndKeys: self.appDelegate.currentBusiness.goog_id],
+//                          @"goog_id",
+//                          nil];
+    NSArray *keyArray = [[NSArray alloc] initWithObjects:@"goog_id", nil];
+    NSArray *valArray = [[NSArray alloc] initWithObjects:self.appDelegate.currentBusiness.goog_id, nil];
+    NSDictionary *dict = [[NSDictionary alloc] initWithObjects:valArray forKeys:keyArray];
+                            
+    
     [ConnectionManager serverRequest:@"POST"
                             withParams:dict
                                  url:SURVEY_URL

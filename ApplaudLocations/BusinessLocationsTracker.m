@@ -73,12 +73,13 @@
         NSMutableArray *businessArray = [[NSMutableArray alloc] init];
         for(NSDictionary *dict in [businesses objectForKey:@"nearby_businesses"]) {
             Business *bus = [[Business alloc] initWithName:[dict objectForKey:@"name"]
-                                                      type:[dict objectForKey:@"type"]
                                                    goog_id:[dict objectForKey:@"goog_id"]
                                                   latitude:[dict objectForKey:@"latitude"]
                                                  longitude:[dict objectForKey:@"longitude"]
                                               primaryColor:[dict objectForKey:@"primary"]
-                                            secondaryColor:[dict objectForKey:@"secondary"]];
+                                            secondaryColor:[dict objectForKey:@"secondary"]
+                                                     types:[dict objectForKey:@"types"]];
+            NSLog(@"The business_id is....%d",[[dict objectForKey:@"business_id"] intValue]);
             bus.business_id = [[dict objectForKey:@"business_id"] intValue];
             NSLog(@"Got business: %@", bus.description);
             NSLog(@"%@", [dict objectForKey:@"primary"]);
@@ -100,17 +101,7 @@
 
     // dummy businesses for debugging
     // [ConnectionManager serverRequest:@"GET" withParams:nil url:EXAMPLE_URL callback:callback];
-//    NSString *urlString = [[NSString alloc] initWithFormat:@"%@%@", SERVER_URL, WHEREAMI_URL];
-//    NSLog(@"%@", urlString);
-//    NSURL *url = [[NSURL alloc] initWithString:urlString];
-//    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
-//    NSError *e;
-//    NSData *d = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:&e];
-//    NSLog(@"data is: %@", d.description);
-//    callback(d);
-    // actual businesses
-    NSLog(@"latitude is.....%@", [getDict objectForKey:@"latitude"]);
-    NSLog(@"longitude is.....%@", [getDict objectForKey:@"longitude"]);
+
     [ConnectionManager serverRequest:@"GET" withParams:getDict url:WHEREAMI_URL callback:callback];
 }
 
