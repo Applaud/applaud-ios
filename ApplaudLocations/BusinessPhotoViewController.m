@@ -19,6 +19,7 @@
 @synthesize appDelegate = _appDelegate;
 @synthesize imagePicker = _imagePicker;
 @synthesize cameraButton = _cameraButton;
+@synthesize businessPhotos = _businessPhotos;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -29,8 +30,18 @@
             self.imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
             self.imagePicker.delegate = self;
         }
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                               selector:@selector(notificationReceived:)
+                                                   name:@"BUSINESS_SET"
+                                                 object:nil];
     }
     return self;
+}
+
+-(void)notificationReceived:(NSNotification *)notification {
+    if([notification.name isEqualToString:@"BUSINESS_SET"]) {
+        [self getPhotos];
+    }
 }
 
 - (void)viewDidLoad
@@ -89,6 +100,28 @@
 
 #pragma mark -
 #pragma Other stuff
+
+-(void)getPhotos {
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:self.appDelegate.currentBusiness.business_id], @"id", nil];
+    NSData *photoData = [ConnectionManager serverRequest:@"GET" withParams:params url:GET_PHOTO_URL];
+    [self handlePhotoData:[NSJSONSerialization JSONObjectWithData:photoData
+                                                          options:0
+                                                            error:nil]];
+}
+
+// Do stuff with the photos from the server.
+-(void)handlePhotoData:(NSDictionary *)photoData {
+    for(NSDictionary *photoDict in [photoData objectForKey:@"photos"]) {
+        BusinessPhoto *photo = [[BusinessPhoto alloc] initWithImage:nil
+                                                               tags:[photoDict objectForKey:@"tags"]
+                                                            upvotes:[[photoDict objectForKey:@"upvotes"] intValue]
+                                                          downvotes:[[photoDict objectForKey:@"downvotes"] intValue]
+                                                           business:[[photoDict objectForKey:@"business_id"] intValue]
+                                                        uploaded_by:[[photoDict objectForKey:@"uploaded_by"] intValue]
+                                                             active:[[photoDict objectForKey:@"active"] boolValue]];
+        [self.businessPhotos addObject:photo];
+    }
+}
 
 // Send an image to the server.
 -(void)postPhotoData:(UIImage *)photo {

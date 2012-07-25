@@ -110,7 +110,10 @@
                                                options:0
                                                  error:nil];
     }
-    
+    else if ( [requestType isEqualToString:@"GET"] ) {
+        NSString *dictAsString = [self GETStringFromDict:params];
+        url = [[NSString alloc] initWithFormat:@"%@%@", url,dictAsString];
+    }
     return [ConnectionManager serverRequest:requestType withData:data url:url callback:callback];
 }
 

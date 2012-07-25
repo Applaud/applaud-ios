@@ -45,6 +45,7 @@
 		6F462623158A8BDE007EA86E /* NFItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F462622158A8BDE007EA86E /* NFItem.m */; };
 		6F875EF61591594600555390 /* FirstTimeNavigatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F875EF51591594600555390 /* FirstTimeNavigatorViewController.m */; };
 		6F8C8A2B158C03DB00BB4BA0 /* Employee.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F8C8A2A158C03DB00BB4BA0 /* Employee.m */; };
+		6F9E60D915C06E37006BD49A /* BusinessPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F9E60D815C06E37006BD49A /* BusinessPhoto.m */; };
 		6FAB07A01587BF0700C9F1DF /* BusinessAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FAB079F1587BF0700C9F1DF /* BusinessAnnotation.m */; };
 		6FE182A7158E957A00FF78E7 /* GeneralFeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FE182A5158E957A00FF78E7 /* GeneralFeedbackViewController.m */; };
 		6FE182A8158E957A00FF78E7 /* GeneralFeedbackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6FE182A6158E957A00FF78E7 /* GeneralFeedbackViewController.xib */; };
@@ -114,6 +115,8 @@
 		6F875EF51591594600555390 /* FirstTimeNavigatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirstTimeNavigatorViewController.m; sourceTree = "<group>"; };
 		6F8C8A29158C03DB00BB4BA0 /* Employee.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Employee.h; sourceTree = "<group>"; };
 		6F8C8A2A158C03DB00BB4BA0 /* Employee.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Employee.m; sourceTree = "<group>"; };
+		6F9E60D715C06E37006BD49A /* BusinessPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessPhoto.h; sourceTree = "<group>"; };
+		6F9E60D815C06E37006BD49A /* BusinessPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessPhoto.m; sourceTree = "<group>"; };
 		6FAB079E1587BF0700C9F1DF /* BusinessAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessAnnotation.h; sourceTree = "<group>"; };
 		6FAB079F1587BF0700C9F1DF /* BusinessAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessAnnotation.m; sourceTree = "<group>"; };
 		6FE182A4158E957A00FF78E7 /* GeneralFeedbackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeneralFeedbackViewController.h; sourceTree = "<group>"; };
@@ -288,6 +291,8 @@
 		6F3EA47A15BE03AD006E66A8 /* Business Photos */ = {
 			isa = PBXGroup;
 			children = (
+				6F9E60D715C06E37006BD49A /* BusinessPhoto.h */,
+				6F9E60D815C06E37006BD49A /* BusinessPhoto.m */,
 				6F3EA47415BE039D006E66A8 /* BusinessPhotoViewController.h */,
 				6F3EA47515BE039D006E66A8 /* BusinessPhotoViewController.m */,
 				6F3EA47615BE039D006E66A8 /* BusinessPhotoViewController.xib */,
@@ -402,6 +407,7 @@
 				6F3EA47715BE039D006E66A8 /* BusinessPhotoViewController.m in Sources */,
 				1B12763215B89B9600980AA2 /* MasterViewController.m in Sources */,
 				1B9C3A6815BA0637000EEF1A /* SurveyAccordionCell.m in Sources */,
+				6F9E60D915C06E37006BD49A /* BusinessPhoto.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

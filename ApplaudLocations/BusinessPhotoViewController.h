@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ConnectionManager.h"
+#import "BusinessPhoto.h"
 
 @class AppDelegate;
 
@@ -16,5 +17,6 @@
 @property (nonatomic, strong) AppDelegate *appDelegate;
 @property (nonatomic, strong) UIImagePickerController *imagePicker;
 @property (weak, nonatomic) IBOutlet UIButton *cameraButton;
+@property (nonatomic, strong) NSMutableArray *businessPhotos;
 - (IBAction)cameraButtonPressed;
 @end
