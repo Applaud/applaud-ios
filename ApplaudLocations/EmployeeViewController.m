@@ -101,11 +101,11 @@
     nameTextRect.origin.y = VIEW_PADDING;
     self.nameLabel.frame = nameTextRect;
     
-    // Set up the table
-    [self.tableView setFrame:CGRectMake(self.tableView.frame.origin.x, 
-                                        self.tableView.frame.origin.y, 
-                                        self.tableView.frame.size.width,
-                                        1000)];
+//    // Set up the table
+//    [self.tableView setFrame:CGRectMake(self.tableView.frame.origin.x, 
+//                                        self.tableView.frame.origin.y, 
+//                                        self.tableView.frame.size.width,
+//                                        1000)];
     
 //    // The y-coordinate of the first rating field
 //    int dimensionStart = RATING_FIELDS_BEGIN;
@@ -165,6 +165,19 @@
 //        curr_y += RATING_FIELD_HEIGHT;
 //    }
     
+
+    // Set up the table -- the '200' on the end accounts for section headings space + other padding on the table view.
+    // By customizing headers, etc., we could get a more exact figure.
+    CGFloat tableHeight = self.employee.ratingDimensions.count * (RATING_FIELD_HEIGHT 
+                                                                  + TITLE_LABEL_HEIGHT 
+                                                                  + CELL_ELEMENT_PADDING
+                                                                  + 2*CELL_PADDING) + TITLE_LABEL_HEIGHT + 2*CELL_PADDING + 200;
+    [self.tableView setFrame:CGRectMake(0, 
+                                        self.image.frame.origin.y + self.image.frame.size.height + VIEW_ELEMENT_PADDING, 
+                                        self.view.frame.size.width, 
+                                        tableHeight)];
+    self.tableView.scrollEnabled = NO;
+    
     // Set up the 'submit' button
     self.submitButton.frame = CGRectMake(self.view.frame.size.width - 100,
                                          VIEW_PADDING 
@@ -174,11 +187,25 @@
                                          + VIEW_ELEMENT_PADDING,
                                          75,
                                          50);
-    
-    // Tell our scroll view how big its contents are, so we can scroll in it.
+
     self.scrollView.contentSize = CGSizeMake(self.view.frame.size.width,
-                                             1000.0f);
-//                                             curr_y+(2*RATING_FIELD_HEIGHT));
+                                             2*VIEW_PADDING
+                                             + IMAGE_SIZE
+                                             + VIEW_ELEMENT_PADDING
+                                             + self.tableView.frame.size.height);
+    
+//    // Tell our scroll view how big its contents are, so we can scroll in it.
+//    self.scrollView.contentSize = CGSizeMake(self.view.frame.size.width,
+//                                             VIEW_PADDING 
+//                                             + self.nameLabel.frame.size.height 
+//                                             + VIEW_ELEMENT_PADDING 
+//                                             + self.tableView.frame.size.height
+//                                             + VIEW_ELEMENT_PADDING
+//                                             + self.submitButton.frame.size.height
+//                                             + VIEW_PADDING);
+////                                             curr_y+(2*RATING_FIELD_HEIGHT));
+    
+    NSLog(@"At the end of loadViewWithImage. Number of cells in tableview: %d",[[self.tableView visibleCells] count]);
 }
 
 
