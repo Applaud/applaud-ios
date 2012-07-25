@@ -11,7 +11,9 @@
 #import "BusinessLocationsTracker.h"
 @class AppDelegate;
 
-@interface EmployeeViewController : UIViewController <UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource>
+@interface EmployeeViewController : UIViewController <UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource> {
+    BOOL bioCellExpanded;
+}
 
 @property (nonatomic, weak) AppDelegate *appDelegate;
 @property (nonatomic, strong) Employee *employee;

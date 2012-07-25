@@ -18,5 +18,7 @@
 #define CELL_ELEMENT_PADDING 5.0f   // how much space between things inside of a cell
 #define CELL_PADDING 10.0f          // how much space around border of cell, on inside
 #define TITLE_SIZE 18.0f            // font size of title labels in cells
+#define CONTENT_SIZE 12.0f          // font size of bio content, other longer text content
+#define BIO_LABEL_HEIGHT 30.0f      // Height of the "Bio" label
 
 #endif

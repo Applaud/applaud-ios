@@ -364,7 +364,6 @@
 
     // Setting up the rest of the view: survey, title, submit button
     self.survey = survey;
-    [self.questionsTable reloadData];
     [[self navigationItem] setTitle:self.survey.title];
     
     UIBarButtonItem *submitButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Submit"
@@ -384,6 +383,8 @@
     for ( int i=0; i<survey.fields.count; i++ ){ 
         [questionSelections addObject:[NSNumber numberWithBool:NO]];
     }
+    
+    [self.questionsTable reloadData];
 }
 
 /*

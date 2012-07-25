@@ -12,6 +12,7 @@
 #import "ConnectionManager.h"
 #import "SDWebImage/UIImageView+WebCache.h"
 #import "AppDelegate.h"
+#import "EmployeeBioCell.h"
 #import "EmployeeDisplayConstants.h"
 #import <QuartzCore/QuartzCore.h>
 
@@ -44,7 +45,9 @@
                         } failure:^(NSError *error) {
                             [self loadViewWithImage:[UIImage imageNamed:@"blankPerson.jpg"]];
                         }];
-   
+    
+    // Bio cell is collapsed at init
+    bioCellExpanded = NO;
 
 }
 
@@ -196,11 +199,41 @@
 #pragma mark UITableViewDelegate methods
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 110.0f;
+    switch ( indexPath.section ) {
+        case 0:
+            if ( bioCellExpanded ) {
+                CGSize bioLabelSize = [self.employee.bio sizeWithFont:[UIFont systemFontOfSize:CONTENT_SIZE]
+                                                             forWidth:self.view.bounds.size.width - 2*CELL_PADDING - 2*VIEW_PADDING
+                                                        lineBreakMode:UILineBreakModeWordWrap];
+                return 2*CELL_PADDING + CELL_ELEMENT_PADDING + bioLabelSize.height + BIO_LABEL_HEIGHT;
+            }
+            return 2*CELL_PADDING + BIO_LABEL_HEIGHT;
+            break;
+        case 1:
+            // dummy value
+            return 110.0f;
+            break;
+    }
+    return 0.0f;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {    
+    switch ( indexPath.section ) {
+        case 0:
+        {
+            EmployeeBioCell *bioCell = (EmployeeBioCell*)[self.tableView cellForRowAtIndexPath:indexPath];
+            bioCellExpanded = !bioCellExpanded;
+            
+            // Perform animations if necessary
+            [self.tableView beginUpdates];    
+            [bioCell toggleBio];
+            [self.tableView endUpdates];
+        }
+            break;
+        case 1:
+            break;
+    }
+
 }
 
 #pragma mark -
@@ -229,17 +262,19 @@
     static NSString *cellIdentifier = @"EmployeeViewCell";
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
-    if ( nil == cell ) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                      reuseIdentifier:cellIdentifier];
-        
+    if ( nil == cell ) {        
         switch ( indexPath.section ) {
             case 0:
+                cell = [[EmployeeBioCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                              reuseIdentifier:cellIdentifier
+                                                     employee:self.employee];
                 // Initialize with "Bio" title
                 cell.textLabel.text = @"Bio";
                 cell.textLabel.font = [UIFont boldSystemFontOfSize:TITLE_SIZE];
                 break;
             case 1:
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                              reuseIdentifier:cellIdentifier];
                 // Title is title of the respective rateddimension
                 cell.textLabel.text = [[self.employee.ratingDimensions objectAtIndex:indexPath.row] objectForKey:@"title"];
                 
