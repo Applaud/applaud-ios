@@ -42,13 +42,13 @@
     
     if (! self.isEditing ) {
         // Layout for "Bio" label
-        [self.textLabel setFrame:CGRectMake(CELL_PADDING, CELL_PADDING, cellContentWidth, BIO_LABEL_HEIGHT)];
+        [self.textLabel setFrame:CGRectMake(CELL_PADDING, CELL_PADDING, cellContentWidth, TITLE_LABEL_HEIGHT)];
 
         
         // Layout for bio content
         [self.bioLabel setFrame:CGRectMake(CELL_PADDING,
                                            self.textLabel.frame.origin.y
-                                           + BIO_LABEL_HEIGHT
+                                           + TITLE_LABEL_HEIGHT
                                            + CELL_ELEMENT_PADDING,
                                            cellContentWidth,
                                            [self.employee.bio sizeWithFont:[UIFont systemFontOfSize:CONTENT_SIZE]

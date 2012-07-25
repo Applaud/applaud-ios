@@ -9,7 +9,7 @@
 #ifndef ApplaudIOS_EmployeeDisplayConstants_h
 #define ApplaudIOS_EmployeeDisplayConstants_h
 
-#define RATING_FIELD_HEIGHT 70
+#define RATING_FIELD_HEIGHT 40
 #define RATING_FIELDS_BEGIN 300
 #define RATING_FIELD_SPACING 20
 #define IMAGE_SIZE 130.0f
@@ -19,6 +19,6 @@
 #define CELL_PADDING 10.0f          // how much space around border of cell, on inside
 #define TITLE_SIZE 18.0f            // font size of title labels in cells
 #define CONTENT_SIZE 12.0f          // font size of bio content, other longer text content
-#define BIO_LABEL_HEIGHT 30.0f      // Height of the "Bio" label
+#define TITLE_LABEL_HEIGHT 30.0f    // Height of a title label (e.g., textLabel in UITableViewCell)
 
 #endif

@@ -214,13 +214,12 @@
                 CGSize bioLabelSize = [self.employee.bio sizeWithFont:[UIFont systemFontOfSize:CONTENT_SIZE]
                                                     constrainedToSize:CGSizeMake(self.tableView.frame.size.width - 2*CELL_PADDING, 200)
                                                         lineBreakMode:UILineBreakModeWordWrap];
-                return 2*CELL_PADDING + CELL_ELEMENT_PADDING + bioLabelSize.height + BIO_LABEL_HEIGHT;
+                return 2*CELL_PADDING + CELL_ELEMENT_PADDING + bioLabelSize.height + TITLE_LABEL_HEIGHT;
             }
-            return 2*CELL_PADDING + BIO_LABEL_HEIGHT;
+            return 2*CELL_PADDING + TITLE_LABEL_HEIGHT;
             break;
         case 1:
-            // dummy value
-            return 110.0f;
+            return 2*CELL_PADDING + TITLE_LABEL_HEIGHT + RATING_FIELD_HEIGHT + CELL_ELEMENT_PADDING;
             break;
     }
     return 0.0f;
@@ -297,15 +296,21 @@
             case 1:
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                               reuseIdentifier:cellIdentifier];
-                // Title is title of the respective rateddimension
-                cell.textLabel.text = [[self.employee.ratingDimensions objectAtIndex:indexPath.row] objectForKey:@"title"];
+                
+                // Label for the respective rated dimension title
+                UILabel *ratedDimensionLabel = [[UILabel alloc] initWithFrame:CGRectMake(CELL_PADDING, 
+                                                                                         CELL_PADDING, 
+                                                                                         self.tableView.frame.size.width
+                                                                                         - 2*CELL_PADDING - 2*VIEW_PADDING, 
+                                                                                         TITLE_LABEL_HEIGHT)];
+                ratedDimensionLabel.text = [[self.employee.ratingDimensions objectAtIndex:indexPath.row] objectForKey:@"title"];
+                [cell.contentView addSubview:ratedDimensionLabel];
                 
                 // Add the slider
-                UISlider *slider = [[UISlider alloc] initWithFrame:CGRectMake(0, 
-                                                                              cell.textLabel.frame.size.height + CELL_ELEMENT_PADDING,
-                                                                              self.view.frame.size.width 
-                                                                              - 2*VIEW_PADDING 
-                                                                              - 2*CELL_PADDING, 
+                UISlider *slider = [[UISlider alloc] initWithFrame:CGRectMake(CELL_PADDING, 
+                                                                              CELL_PADDING + TITLE_LABEL_HEIGHT + CELL_ELEMENT_PADDING,
+                                                                              self.tableView.frame.size.width
+                                                                              - 2*CELL_PADDING - 2*VIEW_PADDING,
                                                                               RATING_FIELD_HEIGHT)];
                 [cell.contentView addSubview:slider];
                 break;
