@@ -48,7 +48,16 @@
     
     // Bio cell is collapsed at init
     bioCellExpanded = NO;
-
+    
+    // register for keyboard notifications
+    [[NSNotificationCenter defaultCenter] addObserver:self 
+                                             selector:@selector(keyboardWillShow:) 
+                                                 name:UIKeyboardWillShowNotification 
+                                               object:self.view.window];
+    [[NSNotificationCenter defaultCenter] addObserver:self 
+                                             selector:@selector(keyboardWillHide:) 
+                                                 name:UIKeyboardWillHideNotification 
+                                               object:self.view.window];
 }
 
 - (void)viewDidUnload
@@ -189,10 +198,65 @@
 }
 
 #pragma mark -
-#pragma UITextFieldDelegate methods
+#pragma mark UITextFieldDelegate methods
 -(BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return YES;
+}
+
+#pragma mark -
+#pragma mark Keyboard Handling
+
+- (void)keyboardWillHide:(NSNotification *)n
+{
+    NSDictionary* userInfo = [n userInfo];
+    
+    // get the size of the keyboard
+    CGSize keyboardSize = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    
+    
+    // resize the scrollview
+    CGRect viewFrame = self.view.frame;
+    // I'm also subtracting a constant kTabBarHeight because my UIScrollView was offset by the UITabBar so really only the portion of the keyboard that is leftover pass the UITabBar is obscuring my UIScrollView.
+    viewFrame.size.height += keyboardSize.height - NAVBAR_SIZE;
+    
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    
+    [UIView setAnimationDuration:SCROLL_LENGTH];
+    [self.view setFrame:viewFrame];
+    [UIView commitAnimations];
+    
+    keyboardIsShown = NO;
+}
+
+- (void)keyboardWillShow:(NSNotification *)n
+{
+    if (keyboardIsShown) {
+        return;
+    }
+    
+    NSDictionary* userInfo = [n userInfo];
+    
+    // get the size of the keyboard
+    CGSize keyboardSize = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    
+    // resize the noteView
+    CGRect viewFrame = self.view.frame;
+    viewFrame.size.height -= keyboardSize.height - NAVBAR_SIZE;
+    
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    
+    [UIView setAnimationDuration:SCROLL_LENGTH];
+    [self.view setFrame:viewFrame];
+    [UIView commitAnimations];
+    
+    [self.tableView scrollToRowAtIndexPath:[self.tableView indexPathForSelectedRow]
+                          atScrollPosition:UITableViewScrollPositionTop
+                                  animated:YES];
+    
+    keyboardIsShown = YES;
 }
 
 #pragma mark -
@@ -306,13 +370,28 @@
                 ratedDimensionLabel.text = [[self.employee.ratingDimensions objectAtIndex:indexPath.row] objectForKey:@"title"];
                 [cell.contentView addSubview:ratedDimensionLabel];
                 
-                // Add the slider
-                UISlider *slider = [[UISlider alloc] initWithFrame:CGRectMake(CELL_PADDING, 
-                                                                              CELL_PADDING + TITLE_LABEL_HEIGHT + CELL_ELEMENT_PADDING,
-                                                                              self.tableView.frame.size.width
-                                                                              - 2*CELL_PADDING - 2*VIEW_PADDING,
-                                                                              RATING_FIELD_HEIGHT)];
-                [cell.contentView addSubview:slider];
+                // Add correct widget for this rateddimension
+                UIView *responseWidget = nil;
+                CGRect responseFrame = CGRectMake(CELL_PADDING, 
+                                                  CELL_PADDING + TITLE_LABEL_HEIGHT + CELL_ELEMENT_PADDING,
+                                                  self.tableView.frame.size.width
+                                                  - 2*CELL_PADDING - 2*VIEW_PADDING,
+                                                  RATING_FIELD_HEIGHT);
+                if ( [[[self.employee.ratingDimensions objectAtIndex:indexPath.row] objectForKey:@"is_text"] boolValue] ) {
+                    UITextField *textField = [[UITextField alloc] initWithFrame:responseFrame];
+                    [textField setReturnKeyType:UIReturnKeyDone];
+                    [textField setDelegate:self];
+                    textField.layer.cornerRadius = 5;
+                    textField.layer.borderColor = [[[UIColor grayColor] colorWithAlphaComponent:0.5] CGColor];
+                    textField.layer.borderWidth = 2.0;
+                    
+                    responseWidget = textField;
+                } else {
+                    // Add the slider
+                    UISlider *slider = [[UISlider alloc] initWithFrame:responseFrame];
+                    [cell.contentView addSubview:slider];
+                }
+                [cell.contentView addSubview:responseWidget];
                 break;
         }
         

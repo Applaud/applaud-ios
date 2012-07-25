@@ -13,6 +13,7 @@
 
 @interface EmployeeViewController : UIViewController <UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource> {
     BOOL bioCellExpanded;
+    BOOL keyboardIsShown;
 }
 
 @property (nonatomic, weak) AppDelegate *appDelegate;

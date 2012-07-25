@@ -20,5 +20,7 @@
 #define TITLE_SIZE 18.0f            // font size of title labels in cells
 #define CONTENT_SIZE 12.0f          // font size of bio content, other longer text content
 #define TITLE_LABEL_HEIGHT 30.0f    // Height of a title label (e.g., textLabel in UITableViewCell)
+#define NAVBAR_SIZE 49.0f           // size of the navigation bar (for use in resizing view for keyboard appearance)
+#define SCROLL_LENGTH 0.17f         // # of seconds to scroll the view when keyboard appears
 
 #endif
