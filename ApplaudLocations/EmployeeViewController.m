@@ -249,6 +249,18 @@
 #pragma mark -
 #pragma mark UITableViewDataSource methods
 
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    switch ( section ) {
+        case 0:
+            return @"Profile";
+            break;
+        case 1:
+            return @"Rate me";
+            break;
+    }
+    return nil;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch ( section ) {
         case 0:
