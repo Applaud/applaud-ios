@@ -52,7 +52,7 @@
                                            + CELL_ELEMENT_PADDING,
                                            cellContentWidth,
                                            [self.employee.bio sizeWithFont:[UIFont systemFontOfSize:CONTENT_SIZE]
-                                                                  forWidth:cellContentWidth
+                                                         constrainedToSize:CGSizeMake(cellContentWidth, 200)
                                                              lineBreakMode:UILineBreakModeWordWrap].height)];
     }
 }

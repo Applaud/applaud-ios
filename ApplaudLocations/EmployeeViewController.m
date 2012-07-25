@@ -198,12 +198,21 @@
 #pragma mark -
 #pragma mark UITableViewDelegate methods
 
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    [cell.contentView.layer setMasksToBounds:YES];
+    
+    // Set shape and color
+    cell.backgroundColor = [UIColor whiteColor];
+    cell.contentView.backgroundColor = [UIColor whiteColor];
+    cell.contentView.layer.cornerRadius = 7.0f;
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     switch ( indexPath.section ) {
         case 0:
             if ( bioCellExpanded ) {
                 CGSize bioLabelSize = [self.employee.bio sizeWithFont:[UIFont systemFontOfSize:CONTENT_SIZE]
-                                                             forWidth:self.view.bounds.size.width - 2*CELL_PADDING - 2*VIEW_PADDING
+                                                    constrainedToSize:CGSizeMake(self.tableView.frame.size.width - 2*CELL_PADDING, 200)
                                                         lineBreakMode:UILineBreakModeWordWrap];
                 return 2*CELL_PADDING + CELL_ELEMENT_PADDING + bioLabelSize.height + BIO_LABEL_HEIGHT;
             }
@@ -226,8 +235,9 @@
             
             // Perform animations if necessary
             [self.tableView beginUpdates];    
-            [bioCell toggleBio];
             [self.tableView endUpdates];
+            
+            [bioCell toggleBio];
         }
             break;
         case 1:
@@ -288,6 +298,8 @@
                 [cell.contentView addSubview:slider];
                 break;
         }
+        
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
     return cell;
