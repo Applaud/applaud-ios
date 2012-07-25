@@ -204,12 +204,6 @@
     return YES;
 }
 
-//- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-//    selectedTextRect = textField.bounds;
-//    selectedTextRect = [textField convertRect:selectedTextRect toView:self.view];
-//    return YES;
-//}
-
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     selectedTextRect = textField.bounds;
     selectedTextRect = [textField convertRect:selectedTextRect toView:self.view];
@@ -222,18 +216,7 @@
 - (void)keyboardWillHide:(NSNotification *)n
 {
     [(UIScrollView*)self.view setContentOffset:previousOffset animated:YES];
-//    // resize the scrollview
-//    CGRect viewFrame = self.view.frame;
-//    // I'm also subtracting a constant kTabBarHeight because my UIScrollView was offset by the UITabBar so really only the portion of the keyboard that is leftover pass the UITabBar is obscuring my UIScrollView.
-//    viewFrame.size.height += (keyboardSize.height - NAVBAR_SIZE);
-//    
-//    [UIView beginAnimations:nil context:NULL];
-//    [UIView setAnimationBeginsFromCurrentState:YES];
-//    
-//    [UIView setAnimationDuration:SCROLL_LENGTH];
-//    [self.view setFrame:viewFrame];
-//    [UIView commitAnimations];
-    
+
     keyboardIsShown = NO;
 }
 
@@ -252,34 +235,7 @@
     offsetPoint.x = 0;
     offsetPoint.y -= keyboardSize.height - selectedTextRect.size.height - NAVBAR_SIZE;
     [(UIScrollView*)self.view setContentOffset:offsetPoint animated:YES];
-    
-//    
-//    
-//    // resize the noteView
-//    CGRect viewFrame = self.view.frame;
-//    viewFrame.size.height -= (keyboardSize.height - NAVBAR_SIZE);
-//    
-//    [UIView beginAnimations:nil context:NULL];
-//    [UIView setAnimationBeginsFromCurrentState:YES];
-//    
-//    [UIView setAnimationDuration:SCROLL_LENGTH];
-//    [self.view setFrame:viewFrame];
-//    [UIView commitAnimations];
-    
-    
-//    NSLog(@"Keyboard height was %f. View height is now %f. STR: %f",keyboardSize.height,self.view.frame.size.height,selectedTextRect.origin.y);
-    
-//    [(UIScrollView*)self.view setContentOffset:CGPointMake(0, 10*selectedTextRect.origin.y - self.view.frame.size.height) animated:YES];
-    
-//    [(UIScrollView*)self.view scrollRectToVisible:
-//     [[self.tableView cellForRowAtIndexPath:
-//       [self.tableView indexPathForSelectedRow]] bounds] 
-//                                         animated:YES];
-//    
-//    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:selectedRating inSection:1]
-//                          atScrollPosition:UITableViewScrollPositionTop
-//                                  animated:YES];
-//    
+  
     keyboardIsShown = YES;
 }
 
