@@ -12,8 +12,10 @@
 @class AppDelegate;
 
 @interface EmployeeViewController : UIViewController <UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource> {
-    BOOL bioCellExpanded;
-    BOOL keyboardIsShown;
+    BOOL bioCellExpanded;       // Whether the "bio" cell is currently expanded or not
+    BOOL keyboardIsShown;       // Whether the keyboard is currently showing
+    CGRect selectedTextRect;    // The rect of the currently active textfield
+    CGPoint previousOffset;     // The point where the scrollview was scrolled to before text editing
 }
 
 @property (nonatomic, weak) AppDelegate *appDelegate;
