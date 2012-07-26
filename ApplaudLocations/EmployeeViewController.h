@@ -16,6 +16,8 @@
     BOOL keyboardIsShown;       // Whether the keyboard is currently showing
     CGRect selectedTextRect;    // The rect of the currently active textfield
     CGPoint previousOffset;     // The point where the scrollview was scrolled to before text editing
+    
+    NSMutableArray *widgetList;
 }
 
 @property (nonatomic, weak) AppDelegate *appDelegate;

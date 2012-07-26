@@ -30,6 +30,7 @@
     if ( self = [super init] ) {
         _employee = e;
         _ratingDimensions = [[NSMutableDictionary alloc] init];
+        widgetList = [[NSMutableArray alloc] init];
     }
     
     return self;
@@ -353,7 +354,6 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellIdentifier = @"EmployeeViewCell";
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    static int ratingCount = 0;
     
     if ( nil == cell ) {        
         switch ( indexPath.section ) {
@@ -385,7 +385,7 @@
                                                   self.tableView.frame.size.width
                                                   - 2*CELL_PADDING - 2*VIEW_PADDING,
                                                   RATING_FIELD_HEIGHT);
-                responseWidget.tag = ratingCount++;
+                
                 if ( [[[self.employee.ratingDimensions objectAtIndex:indexPath.row] objectForKey:@"is_text"] boolValue] ) {
                     UITextField *textField = [[UITextField alloc] initWithFrame:responseFrame];
                     [textField setReturnKeyType:UIReturnKeyDone];
@@ -398,9 +398,15 @@
                 } else {
                     // Add the slider
                     UISlider *slider = [[UISlider alloc] initWithFrame:responseFrame];
+                    responseWidget = slider;
                     [cell.contentView addSubview:slider];
                 }
+                // Set the tag of the widget based on the ID of the RatedDimension
+                responseWidget.tag = [[[self.employee.ratingDimensions objectAtIndex:indexPath.row] objectForKey:@"id"] intValue];
+                [widgetList addObject:responseWidget];
+
                 [cell.contentView addSubview:responseWidget];
+
                 break;
         }
         
@@ -414,38 +420,48 @@
 #pragma mark IBActions
 
 - (IBAction)submitButtonPressed:(UIButton *)sender {
+    // Basic employee information: first name, last name, id
     NSMutableDictionary *em = [[NSMutableDictionary alloc] init];
     [em setObject:self.employee.firstName forKey:@"first_name"];
     [em setObject:self.employee.lastName forKey:@"last_name"];
     [em setObject:[NSNumber numberWithInt: self.employee.employee_id] forKey:@"id"];
+    
+    // Build dictionary for ratings
     NSMutableDictionary *ratings = [[NSMutableDictionary alloc] init];
-    for( UIView *view in self.view.subviews){
+    for ( UIView *view in widgetList ) {
         if([view isKindOfClass:[UISlider class]]){
             UISlider *slider = (UISlider *)view;
             [ratings setObject:[NSNumber numberWithFloat:slider.value]
-                        forKey:[[[self.employee.ratingDimensions objectAtIndex:slider.tag] objectForKey:@"id"] description]];
+                        forKey:[[NSNumber numberWithInt:slider.tag] description]];
         }
         else if([view isKindOfClass:[UITextField class]]) {
             UITextField *field = (UITextField *)view;
             [ratings setObject:field.text
-                        forKey:[[[self.employee.ratingDimensions objectAtIndex:field.tag] objectForKey:@"id"] description]];
+                        forKey:[[NSNumber numberWithInt:field.tag] description]];
         }
     }
+    
+    // Build the final dictionary to send to the server in JSON
     NSMutableDictionary *ret = [[NSMutableDictionary alloc] init];
     [ret setObject:em forKey:@"employee"];
     [ret setObject:ratings forKey:@"ratings"];
+    
+    // Send request to the server
     [ConnectionManager serverRequest:@"POST" withParams:ret url:EVALUATE_URL callback:nil];
+   
+    // Thank the user
     [[[UIAlertView alloc] initWithTitle:@"Thanks!"
                                 message:@"We appreciate your feedback."
                                delegate:nil
                       cancelButtonTitle:nil
                       otherButtonTitles:@"OK", nil] show];
-    NSLog(@"%@", self.parentViewController);
+    
+    // Switch to another part of the app
     [(UITabBarController *)self.appDelegate.window.rootViewController setSelectedIndex:4];
     UINavigationController *parent = (UINavigationController *)self.parentViewController;
     [parent popViewControllerAnimated:NO];
     EmployeeListViewController *elvc = [parent.viewControllers objectAtIndex:0];
-    //    [elvc.employeeControllers replaceObjectAtIndex:[[elvc.tableView indexPathForSelectedRow] row]
+    // Are we nulling out the employee view here???
     [elvc.employeeControllers replaceObjectAtIndex:[[elvc.tableView indexPathForSelectedRow] row] withObject:[[NSNull alloc] init]];
 }
 
