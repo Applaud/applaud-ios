@@ -101,78 +101,13 @@
     nameTextRect.origin.x = VIEW_PADDING + self.image.frame.size.width + VIEW_ELEMENT_PADDING;
     nameTextRect.origin.y = VIEW_PADDING;
     self.nameLabel.frame = nameTextRect;
-    
-//    // Set up the table
-//    [self.tableView setFrame:CGRectMake(self.tableView.frame.origin.x, 
-//                                        self.tableView.frame.origin.y, 
-//                                        self.tableView.frame.size.width,
-//                                        1000)];
-    
-//    // The y-coordinate of the first rating field
-//    int dimensionStart = RATING_FIELDS_BEGIN;
-//    if ( self.employee.bio != (id)[NSNull null] && self.employee.bio.length > 0 ) {
-//        [self.bioField setText:self.employee.bio];
-//    }
-//    else {
-//        int spaceGained = bioField.bounds.size.height + bioLabel.bounds.size.height;
-//        [self.bioField removeFromSuperview];
-//        [self.bioLabel removeFromSuperview];
-//        dimensionStart -= spaceGained;
-//    }
-//    
-//    // Keeps track of where we're putting labels/sliders
-//    int curr_y = dimensionStart;
-//    // i will be used as a tag for UISliders, so we can identify which one is which later.
-//    int i = 0;
-//    // Parse all of the rating dimensions
-//    for ( NSDictionary *dimension_dict in self.employee.ratingDimensions ) {
-//        NSString *dimension = [dimension_dict objectForKey:@"title"];
-//        // Create a label
-//        UILabel *dimensionLabel = [[UILabel alloc] 
-//                                   initWithFrame:CGRectMake(RATING_FIELD_SPACING,
-//                                                            curr_y,
-//                                                            self.view.frame.size.width-(2*RATING_FIELD_SPACING),
-//                                                            RATING_FIELD_HEIGHT/2)];
-//        [dimensionLabel setText:dimension];
-//        dimensionLabel.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
-//        [self.view addSubview:dimensionLabel];
-//        if([[dimension_dict objectForKey:@"is_text"] boolValue]) {
-//            UITextField *dimensionText = [[UITextField alloc]
-//                                          initWithFrame:CGRectMake(RATING_FIELD_SPACING,
-//                                                                   curr_y + 30,
-//                                                                   self.view.frame.size.width-(2*RATING_FIELD_SPACING),
-//                                                                   RATING_FIELD_HEIGHT/2)];
-//            dimensionText.returnKeyType = UIReturnKeyDone;
-//            dimensionText.delegate = self;
-//            dimensionText.borderStyle = UITextBorderStyleRoundedRect;
-//            dimensionText.tag = i++;
-//            [self.ratingDimensions setObject:dimension forKey:[NSNumber numberWithInt:dimensionText.tag]];
-//            [self.view addSubview:dimensionText];
-//        }
-//        else {
-//            UISlider *dimensionSlider = [[UISlider alloc] 
-//                                         initWithFrame:CGRectMake(RATING_FIELD_SPACING, 
-//                                                                  curr_y + 30,
-//                                                                  self.view.frame.size.width-(2*RATING_FIELD_SPACING),
-//                                                                  RATING_FIELD_HEIGHT)];
-//            curr_y += 20;
-//            [dimensionSlider setMinimumValue:0.0f];
-//            [dimensionSlider setMaximumValue:1.0f];
-//            dimensionSlider.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
-//            dimensionSlider.tag = i++;
-//            [self.ratingDimensions setObject:dimension forKey:[NSNumber numberWithInt:dimensionSlider.tag]]; // NSNumbers let us put an int into the dictionary
-//            [self.view addSubview:dimensionSlider];
-//        }
-//        curr_y += RATING_FIELD_HEIGHT;
-//    }
-    
 
     // Set up the table -- the '200' on the end accounts for section headings space + other padding on the table view.
     // By customizing headers, etc., we could get a more exact figure.
     CGFloat tableHeight = self.employee.ratingDimensions.count * (RATING_FIELD_HEIGHT 
                                                                   + TITLE_LABEL_HEIGHT 
                                                                   + CELL_ELEMENT_PADDING
-                                                                  + 2*CELL_PADDING) + TITLE_LABEL_HEIGHT + 2*CELL_PADDING + 200;
+                                                                  + 2*CELL_PADDING) + TITLE_LABEL_HEIGHT + 2*CELL_PADDING + 230;
     [self.tableView setFrame:CGRectMake(0, 
                                         self.image.frame.origin.y + self.image.frame.size.height + VIEW_ELEMENT_PADDING, 
                                         self.view.frame.size.width, 
@@ -180,33 +115,27 @@
     self.tableView.scrollEnabled = NO;
     
     // Set up the 'submit' button
-    self.submitButton.frame = CGRectMake(self.view.frame.size.width - 100,
+    self.submitButton.frame = CGRectMake(VIEW_PADDING,
                                          VIEW_PADDING 
                                          + self.nameLabel.frame.size.height 
                                          + VIEW_ELEMENT_PADDING 
                                          + self.tableView.frame.size.height
                                          + VIEW_ELEMENT_PADDING,
-                                         75,
+                                         self.view.frame.size.width - 2*VIEW_PADDING,
                                          50);
-
+    // Make a submit button on the navigation bar as well
+    UIBarButtonItem *submitItem = [[UIBarButtonItem alloc] initWithTitle:@"Submit"
+                                                                   style:UIBarButtonItemStyleBordered
+                                                                  target:self
+                                                                  action:@selector(submit)];
+    [[self navigationItem] setRightBarButtonItem:submitItem];
+    
+    // Set up the scrollable area for the scrollview
     self.scrollView.contentSize = CGSizeMake(self.view.frame.size.width,
                                              2*VIEW_PADDING
                                              + IMAGE_SIZE
                                              + VIEW_ELEMENT_PADDING
                                              + self.tableView.frame.size.height);
-    
-//    // Tell our scroll view how big its contents are, so we can scroll in it.
-//    self.scrollView.contentSize = CGSizeMake(self.view.frame.size.width,
-//                                             VIEW_PADDING 
-//                                             + self.nameLabel.frame.size.height 
-//                                             + VIEW_ELEMENT_PADDING 
-//                                             + self.tableView.frame.size.height
-//                                             + VIEW_ELEMENT_PADDING
-//                                             + self.submitButton.frame.size.height
-//                                             + VIEW_PADDING);
-////                                             curr_y+(2*RATING_FIELD_HEIGHT));
-    
-    NSLog(@"At the end of loadViewWithImage. Number of cells in tableview: %d",[[self.tableView visibleCells] count]);
 }
 
 
@@ -420,6 +349,10 @@
 #pragma mark IBActions
 
 - (IBAction)submitButtonPressed:(UIButton *)sender {
+    [self submit];
+}
+
+- (void)submit {
     // Basic employee information: first name, last name, id
     NSMutableDictionary *em = [[NSMutableDictionary alloc] init];
     [em setObject:self.employee.firstName forKey:@"first_name"];
@@ -448,7 +381,7 @@
     
     // Send request to the server
     [ConnectionManager serverRequest:@"POST" withParams:ret url:EVALUATE_URL callback:nil];
-   
+    
     // Thank the user
     [[[UIAlertView alloc] initWithTitle:@"Thanks!"
                                 message:@"We appreciate your feedback."
