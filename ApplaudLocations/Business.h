@@ -18,8 +18,12 @@
 @property (nonatomic, strong) UIColor *secondaryColor;
 @property (nonatomic, strong) NSDictionary *types;
 
--(id) initWithName:(NSString *)name goog_id:(NSString *)goog_id
-          latitude:(NSNumber *) latitude longitude:(NSNumber *) longitude
-      primaryColor:(NSString *)primaryColor secondaryColor:(NSString *)secondaryColor types:(NSDictionary *) types;
+-(id) initWithName:(NSString *)name
+           goog_id:(NSString *)goog_id
+          latitude:(NSNumber *) latitude
+         longitude:(NSNumber *) longitude
+      primaryColor:(NSString *)primaryColor
+    secondaryColor:(NSString *)secondaryColor
+             types:(NSDictionary *) types;
 
 @end

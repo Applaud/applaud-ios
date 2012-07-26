@@ -120,13 +120,15 @@
                                 // Set app delegate's current business from what was returned by the server
                                 NSLog(@"Business from server: %@",bus.description);
                                 NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:dat options:0 error:nil];
-                                self.appDelegate.currentBusiness = [[Business alloc] initWithName:[dict objectForKey:@"name"]
-                                                                                                          goog_id:[dict objectForKey:@"goog_id"]
-                                                                                                         latitude:[dict objectForKey:@"latitude"]
-                                                                                                        longitude:[dict objectForKey:@"longitude"]
-                                                                                                     primaryColor:[dict objectForKey:@"primary"]
-                                                                                                   secondaryColor:[dict objectForKey:@"secondary"]
-                                                                                                            types:[dict objectForKey:@"types"]];
+                                Business *business = [[Business alloc] initWithName:[dict objectForKey:@"name"]
+                                                                            goog_id:[dict objectForKey:@"goog_id"]
+                                                                           latitude:[dict objectForKey:@"latitude"]
+                                                                          longitude:[dict objectForKey:@"longitude"]
+                                                                       primaryColor:[dict objectForKey:@"primary"]
+                                                                     secondaryColor:[dict objectForKey:@"secondary"]
+                                                                              types:[dict objectForKey:@"types"]];
+                                [business setBusiness_id:[dict[@"business_id"] intValue]];
+                                self.appDelegate.currentBusiness = business;
 
                                 NSLog(@"The current business primary is: %@",bus.primaryColor);
                                 

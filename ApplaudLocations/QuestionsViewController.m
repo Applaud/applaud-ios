@@ -314,8 +314,8 @@
 //                          initWithObjectsAndKeys: self.appDelegate.currentBusiness.goog_id],
 //                          @"goog_id",
 //                          nil];
-    NSArray *keyArray = [[NSArray alloc] initWithObjects:@"goog_id", nil];
-    NSArray *valArray = [[NSArray alloc] initWithObjects:self.appDelegate.currentBusiness.goog_id, nil];
+    NSArray *keyArray = [[NSArray alloc] initWithObjects:@"business_id", nil];
+    NSArray *valArray = [[NSArray alloc] initWithObjects:@(self.appDelegate.currentBusiness.business_id), nil];
     NSDictionary *dict = [[NSDictionary alloc] initWithObjects:valArray forKeys:keyArray];
                             
     

@@ -161,8 +161,8 @@
  * this is called when we load up the news feed is selected
  */
 - (void) getNewsFeeds {
-    NSArray *keyArray = [[NSArray alloc] initWithObjects:@"goog_id", nil];
-    NSArray *valArray = [[NSArray alloc] initWithObjects:self.appDelegate.currentBusiness.goog_id, nil];
+    NSArray *keyArray = [[NSArray alloc] initWithObjects:@"business_id", nil];
+    NSArray *valArray = [[NSArray alloc] initWithObjects:@(self.appDelegate.currentBusiness.business_id), nil];
     NSDictionary *dict = [[NSDictionary alloc] initWithObjects:valArray forKeys:keyArray];
 
     NSError *error = nil;
