@@ -354,6 +354,11 @@
     UISlider *slider = (UISlider*)sender;
     UILabel *valueLabel = (UILabel*)[self.view viewWithTag:-slider.tag];
     valueLabel.text = [NSString stringWithFormat:@"%1.2f",slider.value*5.0];
+    
+    // Change text color
+//    slider.backgroundColor = [UIColor colorWithHue:slider.value/3.0f saturation:1.0f brightness:1.0f alpha:1.0f];
+    valueLabel.textColor = [UIColor colorWithHue:slider.value/3.0f saturation:1.0f brightness:0.6f alpha:1.0f];
+
 }
 
 - (void) submitButtonPressed:(UIButton *)sender {
