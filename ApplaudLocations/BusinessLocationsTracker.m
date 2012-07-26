@@ -76,9 +76,12 @@
                                                    goog_id:[dict objectForKey:@"goog_id"]
                                                   latitude:[dict objectForKey:@"latitude"]
                                                  longitude:[dict objectForKey:@"longitude"]
-                                              primaryColor:[dict objectForKey:@"primary"]
-                                            secondaryColor:[dict objectForKey:@"secondary"]
+                                              primaryColor:nil
+                                            secondaryColor: nil
                                                      types:[dict objectForKey:@"types"]];
+            NSLog(@"The primary color is.....%@",[dict objectForKey:@"primary"]);
+            NSLog(@"The primary secondary is.....%@",[dict objectForKey:@"secondary"]);
+            
             NSLog(@"The business_id is....%d",[[dict objectForKey:@"business_id"] intValue]);
             bus.business_id = [[dict objectForKey:@"business_id"] intValue];
             NSLog(@"Got business: %@", bus.description);

@@ -164,17 +164,18 @@
  * this is called when we load up the news feed is selected
  */
 - (void) getNewsFeeds {
-    NSDictionary *dict = [[NSDictionary alloc]
-                          initWithObjectsAndKeys:[NSNumber numberWithInt:self.appDelegate.currentBusiness.business_id],
-                          @"business_id", nil];
+    NSArray *keyArray = [[NSArray alloc] initWithObjects:@"goog_id", nil];
+    NSArray *valArray = [[NSArray alloc] initWithObjects:self.appDelegate.currentBusiness.goog_id, nil];
+    NSDictionary *dict = [[NSDictionary alloc] initWithObjects:valArray forKeys:keyArray];
+
     NSError *error = nil;
-    NSData *data = [NSJSONSerialization dataWithJSONObject:dict
-                                                   options:0
-                                                     error:&error];
+//    NSData *data = [NSJSONSerialization dataWithJSONObject:dict
+//                                                   options:0
+//                                                     error:&error];
     if(error) {
         NSLog(@"%@", error);
     }
-    [ConnectionManager serverRequest:@"POST" withData:data url:NEWSFEED_URL callback:^(NSData *data) {
+    [ConnectionManager serverRequest:@"POST" withParams:dict url:NEWSFEED_URL callback:^(NSData *data) {
         NSLog(@"Newsfeeds: %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
         NSError *e;
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data

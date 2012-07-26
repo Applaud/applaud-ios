@@ -42,6 +42,10 @@
         questionLabel.lineBreakMode = UILineBreakModeWordWrap;
         questionLabel.font = [UIFont boldSystemFontOfSize:TITLE_SIZE];
         
+        if( self.field.type == RADIO ){
+            self.field.type = TEXTAREA;
+        }
+        
         // ...and then the question widgets
         questionWidgets = [[NSMutableArray alloc] init];
         switch ( [field type] ) {
@@ -118,7 +122,7 @@
                                     sizeWithFont:[UIFont boldSystemFontOfSize:TITLE_SIZE]
                                     constrainedToSize:CGSizeMake(contentRect.size.width - 2*CELL_PADDING,400)
                                     lineBreakMode:UILineBreakModeWordWrap];
-        
+
         // Set the contracted height based off of just the question label
         _contractedHeight = questionLabelSize.height + 2*CELL_PADDING + 2*CELL_ELEMENT_PADDING;
         
@@ -130,6 +134,8 @@
         
         // The baseline height of an expanded cell. This will be adjusted in each case of the following switch statement.
         _expandedHeight = questionLabelSize.height + 2*CELL_ELEMENT_PADDING + 2*CELL_PADDING;
+        
+        
         
         // Question widget
         switch ( self.field.type ) {

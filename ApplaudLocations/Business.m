@@ -35,22 +35,16 @@
     return self;
 }
 
-- (id)initWithName:(NSString *)name type:(NSString *)type business_id:(int)bus_id
-          latitude:(NSNumber *) latitude longitude:(NSNumber *) longitude {
-    if(self = [super init]) {
-        _name = name;
-        _business_id = bus_id;
-        _latitude = latitude;
-        _longitude = longitude;
-    }
-    return self;
-}
 
 /*
  * Convert a hex string to a UIColor *. The string should be in the format
  * "#[0-9a-f]{6}".
  */
 - (UIColor *)colorWithHex:(NSString *)hexString {
+    if(!hexString){
+        return nil;
+    }
+    
     NSString *red = [hexString substringWithRange:NSMakeRange(1, 2)];
     NSString *green = [hexString substringWithRange:NSMakeRange(3, 2)];
     NSString *blue = [hexString substringWithRange:NSMakeRange(5, 2)];

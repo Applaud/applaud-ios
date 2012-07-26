@@ -22,6 +22,4 @@
           latitude:(NSNumber *) latitude longitude:(NSNumber *) longitude
       primaryColor:(NSString *)primaryColor secondaryColor:(NSString *)secondaryColor types:(NSDictionary *) types;
 
--(id) initWithName:(NSString *)name type:(NSString *)type business_id:(int)bus_id
-          latitude:(NSNumber *) latitude longitude:(NSNumber *) longitude;
 @end
