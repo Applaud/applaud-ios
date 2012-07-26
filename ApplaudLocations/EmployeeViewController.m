@@ -147,11 +147,11 @@
     CGFloat tableHeight = self.employee.ratingDimensions.count * (RATING_FIELD_HEIGHT 
                                                                   + TITLE_LABEL_HEIGHT 
                                                                   + CELL_ELEMENT_PADDING
-                                                                  + 2*CELL_PADDING) + 2 * CELL_PADDING + TITLE_LABEL_HEIGHT + CELL_GAP + 30;
+                                                                  + 2*CELL_PADDING) + 2 * CELL_PADDING + TITLE_LABEL_HEIGHT + CELL_GAP + 20;
 
     NSLog(@"Profile view: %f at origin and %f for height", self.profileView.frame.origin.y, self.profileView.frame.size.height);
     [self.tableView setFrame:CGRectMake(0, 
-                                        self.profileView.frame.origin.y + self.profileView.frame.size.height - CELL_GAP,
+                                        self.profileView.frame.origin.y + self.profileView.frame.size.height - CELL_GAP - 15,
                                         self.view.frame.size.width, 
                                         tableHeight)];
     self.tableView.scrollEnabled = NO;
@@ -170,11 +170,9 @@
     
     // Set up the scrollable area for the scrollview
     self.scrollView.contentSize = CGSizeMake(self.view.frame.size.width,
-                                             self.profileView.frame.size.height
-                                             + self.tableView.frame.size.height
+                                             self.submitButton.frame.origin.y
                                              + self.submitButton.frame.size.height
-                                             + 2*VIEW_ELEMENT_PADDING
-                                             + 2*VIEW_PADDING);
+                                             + VIEW_PADDING);
 }
 
 
@@ -249,7 +247,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if ( indexPath.row == 0 )
-        return TITLE_LABEL_HEIGHT + 2*CELL_PADDING + 70;
+        return TITLE_LABEL_HEIGHT + 2*CELL_PADDING + CELL_GAP;
     // Calculate other heights
     return 2*CELL_PADDING + TITLE_LABEL_HEIGHT + RATING_FIELD_HEIGHT + CELL_ELEMENT_PADDING;
 }
