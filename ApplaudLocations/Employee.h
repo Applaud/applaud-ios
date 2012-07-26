@@ -14,8 +14,15 @@
 @property (nonatomic, copy) NSString *bio;
 @property (nonatomic, strong) NSURL *imageURL;
 @property (nonatomic, strong) NSArray *ratingDimensions;    // What dimensions the employee can be rated on
+@property (nonatomic, strong) NSString *ratingProfileTitle;
 @property (nonatomic) int employee_id;
 
-- (id) initWithFirstName:(NSString *)firstname lastName:(NSString *)lastname bio:(NSString *)bio imageURL:(NSURL *)imageURL dimensions:(NSArray *)dims employee_id:(int) employee_id;
+- (id) initWithFirstName:(NSString *)firstname
+                lastName:(NSString *)lastname
+                     bio:(NSString *)bio
+                imageURL:(NSURL *)imageURL
+            profileTitle:(NSString*)profileTitle
+              dimensions:(NSArray *)dims
+             employee_id:(int) employee_id;
 
 @end

@@ -21,7 +21,7 @@
 @synthesize submitButton;
 @synthesize employee = _employee;
 @synthesize scrollView = _scrollView;
-@synthesize image, nameLabel;
+@synthesize image, nameLabel, titleLabel;
 @synthesize tableView = _tableView;
 @synthesize ratingDimensions = _ratingDimensions;
 
@@ -101,6 +101,13 @@
     nameTextRect.origin.x = VIEW_PADDING + self.image.frame.size.width + VIEW_ELEMENT_PADDING;
     nameTextRect.origin.y = VIEW_PADDING;
     self.nameLabel.frame = nameTextRect;
+    
+    // Set up the employee's title label
+    [self.titleLabel setText:self.employee.ratingProfileTitle];
+    CGRect titleTextRect = self.titleLabel.frame;
+    titleTextRect.origin.x = VIEW_PADDING + self.image.frame.size.width + VIEW_ELEMENT_PADDING;
+    titleTextRect.origin.y = nameTextRect.origin.y + nameTextRect.size.height + VIEW_ELEMENT_PADDING;
+    self.titleLabel.frame = titleTextRect;
 
     // Set up the table -- the '200' on the end accounts for section headings space + other padding on the table view.
     // By customizing headers, etc., we could get a more exact figure.

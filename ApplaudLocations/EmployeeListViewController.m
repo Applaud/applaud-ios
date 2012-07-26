@@ -142,6 +142,8 @@
                                                      lastName:[dict objectForKey:@"last_name"]
                                                           bio:[dict objectForKey:@"bio"]
                                                      imageURL:[[NSURL alloc] initWithString:imageURLString]
+                                                 profileTitle:[[dict objectForKey:@"ratings"]
+                                                               objectForKey:@"rating_title"]
                                                    dimensions:[[dict objectForKey:@"ratings"]
                                                                objectForKey:@"dimensions"]
                                                   employee_id:[[dict objectForKey:@"id"] intValue]];

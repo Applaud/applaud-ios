@@ -12,7 +12,7 @@
 #define RATING_FIELD_HEIGHT 40
 #define RATING_FIELDS_BEGIN 300
 #define RATING_FIELD_SPACING 20
-#define IMAGE_SIZE 130.0f
+#define IMAGE_SIZE 80.0f
 #define VIEW_PADDING 10.0f
 #define VIEW_ELEMENT_PADDING 5.0f   // how much space between things inside of the view
 #define CELL_ELEMENT_PADDING 5.0f   // how much space between things inside of a cell
