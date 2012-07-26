@@ -103,6 +103,8 @@
 
 -(void)getPhotos {
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:self.appDelegate.currentBusiness.business_id], @"id", nil];
+    NSDictionary *foo = @{@"id": @(self.appDelegate.currentBusiness.business_id)};
+    NSLog(@"%@", foo[@"id"]);
     NSData *photoData = [ConnectionManager serverRequest:@"GET" withParams:params url:GET_PHOTO_URL];
     [self handlePhotoData:[NSJSONSerialization JSONObjectWithData:photoData
                                                           options:0
