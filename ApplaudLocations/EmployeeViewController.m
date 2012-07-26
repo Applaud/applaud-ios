@@ -134,7 +134,9 @@
     }
     
     // Set up the profile view. This contains the name, title, bio, biolabel as subviews
-    self.profileView.frame = CGRectMake(0, 0, self.view.frame.size.width, bioTextRect.origin.y + bioTextRect.size.height+30);
+    self.profileView.frame = CGRectMake(0, 0,
+                                        self.view.frame.size.width,
+                                        bioTextRect.origin.y + bioTextRect.size.height+VIEW_ELEMENT_PADDING);
     // Some nice visual FX for the profile view
     self.profileView.layer.shadowRadius = 5.0f;
     self.profileView.layer.shadowOpacity = 0.2f;
@@ -246,9 +248,8 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Empty row at the top is 100px
     if ( indexPath.row == 0 )
-        return TITLE_LABEL_HEIGHT + 2*CELL_PADDING + CELL_GAP;
+        return TITLE_LABEL_HEIGHT + 2*CELL_PADDING + 70;
     // Calculate other heights
     return 2*CELL_PADDING + TITLE_LABEL_HEIGHT + RATING_FIELD_HEIGHT + CELL_ELEMENT_PADDING;
 }
@@ -277,6 +278,7 @@
     if ( nil == cell ) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                       reuseIdentifier:cellIdentifier];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         // Blank cell at the top of the page
         if ( indexPath.row == 0 ) {
@@ -325,8 +327,6 @@
         [widgetList addObject:responseWidget];
         
         [cell.contentView addSubview:responseWidget];
-        
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
     return cell;
