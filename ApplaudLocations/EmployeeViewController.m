@@ -291,8 +291,8 @@
         // Label for the respective rated dimension title
         UILabel *ratedDimensionLabel = [[UILabel alloc] initWithFrame:CGRectMake(CELL_PADDING,
                                                                                  CELL_PADDING,
-                                                                                 self.tableView.frame.size.width
-                                                                                 - 2*CELL_PADDING - 2*VIEW_PADDING,
+                                                                                 self.tableView.frame.size.width/2
+                                                                                 - CELL_PADDING - VIEW_PADDING,
                                                                                  TITLE_LABEL_HEIGHT)];
         ratedDimensionLabel.text = [[self.employee.ratingDimensions objectAtIndex:indexPath.row-1] objectForKey:@"title"];
         [cell.contentView addSubview:ratedDimensionLabel];
@@ -317,8 +317,21 @@
         } else {
             // Add the slider
             UISlider *slider = [[UISlider alloc] initWithFrame:responseFrame];
+            [slider addTarget:self action:@selector(sliderValueChanged:)
+               forControlEvents:UIControlEventValueChanged];
             responseWidget = slider;
+            
+            // Add a label to show value of the slider
+            UILabel *sliderValue = [[UILabel alloc] initWithFrame:CGRectMake(self.tableView.frame.size.width - 100 - CELL_PADDING,
+                                                                             CELL_PADDING,
+                                                                             80,
+                                                                             TITLE_LABEL_HEIGHT)];
+            sliderValue.textAlignment = UITextAlignmentRight;
+            // Slider value label is opposite of response widget's tag.
+            sliderValue.tag = -[[[self.employee.ratingDimensions objectAtIndex:indexPath.row-1] objectForKey:@"id"] intValue];
+            sliderValue.text = @"0.00";
             [cell.contentView addSubview:slider];
+            [cell.contentView addSubview:sliderValue];
         }
         // Set the tag of the widget based on the ID of the RatedDimension
         responseWidget.tag = [[[self.employee.ratingDimensions objectAtIndex:indexPath.row-1] objectForKey:@"id"] intValue];
@@ -333,7 +346,17 @@
 #pragma mark -
 #pragma mark IBActions
 
-- (IBAction)submitButtonPressed:(UIButton *)sender {
+/*
+ * This gets when we get a notification.
+ */
+- (IBAction)sliderValueChanged:(id)sender {
+    // Set value on corresponding label
+    UISlider *slider = (UISlider*)sender;
+    UILabel *valueLabel = (UILabel*)[self.view viewWithTag:-slider.tag];
+    valueLabel.text = [NSString stringWithFormat:@"%1.2f",slider.value*5.0];
+}
+
+- (void) submitButtonPressed:(UIButton *)sender {
     [self submit];
 }
 
