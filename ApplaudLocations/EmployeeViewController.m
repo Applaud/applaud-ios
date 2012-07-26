@@ -21,7 +21,7 @@
 @synthesize submitButton;
 @synthesize employee = _employee;
 @synthesize scrollView = _scrollView;
-@synthesize image, nameLabel, titleLabel;
+@synthesize image, nameLabel, titleLabel, bioContentLabel, bioLabel;
 @synthesize tableView = _tableView;
 @synthesize ratingDimensions = _ratingDimensions;
 
@@ -108,15 +108,39 @@
     titleTextRect.origin.x = VIEW_PADDING + self.image.frame.size.width + VIEW_ELEMENT_PADDING;
     titleTextRect.origin.y = nameTextRect.origin.y + nameTextRect.size.height + VIEW_ELEMENT_PADDING;
     self.titleLabel.frame = titleTextRect;
+    
+    // Set up bio labels
+    CGRect bioTextRect;
+    if ( self.employee.bio.length == 0 ) {
+        [self.bioLabel setHidden:YES];
+        bioTextRect = titleTextRect;
+    } else {
+        // Label "Bio:"
+        CGRect bioLabelRect = self.bioLabel.frame;
+        bioLabelRect.origin.x = VIEW_PADDING + self.image.frame.size.width + VIEW_ELEMENT_PADDING;
+        bioLabelRect.origin.y = imageRect.origin.y + imageRect.size.height - BIO_LABEL_HEIGHT;
+        self.bioLabel.frame = bioLabelRect;
+        
+        // Bio content label
+        [self.bioContentLabel setText:self.employee.bio];
+        self.bioContentLabel.lineBreakMode = UILineBreakModeWordWrap;
+        self.bioContentLabel.numberOfLines = 0;
+        [self.bioContentLabel setFont:[UIFont systemFontOfSize:BIO_SIZE]];
+        [self.bioContentLabel sizeToFit];
+        bioTextRect = self.bioContentLabel.frame;
+        bioTextRect.origin.x = VIEW_PADDING;
+        bioTextRect.origin.y = imageRect.origin.y + imageRect.size.height + VIEW_ELEMENT_PADDING;
+        self.bioContentLabel.frame = bioTextRect;
+    }
 
-    // Set up the table -- the '200' on the end accounts for section headings space + other padding on the table view.
+    // Set up the table -- the '110' on the end accounts for section headings space + other padding on the table view.
     // By customizing headers, etc., we could get a more exact figure.
     CGFloat tableHeight = self.employee.ratingDimensions.count * (RATING_FIELD_HEIGHT 
                                                                   + TITLE_LABEL_HEIGHT 
                                                                   + CELL_ELEMENT_PADDING
-                                                                  + 2*CELL_PADDING) + TITLE_LABEL_HEIGHT + 2*CELL_PADDING + 230;
+                                                                  + 2*CELL_PADDING) + TITLE_LABEL_HEIGHT + 2*CELL_PADDING + 110;
     [self.tableView setFrame:CGRectMake(0, 
-                                        self.image.frame.origin.y + self.image.frame.size.height + VIEW_ELEMENT_PADDING, 
+                                        bioTextRect.origin.y + bioTextRect.size.height + VIEW_ELEMENT_PADDING,
                                         self.view.frame.size.width, 
                                         tableHeight)];
     self.tableView.scrollEnabled = NO;
@@ -216,75 +240,27 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    switch ( indexPath.section ) {
-        case 0:
-            if ( bioCellExpanded ) {
-                CGSize bioLabelSize = [self.employee.bio sizeWithFont:[UIFont systemFontOfSize:CONTENT_SIZE]
-                                                    constrainedToSize:CGSizeMake(self.tableView.frame.size.width - 2*CELL_PADDING, 200)
-                                                        lineBreakMode:UILineBreakModeWordWrap];
-                return 2*CELL_PADDING + CELL_ELEMENT_PADDING + bioLabelSize.height + TITLE_LABEL_HEIGHT;
-            }
-            return 2*CELL_PADDING + TITLE_LABEL_HEIGHT;
-            break;
-        case 1:
-            return 2*CELL_PADDING + TITLE_LABEL_HEIGHT + RATING_FIELD_HEIGHT + CELL_ELEMENT_PADDING;
-            break;
-    }
-    return 0.0f;
+    return 2*CELL_PADDING + TITLE_LABEL_HEIGHT + RATING_FIELD_HEIGHT + CELL_ELEMENT_PADDING;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {    
-    switch ( indexPath.section ) {
-        case 0:
-        {
-            EmployeeBioCell *bioCell = (EmployeeBioCell*)[self.tableView cellForRowAtIndexPath:indexPath];
-            bioCellExpanded = !bioCellExpanded;
-            
-            // Perform animations if necessary
-            [self.tableView beginUpdates];    
-            [self.tableView endUpdates];
-            
-            [bioCell toggleBio];
-        }
-            break;
-        case 1:
-            break;
-    }
-
+    // nothing yet
 }
 
 #pragma mark -
 #pragma mark UITableViewDataSource methods
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    switch ( section ) {
-        case 0:
-            return @"Profile";
-            break;
-        case 1:
-            return @"Rate me";
-            break;
-    }
-    return nil;
+    return @"Rate me";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    switch ( section ) {
-        case 0:
-            // Just the bio
-            return 1;
-            break;
-        case 1:
-            // The number of ratings
-            return self.employee.ratingDimensions.count;
-            break;
-    }
-    return 0;
+    return self.employee.ratingDimensions.count;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    // One for the bio, another for the ratings
-    return 2;
+    // Ratings section
+    return 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -292,59 +268,46 @@
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
     if ( nil == cell ) {        
-        switch ( indexPath.section ) {
-            case 0:
-                cell = [[EmployeeBioCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                              reuseIdentifier:cellIdentifier
-                                                     employee:self.employee];
-                // Initialize with "Bio" title
-                cell.textLabel.text = @"Bio";
-                cell.textLabel.font = [UIFont boldSystemFontOfSize:TITLE_SIZE];
-                break;
-            case 1:
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                              reuseIdentifier:cellIdentifier];
-                
-                // Label for the respective rated dimension title
-                UILabel *ratedDimensionLabel = [[UILabel alloc] initWithFrame:CGRectMake(CELL_PADDING, 
-                                                                                         CELL_PADDING, 
-                                                                                         self.tableView.frame.size.width
-                                                                                         - 2*CELL_PADDING - 2*VIEW_PADDING, 
-                                                                                         TITLE_LABEL_HEIGHT)];
-                ratedDimensionLabel.text = [[self.employee.ratingDimensions objectAtIndex:indexPath.row] objectForKey:@"title"];
-                [cell.contentView addSubview:ratedDimensionLabel];
-                
-                // Add correct widget for this rateddimension
-                UIView *responseWidget = nil;
-                CGRect responseFrame = CGRectMake(CELL_PADDING, 
-                                                  CELL_PADDING + TITLE_LABEL_HEIGHT + CELL_ELEMENT_PADDING,
-                                                  self.tableView.frame.size.width
-                                                  - 2*CELL_PADDING - 2*VIEW_PADDING,
-                                                  RATING_FIELD_HEIGHT);
-                
-                if ( [[[self.employee.ratingDimensions objectAtIndex:indexPath.row] objectForKey:@"is_text"] boolValue] ) {
-                    UITextField *textField = [[UITextField alloc] initWithFrame:responseFrame];
-                    [textField setReturnKeyType:UIReturnKeyDone];
-                    [textField setDelegate:self];
-                    textField.layer.cornerRadius = 5;
-                    textField.layer.borderColor = [[[UIColor grayColor] colorWithAlphaComponent:0.5] CGColor];
-                    textField.layer.borderWidth = 2.0;
-                    
-                    responseWidget = textField;
-                } else {
-                    // Add the slider
-                    UISlider *slider = [[UISlider alloc] initWithFrame:responseFrame];
-                    responseWidget = slider;
-                    [cell.contentView addSubview:slider];
-                }
-                // Set the tag of the widget based on the ID of the RatedDimension
-                responseWidget.tag = [[[self.employee.ratingDimensions objectAtIndex:indexPath.row] objectForKey:@"id"] intValue];
-                [widgetList addObject:responseWidget];
-
-                [cell.contentView addSubview:responseWidget];
-
-                break;
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                      reuseIdentifier:cellIdentifier];
+        
+        // Label for the respective rated dimension title
+        UILabel *ratedDimensionLabel = [[UILabel alloc] initWithFrame:CGRectMake(CELL_PADDING,
+                                                                                 CELL_PADDING,
+                                                                                 self.tableView.frame.size.width
+                                                                                 - 2*CELL_PADDING - 2*VIEW_PADDING,
+                                                                                 TITLE_LABEL_HEIGHT)];
+        ratedDimensionLabel.text = [[self.employee.ratingDimensions objectAtIndex:indexPath.row] objectForKey:@"title"];
+        [cell.contentView addSubview:ratedDimensionLabel];
+        
+        // Add correct widget for this rateddimension
+        UIView *responseWidget = nil;
+        CGRect responseFrame = CGRectMake(CELL_PADDING,
+                                          CELL_PADDING + TITLE_LABEL_HEIGHT + CELL_ELEMENT_PADDING,
+                                          self.tableView.frame.size.width
+                                          - 2*CELL_PADDING - 2*VIEW_PADDING,
+                                          RATING_FIELD_HEIGHT);
+        
+        if ( [[[self.employee.ratingDimensions objectAtIndex:indexPath.row] objectForKey:@"is_text"] boolValue] ) {
+            UITextField *textField = [[UITextField alloc] initWithFrame:responseFrame];
+            [textField setReturnKeyType:UIReturnKeyDone];
+            [textField setDelegate:self];
+            textField.layer.cornerRadius = 5;
+            textField.layer.borderColor = [[[UIColor grayColor] colorWithAlphaComponent:0.5] CGColor];
+            textField.layer.borderWidth = 2.0;
+            
+            responseWidget = textField;
+        } else {
+            // Add the slider
+            UISlider *slider = [[UISlider alloc] initWithFrame:responseFrame];
+            responseWidget = slider;
+            [cell.contentView addSubview:slider];
         }
+        // Set the tag of the widget based on the ID of the RatedDimension
+        responseWidget.tag = [[[self.employee.ratingDimensions objectAtIndex:indexPath.row] objectForKey:@"id"] intValue];
+        [widgetList addObject:responseWidget];
+        
+        [cell.contentView addSubview:responseWidget];
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }

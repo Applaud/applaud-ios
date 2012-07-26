@@ -26,6 +26,8 @@
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
+@property (strong, nonatomic) IBOutlet UILabel *bioContentLabel;    // Displays the bio
+@property (strong, nonatomic) IBOutlet UILabel *bioLabel;           // Displays "Bio:"
 @property (strong, nonatomic) NSMutableDictionary *ratingDimensions;
 @property (weak, nonatomic) IBOutlet UIImageView *image;
 @property (weak, nonatomic) IBOutlet UIButton *submitButton;
