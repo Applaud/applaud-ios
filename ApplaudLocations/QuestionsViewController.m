@@ -54,7 +54,7 @@
     // Do any additional setup after loading the view from its nib.
 
 	if(nil == _survey) {
-        [self getSurveys];
+        //[self getSurveys];
 	}
     
     // register for keyboard notifications
@@ -182,6 +182,11 @@
  * This lets us change the background color of a cell -- if we have a view controller stored at that index and it has an answer, then we set it to green.
  */
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    SurveyAccordionCell *acccell = (SurveyAccordionCell*)cell;
+    NSLog(@"Label for cell was %@",acccell.questionLabel.text);
+    NSLog(@"Number of cells: %d",self.questionsTable.numberOfSections);
+    
     // Set color and shape
     cell.backgroundColor = [UIColor whiteColor];
     cell.contentView.backgroundColor = [UIColor whiteColor];
@@ -305,10 +310,15 @@
 #pragma mark Other Methods
 
 -(void)getSurveys {
-    NSDictionary *dict = [[NSDictionary alloc]
-                          initWithObjectsAndKeys:[NSNumber numberWithInt:self.appDelegate.currentBusiness.business_id],
-                          @"business_id",
-                          nil];
+//    NSDictionary *dict = [[NSDictionary alloc]
+//                          initWithObjectsAndKeys: self.appDelegate.currentBusiness.goog_id],
+//                          @"goog_id",
+//                          nil];
+    NSArray *keyArray = [[NSArray alloc] initWithObjects:@"goog_id", nil];
+    NSArray *valArray = [[NSArray alloc] initWithObjects:self.appDelegate.currentBusiness.goog_id, nil];
+    NSDictionary *dict = [[NSDictionary alloc] initWithObjects:valArray forKeys:keyArray];
+                            
+    
     [ConnectionManager serverRequest:@"POST"
                             withParams:dict
                                  url:SURVEY_URL
@@ -325,6 +335,7 @@
  */
 - (void)handleSurveyData:(NSData *)d {
     // Grabbing the JSON data from the server's response
+    NSLog(@"Survey data is......");
     NSLog(@"%@", [[NSString alloc] initWithData:d encoding:NSUTF8StringEncoding]);
     NSError *e = [[NSError alloc] init];
     NSDictionary *surveyData = [NSJSONSerialization JSONObjectWithData:d
@@ -334,6 +345,7 @@
     // Creating the fields of the survey
     NSMutableArray *fields = [[NSMutableArray alloc] init];
     for(NSDictionary *dict in [surveyData objectForKey:@"questions"]) {
+        NSLog(@"Looping through survey data....");
         NSString *type = [dict objectForKey:@"type"];
         QuestionType widgetType;
         if([type isEqualToString:@"TF"]) {
@@ -355,7 +367,8 @@
                            ];
         [fields addObject:sf];
     }   
-
+    NSLog(@"%@",fields.description);
+    
     // Creating the survey model
     Survey *survey = [[Survey alloc] initWithTitle:[surveyData objectForKey:@"title"]
                                            summary:[surveyData objectForKey:@"description"]
@@ -373,10 +386,6 @@
     submitButtonItem.tintColor = self.appDelegate.currentBusiness.primaryColor;
 
     [[self navigationItem] setRightBarButtonItem:submitButtonItem];
-    int i;
-    for(i = 0; i < self.survey.answers.count; i++) {
-        [_surveyControllers addObject:[[NSNull alloc] init]];
-    }
     
     // Set up selection array
     questionSelections = [[NSMutableArray alloc] init];
@@ -384,6 +393,7 @@
         [questionSelections addObject:[NSNumber numberWithBool:NO]];
     }
     
+    // Load the table
     [self.questionsTable reloadData];
 }
 

@@ -48,6 +48,7 @@
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
+    NSLog(@"Location is.... %f, %f",manager.location.coordinate.latitude, manager.location.coordinate.longitude );
     UIAlertView *connection_problem = [[UIAlertView alloc] initWithTitle:@"Connection error"
                                                                  message:@"Couldn't get business data"
                                                                 delegate:nil
@@ -64,18 +65,24 @@
  * What we do when we want to find businesses around a certain location.
  */
 - (void)findBusinessesWithLocation:(CLLocationCoordinate2D)location {
+    NSLog(@"Location is.... %f, %f",location.latitude, location.longitude );
+    
     void (^callback)(NSData *) = ^(NSData *dat){
         NSError *e;
         NSMutableDictionary *businesses = [NSJSONSerialization JSONObjectWithData:dat options:NSJSONReadingMutableLeaves | NSJSONReadingMutableContainers error:&e];
         NSMutableArray *businessArray = [[NSMutableArray alloc] init];
         for(NSDictionary *dict in [businesses objectForKey:@"nearby_businesses"]) {
             Business *bus = [[Business alloc] initWithName:[dict objectForKey:@"name"]
-                                                      type:[dict objectForKey:@"type"]
                                                    goog_id:[dict objectForKey:@"goog_id"]
                                                   latitude:[dict objectForKey:@"latitude"]
                                                  longitude:[dict objectForKey:@"longitude"]
-                                              primaryColor:[dict objectForKey:@"primary"]
-                                            secondaryColor:[dict objectForKey:@"secondary"]];
+                                              primaryColor:nil
+                                            secondaryColor: nil
+                                                     types:[dict objectForKey:@"types"]];
+            NSLog(@"The primary color is.....%@",[dict objectForKey:@"primary"]);
+            NSLog(@"The primary secondary is.....%@",[dict objectForKey:@"secondary"]);
+            
+            NSLog(@"The business_id is....%d",[[dict objectForKey:@"business_id"] intValue]);
             bus.business_id = [[dict objectForKey:@"business_id"] intValue];
             NSLog(@"Got business: %@", bus.description);
             NSLog(@"%@", [dict objectForKey:@"primary"]);
@@ -86,22 +93,19 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:@"BUSINESS_RECEIVED" object:businessArray];
     };
 
-/*    NSArray *keyArray = [[NSArray alloc] initWithObjects:@"latitude", @"longitude", nil];
+    NSArray *keyArray = [[NSArray alloc] initWithObjects:@"latitude", @"longitude", nil];
     NSArray *valArray = [[NSArray alloc] initWithObjects:
                          [NSNumber numberWithFloat:location.latitude], 
-                         [NSNumber numberWithFloat:location.longitude], nil];*/
-//    NSDictionary *getDict = [[NSDictionary alloc] initWithObjects:valArray forKeys:keyArray];
+                         [NSNumber numberWithFloat:location.longitude], nil];
+    NSDictionary *getDict = [[NSDictionary alloc] initWithObjects:valArray forKeys:keyArray];
+    
+    // Python equivalent to the above
+    // dict = {"latitude":location.latitude, "longitude":location.logitude}
 
     // dummy businesses for debugging
-    [ConnectionManager serverRequest:@"GET" withParams:nil url:EXAMPLE_URL callback:callback];
-/*    NSString *urlString = [[NSString alloc] initWithFormat:@"%@%@", SERVER_URL, EXAMPLE_URL];
-    NSURL *url = [[NSURL alloc] initWithString:urlString];
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
-    NSError *e;
-    NSData *d = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:&e];
-    callback(d);*/
-    // actual businesses
-    //[ConnectionManager serverRequest:@"GET" withParams:getDict url:WHEREAMI_URL callback:callback];
+    // [ConnectionManager serverRequest:@"GET" withParams:nil url:EXAMPLE_URL callback:callback];
+
+    [ConnectionManager serverRequest:@"GET" withParams:getDict url:WHEREAMI_URL callback:callback];
 }
 
 /**

@@ -133,6 +133,7 @@
     loginAlert.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
     if ( (username = self.settings.username) && (password = self.settings.password) ) {
         BOOL loginSuccess = [ConnectionManager authenticateWithUsername:username password:password];
+        NSLog(@"Login success is %d",loginSuccess);
         if ( loginSuccess ) {
             // Cache username and password in our program settings
             [self.settings setUsername:username];
