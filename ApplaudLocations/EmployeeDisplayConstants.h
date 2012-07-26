@@ -22,6 +22,7 @@
 #define BIO_SIZE 10.0f              // font size of employee bio
 #define BIO_LABEL_HEIGHT 25.0f      // Height of the label that reads "Bio:"
 #define TITLE_LABEL_HEIGHT 30.0f    // Height of a title label (e.g., textLabel in UITableViewCell)
+#define CELL_GAP 50.0f              // Amount of space reserved at top of first cell (hidden under namecard)
 #define NAVBAR_SIZE 49.0f           // size of the navigation bar (for use in resizing view for keyboard appearance)
 #define SCROLL_LENGTH 0.17f         // # of seconds to scroll the view when keyboard appears
 

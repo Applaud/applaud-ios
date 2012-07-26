@@ -132,26 +132,31 @@
         bioTextRect.origin.y = imageRect.origin.y + imageRect.size.height + VIEW_ELEMENT_PADDING;
         self.bioContentLabel.frame = bioTextRect;
     }
+    
+    // Set up the profile view. This contains the name, title, bio, biolabel as subviews
+    self.profileView.frame = CGRectMake(0, 0, self.view.frame.size.width, bioTextRect.origin.y + bioTextRect.size.height+30);
+    // Some nice visual FX for the profile view
+    self.profileView.layer.shadowRadius = 5.0f;
+    self.profileView.layer.shadowOpacity = 0.2f;
+    self.profileView.layer.shadowOffset = CGSizeMake(1, 0);
 
-    // Set up the table -- the '110' on the end accounts for section headings space + other padding on the table view.
+    // Set up the table -- the '230' on the end accounts for section headings space + other padding on the table view.
     // By customizing headers, etc., we could get a more exact figure.
     CGFloat tableHeight = self.employee.ratingDimensions.count * (RATING_FIELD_HEIGHT 
                                                                   + TITLE_LABEL_HEIGHT 
                                                                   + CELL_ELEMENT_PADDING
-                                                                  + 2*CELL_PADDING) + TITLE_LABEL_HEIGHT + 2*CELL_PADDING + 110;
+                                                                  + 2*CELL_PADDING) + 2 * CELL_PADDING + TITLE_LABEL_HEIGHT + CELL_GAP + 30;
+
+    NSLog(@"Profile view: %f at origin and %f for height", self.profileView.frame.origin.y, self.profileView.frame.size.height);
     [self.tableView setFrame:CGRectMake(0, 
-                                        bioTextRect.origin.y + bioTextRect.size.height + VIEW_ELEMENT_PADDING,
+                                        self.profileView.frame.origin.y + self.profileView.frame.size.height - CELL_GAP,
                                         self.view.frame.size.width, 
                                         tableHeight)];
     self.tableView.scrollEnabled = NO;
     
     // Set up the 'submit' button
     self.submitButton.frame = CGRectMake(VIEW_PADDING,
-                                         VIEW_PADDING 
-                                         + self.nameLabel.frame.size.height 
-                                         + VIEW_ELEMENT_PADDING 
-                                         + self.tableView.frame.size.height
-                                         + VIEW_ELEMENT_PADDING,
+                                         self.tableView.frame.origin.y + tableHeight + VIEW_ELEMENT_PADDING,
                                          self.view.frame.size.width - 2*VIEW_PADDING,
                                          50);
     // Make a submit button on the navigation bar as well
@@ -163,10 +168,11 @@
     
     // Set up the scrollable area for the scrollview
     self.scrollView.contentSize = CGSizeMake(self.view.frame.size.width,
-                                             2*VIEW_PADDING
-                                             + IMAGE_SIZE
-                                             + VIEW_ELEMENT_PADDING
-                                             + self.tableView.frame.size.height);
+                                             self.profileView.frame.size.height
+                                             + self.tableView.frame.size.height
+                                             + self.submitButton.frame.size.height
+                                             + 2*VIEW_ELEMENT_PADDING
+                                             + 2*VIEW_PADDING);
 }
 
 
@@ -240,6 +246,10 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Empty row at the top is 100px
+    if ( indexPath.row == 0 )
+        return TITLE_LABEL_HEIGHT + 2*CELL_PADDING + CELL_GAP;
+    // Calculate other heights
     return 2*CELL_PADDING + TITLE_LABEL_HEIGHT + RATING_FIELD_HEIGHT + CELL_ELEMENT_PADDING;
 }
 
@@ -250,12 +260,9 @@
 #pragma mark -
 #pragma mark UITableViewDataSource methods
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return @"Rate me";
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.employee.ratingDimensions.count;
+    // Include an empty cell at the top for looks (hide under name tag)
+    return self.employee.ratingDimensions.count + 1;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -267,9 +274,19 @@
     static NSString *cellIdentifier = @"EmployeeViewCell";
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
-    if ( nil == cell ) {        
+    if ( nil == cell ) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                       reuseIdentifier:cellIdentifier];
+        
+        // Blank cell at the top of the page
+        if ( indexPath.row == 0 ) {
+            UILabel *applaudLabel = [[UILabel alloc] initWithFrame:CGRectMake(CELL_PADDING, CELL_PADDING + CELL_GAP,
+                                                                              200, TITLE_LABEL_HEIGHT)];
+            applaudLabel.text = @"Applaud me";
+            applaudLabel.font = [UIFont boldSystemFontOfSize:TITLE_SIZE];
+            [cell.contentView addSubview:applaudLabel];
+            return cell;
+        }
         
         // Label for the respective rated dimension title
         UILabel *ratedDimensionLabel = [[UILabel alloc] initWithFrame:CGRectMake(CELL_PADDING,
@@ -277,7 +294,7 @@
                                                                                  self.tableView.frame.size.width
                                                                                  - 2*CELL_PADDING - 2*VIEW_PADDING,
                                                                                  TITLE_LABEL_HEIGHT)];
-        ratedDimensionLabel.text = [[self.employee.ratingDimensions objectAtIndex:indexPath.row] objectForKey:@"title"];
+        ratedDimensionLabel.text = [[self.employee.ratingDimensions objectAtIndex:indexPath.row-1] objectForKey:@"title"];
         [cell.contentView addSubview:ratedDimensionLabel];
         
         // Add correct widget for this rateddimension
@@ -288,7 +305,7 @@
                                           - 2*CELL_PADDING - 2*VIEW_PADDING,
                                           RATING_FIELD_HEIGHT);
         
-        if ( [[[self.employee.ratingDimensions objectAtIndex:indexPath.row] objectForKey:@"is_text"] boolValue] ) {
+        if ( [[[self.employee.ratingDimensions objectAtIndex:indexPath.row-1] objectForKey:@"is_text"] boolValue] ) {
             UITextField *textField = [[UITextField alloc] initWithFrame:responseFrame];
             [textField setReturnKeyType:UIReturnKeyDone];
             [textField setDelegate:self];
@@ -304,7 +321,7 @@
             [cell.contentView addSubview:slider];
         }
         // Set the tag of the widget based on the ID of the RatedDimension
-        responseWidget.tag = [[[self.employee.ratingDimensions objectAtIndex:indexPath.row] objectForKey:@"id"] intValue];
+        responseWidget.tag = [[[self.employee.ratingDimensions objectAtIndex:indexPath.row-1] objectForKey:@"id"] intValue];
         [widgetList addObject:responseWidget];
         
         [cell.contentView addSubview:responseWidget];
