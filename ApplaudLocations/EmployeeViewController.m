@@ -12,24 +12,17 @@
 #import "ConnectionManager.h"
 #import "SDWebImage/UIImageView+WebCache.h"
 #import "AppDelegate.h"
+#import "EmployeeBioCell.h"
+#import "EmployeeDisplayConstants.h"
 #import <QuartzCore/QuartzCore.h>
-
-#define RATING_FIELD_HEIGHT 70
-#define RATING_FIELDS_BEGIN 300
-#define RATING_FIELD_SPACING 20
-#define IMAGE_SIZE 130.0f
-#define VIEW_PADDING 10.0f
-#define CELL_ELEMENT_PADDING 5.0f   // how much space between things inside of the cell
 
 @implementation EmployeeViewController
 @synthesize appDelegate = _appDelegate;
 @synthesize submitButton;
 @synthesize employee = _employee;
 @synthesize scrollView = _scrollView;
-@synthesize image;
-@synthesize nameLabel;
-@synthesize bioLabel;
-@synthesize bioField;
+@synthesize image, nameLabel, titleLabel, bioContentLabel, bioLabel;
+@synthesize tableView = _tableView;
 @synthesize ratingDimensions = _ratingDimensions;
 
 
@@ -37,6 +30,7 @@
     if ( self = [super init] ) {
         _employee = e;
         _ratingDimensions = [[NSMutableDictionary alloc] init];
+        widgetList = [[NSMutableArray alloc] init];
     }
     
     return self;
@@ -45,15 +39,38 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
     [self.image setImageWithURL:self.employee.imageURL
                         success:^(UIImage *img) {
                             [self loadViewWithImage:img];
                         } failure:^(NSError *error) {
                             [self loadViewWithImage:[UIImage imageNamed:@"blankPerson.jpg"]];
                         }];
-   
+    
+    // Bio cell is collapsed at init
+    bioCellExpanded = NO;
+    
+    // register for keyboard notifications
+    [[NSNotificationCenter defaultCenter] addObserver:self 
+                                             selector:@selector(keyboardWillShow:) 
+                                                 name:UIKeyboardWillShowNotification 
+                                               object:self.view.window];
+    [[NSNotificationCenter defaultCenter] addObserver:self 
+                                             selector:@selector(keyboardWillHide:) 
+                                                 name:UIKeyboardWillHideNotification 
+                                               object:self.view.window];
+}
 
+- (void)viewDidUnload
+{
+    [self setNameLabel:nil];
+    [self setScrollView:nil];
+    [self setSubmitButton:nil];
+    [self setImage:nil];
+    [self setTableView:nil];
+    [super viewDidUnload];
+    // Release any retained subviews of the main view.
+    // e.g. self.myOutlet = nil;
 }
 
 /*
@@ -61,7 +78,7 @@
  * to break up layout into two pieces, since image download happens asynchronously.
  */
 - (void)loadViewWithImage:(UIImage *)img {
-    // Resize and position the image when it gets here.
+    // Resize and position the image
     float scaleFactor = img.size.width * img.scale / IMAGE_SIZE;
     self.image.image = [UIImage imageWithCGImage:img.CGImage
                                            scale:scaleFactor
@@ -72,99 +89,94 @@
     imageRect.origin.y = VIEW_PADDING;
     self.image.frame = imageRect;
     
+    // Add a border around the image
     CALayer *imageLayer = self.image.layer;
     imageLayer.borderWidth = 3.0f;
     imageLayer.borderColor = [[UIColor darkGrayColor] CGColor];
     
-    // Do any additional setup after loading the view from its nib.
+    // Set up the name label
     [self.nameLabel setText:[NSString stringWithFormat:@"%@ %@",
                              self.employee.firstName, self.employee.lastName]];
     CGRect nameTextRect = self.nameLabel.frame;
-    nameTextRect.origin.x = VIEW_PADDING + self.image.frame.size.width + CELL_ELEMENT_PADDING;
+    nameTextRect.origin.x = VIEW_PADDING + self.image.frame.size.width + VIEW_ELEMENT_PADDING;
     nameTextRect.origin.y = VIEW_PADDING;
     self.nameLabel.frame = nameTextRect;
     
-    [self.bioField setText:self.employee.bio];
-    self.bioField.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+    // Set up the employee's title label
+    [self.titleLabel setText:self.employee.ratingProfileTitle];
+    CGRect titleTextRect = self.titleLabel.frame;
+    titleTextRect.origin.x = VIEW_PADDING + self.image.frame.size.width + VIEW_ELEMENT_PADDING;
+    titleTextRect.origin.y = nameTextRect.origin.y + nameTextRect.size.height + VIEW_ELEMENT_PADDING;
+    self.titleLabel.frame = titleTextRect;
     
+    // Set up bio labels
+    CGRect bioTextRect;
+    if ( self.employee.bio.length == 0 ) {
+        [self.bioLabel setHidden:YES];
+        bioTextRect = titleTextRect;
+    } else {
+        // Label "Bio:"
+        CGRect bioLabelRect = self.bioLabel.frame;
+        bioLabelRect.origin.x = VIEW_PADDING + self.image.frame.size.width + VIEW_ELEMENT_PADDING;
+        bioLabelRect.origin.y = imageRect.origin.y + imageRect.size.height - BIO_LABEL_HEIGHT;
+        self.bioLabel.frame = bioLabelRect;
+        
+        // Bio content label
+        [self.bioContentLabel setText:self.employee.bio];
+        self.bioContentLabel.lineBreakMode = UILineBreakModeWordWrap;
+        self.bioContentLabel.numberOfLines = 0;
+        [self.bioContentLabel setFont:[UIFont systemFontOfSize:BIO_SIZE]];
+        [self.bioContentLabel sizeToFit];
+        bioTextRect = self.bioContentLabel.frame;
+        bioTextRect.origin.x = VIEW_PADDING;
+        bioTextRect.origin.y = imageRect.origin.y + imageRect.size.height + VIEW_ELEMENT_PADDING;
+        self.bioContentLabel.frame = bioTextRect;
+    }
     
-    // The y-coordinate of the first rating field
-    int dimensionStart = RATING_FIELDS_BEGIN;
-    if ( self.employee.bio != (id)[NSNull null] && self.employee.bio.length > 0 ) {
-        [self.bioField setText:self.employee.bio];
-    }
-    else {
-        int spaceGained = bioField.bounds.size.height + bioLabel.bounds.size.height;
-        [self.bioField removeFromSuperview];
-        [self.bioLabel removeFromSuperview];
-        dimensionStart -= spaceGained;
-    }
+    // Set up the profile view. This contains the name, title, bio, biolabel as subviews
+    self.profileView.frame = CGRectMake(0, 0,
+                                        self.view.frame.size.width,
+                                        bioTextRect.origin.y + bioTextRect.size.height+VIEW_ELEMENT_PADDING);
+    // Some nice visual FX for the profile view
+    self.profileView.layer.shadowRadius = 5.0f;
+    self.profileView.layer.shadowOpacity = 0.2f;
+    self.profileView.layer.shadowOffset = CGSizeMake(1, 0);
+
+    // Set up the table -- the '230' on the end accounts for section headings space + other padding on the table view.
+    // By customizing headers, etc., we could get a more exact figure.
+    CGFloat tableHeight = self.employee.ratingDimensions.count * (RATING_FIELD_HEIGHT 
+                                                                  + TITLE_LABEL_HEIGHT 
+                                                                  + CELL_ELEMENT_PADDING
+                                                                  + 2*CELL_PADDING) + 2 * CELL_PADDING + TITLE_LABEL_HEIGHT + CELL_GAP + 30;
+
+    NSLog(@"Profile view: %f at origin and %f for height", self.profileView.frame.origin.y, self.profileView.frame.size.height);
+    [self.tableView setFrame:CGRectMake(0, 
+                                        self.profileView.frame.origin.y + self.profileView.frame.size.height - CELL_GAP,
+                                        self.view.frame.size.width, 
+                                        tableHeight)];
+    self.tableView.scrollEnabled = NO;
     
-    // Keeps track of where we're putting labels/sliders
-    int curr_y = dimensionStart;
-    // i will be used as a tag for UISliders, so we can identify which one is which later.
-    int i = 0;
-    // Parse all of the rating dimensions
-    for ( NSDictionary *dimension_dict in self.employee.ratingDimensions ) {
-        NSString *dimension = [dimension_dict objectForKey:@"title"];
-        // Create a label
-        UILabel *dimensionLabel = [[UILabel alloc] 
-                                   initWithFrame:CGRectMake(RATING_FIELD_SPACING,
-                                                            curr_y,
-                                                            self.view.frame.size.width-(2*RATING_FIELD_SPACING),
-                                                            RATING_FIELD_HEIGHT/2)];
-        [dimensionLabel setText:dimension];
-        dimensionLabel.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
-        [self.view addSubview:dimensionLabel];
-        if([[dimension_dict objectForKey:@"is_text"] boolValue]) {
-            UITextField *dimensionText = [[UITextField alloc]
-                                          initWithFrame:CGRectMake(RATING_FIELD_SPACING,
-                                                                   curr_y + 30,
-                                                                   self.view.frame.size.width-(2*RATING_FIELD_SPACING),
-                                                                   RATING_FIELD_HEIGHT/2)];
-            dimensionText.returnKeyType = UIReturnKeyDone;
-            dimensionText.delegate = self;
-            dimensionText.borderStyle = UITextBorderStyleRoundedRect;
-            dimensionText.tag = i++;
-            [self.ratingDimensions setObject:dimension forKey:[NSNumber numberWithInt:dimensionText.tag]];
-            [self.view addSubview:dimensionText];
-        }
-        else {
-            UISlider *dimensionSlider = [[UISlider alloc] 
-                                         initWithFrame:CGRectMake(RATING_FIELD_SPACING, 
-                                                                  curr_y + 30,
-                                                                  self.view.frame.size.width-(2*RATING_FIELD_SPACING),
-                                                                  RATING_FIELD_HEIGHT)];
-            curr_y += 20;
-            [dimensionSlider setMinimumValue:0.0f];
-            [dimensionSlider setMaximumValue:1.0f];
-            dimensionSlider.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
-            dimensionSlider.tag = i++;
-            [self.ratingDimensions setObject:dimension forKey:[NSNumber numberWithInt:dimensionSlider.tag]]; // NSNumbers let us put an int into the dictionary
-            [self.view addSubview:dimensionSlider];
-        }
-        curr_y += RATING_FIELD_HEIGHT;
-    }
-    self.submitButton.frame = CGRectMake(self.view.frame.size.width - 100,
-                                         curr_y + 20,
-                                         75,
+    // Set up the 'submit' button
+    self.submitButton.frame = CGRectMake(VIEW_PADDING,
+                                         self.tableView.frame.origin.y + tableHeight + VIEW_ELEMENT_PADDING,
+                                         self.view.frame.size.width - 2*VIEW_PADDING,
                                          50);
-    // Tell our scroll view how big its contents are, so we can scroll in it.
+    // Make a submit button on the navigation bar as well
+    UIBarButtonItem *submitItem = [[UIBarButtonItem alloc] initWithTitle:@"Submit"
+                                                                   style:UIBarButtonItemStyleBordered
+                                                                  target:self
+                                                                  action:@selector(submit)];
+    [[self navigationItem] setRightBarButtonItem:submitItem];
+    
+    // Set up the scrollable area for the scrollview
     self.scrollView.contentSize = CGSizeMake(self.view.frame.size.width,
-                                             curr_y+(2*RATING_FIELD_HEIGHT));
+                                             self.profileView.frame.size.height
+                                             + self.tableView.frame.size.height
+                                             + self.submitButton.frame.size.height
+                                             + 2*VIEW_ELEMENT_PADDING
+                                             + 2*VIEW_PADDING);
 }
 
-- (void)viewDidUnload
-{
-    [self setNameLabel:nil];
-    [self setBioField:nil];
-    [self setScrollView:nil];
-    [self setSubmitButton:nil];
-    [self setImage:nil];
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
 
 /*
  * Deselects the corresponding row in the NFViewController when the back button is pressed.
@@ -181,47 +193,196 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+#pragma mark -
+#pragma mark UITextFieldDelegate methods
+-(BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    selectedTextRect = textField.bounds;
+    selectedTextRect = [textField convertRect:selectedTextRect toView:self.view];
+    previousOffset = [(UIScrollView*)self.view contentOffset];
+}
+
+#pragma mark -
+#pragma mark Keyboard Handling
+
+- (void)keyboardWillHide:(NSNotification *)n
+{
+    [(UIScrollView*)self.view setContentOffset:previousOffset animated:YES];
+
+    keyboardIsShown = NO;
+}
+
+- (void)keyboardWillShow:(NSNotification *)n
+{
+    if (keyboardIsShown) {
+        return;
+    }
+    
+    NSDictionary* userInfo = [n userInfo];
+    
+    // get the size of the keyboard
+    CGSize keyboardSize = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    
+    CGPoint offsetPoint = selectedTextRect.origin;
+    offsetPoint.x = 0;
+    offsetPoint.y -= keyboardSize.height - selectedTextRect.size.height - NAVBAR_SIZE;
+    [(UIScrollView*)self.view setContentOffset:offsetPoint animated:YES];
+  
+    keyboardIsShown = YES;
+}
+
+#pragma mark -
+#pragma mark UITableViewDelegate methods
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    [cell.contentView.layer setMasksToBounds:YES];
+    
+    // Set shape and color
+    cell.backgroundColor = [UIColor whiteColor];
+    cell.contentView.backgroundColor = [UIColor whiteColor];
+    cell.contentView.layer.cornerRadius = 7.0f;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ( indexPath.row == 0 )
+        return TITLE_LABEL_HEIGHT + 2*CELL_PADDING + 70;
+    // Calculate other heights
+    return 2*CELL_PADDING + TITLE_LABEL_HEIGHT + RATING_FIELD_HEIGHT + CELL_ELEMENT_PADDING;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {    
+    // nothing yet
+}
+
+#pragma mark -
+#pragma mark UITableViewDataSource methods
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    // Include an empty cell at the top for looks (hide under name tag)
+    return self.employee.ratingDimensions.count + 1;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    // Ratings section
+    return 1;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *cellIdentifier = @"EmployeeViewCell";
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    
+    if ( nil == cell ) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                      reuseIdentifier:cellIdentifier];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        // Blank cell at the top of the page
+        if ( indexPath.row == 0 ) {
+            UILabel *applaudLabel = [[UILabel alloc] initWithFrame:CGRectMake(CELL_PADDING, CELL_PADDING + CELL_GAP,
+                                                                              200, TITLE_LABEL_HEIGHT)];
+            applaudLabel.text = @"Applaud me";
+            applaudLabel.font = [UIFont boldSystemFontOfSize:TITLE_SIZE];
+            [cell.contentView addSubview:applaudLabel];
+            return cell;
+        }
+        
+        // Label for the respective rated dimension title
+        UILabel *ratedDimensionLabel = [[UILabel alloc] initWithFrame:CGRectMake(CELL_PADDING,
+                                                                                 CELL_PADDING,
+                                                                                 self.tableView.frame.size.width
+                                                                                 - 2*CELL_PADDING - 2*VIEW_PADDING,
+                                                                                 TITLE_LABEL_HEIGHT)];
+        ratedDimensionLabel.text = [[self.employee.ratingDimensions objectAtIndex:indexPath.row-1] objectForKey:@"title"];
+        [cell.contentView addSubview:ratedDimensionLabel];
+        
+        // Add correct widget for this rateddimension
+        UIView *responseWidget = nil;
+        CGRect responseFrame = CGRectMake(CELL_PADDING,
+                                          CELL_PADDING + TITLE_LABEL_HEIGHT + CELL_ELEMENT_PADDING,
+                                          self.tableView.frame.size.width
+                                          - 2*CELL_PADDING - 2*VIEW_PADDING,
+                                          RATING_FIELD_HEIGHT);
+        
+        if ( [[[self.employee.ratingDimensions objectAtIndex:indexPath.row-1] objectForKey:@"is_text"] boolValue] ) {
+            UITextField *textField = [[UITextField alloc] initWithFrame:responseFrame];
+            [textField setReturnKeyType:UIReturnKeyDone];
+            [textField setDelegate:self];
+            textField.layer.cornerRadius = 5;
+            textField.layer.borderColor = [[[UIColor grayColor] colorWithAlphaComponent:0.5] CGColor];
+            textField.layer.borderWidth = 2.0;
+            
+            responseWidget = textField;
+        } else {
+            // Add the slider
+            UISlider *slider = [[UISlider alloc] initWithFrame:responseFrame];
+            responseWidget = slider;
+            [cell.contentView addSubview:slider];
+        }
+        // Set the tag of the widget based on the ID of the RatedDimension
+        responseWidget.tag = [[[self.employee.ratingDimensions objectAtIndex:indexPath.row-1] objectForKey:@"id"] intValue];
+        [widgetList addObject:responseWidget];
+        
+        [cell.contentView addSubview:responseWidget];
+    }
+    
+    return cell;
+}
+
+#pragma mark -
+#pragma mark IBActions
+
 - (IBAction)submitButtonPressed:(UIButton *)sender {
+    [self submit];
+}
+
+- (void)submit {
+    // Basic employee information: first name, last name, id
     NSMutableDictionary *em = [[NSMutableDictionary alloc] init];
     [em setObject:self.employee.firstName forKey:@"first_name"];
     [em setObject:self.employee.lastName forKey:@"last_name"];
     [em setObject:[NSNumber numberWithInt: self.employee.employee_id] forKey:@"id"];
+    
+    // Build dictionary for ratings
     NSMutableDictionary *ratings = [[NSMutableDictionary alloc] init];
-    for( UIView *view in self.view.subviews){
+    for ( UIView *view in widgetList ) {
         if([view isKindOfClass:[UISlider class]]){
             UISlider *slider = (UISlider *)view;
             [ratings setObject:[NSNumber numberWithFloat:slider.value*5.0]
-                        forKey:[[[self.employee.ratingDimensions objectAtIndex:slider.tag] objectForKey:@"id"] description]];
+                        forKey:[[NSNumber numberWithInt:slider.tag] description]];
         }
         else if([view isKindOfClass:[UITextField class]]) {
             UITextField *field = (UITextField *)view;
             [ratings setObject:field.text
-                        forKey:[[[self.employee.ratingDimensions objectAtIndex:field.tag] objectForKey:@"id"] description]];
+                        forKey:[[NSNumber numberWithInt:field.tag] description]];
         }
     }
+    
+    // Build the final dictionary to send to the server in JSON
     NSMutableDictionary *ret = [[NSMutableDictionary alloc] init];
     [ret setObject:em forKey:@"employee"];
     [ret setObject:ratings forKey:@"ratings"];
+    
+    // Send request to the server
     [ConnectionManager serverRequest:@"POST" withParams:ret url:EVALUATE_URL callback:nil];
+    
+    // Thank the user
     [[[UIAlertView alloc] initWithTitle:@"Thanks!"
                                 message:@"We appreciate your feedback."
                                delegate:nil
                       cancelButtonTitle:nil
                       otherButtonTitles:@"OK", nil] show];
-    NSLog(@"%@", self.parentViewController);
+    
+    // Switch to another part of the app
     [(UITabBarController *)self.appDelegate.window.rootViewController setSelectedIndex:4];
     UINavigationController *parent = (UINavigationController *)self.parentViewController;
     [parent popViewControllerAnimated:NO];
     EmployeeListViewController *elvc = [parent.viewControllers objectAtIndex:0];
-//    [elvc.employeeControllers replaceObjectAtIndex:[[elvc.tableView indexPathForSelectedRow] row]
+    // Are we nulling out the employee view here???
     [elvc.employeeControllers replaceObjectAtIndex:[[elvc.tableView indexPathForSelectedRow] row] withObject:[[NSNull alloc] init]];
-}
-
-#pragma mark -
-#pragma UITextFieldDelegate methods
--(BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [textField resignFirstResponder];
-    return YES;
 }
 
 @end

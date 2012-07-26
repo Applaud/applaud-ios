@@ -22,7 +22,6 @@
 @property (strong, nonatomic) UILabel *questionLabel;   // The question's text
 @property (strong, nonatomic) NSMutableArray *questionWidgets;  // Widgets with which the user interacts
 @property (readonly) CGFloat expandedHeight;            // How tall this cell should be drawn when expanded
-@property (readonly) CGFloat contractedHeight;		// How tall this cell should be drawn when contracted
 @property (strong, nonatomic) SurveyField *field;	// Field that this cell represents
 
 @end

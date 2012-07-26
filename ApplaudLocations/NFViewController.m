@@ -156,9 +156,6 @@
 #pragma mark -
 #pragma Other methods
 
-#pragma mark -
-#pragma URL connection
-
 /*
  * get newsfeeds from the server.
  * this is called when we load up the news feed is selected

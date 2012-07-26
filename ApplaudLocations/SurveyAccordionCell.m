@@ -23,7 +23,7 @@
 @implementation SurveyAccordionCell
 
 @synthesize questionLabel, questionWidgets;
-@synthesize expandedHeight = _expandedHeight, contractedHeight = _contractedHeight;
+@synthesize expandedHeight = _expandedHeight;
 @synthesize containerView = _containerView;
 @synthesize field = _field;
 
@@ -118,9 +118,6 @@
                                     sizeWithFont:[UIFont boldSystemFontOfSize:TITLE_SIZE]
                                     constrainedToSize:CGSizeMake(contentRect.size.width - 2*CELL_PADDING,400)
                                     lineBreakMode:UILineBreakModeWordWrap];
-        
-        // Set the contracted height based off of just the question label
-        _contractedHeight = questionLabelSize.height + 2*CELL_PADDING + 2*CELL_ELEMENT_PADDING;
         
         // Question label
         self.questionLabel.frame = CGRectMake(contentRect.origin.x + CELL_PADDING,
