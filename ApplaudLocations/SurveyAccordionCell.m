@@ -110,21 +110,19 @@
     
     // We will never edit, but it's clean.
     if (! self.editing) {
-        CGSize questionLabelSize = [questionLabel.text
+        CGSize questionLabelSize = [self.questionLabel.text
                                     sizeWithFont:[UIFont boldSystemFontOfSize:TITLE_SIZE]
                                     constrainedToSize:CGSizeMake(contentRect.size.width - 2*CELL_PADDING,400)
                                     lineBreakMode:UILineBreakModeWordWrap];
         
         // Question label
-        self.questionLabel.frame = CGRectMake(contentRect.origin.x + CELL_PADDING,
-                                              contentRect.origin.y + CELL_PADDING,
+        self.questionLabel.frame = CGRectMake(CELL_PADDING,
+                                              CELL_PADDING,
                                               contentRect.size.width - 2*CELL_PADDING,
                                               questionLabelSize.height);
         
         // The baseline height of an expanded cell. This will be adjusted in each case of the following switch statement.
         _expandedHeight = questionLabelSize.height + 2*CELL_ELEMENT_PADDING + 2*CELL_PADDING;
-        
-        
         
         // Question widget
         switch ( self.field.type ) {
@@ -142,7 +140,7 @@
             case TEXTFIELD:
             {
                 UIView *textField = [questionWidgets objectAtIndex:0];
-                [textField setFrame:CGRectMake(CELL_PADDING, 
+                [textField setFrame:CGRectMake(CELL_PADDING,
                                                questionLabel.frame.origin.y + questionLabel.frame
                                                .size.height + 2*CELL_ELEMENT_PADDING, 
                                                contentRect.size.width - 2*CELL_PADDING, 

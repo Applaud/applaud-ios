@@ -172,12 +172,11 @@
     
     // Showing the content of the question upon selection
     if ( [self cellIsSelectedAtIndexPath:indexPath] ) {
-//        return origSize.height * 3 + 2*CELL_PADDING;
         return [[questionSelections objectAtIndex:indexPath.section] floatValue];
     }
     // Showing just the title and whether or not the question has been answered
     else {
-        return origSize.height + 2*CELL_PADDING;
+        return origSize.height + 2*CELL_PADDING + 2;
     }
 }
 
