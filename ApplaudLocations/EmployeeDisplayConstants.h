@@ -25,5 +25,6 @@
 #define CELL_GAP 90.0f              // Amount of space reserved at top of first cell (hidden under namecard)
 #define NAVBAR_SIZE 49.0f           // size of the navigation bar (for use in resizing view for keyboard appearance)
 #define SCROLL_LENGTH 0.17f         // # of seconds to scroll the view when keyboard appears
+#define NO_RATING_TEXT @"no rating"
 
 #endif

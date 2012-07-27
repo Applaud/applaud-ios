@@ -31,6 +31,11 @@
         _employee = e;
         _ratingDimensions = [[NSMutableDictionary alloc] init];
         widgetList = [[NSMutableArray alloc] init];
+        
+        clearButtonTable = [[NSMutableDictionary alloc] init];
+        sliderLabelTable = [[NSMutableDictionary alloc] init];
+        sliderTable = [[NSMutableDictionary alloc] init];
+        activityTable = [[NSMutableDictionary alloc] init];
     }
     
     return self;
@@ -299,6 +304,7 @@
         
         // Add correct widget for this rateddimension
         UIView *responseWidget = nil;
+        int responseWidgetTag = [[[self.employee.ratingDimensions objectAtIndex:indexPath.row-1] objectForKey:@"id"] intValue];
         CGRect responseFrame = CGRectMake(CELL_PADDING,
                                           CELL_PADDING + TITLE_LABEL_HEIGHT + CELL_ELEMENT_PADDING,
                                           self.tableView.frame.size.width
@@ -317,24 +323,42 @@
         } else {
             // Add the slider
             UISlider *slider = [[UISlider alloc] initWithFrame:responseFrame];
+            [slider setMaximumValue:5.0f];
             [slider addTarget:self action:@selector(sliderValueChanged:)
                forControlEvents:UIControlEventValueChanged];
+            [sliderTable setObject:slider forKey:[[NSNumber numberWithInt:responseWidgetTag] description]];
             responseWidget = slider;
             
             // Add a label to show value of the slider
-            UILabel *sliderValue = [[UILabel alloc] initWithFrame:CGRectMake(self.tableView.frame.size.width - 100 - CELL_PADDING,
+            UILabel *sliderValue = [[UILabel alloc] initWithFrame:CGRectMake(self.tableView.frame.size.width - 125 - CELL_PADDING,
                                                                              CELL_PADDING,
                                                                              80,
                                                                              TITLE_LABEL_HEIGHT)];
             sliderValue.textAlignment = UITextAlignmentRight;
-            // Slider value label is opposite of response widget's tag.
-            sliderValue.tag = -[[[self.employee.ratingDimensions objectAtIndex:indexPath.row-1] objectForKey:@"id"] intValue];
-            sliderValue.text = @"0.00";
+            sliderValue.text = NO_RATING_TEXT;
+            sliderValue.tag = responseWidgetTag;
+            [sliderLabelTable setObject:sliderValue forKey:[[NSNumber numberWithInt:responseWidgetTag] description]];
+            
+            // Add a button to clear the rating, to be activated when the slider has been touched
+            UIButton *clearButton = [[UIButton alloc] initWithFrame:CGRectMake(self.tableView.frame.size.width - CELL_PADDING - 35,
+                                                                               CELL_PADDING + 8,
+                                                                               16,
+                                                                               16)];
+            [clearButton setBackgroundImage:[UIImage imageNamed:@"cancelup.png"] forState:UIControlStateNormal];
+            [clearButton addTarget:self action:@selector(clearButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+            clearButton.tag = responseWidgetTag;
+            [clearButtonTable setObject:clearButton forKey:[[NSNumber numberWithInt:responseWidgetTag] description]];
+           
+            [cell.contentView addSubview:clearButton];
             [cell.contentView addSubview:slider];
             [cell.contentView addSubview:sliderValue];
+            
+            // Note that the slider is untouched (i.e., inactive)
+            [activityTable setObject:[NSNumber numberWithBool:NO] forKey:[[NSNumber numberWithInt:responseWidgetTag] description]];
         }
         // Set the tag of the widget based on the ID of the RatedDimension
-        responseWidget.tag = [[[self.employee.ratingDimensions objectAtIndex:indexPath.row-1] objectForKey:@"id"] intValue];
+        responseWidget.tag = responseWidgetTag;
+        
         [widgetList addObject:responseWidget];
         
         [cell.contentView addSubview:responseWidget];
@@ -347,18 +371,38 @@
 #pragma mark IBActions
 
 /*
- * This gets when we get a notification.
+ * This gets called for a clear button pressed.
+ */
+- (IBAction)clearButtonPressed:(id)sender {
+    UIButton *clearButton = (UIButton*)sender;
+    UILabel *valueLabel = (UILabel*)[sliderLabelTable objectForKey:[[NSNumber numberWithInt:clearButton.tag] description]];
+    UISlider *slider = (UISlider*)[sliderTable objectForKey:[[NSNumber numberWithInt:clearButton.tag] description]];
+    
+    // Reset the slider
+    [slider setValue:0.0f animated:YES];
+    NSLog(@"Slider value is %f",slider.value);
+    // Reset the value label
+    [valueLabel setText:NO_RATING_TEXT];
+    [valueLabel setTextColor:[UIColor blackColor]];
+    
+    // Note that the slider is no longer active
+    [activityTable setObject:[NSNumber numberWithBool:NO] forKey:[[NSNumber numberWithInt:valueLabel.tag] description]];
+}
+
+/*
+ * This gets when when a rating slider is touched
  */
 - (IBAction)sliderValueChanged:(id)sender {
     // Set value on corresponding label
     UISlider *slider = (UISlider*)sender;
-    UILabel *valueLabel = (UILabel*)[self.view viewWithTag:-slider.tag];
-    valueLabel.text = [NSString stringWithFormat:@"%1.2f",slider.value*5.0];
+    UILabel *valueLabel = (UILabel*)[sliderLabelTable objectForKey:[[NSNumber numberWithInt:slider.tag] description]];
+    valueLabel.text = [NSString stringWithFormat:@"%1.1f",slider.value];
     
     // Change text color
-//    slider.backgroundColor = [UIColor colorWithHue:slider.value/3.0f saturation:1.0f brightness:1.0f alpha:1.0f];
     valueLabel.textColor = [UIColor colorWithHue:slider.value/3.0f saturation:1.0f brightness:0.6f alpha:1.0f];
 
+    // Note that the slider is active
+    [activityTable setObject:[NSNumber numberWithBool:YES] forKey:[[NSNumber numberWithInt:valueLabel.tag] description]];
 }
 
 - (void) submitButtonPressed:(UIButton *)sender {
@@ -375,6 +419,8 @@
     // Build dictionary for ratings
     NSMutableDictionary *ratings = [[NSMutableDictionary alloc] init];
     for ( UIView *view in widgetList ) {
+        if ( ![self sliderHasValue:(UISlider*)view] )
+            continue;
         if([view isKindOfClass:[UISlider class]]){
             UISlider *slider = (UISlider *)view;
             [ratings setObject:[NSNumber numberWithFloat:slider.value]
@@ -409,6 +455,13 @@
     EmployeeListViewController *elvc = [parent.viewControllers objectAtIndex:0];
     // Are we nulling out the employee view here???
     [elvc.employeeControllers replaceObjectAtIndex:[[elvc.tableView indexPathForSelectedRow] row] withObject:[[NSNull alloc] init]];
+}
+
+# pragma mark -
+# pragma mark Other Methods
+
+- (BOOL)sliderHasValue:(UISlider*)slider {
+    return [[activityTable objectForKey:[[NSNumber numberWithInt:slider.tag] description]] boolValue];
 }
 
 @end
