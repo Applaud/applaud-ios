@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B10A0EC15C20AE000A65FAE /* canceldown.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B10A0EA15C20AE000A65FAE /* canceldown.png */; };
+		1B10A0ED15C20AE000A65FAE /* cancelup.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B10A0EB15C20AE000A65FAE /* cancelup.png */; };
 		1B12763215B89B9600980AA2 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B12763015B89B9600980AA2 /* MasterViewController.m */; };
 		1B12763315B89B9600980AA2 /* MasterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B12763115B89B9600980AA2 /* MasterViewController.xib */; };
 		1B301C621588580E0038A5BE /* NFViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B301C601588580E0038A5BE /* NFViewController.m */; };
@@ -87,6 +89,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1B10A0EA15C20AE000A65FAE /* canceldown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = canceldown.png; sourceTree = "<group>"; };
+		1B10A0EB15C20AE000A65FAE /* cancelup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cancelup.png; sourceTree = "<group>"; };
+		1B10A0EE15C2F94F00A65FAE /* SurveyDisplayConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SurveyDisplayConstants.h; sourceTree = "<group>"; };
 		1B12762F15B89B9600980AA2 /* MasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
 		1B12763015B89B9600980AA2 /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
 		1B12763115B89B9600980AA2 /* MasterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MasterViewController.xib; sourceTree = "<group>"; };
@@ -237,6 +242,7 @@
 		1B301C69158858490038A5BE /* Questions */ = {
 			isa = PBXGroup;
 			children = (
+				1B10A0EE15C2F94F00A65FAE /* SurveyDisplayConstants.h */,
 				1B9C3A6615BA0637000EEF1A /* SurveyAccordionCell.h */,
 				1B9C3A6715BA0637000EEF1A /* SurveyAccordionCell.m */,
 				1B301C6A158858560038A5BE /* QuestionsViewController.h */,
@@ -348,6 +354,8 @@
 		1BD494ED15BDF6D3006A01A9 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				1B10A0EA15C20AE000A65FAE /* canceldown.png */,
+				1B10A0EB15C20AE000A65FAE /* cancelup.png */,
 				1BD494EE15BDF786006A01A9 /* blankPerson.jpg */,
 			);
 			name = Assets;
@@ -456,6 +464,8 @@
 				1B51401C158FA4A9008CB057 /* FirstTimeNavigatorViewControllerIphone.xib in Resources */,
 				1B12763315B89B9600980AA2 /* MasterViewController.xib in Resources */,
 				1BD494EF15BDF786006A01A9 /* blankPerson.jpg in Resources */,
+				1B10A0EC15C20AE000A65FAE /* canceldown.png in Resources */,
+				1B10A0ED15C20AE000A65FAE /* cancelup.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

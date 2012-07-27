@@ -18,6 +18,11 @@
     CGPoint previousOffset;     // The point where the scrollview was scrolled to before text editing
     
     NSMutableArray *widgetList;
+    
+    NSMutableDictionary *sliderLabelTable;
+    NSMutableDictionary *clearButtonTable;
+    NSMutableDictionary *sliderTable;
+    NSMutableDictionary *activityTable;
 }
 
 @property (nonatomic, weak) AppDelegate *appDelegate;
