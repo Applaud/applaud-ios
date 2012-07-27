@@ -399,7 +399,11 @@
     valueLabel.text = [NSString stringWithFormat:@"%1.1f",slider.value];
     
     // Change text color
-    valueLabel.textColor = [UIColor colorWithHue:slider.value/3.0f saturation:1.0f brightness:0.6f alpha:1.0f];
+    float red = (5.0f - slider.value)/5.0f;
+    float green = slider.value/5.6f;
+    float blue = 0.0f;
+    NSLog(@"red: %f green: %f blue: %f", red, green, blue);
+    valueLabel.textColor = [UIColor colorWithRed:red green:green blue:blue alpha:1.0f];
 
     // Note that the slider is active
     [activityTable setObject:[NSNumber numberWithBool:YES] forKey:[[NSNumber numberWithInt:valueLabel.tag] description]];
@@ -455,6 +459,7 @@
     EmployeeListViewController *elvc = [parent.viewControllers objectAtIndex:0];
     // Are we nulling out the employee view here???
     [elvc.employeeControllers replaceObjectAtIndex:[[elvc.tableView indexPathForSelectedRow] row] withObject:[[NSNull alloc] init]];
+    [elvc.tableView deselectRowAtIndexPath:[elvc.tableView indexPathForSelectedRow] animated:NO];
 }
 
 # pragma mark -
