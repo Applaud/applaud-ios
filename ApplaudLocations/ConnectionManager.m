@@ -63,7 +63,7 @@
                            completionHandler:^(NSURLResponse *response, NSData *d, NSError *err) {
                                if(err) {
                                    [[[UIAlertView alloc] initWithTitle:@"Connection Error"
-                                                               message:[err description]
+                                                               message:@"Apatapa couldn't connect to the internet."
                                                               delegate:nil
                                                      cancelButtonTitle:@"OK"
                                                      otherButtonTitles:nil] show];

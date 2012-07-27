@@ -57,7 +57,7 @@
     
     // Back button.
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:BACK_BUTTON_TITLE
-                                                                             style:UIBarButtonItemStyleDone
+                                                                             style:UIBarButtonItemStylePlain
                                                                             target:self
                                                                             action:@selector(backButtonPressed)];
     

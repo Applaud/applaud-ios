@@ -49,7 +49,7 @@
     self.questionLabel.text = @"Leave Comment";
     self.textField.delegate = self;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:BACK_BUTTON_TITLE
-                                                                             style:UIBarButtonItemStyleDone
+                                                                             style:UIBarButtonItemStylePlain
                                                                             target:self
                                                                             action:@selector(backButtonPressed)];
 }
