@@ -137,13 +137,18 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [self.questionsTable dequeueReusableCellWithIdentifier:CellIdentifier];
+    SurveyAccordionCell *cell = [self.questionsTable dequeueReusableCellWithIdentifier:CellIdentifier];
     
     if ( nil == cell ) {
         cell = [[SurveyAccordionCell alloc] initWithStyle:UITableViewCellStyleDefault
                                           reuseIdentifier:CellIdentifier
                                                     field:[self.survey.fields objectAtIndex:indexPath.section]];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        if ( indexPath.section == 0 ) {
+            [cell expand];
+            [cell layoutSubviews];
+        }
     }
     
     return cell;
@@ -224,12 +229,9 @@
     }
     
     // Note selected state of currently selected question by putting adjusted height (expanded height)
-    // into the questinoSelections array.
+    // into the questionSelections array.
     [questionSelections replaceObjectAtIndex:indexPath.section 
                                   withObject:[NSNumber numberWithFloat:[cell expandedHeight]]];
-   
-    // Set selection state of cell to "NO"
-//    [self.questionsTable deselectRowAtIndexPath:indexPath animated:YES];
 
     // Perform animation
     [self.questionsTable beginUpdates];
@@ -237,20 +239,6 @@
     
     // Show question body
     [cell expand];
-    
-//    SurveyFieldViewController *sfvc;
-//    if([[self.surveyControllers objectAtIndex:indexPath.section] isKindOfClass:[NSNull class]]) {
-//        sfvc = [[SurveyFieldViewController alloc] initWithNibName:@"SurveyFieldViewController" bundle:nil];
-//        sfvc.field = [self.survey.fields objectAtIndex:indexPath.section];
-//        [self.surveyControllers replaceObjectAtIndex:indexPath.section withObject:sfvc];
-//        // Give the SurveyViewController the right background color.
-//        sfvc.view.opaque = YES;
-//        sfvc.view.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
-//    }
-//    else {
-//        sfvc = [self.surveyControllers objectAtIndex:indexPath.section];
-//    }
-//    [self.navigationController pushViewController:sfvc animated:YES];
 }
 
 #pragma mark -
@@ -401,9 +389,13 @@
     
     // Set up selection array
     questionSelections = [[NSMutableArray alloc] init];
-    for ( int i=0; i<survey.fields.count; i++ ){ 
+    for ( int i=0; i<survey.fields.count; i++ ){
         [questionSelections addObject:[NSNumber numberWithBool:NO]];
     }
+    // First question is already expanded
+    CGFloat genFeedbackLabelHeight = [[[fields objectAtIndex:0] label] sizeWithFont:[UIFont boldSystemFontOfSize:TITLE_SIZE] constrainedToSize:CGSizeMake(self.view.frame.size.width - 2*CELL_MARGIN - 2*CELL_PADDING, 300) lineBreakMode:UILineBreakModeWordWrap].height;
+    [questionSelections setObject:[NSNumber numberWithFloat:2*CELL_PADDING + 2*CELL_ELEMENT_PADDING + 2*WIDGET_HEIGHT + genFeedbackLabelHeight]
+               atIndexedSubscript:0];
     
     // Load the table
     [self.questionsTable reloadData];
