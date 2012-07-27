@@ -109,7 +109,7 @@
                                             + MAX(self.imageView.frame.size.height,
                                                   self.titleLabel.frame.size.height)
                                             + CELL_ELEMENT_PADDING, 
-                                            contentRect.size.width - 2*CELL_ELEMENT_PADDING, 
+                                            contentRect.size.width - 2*CELL_PADDING, 
                                             bodySize.height)];
                                                               
     }
