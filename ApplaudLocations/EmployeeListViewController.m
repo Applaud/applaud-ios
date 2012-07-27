@@ -13,6 +13,8 @@
 #import "SDWebImage/UIImageView+WebCache.h"
 #import "AppDelegate.h"
 
+#define NO_EMPLOYEES_MESSAGE @"This business hasn't added any employees yet. Check back later!"
+
 @implementation EmployeeListViewController
 
 @synthesize appDelegate = _appDelegate;
@@ -73,6 +75,9 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if(self.employeeArray.count == 0) {
+        return 1;
+    }
     return self.employeeArray.count;
 }
 
@@ -85,18 +90,39 @@
     }
     
     // Configure the cell...
-    [cell.textLabel setText:[[self.employeeArray objectAtIndex:indexPath.row] description]];
-    cell.contentView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
-    cell.textLabel.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
-    cell.detailTextLabel.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
-    [cell.imageView setImageWithURL:[(Employee*)[self.employeeArray objectAtIndex:indexPath.row] imageURL]
-                   placeholderImage:[UIImage imageNamed:@"blankPerson.jpg"]];
-    tableView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
-
+    if(self.employeeArray.count == 0) {
+        // 10 lines is pretty big, but we won't actually
+        // use that many.
+        cell.textLabel.numberOfLines = 10;
+        cell.textLabel.text = NO_EMPLOYEES_MESSAGE;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+    }
+    else {
+        [cell.textLabel setText:[[self.employeeArray objectAtIndex:indexPath.row] description]];
+        cell.contentView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+        cell.textLabel.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+        cell.detailTextLabel.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+        [cell.imageView setImageWithURL:[(Employee*)[self.employeeArray objectAtIndex:indexPath.row] imageURL]
+                       placeholderImage:[UIImage imageNamed:@"blankPerson.jpg"]];
+        tableView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+    }
     return cell;
 }
 
+// If it's NO_EMPLOYEES_MESSAGE, return an appropriate size. Else return the default.
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if(self.employeeArray.count == 0 && indexPath.row == 0) {
+        return 100;
+    }
+    else return 44;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if(self.employeeArray.count == 0) {
+        // Don't do anything.
+        return;
+    }
     Employee *employee = [self.employeeArray objectAtIndex:indexPath.row];
     EmployeeViewController *evc;
     if([[self.employeeControllers objectAtIndex:indexPath.row] isKindOfClass:[NSNull class]]) {

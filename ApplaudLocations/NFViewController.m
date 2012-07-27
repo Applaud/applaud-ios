@@ -13,6 +13,8 @@
 #import "NFDisplayConstants.h"
 #import <QuartzCore/QuartzCore.h>
 
+#define NO_NEWSFEED_MESSAGE @"This business doesn't have any news items yet. Check back later!"
+
 @implementation NFViewController
 
 @synthesize appDelegate = _appDelegate;
@@ -26,7 +28,10 @@
     if (self) {
         // Let us know about updates from the newsfeed.
         // [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newfeedReceived:) name:@"NEWSFEED_RECEIVED" object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notificationReceived:) name:@"BUSINESS_SET" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(notificationReceived:)
+                                                     name:@"BUSINESS_SET"
+                                                   object:nil];
         _newsFeeds = [[NSMutableArray alloc] init];
         [self setTitle:@"Newsfeed"];
     }
@@ -68,16 +73,25 @@
 #pragma mark UITableView data source methods
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    if(self.newsFeeds.count == 0) {
+        return @"";
+    }
     NSDateFormatter *format = [[NSDateFormatter alloc] init];
     format.dateStyle = NSDateFormatterLongStyle;
     return [format stringFromDate:[[[self.newsFeeds objectAtIndex:section] objectAtIndex:0] date]];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    if(self.newsFeeds.count == 0) {
+        return 1;
+    }
     return self.newsFeeds.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if(self.newsFeeds.count == 0) {
+        return 1;
+    }
     return [[self.newsFeeds objectAtIndex:section] count];
 }
 
@@ -86,10 +100,21 @@
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
     if ( nil == cell ) {
-        cell = [[NFTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                      reuseIdentifier:cellIdentifier 
-                                             newsfeed:[[self.newsFeeds objectAtIndex:indexPath.section] 
-                                                       objectAtIndex:indexPath.row]];
+        if(self.newsFeeds.count == 0) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+            cell.textLabel.lineBreakMode = UILineBreakModeWordWrap;
+            // Way larger than we'll need it to be -- it's the maximum number,
+            // not necessarily the number which will be used.
+            cell.textLabel.numberOfLines = 10;
+            cell.textLabel.text = NO_NEWSFEED_MESSAGE;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        }
+        else {
+            cell = [[NFTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                          reuseIdentifier:cellIdentifier
+                                                 newsfeed:[[self.newsFeeds objectAtIndex:indexPath.section]
+                                                           objectAtIndex:indexPath.row]];
+        }
     }
      
     return cell;
@@ -99,6 +124,10 @@
 #pragma mark UITableView delegate methods
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    // If we don't have any newsfeeds, don't do anything special.
+    if(self.newsFeeds.count == 0) {
+        return;
+    }
     // Set shape and color
     cell.backgroundColor = [UIColor whiteColor];
     cell.contentView.backgroundColor = [UIColor whiteColor];
@@ -111,6 +140,12 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Return the number of lines we'll need, plus a bit of padding.
+    if(self.newsFeeds.count == 0) {
+        return [NO_NEWSFEED_MESSAGE sizeWithFont:[UIFont systemFontOfSize:20.0f]
+                                 constrainedToSize:CGSizeMake(300, 1000)
+                                     lineBreakMode:UILineBreakModeWordWrap].height + 20;
+    }
     CGSize constraintSize;
     NFItem *nfItem = [[self.newsFeeds objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     if ( ! [[nfItem.imageURL absoluteString] isEqualToString:@""] ) {
@@ -146,6 +181,10 @@
  * create a new detail view controller and show it
  */
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    // No newsfeeds, don't do anything.
+    if(self.newsFeeds.count == 0 ) {
+        return;
+    }
     NFItemViewController *nfivc = [[NFItemViewController alloc] initWithNibName:@"NFItemViewController" bundle:nil];
     nfivc.item = [[self.newsFeeds objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     nfivc.view.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
