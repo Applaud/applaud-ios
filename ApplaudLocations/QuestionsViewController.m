@@ -7,15 +7,8 @@
 //
 
 #import "QuestionsViewController.h"
+#import "SurveyDisplayConstants.h"
 #import "SurveyAccordionCell.h"
-
-#define CELL_ELEMENT_PADDING 5.0f   // how much space between things inside of the cell
-#define CELL_PADDING 10.0f          // space between cell wall and anything else
-#define CELL_MARGIN 22.0f           // space between outside of the cell and edge of the screen
-#define TITLE_SIZE 18.0f            // size of newsfeed item titles
-#define SUBTITLE_SIZE 12.0f         // size of newsfeed item subtitles
-#define NAVBAR_SIZE 49.0f           // size of the navigation bar (for use in resizing view for keyboard appearance)
-#define SCROLL_LENGTH 0.17f         // # of seconds to scroll the view when keyboard appears
 
 @implementation QuestionsViewController
 @synthesize appDelegate = _appDelegate;

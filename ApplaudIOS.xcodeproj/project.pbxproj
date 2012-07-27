@@ -91,6 +91,7 @@
 /* Begin PBXFileReference section */
 		1B10A0EA15C20AE000A65FAE /* canceldown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = canceldown.png; sourceTree = "<group>"; };
 		1B10A0EB15C20AE000A65FAE /* cancelup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cancelup.png; sourceTree = "<group>"; };
+		1B10A0EE15C2F94F00A65FAE /* SurveyDisplayConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SurveyDisplayConstants.h; sourceTree = "<group>"; };
 		1B12762F15B89B9600980AA2 /* MasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
 		1B12763015B89B9600980AA2 /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
 		1B12763115B89B9600980AA2 /* MasterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MasterViewController.xib; sourceTree = "<group>"; };
@@ -241,6 +242,7 @@
 		1B301C69158858490038A5BE /* Questions */ = {
 			isa = PBXGroup;
 			children = (
+				1B10A0EE15C2F94F00A65FAE /* SurveyDisplayConstants.h */,
 				1B9C3A6615BA0637000EEF1A /* SurveyAccordionCell.h */,
 				1B9C3A6715BA0637000EEF1A /* SurveyAccordionCell.m */,
 				1B301C6A158858560038A5BE /* QuestionsViewController.h */,
