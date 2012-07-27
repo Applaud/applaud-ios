@@ -92,17 +92,8 @@
     nfvc.navigationController = newsNav;
     nfvc.appDelegate = self;
 	
-	// Finally GeneralFeedbackViewController
-	GeneralFeedbackViewController *gfvc = [[GeneralFeedbackViewController alloc] init];
-	[gfvc setTitle:@"Leave Comment"];
-	UINavigationController *generalNav = [[UINavigationController alloc] initWithRootViewController:gfvc];
-	gfvc.navigationController = generalNav;
-    gfvc.appDelegate = self;
-	
     tabNavigator.viewControllers = [NSArray arrayWithObjects:
                                     employeeNav,
-                                    [[UIViewController alloc] init],    // This is a dummy!!
-									generalNav,
                                     questionNav,
                                     newsNav,
                                     nil];
@@ -177,18 +168,6 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-}
-
-#pragma mark -
-#pragma mark Tabbar delegate
-
-/*
- * make sure we can't select the empty view controller in the space between evaluations and everything else
- */
-- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
-    if([viewController isEqual:[tabBarController.viewControllers objectAtIndex:1]])
-        return NO;
-    return YES;
 }
 
 #pragma mark -
