@@ -17,7 +17,6 @@
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *locationsArray;
 @property (nonatomic, strong) MapViewController *mapViewController;
-@property (nonatomic, strong) IBOutlet UILabel *titleLabel;
 @property (nonatomic, weak) UIWindow *window;
 @property (nonatomic, weak) AppDelegate *appDelegate;
 

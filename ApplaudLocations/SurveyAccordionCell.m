@@ -49,6 +49,7 @@
                 textView.layer.borderWidth = 2.0;
                 [textView setReturnKeyType:UIReturnKeyDone];
                 textView.delegate = self;
+                textView.font = [UIFont systemFontOfSize:16.0];
                 [questionWidgets addObject:textView];
             }
                 break;

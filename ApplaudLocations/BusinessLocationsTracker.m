@@ -12,13 +12,15 @@
 
 @implementation BusinessLocationsTracker
 
+@synthesize locMan = _locMan;
+
 - (id)init {
     self = [super init];
     if ( self ) {
-        locMan = [[CLLocationManager alloc] init];
-        locMan.desiredAccuracy = kCLLocationAccuracyBest;
-        locMan.delegate = self;
-        [locMan startUpdatingLocation];
+        self.locMan = [[CLLocationManager alloc] init];
+        self.locMan.desiredAccuracy = kCLLocationAccuracyBest;
+        self.locMan.delegate = self;
+        [self.locMan startUpdatingLocation];
         serverData = [[NSMutableData alloc] init];
     }
     
@@ -88,6 +90,14 @@
             NSLog(@"%@", [dict objectForKey:@"primary"]);
             [businessArray addObject:bus];
         }
+        
+        if( ! businessArray.count ){
+            [[[UIAlertView alloc] initWithTitle:@"Sorry..."
+                                        message:@"There aren't any businesses in your area"
+                                       delegate:self
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:@"Refresh", nil] show];
+        }
         NSLog(@"sent BUSINESS_RECEIVED");
         // put some info in the notificationcenter
         [[NSNotificationCenter defaultCenter] postNotificationName:@"BUSINESS_RECEIVED" object:businessArray];
@@ -123,6 +133,18 @@
     
     serverData = nil;
     urlConnection = nil;
+}
+
+#pragma mark -
+#pragma UIAlertViewDelegate methods
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if(buttonIndex == 0) {
+        exit(0);
+    }
+    else if(buttonIndex == 1) {
+        [self findBusinessesWithLocation:self.locMan.location.coordinate];
+    }
 }
 
 #pragma mark -
