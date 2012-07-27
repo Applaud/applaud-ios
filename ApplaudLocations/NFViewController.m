@@ -112,9 +112,7 @@
         if(self.newsFeeds.count == 0) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
             cell.textLabel.lineBreakMode = UILineBreakModeWordWrap;
-            // Way larger than we'll need it to be -- it's the maximum number,
-            // not necessarily the number which will be used.
-            cell.textLabel.numberOfLines = 10;
+            cell.textLabel.numberOfLines = 0;
             cell.textLabel.text = NO_NEWSFEED_MESSAGE;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
@@ -133,10 +131,6 @@
 #pragma mark UITableView delegate methods
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    // If we don't have any newsfeeds, don't do anything special.
-    if(self.newsFeeds.count == 0) {
-        return;
-    }
     // Set shape and color
     cell.backgroundColor = [UIColor whiteColor];
     cell.contentView.backgroundColor = [UIColor whiteColor];
@@ -214,9 +208,6 @@
     NSDictionary *dict = [[NSDictionary alloc] initWithObjects:valArray forKeys:keyArray];
 
     NSError *error = nil;
-//    NSData *data = [NSJSONSerialization dataWithJSONObject:dict
-//                                                   options:0
-//                                                     error:&error];
     if(error) {
         NSLog(@"%@", error);
     }
@@ -235,12 +226,12 @@
         NSLog(@"%d", self.newsFeeds.count);
         
         [format setDateFormat:@"MM/dd/yyyy"];
-        for(NSDictionary *feed in items) {
+        for ( NSDictionary *feed in items ) {
             NSString *imageURLString = @"";
             if (! [[feed objectForKey:@"image"] isEqualToString:@""] ) {
                 imageURLString = [NSString stringWithFormat:@"%@%@", SERVER_URL, [feed objectForKey:@"image"]];
             }
-                                            
+            
             [self.newsFeeds addObject:[[NFItem alloc] initWithTitle:[feed objectForKey:@"title"]
                                                            subtitle:[feed objectForKey:@"subtitle"]
                                                                body:[feed objectForKey:@"body"]

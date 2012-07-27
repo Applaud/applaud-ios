@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
 #import "BusinessLocationsTracker.h"
-#import "GeneralFeedbackViewController.h"
 #import "ApplaudProgramSettingsModel.h"
 #import "Business.h"
 

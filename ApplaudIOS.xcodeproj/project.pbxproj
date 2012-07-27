@@ -51,8 +51,6 @@
 		6F875EF61591594600555390 /* FirstTimeNavigatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F875EF51591594600555390 /* FirstTimeNavigatorViewController.m */; };
 		6F8C8A2B158C03DB00BB4BA0 /* Employee.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F8C8A2A158C03DB00BB4BA0 /* Employee.m */; };
 		6FAB07A01587BF0700C9F1DF /* BusinessAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FAB079F1587BF0700C9F1DF /* BusinessAnnotation.m */; };
-		6FE182A7158E957A00FF78E7 /* GeneralFeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FE182A5158E957A00FF78E7 /* GeneralFeedbackViewController.m */; };
-		6FE182A8158E957A00FF78E7 /* GeneralFeedbackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6FE182A6158E957A00FF78E7 /* GeneralFeedbackViewController.xib */; };
 		6FFAD3E1158E60A5000CE190 /* SurveyFieldViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FFAD3DF158E60A5000CE190 /* SurveyFieldViewController.m */; };
 		6FFAD3E2158E60A5000CE190 /* SurveyFieldViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6FFAD3E0158E60A5000CE190 /* SurveyFieldViewController.xib */; };
 /* End PBXBuildFile section */
@@ -161,9 +159,6 @@
 		6F8C8A2A158C03DB00BB4BA0 /* Employee.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Employee.m; sourceTree = "<group>"; };
 		6FAB079E1587BF0700C9F1DF /* BusinessAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessAnnotation.h; sourceTree = "<group>"; };
 		6FAB079F1587BF0700C9F1DF /* BusinessAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessAnnotation.m; sourceTree = "<group>"; };
-		6FE182A4158E957A00FF78E7 /* GeneralFeedbackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeneralFeedbackViewController.h; sourceTree = "<group>"; };
-		6FE182A5158E957A00FF78E7 /* GeneralFeedbackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneralFeedbackViewController.m; sourceTree = "<group>"; };
-		6FE182A6158E957A00FF78E7 /* GeneralFeedbackViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GeneralFeedbackViewController.xib; sourceTree = "<group>"; };
 		6FFAD3DE158E60A5000CE190 /* SurveyFieldViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SurveyFieldViewController.h; sourceTree = "<group>"; };
 		6FFAD3DF158E60A5000CE190 /* SurveyFieldViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SurveyFieldViewController.m; sourceTree = "<group>"; };
 		6FFAD3E0158E60A5000CE190 /* SurveyFieldViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SurveyFieldViewController.xib; sourceTree = "<group>"; };
@@ -317,7 +312,6 @@
 			children = (
 				1BD494ED15BDF6D3006A01A9 /* Assets */,
 				1B514017158FA3C7008CB057 /* DBModels */,
-				6FE182A2158E955900FF78E7 /* General Feedback */,
 				1B301C69158858490038A5BE /* Questions */,
 				1B301C5E158857D20038A5BE /* Employee */,
 				1B301C5B158856470038A5BE /* Newsfeed */,
@@ -359,16 +353,6 @@
 				1BD494EE15BDF786006A01A9 /* blankPerson.jpg */,
 			);
 			name = Assets;
-			sourceTree = "<group>";
-		};
-		6FE182A2158E955900FF78E7 /* General Feedback */ = {
-			isa = PBXGroup;
-			children = (
-				6FE182A4158E957A00FF78E7 /* GeneralFeedbackViewController.h */,
-				6FE182A5158E957A00FF78E7 /* GeneralFeedbackViewController.m */,
-				6FE182A6158E957A00FF78E7 /* GeneralFeedbackViewController.xib */,
-			);
-			name = "General Feedback";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -460,7 +444,6 @@
 				6F37B93C1589400E001DD06D /* NFItemViewController.xib in Resources */,
 				1BFF2E7F158D9CDC00753F94 /* EmployeeListViewController.xib in Resources */,
 				6FFAD3E2158E60A5000CE190 /* SurveyFieldViewController.xib in Resources */,
-				6FE182A8158E957A00FF78E7 /* GeneralFeedbackViewController.xib in Resources */,
 				1B51401C158FA4A9008CB057 /* FirstTimeNavigatorViewControllerIphone.xib in Resources */,
 				1B12763315B89B9600980AA2 /* MasterViewController.xib in Resources */,
 				1BD494EF15BDF786006A01A9 /* blankPerson.jpg in Resources */,
@@ -492,7 +475,6 @@
 				6F8C8A2B158C03DB00BB4BA0 /* Employee.m in Sources */,
 				1BFF2E7E158D9CDC00753F94 /* EmployeeListViewController.m in Sources */,
 				6FFAD3E1158E60A5000CE190 /* SurveyFieldViewController.m in Sources */,
-				6FE182A7158E957A00FF78E7 /* GeneralFeedbackViewController.m in Sources */,
 				1B514013158F9441008CB057 /* ApplaudProgramState.xcdatamodeld in Sources */,
 				1B514016158FA233008CB057 /* ApplaudProgramSettingsModel.m in Sources */,
 				1B9528C01590D87500103723 /* ConnectionManager.m in Sources */,
