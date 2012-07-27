@@ -103,9 +103,7 @@
         if(self.newsFeeds.count == 0) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
             cell.textLabel.lineBreakMode = UILineBreakModeWordWrap;
-            // Way larger than we'll need it to be -- it's the maximum number,
-            // not necessarily the number which will be used.
-            cell.textLabel.numberOfLines = 10;
+            cell.textLabel.numberOfLines = 0;
             cell.textLabel.text = NO_NEWSFEED_MESSAGE;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
@@ -124,10 +122,6 @@
 #pragma mark UITableView delegate methods
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    // If we don't have any newsfeeds, don't do anything special.
-    if(self.newsFeeds.count == 0) {
-        return;
-    }
     // Set shape and color
     cell.backgroundColor = [UIColor whiteColor];
     cell.contentView.backgroundColor = [UIColor whiteColor];
