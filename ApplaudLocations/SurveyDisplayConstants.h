@@ -18,5 +18,7 @@
 #define POSITIVE_RESPONSE 0         // What index a UISegmentedControl is in that indicates a "yes"
 #define NAVBAR_SIZE 49.0f           // size of the navigation bar (for use in resizing view for keyboard appearance)
 #define SCROLL_LENGTH 0.17f         // # of seconds to scroll the view when keyboard appears
+#define VIEW_LEFT_PADDING 20.0f     // Padding on left edge of the view itself
+#define VIEW_TOP_PADDING 6.0f       // Padding on top edge of the view itself
 
 #endif

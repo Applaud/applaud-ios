@@ -104,13 +104,23 @@
     
     // Create label with section title
     UILabel *label = [[UILabel alloc] init];
-    label.frame = CGRectMake(20, 6, 300, 30);
     label.backgroundColor = [UIColor clearColor];
     label.font = [UIFont systemFontOfSize:14.0f];
     label.text = sectionTitle;
+    label.numberOfLines = 0;
+    label.lineBreakMode = UILineBreakModeWordWrap;
+    
+    CGSize labelSizeConstraint = CGSizeMake(self.view.frame.size.width - 2*CELL_PADDING - 30,
+                                            300);
+    CGFloat labelHeight = [sectionTitle sizeWithFont:[UIFont systemFontOfSize:14.0f]
+                                   constrainedToSize:labelSizeConstraint
+                                       lineBreakMode:UILineBreakModeWordWrap].height;
+    label.frame = CGRectMake(VIEW_LEFT_PADDING, VIEW_TOP_PADDING, labelSizeConstraint.width, labelHeight);
+    label.textAlignment = UITextAlignmentCenter;
     
     // Create header view and add label as a subview
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 35)];
+    UIView *view = [[UIView alloc] init];
+    [view sizeToFit];
     [view addSubview:label];
     
     return view;
