@@ -7,15 +7,8 @@
 //
 
 #import "QuestionsViewController.h"
+#import "SurveyDisplayConstants.h"
 #import "SurveyAccordionCell.h"
-
-#define CELL_ELEMENT_PADDING 5.0f   // how much space between things inside of the cell
-#define CELL_PADDING 10.0f          // space between cell wall and anything else
-#define CELL_MARGIN 22.0f           // space between outside of the cell and edge of the screen
-#define TITLE_SIZE 18.0f            // size of newsfeed item titles
-#define SUBTITLE_SIZE 12.0f         // size of newsfeed item subtitles
-#define NAVBAR_SIZE 49.0f           // size of the navigation bar (for use in resizing view for keyboard appearance)
-#define SCROLL_LENGTH 0.17f         // # of seconds to scroll the view when keyboard appears
 
 @implementation QuestionsViewController
 @synthesize appDelegate = _appDelegate;
@@ -111,13 +104,23 @@
     
     // Create label with section title
     UILabel *label = [[UILabel alloc] init];
-    label.frame = CGRectMake(20, 6, 300, 30);
     label.backgroundColor = [UIColor clearColor];
     label.font = [UIFont systemFontOfSize:14.0f];
     label.text = sectionTitle;
+    label.numberOfLines = 0;
+    label.lineBreakMode = UILineBreakModeWordWrap;
+    
+    CGSize labelSizeConstraint = CGSizeMake(self.view.frame.size.width - 2*CELL_PADDING - 30,
+                                            300);
+    CGFloat labelHeight = [sectionTitle sizeWithFont:[UIFont systemFontOfSize:14.0f]
+                                   constrainedToSize:labelSizeConstraint
+                                       lineBreakMode:UILineBreakModeWordWrap].height;
+    label.frame = CGRectMake(VIEW_LEFT_PADDING, VIEW_TOP_PADDING, labelSizeConstraint.width, labelHeight);
+    label.textAlignment = UITextAlignmentCenter;
     
     // Create header view and add label as a subview
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 35)];
+    UIView *view = [[UIView alloc] init];
+    [view sizeToFit];
     [view addSubview:label];
     
     return view;
