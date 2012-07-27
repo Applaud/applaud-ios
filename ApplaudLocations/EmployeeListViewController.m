@@ -48,11 +48,18 @@
     }
 }
 
+-(void)backButtonPressed {
+    [self.appDelegate backButtonPressed];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-//    [self getEmployees];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:BACK_BUTTON_TITLE
+                                                                             style:UIBarButtonItemStyleDone
+                                                                            target:self
+                                                                            action:@selector(backButtonPressed)];
 }
 
 - (void)viewDidUnload

@@ -16,7 +16,7 @@
 
 @implementation MasterViewController
 
-@synthesize locationsArray, mapViewController, tableView, titleLabel, tabBarController, window=_window;
+@synthesize locationsArray, mapViewController, tableView, tabBarController, window=_window;
 @synthesize settings = _settings;
 @synthesize appDelegate = _appDelegate;
 
@@ -45,7 +45,6 @@
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] init];
     backButton.title = @"List View";
     self.navigationItem.backBarButtonItem = backButton;
-    [self.view addSubview:titleLabel];
     [self.view addSubview:tableView];
     
     // Show our title
@@ -55,8 +54,6 @@
 - (void)viewDidUnload
 {
     [super viewDidUnload];
-    
-    self.titleLabel = nil;
     self.tableView = nil;
 }
 
