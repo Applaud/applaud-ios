@@ -44,6 +44,9 @@
     self.navigationItem.backBarButtonItem = backButton;
     [self.view addSubview:titleLabel];
     [self.view addSubview:tableView];
+    
+    // Show our title
+    [self setTitle:@"Available Locations"];
 }
 
 - (void)viewDidUnload
