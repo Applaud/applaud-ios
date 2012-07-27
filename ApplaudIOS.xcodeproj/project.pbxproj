@@ -23,7 +23,6 @@
 		1B51401C158FA4A9008CB057 /* FirstTimeNavigatorViewControllerIphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B51401B158FA4A9008CB057 /* FirstTimeNavigatorViewControllerIphone.xib */; };
 		1B73581D15BDF08F00D87F4E /* libSDWebImageARC.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B73581715BDF03D00D87F4E /* libSDWebImageARC.a */; };
 		1B73582015BDF0A500D87F4E /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B73581F15BDF0A500D87F4E /* ImageIO.framework */; };
-		1B9389A81583CB170088F468 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B9389A71583CB170088F468 /* MapViewController.m */; };
 		1B9389AA1583CB460088F468 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B9389A91583CB460088F468 /* MapKit.framework */; };
 		1B9389B01583EB110088F468 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B9389AF1583EB110088F468 /* CoreLocation.framework */; };
 		1B9389BB1584EF010088F468 /* BusinessLocationsTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B9389BA1584EF010088F468 /* BusinessLocationsTracker.m */; };
@@ -109,8 +108,6 @@
 		1B51401B158FA4A9008CB057 /* FirstTimeNavigatorViewControllerIphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FirstTimeNavigatorViewControllerIphone.xib; sourceTree = "<group>"; };
 		1B73580B15BDF03C00D87F4E /* SDWebImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SDWebImage.xcodeproj; path = SDWebImage/SDWebImage.xcodeproj; sourceTree = "<group>"; };
 		1B73581F15BDF0A500D87F4E /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
-		1B9389A61583CB170088F468 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
-		1B9389A71583CB170088F468 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		1B9389A91583CB460088F468 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		1B9389AF1583EB110088F468 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		1B9389B91584EF010088F468 /* BusinessLocationsTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessLocationsTracker.h; sourceTree = "<group>"; };
@@ -190,8 +187,6 @@
 				1B12762F15B89B9600980AA2 /* MasterViewController.h */,
 				1B12763015B89B9600980AA2 /* MasterViewController.m */,
 				1B12763115B89B9600980AA2 /* MasterViewController.xib */,
-				1B9389A61583CB170088F468 /* MapViewController.h */,
-				1B9389A71583CB170088F468 /* MapViewController.m */,
 				6FAB079E1587BF0700C9F1DF /* BusinessAnnotation.h */,
 				6FAB079F1587BF0700C9F1DF /* BusinessAnnotation.m */,
 			);
@@ -461,7 +456,6 @@
 			files = (
 				1BA358F41582F05E00EB8F32 /* main.m in Sources */,
 				1BA358F81582F05E00EB8F32 /* AppDelegate.m in Sources */,
-				1B9389A81583CB170088F468 /* MapViewController.m in Sources */,
 				1B9389BB1584EF010088F468 /* BusinessLocationsTracker.m in Sources */,
 				6F2A39171587B2AB0024FB52 /* Business.m in Sources */,
 				6FAB07A01587BF0700C9F1DF /* BusinessAnnotation.m in Sources */,
