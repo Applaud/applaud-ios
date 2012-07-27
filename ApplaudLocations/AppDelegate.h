@@ -13,6 +13,8 @@
 #import "ApplaudProgramSettingsModel.h"
 #import "Business.h"
 
+@class MasterViewController;
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate, UITabBarControllerDelegate, UIAlertViewDelegate, NSURLConnectionDelegate> {
     NSMutableData *connectionData;
 }
@@ -20,7 +22,9 @@
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) BusinessLocationsTracker *tracker;
 @property (strong, nonatomic) Business *currentBusiness;
-
+@property (strong, nonatomic) MasterViewController *masterViewController;
+@property (strong, nonatomic) UINavigationController *navControl;
+@property (strong, nonatomic) UITabBarController *tabNavigator;
 
 /**
  * Stores the user's settings
@@ -36,7 +40,7 @@
 @property (nonatomic, retain, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (nonatomic, readonly) NSString *applicationDocumentPath;
 
-
+-(void)backButtonPressed;
 - (NSString *)applicationDocumentsDirectory;
 
 @end

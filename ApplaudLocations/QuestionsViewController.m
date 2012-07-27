@@ -48,6 +48,10 @@
     }
 }
 
+-(void)backButtonPressed {
+    [self.appDelegate backButtonPressed];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -56,6 +60,12 @@
 	if(nil == _survey) {
         //[self getSurveys];
 	}
+    
+    // Back button.
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:BACK_BUTTON_TITLE
+                                                                             style:UIBarButtonItemStyleDone
+                                                                            target:self
+                                                                            action:@selector(backButtonPressed)];
     
     // register for keyboard notifications
     [[NSNotificationCenter defaultCenter] addObserver:self 

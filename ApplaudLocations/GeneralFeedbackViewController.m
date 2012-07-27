@@ -48,6 +48,14 @@
     // Do any additional setup after loading the view from its nib.
     self.questionLabel.text = @"Leave Comment";
     self.textField.delegate = self;
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:BACK_BUTTON_TITLE
+                                                                             style:UIBarButtonItemStyleDone
+                                                                            target:self
+                                                                            action:@selector(backButtonPressed)];
+}
+
+-(void)backButtonPressed {
+    [self.appDelegate backButtonPressed];
 }
 
 - (void)viewDidUnload
