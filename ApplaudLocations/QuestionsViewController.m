@@ -347,8 +347,13 @@
     
     // Creating the fields of the survey
     NSMutableArray *fields = [[NSMutableArray alloc] init];
-    for(NSDictionary *dict in [surveyData objectForKey:@"questions"]) {
-        NSLog(@"Looping through survey data....");
+    int genFeedbackIndex = 0;
+    for ( int i=0; i<[(NSArray*)[surveyData objectForKey:@"questions"] count]; i++) {
+        NSDictionary *dict = [[surveyData objectForKey:@"questions"] objectAtIndex:i];
+        
+        if ( [[dict objectForKey:@"general_feedback"] boolValue] )
+            genFeedbackIndex = i;
+        
         NSString *type = [dict objectForKey:@"type"];
         QuestionType widgetType;
         if([type isEqualToString:@"TF"]) {
@@ -369,7 +374,11 @@
                                                      options:[dict objectForKey:@"options"]
                            ];
         [fields addObject:sf];
-    }   
+    }
+    SurveyField *temp = [fields objectAtIndex:0];
+    [fields setObject:[fields objectAtIndex:genFeedbackIndex] atIndexedSubscript:0];
+    [fields setObject:temp atIndexedSubscript:genFeedbackIndex];
+
     NSLog(@"%@",fields.description);
     
     // Creating the survey model

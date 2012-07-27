@@ -199,9 +199,6 @@
     NSDictionary *dict = [[NSDictionary alloc] initWithObjects:valArray forKeys:keyArray];
 
     NSError *error = nil;
-//    NSData *data = [NSJSONSerialization dataWithJSONObject:dict
-//                                                   options:0
-//                                                     error:&error];
     if(error) {
         NSLog(@"%@", error);
     }
@@ -215,12 +212,12 @@
         NSArray *items = [dict objectForKey:@"newsfeed_items"];
         NSDateFormatter *format = [[NSDateFormatter alloc] init];
         [format setDateFormat:@"MM/dd/yyyy"];
-        for(NSDictionary *feed in items) {
+        for ( NSDictionary *feed in items ) {
             NSString *imageURLString = @"";
             if (! [[feed objectForKey:@"image"] isEqualToString:@""] ) {
                 imageURLString = [NSString stringWithFormat:@"%@%@", SERVER_URL, [feed objectForKey:@"image"]];
             }
-                                            
+            
             [self.newsFeeds addObject:[[NFItem alloc] initWithTitle:[feed objectForKey:@"title"]
                                                            subtitle:[feed objectForKey:@"subtitle"]
                                                                body:[feed objectForKey:@"body"]
