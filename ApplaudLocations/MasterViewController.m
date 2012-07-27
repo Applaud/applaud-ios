@@ -37,8 +37,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     [self.navigationItem setRightBarButtonItem: [[UIBarButtonItem alloc] initWithTitle:@"Map" style:UIBarButtonItemStyleBordered target:self action:@selector(showMapView)]];
+    [self.navigationItem setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
+                                                                                            target:self
+                                                                                            action:@selector(refreshButtonPressed)]];
+    self.navigationItem.title = @"Available Locations";
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] init];
     backButton.title = @"List View";
     self.navigationItem.backBarButtonItem = backButton;
@@ -152,6 +155,10 @@
 - (void) businessReceived:(NSNotification *)notification {
     self.locationsArray = [notification object];
     [tableView reloadData];
+}
+
+-(void)refreshButtonPressed {
+    [self.appDelegate.tracker findBusinessesWithLocation:self.appDelegate.tracker.locMan.location.coordinate];
 }
 
 - (void) downloadFinished:(NSNotification *)notification {
