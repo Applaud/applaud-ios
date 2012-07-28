@@ -102,15 +102,9 @@
         // put some info in the notificationcenter
         [[NSNotificationCenter defaultCenter] postNotificationName:@"BUSINESS_RECEIVED" object:businessArray];
     };
-
-    NSArray *keyArray = [[NSArray alloc] initWithObjects:@"latitude", @"longitude", nil];
-    NSArray *valArray = [[NSArray alloc] initWithObjects:
-                         [NSNumber numberWithFloat:location.latitude], 
-                         [NSNumber numberWithFloat:location.longitude], nil];
-    NSDictionary *getDict = [[NSDictionary alloc] initWithObjects:valArray forKeys:keyArray];
     
-    // Python equivalent to the above
-    // dict = {"latitude":location.latitude, "longitude":location.logitude}
+    NSDictionary *getDict = @{ @"latitude" : @(location.latitude),
+                               @"longitude" : @(location.longitude) };
 
     // dummy businesses for debugging
     // [ConnectionManager serverRequest:@"GET" withParams:nil url:EXAMPLE_URL callback:callback];

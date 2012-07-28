@@ -205,13 +205,25 @@
     UINavigationController *newsNav = [[UINavigationController alloc] initWithRootViewController:nfvc];
     nfvc.navigationController = newsNav;
     nfvc.appDelegate = self;
-	
+
+    // Set up the tab bar
+    UITabBarItem *employeeItem = [[UITabBarItem alloc] initWithTitle:@"Applaud"
+                                                               image:[UIImage imageNamed:@"employees"]
+                                                                 tag:100];
+    elvc.tabBarItem = employeeItem;
+    UITabBarItem *questionItem = [[UITabBarItem alloc] initWithTitle:@"Feedback"
+                                                               image:[UIImage imageNamed:@"dialog"]
+                                                                 tag:101];
+    qvc.tabBarItem = questionItem;
+    UITabBarItem *newsItem = [[UITabBarItem alloc] initWithTitle:@"News"
+                                                           image:[UIImage imageNamed:@"newsfeed"]
+                                                             tag:102];
+    nfvc.tabBarItem = newsItem;
     self.tabNavigator.viewControllers = [NSArray arrayWithObjects:
-						     employeeNav,
-						 [[UIViewController alloc] init],    // This is a dummy!!
-						 questionNav,
-						 newsNav,
-						 nil];
+                                         employeeNav,
+                                         questionNav,
+                                         newsNav,
+                                         nil];
 }
 
 -(void)backButtonPressed {

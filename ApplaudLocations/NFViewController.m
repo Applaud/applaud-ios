@@ -52,8 +52,6 @@
     
     [self.tableView setBackgroundColor:self.appDelegate.currentBusiness.secondaryColor];
     
-    NSLog(@"Number of cells? %d",self.tableView.visibleCells.count);
-    
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:BACK_BUTTON_TITLE
                                                                              style:UIBarButtonItemStyleDone
                                                                             target:self
