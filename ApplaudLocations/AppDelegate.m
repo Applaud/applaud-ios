@@ -7,7 +7,6 @@
 //
 
 #import "AppDelegate.h"
-#import "MapViewController.h"
 #import "MasterViewController.h"
 #import "NFViewController.h"
 #import "EmployeeListViewController.h"
@@ -63,13 +62,9 @@
     // Since we want to track this throughout the application, we initialize it here.
     self.tracker = [[BusinessLocationsTracker alloc] init];
     
-    // Map view, for finding user location
-    MapViewController *mapViewController = [[MapViewController alloc] init];
-    
     // List view controller, for selecting the location
     self.masterViewController = [[MasterViewController alloc] init];
     self.masterViewController.appDelegate = self;
-    self.masterViewController.mapViewController = mapViewController;
     self.masterViewController.settings = self.settings;
     // The tab bar, for navigation
     self.tabNavigator = [[UITabBarController alloc] init];
@@ -81,18 +76,18 @@
     self.tabNavigator.delegate = self;
     [self.masterViewController setWindow:self.window];
    
-    // Ipad initialization
-    if ( [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad ) {
-        NSArray *viewControllers = [NSArray arrayWithObjects:self.masterViewController, mapViewController, nil];
-        UISplitViewController *splitView = [[UISplitViewController alloc] init];
-        splitView.viewControllers = viewControllers;
-        self.window.rootViewController = splitView;
-    }
-    // Iphone initialization 
-    else {
-        self.navControl = [[UINavigationController alloc] initWithRootViewController:self.masterViewController];
-        self.window.rootViewController = self.navControl;
-    }
+//    // Ipad initialization
+//    if ( [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad ) {
+//        NSArray *viewControllers = [NSArray arrayWithObjects:self.masterViewController, mapViewController, nil];
+//        UISplitViewController *splitView = [[UISplitViewController alloc] init];
+//        splitView.viewControllers = viewControllers;
+//        self.window.rootViewController = splitView;
+//    }
+//    // Iphone initialization 
+//    else {
+    self.navControl = [[UINavigationController alloc] initWithRootViewController:self.masterViewController];
+    self.window.rootViewController = self.navControl;
+//    }
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
@@ -210,13 +205,25 @@
     UINavigationController *newsNav = [[UINavigationController alloc] initWithRootViewController:nfvc];
     nfvc.navigationController = newsNav;
     nfvc.appDelegate = self;
-	
+
+    // Set up the tab bar
+    UITabBarItem *employeeItem = [[UITabBarItem alloc] initWithTitle:@"Applaud"
+                                                               image:[UIImage imageNamed:@"employees"]
+                                                                 tag:100];
+    elvc.tabBarItem = employeeItem;
+    UITabBarItem *questionItem = [[UITabBarItem alloc] initWithTitle:@"Feedback"
+                                                               image:[UIImage imageNamed:@"dialog"]
+                                                                 tag:101];
+    qvc.tabBarItem = questionItem;
+    UITabBarItem *newsItem = [[UITabBarItem alloc] initWithTitle:@"News"
+                                                           image:[UIImage imageNamed:@"newsfeed"]
+                                                             tag:102];
+    nfvc.tabBarItem = newsItem;
     self.tabNavigator.viewControllers = [NSArray arrayWithObjects:
-						     employeeNav,
-						 [[UIViewController alloc] init],    // This is a dummy!!
-						 questionNav,
-						 newsNav,
-						 nil];
+                                         employeeNav,
+                                         questionNav,
+                                         newsNav,
+                                         nil];
 }
 
 -(void)backButtonPressed {

@@ -16,7 +16,7 @@
 
 @implementation MasterViewController
 
-@synthesize locationsArray, mapViewController, tableView, tabBarController, window=_window;
+@synthesize locationsArray, tableView, tabBarController, window=_window;
 @synthesize settings = _settings;
 @synthesize appDelegate = _appDelegate;
 
@@ -37,7 +37,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.navigationItem setRightBarButtonItem: [[UIBarButtonItem alloc] initWithTitle:@"Map" style:UIBarButtonItemStyleBordered target:self action:@selector(showMapView)]];
     [self.navigationItem setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
                                                                                             target:self
                                                                                             action:@selector(refreshButtonPressed)]];
@@ -147,10 +146,6 @@
 
 #pragma mark -
 #pragma mark Other Methods
-
-- (void)showMapView {
-    [self.navigationController pushViewController:mapViewController animated:YES];
-}
 
 - (void) businessReceived:(NSNotification *)notification {
     self.locationsArray = [notification object];
