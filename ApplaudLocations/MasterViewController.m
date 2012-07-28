@@ -40,7 +40,15 @@
     [self.navigationItem setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
                                                                                             target:self
                                                                                             action:@selector(refreshButtonPressed)]];
-    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"chicago"]]];
+    
+    UIImage *backgroundImage = [UIImage imageNamed:@"Default"];
+    CGRect cropRect = CGRectMake(0,
+                                 self.navigationController.navigationBar.frame.size.height
+                                 + [[UIScreen mainScreen] applicationFrame].origin.y,
+                                 backgroundImage.size.width,
+                                 backgroundImage.size.height);
+    CGImageRef backgroundImageRef = CGImageCreateWithImageInRect(backgroundImage.CGImage, cropRect);
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageWithCGImage:backgroundImageRef]]];
     [self.tableView setBackgroundColor:[UIColor clearColor]];
     
     self.navigationItem.title = @"Available Locations";
