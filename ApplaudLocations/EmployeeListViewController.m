@@ -9,6 +9,7 @@
 #import "EmployeeListViewController.h"
 #import "EmployeeViewController.h"
 #import "Employee.h"
+#import "EmployeeDisplayConstants.h"
 #import "ConnectionManager.h"
 #import "SDWebImage/UIImageView+WebCache.h"
 #import "AppDelegate.h"
@@ -90,31 +91,39 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *cellIdentifier = @"UITableViewCell";
+    static NSString *cellDefaultIdentifier = @"EmployeeCell";
+    NSString *cellIdentifier = nil;
+    NSString *employeeName = nil;
+    if ( self.employeeArray.count == 0 )
+        cellIdentifier = cellDefaultIdentifier;
+    else {
+        employeeName = [[self.employeeArray objectAtIndex:indexPath.row] description];
+        cellIdentifier = employeeName;
+    }
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
     if ( nil == cell ) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
+    
+        // Configure the cell...
+        if(self.employeeArray.count == 0) {
+            cell.textLabel.numberOfLines = 0;
+            cell.textLabel.text = NO_EMPLOYEES_MESSAGE;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+        }
+        else {
+            [cell.textLabel setText:[[self.employeeArray objectAtIndex:indexPath.row] description]];
+            cell.contentView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+            cell.textLabel.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+            cell.detailTextLabel.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+            [cell.imageView setImageWithURL:[(Employee*)[self.employeeArray objectAtIndex:indexPath.row] imageURL]
+                           placeholderImage:[UIImage imageNamed:@"blankPerson.jpg"]];
+            tableView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+        }
+        cell.textLabel.font = [UIFont boldSystemFontOfSize:TITLE_SIZE];
     }
     
-    // Configure the cell...
-    if(self.employeeArray.count == 0) {
-        // 10 lines is pretty big, but we won't actually
-        // use that many.
-        cell.textLabel.numberOfLines = 10;
-        cell.textLabel.text = NO_EMPLOYEES_MESSAGE;
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-    }
-    else {
-        [cell.textLabel setText:[[self.employeeArray objectAtIndex:indexPath.row] description]];
-        cell.contentView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
-        cell.textLabel.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
-        cell.detailTextLabel.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
-        [cell.imageView setImageWithURL:[(Employee*)[self.employeeArray objectAtIndex:indexPath.row] imageURL]
-                       placeholderImage:[UIImage imageNamed:@"blankPerson.jpg"]];
-        tableView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
-    }
     return cell;
 }
 

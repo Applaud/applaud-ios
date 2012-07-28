@@ -156,6 +156,13 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         if ( indexPath.section == 0 ) {
+            UIImageView *sytImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"shareyourthoughts"]];
+            sytImage.frame = CGRectMake(self.view.frame.size.width - CELL_MARGIN - CELL_PADDING - sytImage.frame.size.width,
+                                        CELL_PADDING - 3,
+                                        sytImage.frame.size.width,
+                                        sytImage.frame.size.height);
+            [cell.contentView addSubview:sytImage];
+            
             [cell expand];
             [cell layoutSubviews];
         }

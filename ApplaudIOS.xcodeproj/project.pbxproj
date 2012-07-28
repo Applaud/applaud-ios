@@ -27,6 +27,7 @@
 		1B688DBC15C3811900FCDCEE /* employees@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B688DB615C3811900FCDCEE /* employees@2x.png */; };
 		1B688DBD15C3811900FCDCEE /* newsfeed.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B688DB715C3811900FCDCEE /* newsfeed.png */; };
 		1B688DBE15C3811900FCDCEE /* newsfeed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B688DB815C3811900FCDCEE /* newsfeed@2x.png */; };
+		1B688DC015C3A94700FCDCEE /* shareyourthoughts.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B688DBF15C3A94700FCDCEE /* shareyourthoughts.png */; };
 		1B73581D15BDF08F00D87F4E /* libSDWebImageARC.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B73581715BDF03D00D87F4E /* libSDWebImageARC.a */; };
 		1B73582015BDF0A500D87F4E /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B73581F15BDF0A500D87F4E /* ImageIO.framework */; };
 		1B9389AA1583CB460088F468 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B9389A91583CB460088F468 /* MapKit.framework */; };
@@ -118,6 +119,7 @@
 		1B688DB615C3811900FCDCEE /* employees@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "employees@2x.png"; path = "assets/employees@2x.png"; sourceTree = "<group>"; };
 		1B688DB715C3811900FCDCEE /* newsfeed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = newsfeed.png; path = assets/newsfeed.png; sourceTree = "<group>"; };
 		1B688DB815C3811900FCDCEE /* newsfeed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "newsfeed@2x.png"; path = "assets/newsfeed@2x.png"; sourceTree = "<group>"; };
+		1B688DBF15C3A94700FCDCEE /* shareyourthoughts.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = shareyourthoughts.png; path = assets/shareyourthoughts.png; sourceTree = "<group>"; };
 		1B73580B15BDF03C00D87F4E /* SDWebImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SDWebImage.xcodeproj; path = SDWebImage/SDWebImage.xcodeproj; sourceTree = "<group>"; };
 		1B73581F15BDF0A500D87F4E /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		1B9389A91583CB460088F468 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -355,6 +357,7 @@
 		1BD494ED15BDF6D3006A01A9 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				1B688DBF15C3A94700FCDCEE /* shareyourthoughts.png */,
 				1B688DB315C3811900FCDCEE /* dialog.png */,
 				1B688DB415C3811900FCDCEE /* dialog@2x.png */,
 				1B688DB515C3811900FCDCEE /* employees.png */,
@@ -468,6 +471,7 @@
 				1B688DBC15C3811900FCDCEE /* employees@2x.png in Resources */,
 				1B688DBD15C3811900FCDCEE /* newsfeed.png in Resources */,
 				1B688DBE15C3811900FCDCEE /* newsfeed@2x.png in Resources */,
+				1B688DC015C3A94700FCDCEE /* shareyourthoughts.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
