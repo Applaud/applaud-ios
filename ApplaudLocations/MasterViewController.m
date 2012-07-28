@@ -52,9 +52,6 @@
     [self.tableView setBackgroundColor:[UIColor clearColor]];
     
     self.navigationItem.title = @"Available Locations";
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] init];
-    backButton.title = @"List View";
-    self.navigationItem.backBarButtonItem = backButton;
     [self.view addSubview:tableView];
     
     // Show our title
