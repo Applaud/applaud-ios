@@ -114,9 +114,6 @@
         }
         else {
             [cell.textLabel setText:[[self.employeeArray objectAtIndex:indexPath.row] description]];
-            cell.contentView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
-            cell.textLabel.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
-            cell.detailTextLabel.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
             [cell.imageView setImageWithURL:[(Employee*)[self.employeeArray objectAtIndex:indexPath.row] imageURL]
                            placeholderImage:[UIImage imageNamed:@"blankPerson.jpg"]];
             tableView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
@@ -132,7 +129,7 @@
     if(self.employeeArray.count == 0 && indexPath.row == 0) {
         return 100;
     }
-    else return 44;
+    else return 60;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -194,6 +191,18 @@
             [self.employeeArray addObject:e];
             
         }
+        // Alphabetize the employees.
+        [self.employeeArray sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+            Employee *emp1 = (Employee *)obj1;
+            Employee *emp2 = (Employee *)obj2;
+            // If first name is the same, sort by last name.
+            NSComparisonResult firstComparison = [emp1.firstName compare:emp2.firstName];
+            if(firstComparison == NSOrderedSame) {
+                return [emp1.lastName compare:emp2.lastName];
+            }
+            return firstComparison;
+        }];
+        
         // set up our array of view controllers with NSNulls, so that we know whether or not we have one cached for a particular employee        
         int i;
         for(i = 0; i < self.employeeArray.count; i++) {
