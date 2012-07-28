@@ -11,6 +11,7 @@
 #import "NFViewController.h"
 #import "EmployeeListViewController.h"
 #import "QuestionsViewController.h"
+#import "ErrorViewController.h"
 #import "ConnectionManager.h"
 
 @implementation AppDelegate
@@ -102,7 +103,10 @@
         if ( error_code ) {
             switch ( error_code ) {
                 case ERROR_NO_CONNECTION:
-                    NSLog(@"Caught no connection error");
+                {
+                    ErrorViewController *evc = [[ErrorViewController alloc] init];
+                    self.window.rootViewController = evc;
+                }
                     break;
             }
         }
@@ -165,6 +169,17 @@
     // The OK button
     if ( buttonIndex == 1 ) {
         if (! [ConnectionManager authenticateWithUsername:username password:password] ) {
+            extern int error_code;
+            if ( error_code ) {
+                switch ( error_code ) {
+                    case ERROR_NO_CONNECTION:
+                    {
+                        ErrorViewController *evc = [[ErrorViewController alloc] init];
+                        self.window.rootViewController = evc;
+                    }
+                        break;
+                }
+            }
             UIAlertView *tryAgain = [[UIAlertView alloc] initWithTitle:@"Invalid Credentials"
                                                                message:@"Please try again."
                                                               delegate:self
@@ -185,7 +200,8 @@
     // User hit 'cancel'
     else if ( buttonIndex == 0 ) {
         error_code = ERROR_BAD_LOGIN;
-        NSLog(@"User did not authenticate.");
+        ErrorViewController *evc = [[ErrorViewController alloc] init];
+        self.window.rootViewController = evc;
     }
 }
 

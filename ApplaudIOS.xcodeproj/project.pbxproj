@@ -26,7 +26,6 @@
 		1B5D030115C44CF400976D33 /* chicago~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B5D02FD15C44CF400976D33 /* chicago~ipad.png */; };
 		1B5D030215C44CF400976D33 /* chicago~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B5D02FE15C44CF400976D33 /* chicago~iphone.png */; };
 		1B5D030A15C4564300976D33 /* ErrorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B5D030815C4564300976D33 /* ErrorViewController.m */; };
-		1B5D030B15C4564300976D33 /* ErrorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B5D030915C4564300976D33 /* ErrorViewController.xib */; };
 		1B5D030E15C456E700976D33 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B5D030C15C456E700976D33 /* Default.png */; };
 		1B5D030F15C456E700976D33 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B5D030D15C456E700976D33 /* Default@2x.png */; };
 		1B688DB915C3811900FCDCEE /* dialog.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B688DB315C3811900FCDCEE /* dialog.png */; };
@@ -127,7 +126,6 @@
 		1B5D02FE15C44CF400976D33 /* chicago~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chicago~iphone.png"; path = "assets/chicago~iphone.png"; sourceTree = "<group>"; };
 		1B5D030715C4564300976D33 /* ErrorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ErrorViewController.h; sourceTree = "<group>"; };
 		1B5D030815C4564300976D33 /* ErrorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ErrorViewController.m; sourceTree = "<group>"; };
-		1B5D030915C4564300976D33 /* ErrorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ErrorViewController.xib; sourceTree = "<group>"; };
 		1B5D030C15C456E700976D33 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = assets/Default.png; sourceTree = "<group>"; };
 		1B5D030D15C456E700976D33 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "assets/Default@2x.png"; sourceTree = "<group>"; };
 		1B688DB315C3811900FCDCEE /* dialog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dialog.png; path = assets/dialog.png; sourceTree = "<group>"; };
@@ -346,7 +344,6 @@
 				1BA358F71582F05E00EB8F32 /* AppDelegate.m */,
 				1B5D030715C4564300976D33 /* ErrorViewController.h */,
 				1B5D030815C4564300976D33 /* ErrorViewController.m */,
-				1B5D030915C4564300976D33 /* ErrorViewController.xib */,
 				6F875EF41591594600555390 /* FirstTimeNavigatorViewController.h */,
 				6F875EF51591594600555390 /* FirstTimeNavigatorViewController.m */,
 				1B51401B158FA4A9008CB057 /* FirstTimeNavigatorViewControllerIphone.xib */,
@@ -502,7 +499,6 @@
 				1B5D030015C44CF400976D33 /* chicago@2x~iphone.png in Resources */,
 				1B5D030115C44CF400976D33 /* chicago~ipad.png in Resources */,
 				1B5D030215C44CF400976D33 /* chicago~iphone.png in Resources */,
-				1B5D030B15C4564300976D33 /* ErrorViewController.xib in Resources */,
 				1B5D030E15C456E700976D33 /* Default.png in Resources */,
 				1B5D030F15C456E700976D33 /* Default@2x.png in Resources */,
 			);
