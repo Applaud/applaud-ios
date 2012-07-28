@@ -9,8 +9,12 @@
 #import "EmployeeListViewController.h"
 #import "EmployeeViewController.h"
 #import "Employee.h"
+#import "EmployeeDisplayConstants.h"
 #import "ConnectionManager.h"
+#import "SDWebImage/UIImageView+WebCache.h"
 #import "AppDelegate.h"
+
+#define NO_EMPLOYEES_MESSAGE @"This business hasn't added any employees yet. Check back later!"
 
 @implementation EmployeeListViewController
 
@@ -45,11 +49,19 @@
     }
 }
 
+-(void)backButtonPressed {
+    [self.appDelegate backButtonPressed];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     // Do any additional setup after loading the view from its nib.
-//    [self getEmployees];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:BACK_BUTTON_TITLE
+                                                                             style:UIBarButtonItemStylePlain
+                                                                            target:self
+                                                                            action:@selector(backButtonPressed)];
 }
 
 - (void)viewDidUnload
@@ -72,33 +84,67 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if(self.employeeArray.count == 0) {
+        return 1;
+    }
     return self.employeeArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"UITableViewCell"];
+    static NSString *cellDefaultIdentifier = @"EmployeeCell";
+    NSString *cellIdentifier = nil;
+    NSString *employeeName = nil;
+    if ( self.employeeArray.count == 0 )
+        cellIdentifier = cellDefaultIdentifier;
+    else {
+        employeeName = [[self.employeeArray objectAtIndex:indexPath.row] description];
+        cellIdentifier = employeeName;
+    }
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
     if ( nil == cell ) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"UITableViewCell"];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
+    
+        // Configure the cell...
+        if(self.employeeArray.count == 0) {
+            cell.textLabel.numberOfLines = 0;
+            cell.textLabel.text = NO_EMPLOYEES_MESSAGE;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+        }
+        else {
+            [cell.textLabel setText:[[self.employeeArray objectAtIndex:indexPath.row] description]];
+            [cell.imageView setImageWithURL:[(Employee*)[self.employeeArray objectAtIndex:indexPath.row] imageURL]
+                           placeholderImage:[UIImage imageNamed:@"blankPerson.jpg"]];
+            tableView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+        }
+        cell.textLabel.font = [UIFont boldSystemFontOfSize:TITLE_SIZE];
     }
     
-    // Configure the cell...
-    [cell.textLabel setText:[[self.employeeArray objectAtIndex:indexPath.row] description]];
-    cell.contentView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
-    cell.textLabel.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
-    cell.detailTextLabel.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
-    cell.imageView.image = [[self.employeeArray objectAtIndex:indexPath.row] image];
-    tableView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
     return cell;
 }
 
+// If it's NO_EMPLOYEES_MESSAGE, return an appropriate size. Else return the default.
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if(self.employeeArray.count == 0 && indexPath.row == 0) {
+        return 100;
+    }
+    else return 60;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if(self.employeeArray.count == 0) {
+        // Don't do anything.
+        return;
+    }
+    Employee *employee = [self.employeeArray objectAtIndex:indexPath.row];
     EmployeeViewController *evc;
     if([[self.employeeControllers objectAtIndex:indexPath.row] isKindOfClass:[NSNull class]]) {
-        evc = [[EmployeeViewController alloc] initWithEmployee:[self.employeeArray objectAtIndex:indexPath.row]];
+        evc = [[EmployeeViewController alloc] initWithEmployee:employee];
         evc.appDelegate = self.appDelegate;
         [self.employeeControllers replaceObjectAtIndex:indexPath.row withObject:evc];
         evc.view.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+        evc.title = [NSString stringWithFormat:@"%@ %@",employee.firstName,employee.lastName];
     }
     else {
         evc = [self.employeeControllers objectAtIndex:indexPath.row];
@@ -110,10 +156,11 @@
 #pragma mark Other Methods
 
 - (void)getEmployees {
-    NSDictionary *dict = [[NSDictionary alloc]
-                          initWithObjectsAndKeys:[NSNumber numberWithInt:self.appDelegate.currentBusiness.business_id],
-                          @"business_id", nil];
+    NSArray *keyArray = [[NSArray alloc] initWithObjects:@"business_id", nil];
+    NSArray *valArray = [[NSArray alloc] initWithObjects:@(self.appDelegate.currentBusiness.business_id), nil];
+    NSDictionary *dict = [[NSDictionary alloc] initWithObjects:valArray forKeys:keyArray];
     [ConnectionManager serverRequest:@"POST" withParams:dict url:EMPLOYEES_URL callback:^(NSData *dat) {
+        NSLog(@"Employee JSON object is......");
         NSLog(@"%@", [[NSString alloc] initWithData:dat encoding:NSUTF8StringEncoding]);
         NSError *err = [[NSError alloc] init]; // for debugging, probably not needed anymore
         NSArray *employeeData = [NSJSONSerialization JSONObjectWithData:dat
@@ -124,19 +171,38 @@
         // employeeArray is a list of dictionaries, each containing information about an employee
         for ( NSDictionary *dict in employeeData ) {
             NSLog(@"Employee with id:%d",(int)[[dict objectForKey:@"id"] intValue]);
+            NSString *imageURLString = @"";
+            if ( ![[dict objectForKey:@"image"] isEqualToString:@""] ) {
+                imageURLString = [[NSString alloc] initWithFormat:@"%@%@",
+                                  SERVER_URL, [dict objectForKey:@"image"]];
+            }
             //TODO: cache images
             Employee *e = [[Employee alloc] initWithFirstName:[dict objectForKey:@"first_name"]
                                                      lastName:[dict objectForKey:@"last_name"]
                                                           bio:[dict objectForKey:@"bio"]
-                                                        image:[UIImage imageWithData:[NSData dataWithContentsOfURL:[[NSURL alloc] initWithString:[dict objectForKey:@"image"]]]]
+                                                     imageURL:[[NSURL alloc] initWithString:imageURLString]
+                                                 profileTitle:[[dict objectForKey:@"ratings"]
+                                                               objectForKey:@"rating_title"]
                                                    dimensions:[[dict objectForKey:@"ratings"]
                                                                objectForKey:@"dimensions"]
                                                   employee_id:[[dict objectForKey:@"id"] intValue]];
-            
+            NSLog(@"Employee image:%@",e.imageURL);
             // employeeArray will hold all the employees
             [self.employeeArray addObject:e];
             
         }
+        // Alphabetize the employees.
+        [self.employeeArray sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+            Employee *emp1 = (Employee *)obj1;
+            Employee *emp2 = (Employee *)obj2;
+            // If first name is the same, sort by last name.
+            NSComparisonResult firstComparison = [emp1.firstName compare:emp2.firstName];
+            if(firstComparison == NSOrderedSame) {
+                return [emp1.lastName compare:emp2.lastName];
+            }
+            return firstComparison;
+        }];
+        
         // set up our array of view controllers with NSNulls, so that we know whether or not we have one cached for a particular employee        
         int i;
         for(i = 0; i < self.employeeArray.count; i++) {

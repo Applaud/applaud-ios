@@ -7,6 +7,7 @@
 //
 
 #import "NFItemViewController.h"
+#import "SDWebImage/UIImageView+WebCache.h"
 
 #define VIEW_PADDING 10.0f
 #define IMAGE_SIZE 130.0f
@@ -42,12 +43,22 @@
 {
     [super viewDidLoad];
 
+    [self.image setImageWithURL:self.item.imageURL
+                        success:^(UIImage *img) {
+                            [self loadViewWithImage:img];
+                        } failure:^(NSError *error) {
+                            [self loadViewWithImage:nil];
+                        }];
+    
+}
+
+- (void)loadViewWithImage:(UIImage *)img {
     // Take care of dynamic layout
     CGRect titleTextFrame, subtitleTextFrame;
-    if ( self.item.image ) {
+    if ( img ) {
         // Set the image
-        float scaleFactor = self.item.image.size.width * self.item.image.scale / IMAGE_SIZE;
-        self.image.image = [UIImage imageWithCGImage:self.item.image.CGImage
+        float scaleFactor = img.size.width * img.scale / IMAGE_SIZE;
+        self.image.image = [UIImage imageWithCGImage:img.CGImage
                                                scale:scaleFactor
                                          orientation:UIImageOrientationUp];
         [self.image sizeToFit];
@@ -88,7 +99,7 @@
     // Set the title label
     self.titleLabel.text = self.item.title;
     [self.titleLabel sizeToFit];
-
+    
     // Set the subtitle label
     self.subtitleLabel.text = self.item.subtitle;
     
@@ -117,6 +128,7 @@
                                                         + dateTextFrame.size.height
                                                         + bodyTextFrame.size.height
                                                         + 3*ELEMENT_PADDING)];
+
 }
 
 - (void)viewDidUnload

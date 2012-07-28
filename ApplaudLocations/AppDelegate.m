@@ -7,7 +7,6 @@
 //
 
 #import "AppDelegate.h"
-#import "MapViewController.h"
 #import "MasterViewController.h"
 #import "NFViewController.h"
 #import "EmployeeListViewController.h"
@@ -22,10 +21,13 @@
 @synthesize managedObjectContext, managedObjectModel, persistentStoreCoordinator, applicationDocumentPath;
 @synthesize settings = _settings;
 @synthesize currentBusiness = _currentBusiness;
+@synthesize masterViewController = _masterViewController;
+@synthesize navControl = _navControl;
+@synthesize tabNavigator = _tabNavigator;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{ 
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+{
+     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
     
     //
@@ -61,77 +63,32 @@
     // Since we want to track this throughout the application, we initialize it here.
     self.tracker = [[BusinessLocationsTracker alloc] init];
     
-    // Map view, for finding user location
-    MapViewController *mapViewController = [[MapViewController alloc] init];
-    
     // List view controller, for selecting the location
-    MasterViewController *masterViewController = [[MasterViewController alloc] init];
-    masterViewController.appDelegate = self;
-    masterViewController.mapViewController = mapViewController;
-    masterViewController.settings = self.settings;
+    self.masterViewController = [[MasterViewController alloc] init];
+    self.masterViewController.appDelegate = self;
+    self.masterViewController.settings = self.settings;
     // The tab bar, for navigation
-    UITabBarController *tabNavigator = [[UITabBarController alloc] init];
+    self.tabNavigator = [[UITabBarController alloc] init];
     
-    // Creating the view controllers in the tab bar
-    // EmployeeListViewController first
-    EmployeeListViewController *elvc = [[EmployeeListViewController alloc] init];
-    UINavigationController *employeeNav = [[UINavigationController alloc] initWithRootViewController:elvc];
-    elvc.navigationController = employeeNav;
-    elvc.appDelegate = self;
-    
-    // QuestionsViewController next
-    QuestionsViewController *qvc = [[QuestionsViewController alloc] init];
-    [qvc setTitle:@"Dialog"];
-    UINavigationController *questionNav = [[UINavigationController alloc] initWithRootViewController:qvc];
-    qvc.navigationController = questionNav;
-    qvc.appDelegate = self;
-    
-    // And then NFViewController
-    NFViewController *nfvc = [[NFViewController alloc] init];
-    [nfvc setTitle:@"News Feed"];
-    UINavigationController *newsNav = [[UINavigationController alloc] initWithRootViewController:nfvc];
-    nfvc.navigationController = newsNav;
-    nfvc.appDelegate = self;
+    [self refreshViewControllers];
 	
-	// Finally GeneralFeedbackViewController
-	GeneralFeedbackViewController *gfvc = [[GeneralFeedbackViewController alloc] init];
-	[gfvc setTitle:@"Leave Comment"];
-	UINavigationController *generalNav = [[UINavigationController alloc] initWithRootViewController:gfvc];
-	gfvc.navigationController = generalNav;
-    gfvc.appDelegate = self;
-    
-    // One more! BusinessPhotoViewController.
-    BusinessPhotoViewController *bpvc = [[BusinessPhotoViewController alloc] init];
-    [bpvc setTitle:@"Take a Photo"];
-    UINavigationController *photoNav = [[UINavigationController alloc] initWithRootViewController:bpvc];
-    bpvc.navigationController = generalNav;
-    bpvc.appDelegate = self;
-	
-    tabNavigator.viewControllers = [NSArray arrayWithObjects:
-                                    employeeNav,
-                                    [[UIViewController alloc] init],    // This is a dummy!!
-									generalNav,
-                                    questionNav,
-                                    newsNav,
-                                    photoNav,
-                                    nil];
     // TODO: should figure out how to set UITabBarItem images
-    masterViewController.tabBarController = tabNavigator;
-    tabNavigator.delegate = self;
-    [masterViewController setWindow:self.window];
+    self.masterViewController.tabBarController = self.tabNavigator;
+    self.tabNavigator.delegate = self;
+    [self.masterViewController setWindow:self.window];
    
-    // Ipad initialization
-    if ( [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad ) {
-        NSArray *viewControllers = [NSArray arrayWithObjects:masterViewController, mapViewController, nil];
-        UISplitViewController *splitView = [[UISplitViewController alloc] init];
-        splitView.viewControllers = viewControllers;
-        self.window.rootViewController = splitView;
-    }
-    // Iphone initialization 
-    else {
-        UINavigationController *navControl = [[UINavigationController alloc] initWithRootViewController:masterViewController];
-        self.window.rootViewController = navControl;
-    }
+//    // Ipad initialization
+//    if ( [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad ) {
+//        NSArray *viewControllers = [NSArray arrayWithObjects:self.masterViewController, mapViewController, nil];
+//        UISplitViewController *splitView = [[UISplitViewController alloc] init];
+//        splitView.viewControllers = viewControllers;
+//        self.window.rootViewController = splitView;
+//    }
+//    // Iphone initialization 
+//    else {
+    self.navControl = [[UINavigationController alloc] initWithRootViewController:self.masterViewController];
+    self.window.rootViewController = self.navControl;
+//    }
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
@@ -141,7 +98,16 @@
     UIAlertView *loginAlert = [[UIAlertView alloc] initWithTitle:@"Login to Applaud" message:@"Please enter your login information." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
     loginAlert.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
     if ( (username = self.settings.username) && (password = self.settings.password) ) {
+        extern int error_code;
         BOOL loginSuccess = [ConnectionManager authenticateWithUsername:username password:password];
+        if ( error_code ) {
+            switch ( error_code ) {
+                case ERROR_NO_CONNECTION:
+                    NSLog(@"Caught no connection error");
+                    break;
+            }
+        }
+        NSLog(@"Login success is %d",loginSuccess);
         if ( loginSuccess ) {
             // Cache username and password in our program settings
             [self.settings setUsername:username];
@@ -188,18 +154,6 @@
 }
 
 #pragma mark -
-#pragma mark Tabbar delegate
-
-/*
- * make sure we can't select the empty view controller in the space between evaluations and everything else
- */
-- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
-    if([viewController isEqual:[tabBarController.viewControllers objectAtIndex:1]])
-        return NO;
-    return YES;
-}
-
-#pragma mark -
 #pragma mark UIAlertView Delegate
 
 /**
@@ -231,9 +185,61 @@
     }
     // User hit 'cancel'
     else if ( buttonIndex == 0 ) {
-        NSLog(@"User did not authenticate. Exiting...");
-        exit(0);
+        error_code = ERROR_BAD_LOGIN;
+        NSLog(@"User did not authenticate.");
     }
+}
+
+#pragma mark -
+#pragma Back button methods
+
+-(void)refreshViewControllers {
+    // Creating the view controllers in the tab bar
+    // EmployeeListViewController first
+    EmployeeListViewController *elvc = [[EmployeeListViewController alloc] init];
+    UINavigationController *employeeNav = [[UINavigationController alloc] initWithRootViewController:elvc];
+    elvc.navigationController = employeeNav;
+    elvc.appDelegate = self;
+    
+    // QuestionsViewController next
+    QuestionsViewController *qvc = [[QuestionsViewController alloc] init];
+    [qvc setTitle:@"Dialog"];
+    UINavigationController *questionNav = [[UINavigationController alloc] initWithRootViewController:qvc];
+    qvc.navigationController = questionNav;
+    qvc.appDelegate = self;
+    
+    // And then NFViewController
+    NFViewController *nfvc = [[NFViewController alloc] init];
+    [nfvc setTitle:@"News Feed"];
+    UINavigationController *newsNav = [[UINavigationController alloc] initWithRootViewController:nfvc];
+    nfvc.navigationController = newsNav;
+    nfvc.appDelegate = self;
+
+    // Set up the tab bar
+    UITabBarItem *employeeItem = [[UITabBarItem alloc] initWithTitle:@"Applaud"
+                                                               image:[UIImage imageNamed:@"employees"]
+                                                                 tag:100];
+    elvc.tabBarItem = employeeItem;
+    UITabBarItem *questionItem = [[UITabBarItem alloc] initWithTitle:@"Feedback"
+                                                               image:[UIImage imageNamed:@"dialog"]
+                                                                 tag:101];
+    qvc.tabBarItem = questionItem;
+    UITabBarItem *newsItem = [[UITabBarItem alloc] initWithTitle:@"News"
+                                                           image:[UIImage imageNamed:@"newsfeed"]
+                                                             tag:102];
+    nfvc.tabBarItem = newsItem;
+    self.tabNavigator.viewControllers = [NSArray arrayWithObjects:
+                                         newsNav,
+                                         questionNav,
+                                         employeeNav,
+                                         nil];
+}
+
+-(void)backButtonPressed {
+    [self refreshViewControllers];
+    self.window.rootViewController = self.navControl;
+    [self.masterViewController.tableView deselectRowAtIndexPath:[self.masterViewController.tableView indexPathForSelectedRow]
+                                                       animated:NO];
 }
 
 #pragma mark -

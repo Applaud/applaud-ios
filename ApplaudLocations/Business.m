@@ -10,47 +10,41 @@
 
 @implementation Business
 @synthesize name = _name;
-@synthesize type = _type;
 @synthesize business_id = _business_id;
 @synthesize goog_id = _goog_id;
 @synthesize latitude = _latitude;
 @synthesize longitude = _longitude;
 @synthesize primaryColor = _primaryColor;
 @synthesize secondaryColor = _secondaryColor;
+@synthesize types = _types;
 
-- (id)initWithName:(NSString *)name type:(NSString *)type goog_id:(NSString *)goog_id
+- (id)initWithName:(NSString *)name goog_id:(NSString *)goog_id
           latitude:(NSNumber *) latitude longitude:(NSNumber *) longitude
-      primaryColor:(NSString *)primaryColor secondaryColor:(NSString *)secondaryColor{
+        primaryColor:(NSString *)primaryColor secondaryColor:(NSString *)secondaryColor
+        types: (NSDictionary *)types {
     NSLog(@"%@   %@", primaryColor, secondaryColor);
     if(self = [super init]) {
         _name = name;
-        _type = type;
         _goog_id = goog_id;
         _latitude = latitude;
         _longitude = longitude;
         _primaryColor = [self colorWithHex:primaryColor];
         _secondaryColor = [self colorWithHex:secondaryColor];
+        _types = types;
     }
     return self;
 }
 
-- (id)initWithName:(NSString *)name type:(NSString *)type business_id:(int)bus_id
-          latitude:(NSNumber *) latitude longitude:(NSNumber *) longitude {
-    if(self = [super init]) {
-        _name = name;
-        _type = type;
-        _business_id = bus_id;
-        _latitude = latitude;
-        _longitude = longitude;
-    }
-    return self;
-}
 
 /*
  * Convert a hex string to a UIColor *. The string should be in the format
  * "#[0-9a-f]{6}".
  */
 - (UIColor *)colorWithHex:(NSString *)hexString {
+    if(!hexString){
+        return nil;
+    }
+    
     NSString *red = [hexString substringWithRange:NSMakeRange(1, 2)];
     NSString *green = [hexString substringWithRange:NSMakeRange(3, 2)];
     NSString *blue = [hexString substringWithRange:NSMakeRange(5, 2)];

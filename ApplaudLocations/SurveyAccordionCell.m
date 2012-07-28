@@ -9,21 +9,13 @@
 //
 
 #import "SurveyAccordionCell.h"
+#import "SurveyDisplayConstants.h"
 #import <QuartzCore/QuartzCore.h>
-
-#define CELL_ELEMENT_PADDING 5.0f   // how much space between things inside of the cell
-#define CELL_PADDING 10.0f          // space between cell wall and anything else
-#define CELL_MARGIN 22.0f           // space between outside of the cell and edge of the screen
-#define TITLE_SIZE 18.0f            // size of newsfeed item titles
-#define SUBTITLE_SIZE 12.0f         // size of newsfeed item subtitles
-#define WIDGET_HEIGHT 30.0f         // standard height of a widget (like an option)
-#define POSITIVE_RESPONSE 0         // What index a UISegmentedControl is in that indicates a "yes"
-                                    // response under a checkbox group
 
 @implementation SurveyAccordionCell
 
 @synthesize questionLabel, questionWidgets;
-@synthesize expandedHeight = _expandedHeight, contractedHeight = _contractedHeight;
+@synthesize expandedHeight = _expandedHeight;
 @synthesize containerView = _containerView;
 @synthesize field = _field;
 
@@ -42,6 +34,10 @@
         questionLabel.lineBreakMode = UILineBreakModeWordWrap;
         questionLabel.font = [UIFont boldSystemFontOfSize:TITLE_SIZE];
         
+        if( self.field.type == RADIO ){
+            self.field.type = TEXTAREA;
+        }
+        
         // ...and then the question widgets
         questionWidgets = [[NSMutableArray alloc] init];
         switch ( [field type] ) {
@@ -53,6 +49,7 @@
                 textView.layer.borderWidth = 2.0;
                 [textView setReturnKeyType:UIReturnKeyDone];
                 textView.delegate = self;
+                textView.font = [UIFont systemFontOfSize:16.0];
                 [questionWidgets addObject:textView];
             }
                 break;
@@ -109,22 +106,18 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    
     CGRect contentRect = [self.containerView bounds];
     
     // We will never edit, but it's clean.
     if (! self.editing) {
-        CGSize questionLabelSize = [questionLabel.text
+        CGSize questionLabelSize = [self.questionLabel.text
                                     sizeWithFont:[UIFont boldSystemFontOfSize:TITLE_SIZE]
                                     constrainedToSize:CGSizeMake(contentRect.size.width - 2*CELL_PADDING,400)
                                     lineBreakMode:UILineBreakModeWordWrap];
         
-        // Set the contracted height based off of just the question label
-        _contractedHeight = questionLabelSize.height + 2*CELL_PADDING + 2*CELL_ELEMENT_PADDING;
-        
         // Question label
-        self.questionLabel.frame = CGRectMake(contentRect.origin.x + CELL_PADDING,
-                                              contentRect.origin.y + CELL_PADDING,
+        self.questionLabel.frame = CGRectMake(CELL_PADDING,
+                                              CELL_PADDING,
                                               contentRect.size.width - 2*CELL_PADDING,
                                               questionLabelSize.height);
         
@@ -147,7 +140,7 @@
             case TEXTFIELD:
             {
                 UIView *textField = [questionWidgets objectAtIndex:0];
-                [textField setFrame:CGRectMake(CELL_PADDING, 
+                [textField setFrame:CGRectMake(CELL_PADDING,
                                                questionLabel.frame.origin.y + questionLabel.frame
                                                .size.height + 2*CELL_ELEMENT_PADDING, 
                                                contentRect.size.width - 2*CELL_PADDING, 
@@ -261,6 +254,7 @@
     }
     return [[NSArray alloc] init ]; // If we don't have an answer.
 }
+
 
 #pragma mark -
 #pragma mark Delegate Methods from UITextView/Field

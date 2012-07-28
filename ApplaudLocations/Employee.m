@@ -12,19 +12,26 @@
 @synthesize firstName = _firstName;
 @synthesize lastName = _lastName;
 @synthesize bio = _bio;
-@synthesize image = _image;
+@synthesize imageURL = _imageURL;
 @synthesize ratingDimensions = _ratingDimensions;
 @synthesize employee_id = _employee_id;
+@synthesize ratingProfileTitle = _ratingProfileTitle;
 
--(id)initWithFirstName:(NSString *)name lastName:(NSString *)lastname bio:(NSString *)bio image:(UIImage *)image dimensions:(NSArray *)dims employee_id:(int) employee_id {
+-(id)initWithFirstName:(NSString *)name
+              lastName:(NSString *)lastname
+                   bio:(NSString *)bio
+              imageURL:(NSURL *)imageURL
+            profileTitle:(NSString *)profileTitle
+            dimensions:(NSArray *)dims
+           employee_id:(int) employee_id {
     if(self = [super init]) {
         _firstName = name;
         _lastName = lastname;
         _bio = bio;
-        _image = image;
+        _imageURL = imageURL;
+        _ratingProfileTitle = profileTitle;
         _ratingDimensions = dims;
         _employee_id = employee_id;
-        _image = image;
     }
     return self;
 }

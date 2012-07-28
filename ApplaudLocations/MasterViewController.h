@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
-#import "MapViewController.h"
 #import "ApplaudProgramSettingsModel.h"
 #import "AppDelegate.h"
 
@@ -16,8 +15,6 @@
 
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *locationsArray;
-@property (nonatomic, strong) MapViewController *mapViewController;
-@property (nonatomic, strong) IBOutlet UILabel *titleLabel;
 @property (nonatomic, weak) UIWindow *window;
 @property (nonatomic, weak) AppDelegate *appDelegate;
 

@@ -13,8 +13,8 @@
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *subtitle;
 @property (nonatomic, strong) NSDate *date;
-@property (nonatomic, strong) UIImage *image;
+@property (nonatomic, strong) NSURL *imageURL;
 
--(id)initWithTitle:(NSString *)title subtitle:(NSString *)subtitle body:(NSString *)body date:(NSDate *)date image:(UIImage *)image;
+-(id)initWithTitle:(NSString *)title subtitle:(NSString *)subtitle body:(NSString *)body date:(NSDate *)date imageURL:(NSURL *)imageURL;
 
 @end

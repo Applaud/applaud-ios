@@ -11,8 +11,8 @@
 #import "SurveyField.h"
 #import "QuestionsViewController.h"
 
-#define WIDGET_HEIGHT 100
-#define WIDGET_BEGIN 100
+#define SURVEY_WIDGET_HEIGHT 100
+#define SURVEY_WIDGET_BEGIN 100
 
 @interface SurveyFieldViewController : UIViewController
 @property (strong, nonatomic) SurveyField *field;

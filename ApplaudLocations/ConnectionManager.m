@@ -37,8 +37,9 @@
         
         // Put the CSRF token into the HTTP request. Kinda important.
         [request addValue:token forHTTPHeaderField:@"X-CSRFToken"];
-
+        NSLog(@"Here, the data is....%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding ]);
         [request setHTTPBody:data];
+        NSLog(@"The url is....%@", url);
         request.HTTPMethod = requestType;
         request.URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", SERVER_URL, url]];
     }
@@ -57,15 +58,17 @@
     }
     outbound_connections++;
     
+    extern int error_code;
     [NSURLConnection sendAsynchronousRequest:request
                                        queue:[NSOperationQueue mainQueue]
                            completionHandler:^(NSURLResponse *response, NSData *d, NSError *err) {
                                if(err) {
                                    [[[UIAlertView alloc] initWithTitle:@"Connection Error"
-                                                               message:[err description]
+                                                               message:@"Apatapa couldn't connect to the internet."
                                                               delegate:nil
                                                      cancelButtonTitle:@"OK"
                                                      otherButtonTitles:nil] show];
+                                   error_code = ERROR_NO_CONNECTION;
                                    NSLog(@"%@", err);
                                }
                                else {
@@ -106,9 +109,15 @@
     NSData *data = nil;
     
     if ( [requestType isEqualToString:@"POST"] ) {
+        NSLog(@"The params are....%@", params);
         data = [NSJSONSerialization dataWithJSONObject:params
                                                options:0
                                                  error:nil];
+        NSLog(@"Then the JSON object is......%@", [[NSString alloc] initWithData:data encoding: NSUTF8StringEncoding]);
+    }
+    else if ( [requestType isEqualToString:@"GET"] ) {
+        NSString *dictAsString = [self GETStringFromDict:params];
+        url = [[NSString alloc] initWithFormat:@"%@%@", url,dictAsString];
     }
     else if ( [requestType isEqualToString:@"GET"] ) {
         NSString *dictAsString = [self GETStringFromDict:params];
@@ -152,15 +161,10 @@
 + (BOOL)authenticateWithUsername:(NSString *)username password:(NSString *)password {
     NSString *postString = [NSString stringWithFormat:@"username=%@&password=%@", username, password];
     
-    // Get the CSRF token from the login url itself
-//    NSString *csrfToken = [ConnectionManager getCSRFTokenFromURL:[NSString stringWithFormat:@"%@%@", SERVER_URL, LOGIN_URL]];
-
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc]
                                     initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",
                                                                       SERVER_URL, LOGIN_URL]]];
     [request setHTTPBody:[NSData dataWithBytes:[postString UTF8String] length:postString.length]];
-    // Put the CSRF token into the HTTP request. Kinda important.
-//    [request addValue:csrfToken forHTTPHeaderField:@"X-CSRFToken"];
     [request setHTTPMethod:@"POST"];
     
     NSError *error = nil;
@@ -169,6 +173,7 @@
     NSData * data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
     NSHTTPURLResponse *r = (NSHTTPURLResponse *)response;
     if ( error ) {
+        error_code = ERROR_NO_CONNECTION;
         NSLog(@"login error: %@",error.description);
         NSLog(@"LOGIN: %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
     }

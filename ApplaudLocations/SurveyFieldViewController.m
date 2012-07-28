@@ -102,9 +102,9 @@
  */
 - (void)addTextField {
     UITextField *field = [[UITextField alloc] initWithFrame:CGRectMake(20,
-                                                                       WIDGET_BEGIN,
+                                                                       SURVEY_WIDGET_BEGIN,
                                                                        self.view.frame.size.width - 40,
-                                                                       WIDGET_HEIGHT/4)];
+                                                                       SURVEY_WIDGET_HEIGHT/4)];
     /* Gives the text area a border -- had to #import Quartz to do so. */
     field.layer.cornerRadius = 5;
     field.layer.borderColor = [[[UIColor grayColor] colorWithAlphaComponent:0.5] CGColor];
@@ -117,9 +117,9 @@
  */
 - (void)addTextArea {
     UITextView *textView = [[UITextView alloc] initWithFrame:CGRectMake(20,
-                                                                         WIDGET_BEGIN,
+                                                                         SURVEY_WIDGET_BEGIN,
                                                                          self.view.frame.size.width - 40,
-                                                                         WIDGET_HEIGHT)];
+                                                                         SURVEY_WIDGET_HEIGHT)];
     /* Gives the text area a border -- had to #import Quartz to do so. */
     textView.layer.cornerRadius = 5;
     textView.clipsToBounds = YES;
@@ -135,9 +135,9 @@
     
     UISegmentedControl *radioGroup = [[UISegmentedControl alloc] initWithItems:self.field.options];
     radioGroup.frame = CGRectMake(self.view.frame.size.width/4,
-                                  WIDGET_BEGIN,
+                                  SURVEY_WIDGET_BEGIN,
                                   self.view.frame.size.width/2,
-                                  WIDGET_HEIGHT/2);
+                                  SURVEY_WIDGET_HEIGHT/2);
     [self.view addSubview:radioGroup];
 }
 
@@ -145,23 +145,23 @@
  * Create a bunch of check boxes (actually switches).
  */
 - (void)addCheckBoxGroup {
-    int currenty = WIDGET_BEGIN;
+    int currenty = SURVEY_WIDGET_BEGIN;
     int i = 0;
     for(NSString *option in self.field.options) {
         UISwitch *checkbox = [[UISwitch alloc] initWithFrame:CGRectMake(20,
                                                                       currenty,
                                                                       50,
-                                                                      WIDGET_HEIGHT)];
+                                                                      SURVEY_WIDGET_HEIGHT)];
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(100,
                                                                    currenty - 15,
                                                                    self.view.frame.size.width - 120,
-                                                                   WIDGET_HEIGHT/2)];
+                                                                   SURVEY_WIDGET_HEIGHT/2)];
         // Give it the right color.
         label.opaque = YES;
         label.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
         label.textAlignment = UITextAlignmentCenter;
         label.text = option;
-        currenty += WIDGET_HEIGHT + 10;
+        currenty += SURVEY_WIDGET_HEIGHT + 10;
         // Associate the checkbox with its question string.
         checkbox.tag = i++;
         [self.labels addObject:label.text];

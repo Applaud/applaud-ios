@@ -7,17 +7,11 @@
 //
 
 #import "QuestionsViewController.h"
+#import "SurveyDisplayConstants.h"
 #import "SurveyAccordionCell.h"
 
-#define CELL_ELEMENT_PADDING 5.0f   // how much space between things inside of the cell
-#define CELL_PADDING 10.0f          // space between cell wall and anything else
-#define CELL_MARGIN 22.0f           // space between outside of the cell and edge of the screen
-#define TITLE_SIZE 18.0f            // size of newsfeed item titles
-#define SUBTITLE_SIZE 12.0f         // size of newsfeed item subtitles
-#define NAVBAR_SIZE 49.0f           // size of the navigation bar (for use in resizing view for keyboard appearance)
-#define SCROLL_LENGTH 0.17f         // # of seconds to scroll the view when keyboard appears
-
 @implementation QuestionsViewController
+
 @synthesize appDelegate = _appDelegate;
 @synthesize survey = _survey;
 @synthesize surveyControllers = _surveyControllers; // For caching SurveyFieldViewControllers.
@@ -48,14 +42,24 @@
     }
 }
 
+-(void)backButtonPressed {
+    [self.appDelegate backButtonPressed];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 
 	if(nil == _survey) {
-        [self getSurveys];
+        //[self getSurveys];
 	}
+    
+    // Back button.
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:BACK_BUTTON_TITLE
+                                                                             style:UIBarButtonItemStylePlain
+                                                                            target:self
+                                                                            action:@selector(backButtonPressed)];
     
     // register for keyboard notifications
     [[NSNotificationCenter defaultCenter] addObserver:self 
@@ -88,10 +92,11 @@
     // e.g. self.myOutlet = nil;
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
+//- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+//{
+//    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+//    return UIInterfaceOrientationIsLandscape(interfaceOrientation);
+//}
 
 #pragma mark -
 #pragma mark Table View data source methods
@@ -111,13 +116,23 @@
     
     // Create label with section title
     UILabel *label = [[UILabel alloc] init];
-    label.frame = CGRectMake(20, 6, 300, 30);
     label.backgroundColor = [UIColor clearColor];
     label.font = [UIFont systemFontOfSize:14.0f];
     label.text = sectionTitle;
+    label.numberOfLines = 0;
+    label.lineBreakMode = UILineBreakModeWordWrap;
+    
+    CGSize labelSizeConstraint = CGSizeMake(self.view.frame.size.width - 2*CELL_PADDING - 30,
+                                            300);
+    CGFloat labelHeight = [sectionTitle sizeWithFont:[UIFont systemFontOfSize:14.0f]
+                                   constrainedToSize:labelSizeConstraint
+                                       lineBreakMode:UILineBreakModeWordWrap].height;
+    label.frame = CGRectMake(VIEW_LEFT_PADDING, VIEW_TOP_PADDING, labelSizeConstraint.width, labelHeight);
+    label.textAlignment = UITextAlignmentCenter;
     
     // Create header view and add label as a subview
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 35)];
+    UIView *view = [[UIView alloc] init];
+    [view sizeToFit];
     [view addSubview:label];
     
     return view;
@@ -132,16 +147,26 @@
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [self.questionsTable dequeueReusableCellWithIdentifier:CellIdentifier];
+    SurveyAccordionCell *cell = [self.questionsTable dequeueReusableCellWithIdentifier:[[self.survey.fields objectAtIndex:indexPath.section] label]];
     
     if ( nil == cell ) {
         cell = [[SurveyAccordionCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                          reuseIdentifier:CellIdentifier
+                                          reuseIdentifier:[[self.survey.fields objectAtIndex:indexPath.section] label]
                                                     field:[self.survey.fields objectAtIndex:indexPath.section]];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        if ( indexPath.section == 0 ) {
+            UIImageView *sytImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"shareyourthoughts"]];
+            sytImage.frame = CGRectMake(self.view.frame.size.width - CELL_MARGIN - CELL_PADDING - sytImage.frame.size.width,
+                                        CELL_PADDING - 3,
+                                        sytImage.frame.size.width,
+                                        sytImage.frame.size.height);
+            [cell.contentView addSubview:sytImage];
+            
+            [cell expand];
+            [cell layoutSubviews];
+        }
     }
-    
     return cell;
 }
 
@@ -169,12 +194,11 @@
     
     // Showing the content of the question upon selection
     if ( [self cellIsSelectedAtIndexPath:indexPath] ) {
-//        return origSize.height * 3 + 2*CELL_PADDING;
         return [[questionSelections objectAtIndex:indexPath.section] floatValue];
     }
     // Showing just the title and whether or not the question has been answered
     else {
-        return origSize.height + 2*CELL_PADDING;
+        return origSize.height + 2*CELL_PADDING + 2;
     }
 }
 
@@ -182,6 +206,11 @@
  * This lets us change the background color of a cell -- if we have a view controller stored at that index and it has an answer, then we set it to green.
  */
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    SurveyAccordionCell *acccell = (SurveyAccordionCell*)cell;
+    NSLog(@"Label for cell was %@",acccell.questionLabel.text);
+    NSLog(@"Number of cells: %d",self.questionsTable.numberOfSections);
+    
     // Set color and shape
     cell.backgroundColor = [UIColor whiteColor];
     cell.contentView.backgroundColor = [UIColor whiteColor];
@@ -216,12 +245,9 @@
     }
     
     // Note selected state of currently selected question by putting adjusted height (expanded height)
-    // into the questinoSelections array.
+    // into the questionSelections array.
     [questionSelections replaceObjectAtIndex:indexPath.section 
                                   withObject:[NSNumber numberWithFloat:[cell expandedHeight]]];
-   
-    // Set selection state of cell to "NO"
-//    [self.questionsTable deselectRowAtIndexPath:indexPath animated:YES];
 
     // Perform animation
     [self.questionsTable beginUpdates];
@@ -229,20 +255,6 @@
     
     // Show question body
     [cell expand];
-    
-//    SurveyFieldViewController *sfvc;
-//    if([[self.surveyControllers objectAtIndex:indexPath.section] isKindOfClass:[NSNull class]]) {
-//        sfvc = [[SurveyFieldViewController alloc] initWithNibName:@"SurveyFieldViewController" bundle:nil];
-//        sfvc.field = [self.survey.fields objectAtIndex:indexPath.section];
-//        [self.surveyControllers replaceObjectAtIndex:indexPath.section withObject:sfvc];
-//        // Give the SurveyViewController the right background color.
-//        sfvc.view.opaque = YES;
-//        sfvc.view.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
-//    }
-//    else {
-//        sfvc = [self.surveyControllers objectAtIndex:indexPath.section];
-//    }
-//    [self.navigationController pushViewController:sfvc animated:YES];
 }
 
 #pragma mark -
@@ -305,10 +317,15 @@
 #pragma mark Other Methods
 
 -(void)getSurveys {
-    NSDictionary *dict = [[NSDictionary alloc]
-                          initWithObjectsAndKeys:[NSNumber numberWithInt:self.appDelegate.currentBusiness.business_id],
-                          @"business_id",
-                          nil];
+//    NSDictionary *dict = [[NSDictionary alloc]
+//                          initWithObjectsAndKeys: self.appDelegate.currentBusiness.goog_id],
+//                          @"goog_id",
+//                          nil];
+    NSArray *keyArray = [[NSArray alloc] initWithObjects:@"business_id", nil];
+    NSArray *valArray = [[NSArray alloc] initWithObjects:@(self.appDelegate.currentBusiness.business_id), nil];
+    NSDictionary *dict = [[NSDictionary alloc] initWithObjects:valArray forKeys:keyArray];
+                            
+    
     [ConnectionManager serverRequest:@"POST"
                             withParams:dict
                                  url:SURVEY_URL
@@ -325,6 +342,7 @@
  */
 - (void)handleSurveyData:(NSData *)d {
     // Grabbing the JSON data from the server's response
+    NSLog(@"Survey data is......");
     NSLog(@"%@", [[NSString alloc] initWithData:d encoding:NSUTF8StringEncoding]);
     NSError *e = [[NSError alloc] init];
     NSDictionary *surveyData = [NSJSONSerialization JSONObjectWithData:d
@@ -333,7 +351,13 @@
     
     // Creating the fields of the survey
     NSMutableArray *fields = [[NSMutableArray alloc] init];
-    for(NSDictionary *dict in [surveyData objectForKey:@"questions"]) {
+    int genFeedbackIndex = 0;
+    for ( int i=0; i<[(NSArray*)[surveyData objectForKey:@"questions"] count]; i++) {
+        NSDictionary *dict = [[surveyData objectForKey:@"questions"] objectAtIndex:i];
+        
+        if ( [[dict objectForKey:@"general_feedback"] boolValue] )
+            genFeedbackIndex = i;
+        
         NSString *type = [dict objectForKey:@"type"];
         QuestionType widgetType;
         if([type isEqualToString:@"TF"]) {
@@ -354,8 +378,13 @@
                                                      options:[dict objectForKey:@"options"]
                            ];
         [fields addObject:sf];
-    }   
+    }
+    SurveyField *temp = [fields objectAtIndex:0];
+    [fields setObject:[fields objectAtIndex:genFeedbackIndex] atIndexedSubscript:0];
+    [fields setObject:temp atIndexedSubscript:genFeedbackIndex];
 
+    NSLog(@"%@",fields.description);
+    
     // Creating the survey model
     Survey *survey = [[Survey alloc] initWithTitle:[surveyData objectForKey:@"title"]
                                            summary:[surveyData objectForKey:@"description"]
@@ -364,7 +393,6 @@
 
     // Setting up the rest of the view: survey, title, submit button
     self.survey = survey;
-    [self.questionsTable reloadData];
     [[self navigationItem] setTitle:self.survey.title];
     
     UIBarButtonItem *submitButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Submit"
@@ -374,16 +402,19 @@
     submitButtonItem.tintColor = self.appDelegate.currentBusiness.primaryColor;
 
     [[self navigationItem] setRightBarButtonItem:submitButtonItem];
-    int i;
-    for(i = 0; i < self.survey.answers.count; i++) {
-        [_surveyControllers addObject:[[NSNull alloc] init]];
-    }
     
     // Set up selection array
     questionSelections = [[NSMutableArray alloc] init];
-    for ( int i=0; i<survey.fields.count; i++ ){ 
+    for ( int i=0; i<survey.fields.count; i++ ){
         [questionSelections addObject:[NSNumber numberWithBool:NO]];
     }
+    // First question is already expanded
+    CGFloat genFeedbackLabelHeight = [[[fields objectAtIndex:0] label] sizeWithFont:[UIFont boldSystemFontOfSize:TITLE_SIZE] constrainedToSize:CGSizeMake(self.view.frame.size.width - 2*CELL_MARGIN - 2*CELL_PADDING, 300) lineBreakMode:UILineBreakModeWordWrap].height;
+    [questionSelections setObject:[NSNumber numberWithFloat:2*CELL_PADDING + 2*CELL_ELEMENT_PADDING + 2*WIDGET_HEIGHT + genFeedbackLabelHeight]
+               atIndexedSubscript:0];
+    
+    // Load the table
+    [self.questionsTable reloadData];
 }
 
 /*
