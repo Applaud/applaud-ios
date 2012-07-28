@@ -220,9 +220,9 @@
                                                              tag:102];
     nfvc.tabBarItem = newsItem;
     self.tabNavigator.viewControllers = [NSArray arrayWithObjects:
-                                         employeeNav,
-                                         questionNav,
                                          newsNav,
+                                         questionNav,
+                                         employeeNav,
                                          nil];
 }
 
