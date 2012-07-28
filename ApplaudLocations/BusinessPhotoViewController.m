@@ -103,12 +103,16 @@
 
 -(void)getPhotos {
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:self.appDelegate.currentBusiness.business_id], @"id", nil];
-    NSDictionary *foo = @{@"id": @(self.appDelegate.currentBusiness.business_id)};
-    NSLog(@"%@", foo[@"id"]);
-    NSData *photoData = [ConnectionManager serverRequest:@"GET" withParams:params url:GET_PHOTO_URL];
-    [self handlePhotoData:[NSJSONSerialization JSONObjectWithData:photoData
-                                                          options:0
-                                                            error:nil]];
+//    NSDictionary *foo = @{@"id": @(self.appDelegate.currentBusiness.business_id)};
+//    NSLog(@"%@", foo[@"id"]);
+    NSData *photoData = [ConnectionManager serverRequest:@"GET"
+                                              withParams:params
+                                                     url:GET_PHOTO_URL
+                                                callback:^(NSData *d) {
+                                                    [self handlePhotoData:[NSJSONSerialization JSONObjectWithData:d
+                                                                                                          options:0
+                                                                                                            error:nil]];
+                                                }];
 }
 
 // Do stuff with the photos from the server.
@@ -120,7 +124,7 @@
                                                           downvotes:[[photoDict objectForKey:@"downvotes"] intValue]
                                                            business:[[photoDict objectForKey:@"business_id"] intValue]
                                                         uploaded_by:[[photoDict objectForKey:@"uploaded_by"] intValue]
-                                                             active:[[photoDict objectForKey:@"active"] boolValue]];
+                                                             active:[[photoDict objectForKey:@"active"] isEqual:@"true"] ? YES : NO];
         [self.businessPhotos addObject:photo];
     }
 }

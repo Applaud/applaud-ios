@@ -214,6 +214,11 @@
     UINavigationController *newsNav = [[UINavigationController alloc] initWithRootViewController:nfvc];
     nfvc.navigationController = newsNav;
     nfvc.appDelegate = self;
+    
+    // BusinessPhotoViewController
+    BusinessPhotoViewController *bpvc = [[BusinessPhotoViewController alloc] init];
+    bpvc.title = @"Take a photo!";
+    bpvc.appDelegate = self;
 
     // Set up the tab bar
     UITabBarItem *employeeItem = [[UITabBarItem alloc] initWithTitle:@"Applaud"
@@ -228,10 +233,15 @@
                                                            image:[UIImage imageNamed:@"newsfeed"]
                                                              tag:102];
     nfvc.tabBarItem = newsItem;
+    UITabBarItem *photoItem = [[UITabBarItem alloc] initWithTitle:@"Photos"
+                                                            image:nil
+                                                              tag:103];
+    bpvc.tabBarItem = photoItem;
     self.tabNavigator.viewControllers = [NSArray arrayWithObjects:
                                          newsNav,
                                          questionNav,
                                          employeeNav,
+                                         bpvc,
                                          nil];
 }
 
