@@ -21,6 +21,12 @@
 		1B514013158F9441008CB057 /* ApplaudProgramState.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1B514011158F9441008CB057 /* ApplaudProgramState.xcdatamodeld */; };
 		1B514016158FA233008CB057 /* ApplaudProgramSettingsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B514015158FA233008CB057 /* ApplaudProgramSettingsModel.m */; };
 		1B51401C158FA4A9008CB057 /* FirstTimeNavigatorViewControllerIphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B51401B158FA4A9008CB057 /* FirstTimeNavigatorViewControllerIphone.xib */; };
+		1B5D02FF15C44CF400976D33 /* chicago@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B5D02FB15C44CF400976D33 /* chicago@2x~ipad.png */; };
+		1B5D030015C44CF400976D33 /* chicago@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B5D02FC15C44CF400976D33 /* chicago@2x~iphone.png */; };
+		1B5D030115C44CF400976D33 /* chicago~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B5D02FD15C44CF400976D33 /* chicago~ipad.png */; };
+		1B5D030215C44CF400976D33 /* chicago~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B5D02FE15C44CF400976D33 /* chicago~iphone.png */; };
+		1B5D030415C44F8400976D33 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B5D030315C44F8400976D33 /* Default.png */; };
+		1B5D030615C44F8B00976D33 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B5D030515C44F8B00976D33 /* Default@2x.png */; };
 		1B688DB915C3811900FCDCEE /* dialog.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B688DB315C3811900FCDCEE /* dialog.png */; };
 		1B688DBA15C3811900FCDCEE /* dialog@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B688DB415C3811900FCDCEE /* dialog@2x.png */; };
 		1B688DBB15C3811900FCDCEE /* employees.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B688DB515C3811900FCDCEE /* employees.png */; };
@@ -113,6 +119,12 @@
 		1B514014158FA233008CB057 /* ApplaudProgramSettingsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplaudProgramSettingsModel.h; sourceTree = "<group>"; };
 		1B514015158FA233008CB057 /* ApplaudProgramSettingsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplaudProgramSettingsModel.m; sourceTree = "<group>"; };
 		1B51401B158FA4A9008CB057 /* FirstTimeNavigatorViewControllerIphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FirstTimeNavigatorViewControllerIphone.xib; sourceTree = "<group>"; };
+		1B5D02FB15C44CF400976D33 /* chicago@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chicago@2x~ipad.png"; path = "assets/chicago@2x~ipad.png"; sourceTree = "<group>"; };
+		1B5D02FC15C44CF400976D33 /* chicago@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chicago@2x~iphone.png"; path = "assets/chicago@2x~iphone.png"; sourceTree = "<group>"; };
+		1B5D02FD15C44CF400976D33 /* chicago~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chicago~ipad.png"; path = "assets/chicago~ipad.png"; sourceTree = "<group>"; };
+		1B5D02FE15C44CF400976D33 /* chicago~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chicago~iphone.png"; path = "assets/chicago~iphone.png"; sourceTree = "<group>"; };
+		1B5D030315C44F8400976D33 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		1B5D030515C44F8B00976D33 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		1B688DB315C3811900FCDCEE /* dialog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dialog.png; path = assets/dialog.png; sourceTree = "<group>"; };
 		1B688DB415C3811900FCDCEE /* dialog@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "dialog@2x.png"; path = "assets/dialog@2x.png"; sourceTree = "<group>"; };
 		1B688DB515C3811900FCDCEE /* employees.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = employees.png; path = assets/employees.png; sourceTree = "<group>"; };
@@ -286,6 +298,8 @@
 		1BA358D81582F05E00EB8F32 = {
 			isa = PBXGroup;
 			children = (
+				1B5D030515C44F8B00976D33 /* Default@2x.png */,
+				1B5D030315C44F8400976D33 /* Default.png */,
 				1B73580B15BDF03C00D87F4E /* SDWebImage.xcodeproj */,
 				1BA358ED1582F05E00EB8F32 /* ApplaudLocations */,
 				1BA358E61582F05E00EB8F32 /* Frameworks */,
@@ -357,6 +371,10 @@
 		1BD494ED15BDF6D3006A01A9 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				1B5D02FB15C44CF400976D33 /* chicago@2x~ipad.png */,
+				1B5D02FC15C44CF400976D33 /* chicago@2x~iphone.png */,
+				1B5D02FD15C44CF400976D33 /* chicago~ipad.png */,
+				1B5D02FE15C44CF400976D33 /* chicago~iphone.png */,
 				1B688DBF15C3A94700FCDCEE /* shareyourthoughts.png */,
 				1B688DB315C3811900FCDCEE /* dialog.png */,
 				1B688DB415C3811900FCDCEE /* dialog@2x.png */,
@@ -472,6 +490,12 @@
 				1B688DBD15C3811900FCDCEE /* newsfeed.png in Resources */,
 				1B688DBE15C3811900FCDCEE /* newsfeed@2x.png in Resources */,
 				1B688DC015C3A94700FCDCEE /* shareyourthoughts.png in Resources */,
+				1B5D02FF15C44CF400976D33 /* chicago@2x~ipad.png in Resources */,
+				1B5D030015C44CF400976D33 /* chicago@2x~iphone.png in Resources */,
+				1B5D030115C44CF400976D33 /* chicago~ipad.png in Resources */,
+				1B5D030215C44CF400976D33 /* chicago~iphone.png in Resources */,
+				1B5D030415C44F8400976D33 /* Default.png in Resources */,
+				1B5D030615C44F8B00976D33 /* Default@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

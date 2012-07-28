@@ -25,8 +25,8 @@
 @synthesize tabNavigator = _tabNavigator;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{ 
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+{
+     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
     
     //
@@ -97,7 +97,15 @@
     UIAlertView *loginAlert = [[UIAlertView alloc] initWithTitle:@"Login to Applaud" message:@"Please enter your login information." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
     loginAlert.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
     if ( (username = self.settings.username) && (password = self.settings.password) ) {
+        extern int error_code;
         BOOL loginSuccess = [ConnectionManager authenticateWithUsername:username password:password];
+        if ( error_code ) {
+            switch ( error_code ) {
+                case ERROR_NO_CONNECTION:
+                    NSLog(@"Caught no connection error");
+                    break;
+            }
+        }
         NSLog(@"Login success is %d",loginSuccess);
         if ( loginSuccess ) {
             // Cache username and password in our program settings
@@ -176,8 +184,8 @@
     }
     // User hit 'cancel'
     else if ( buttonIndex == 0 ) {
-        NSLog(@"User did not authenticate. Exiting...");
-        exit(0);
+        error_code = ERROR_BAD_LOGIN;
+        NSLog(@"User did not authenticate.");
     }
 }
 

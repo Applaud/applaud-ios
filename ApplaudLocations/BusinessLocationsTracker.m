@@ -43,7 +43,6 @@
         NSLog(@"<----- OLD: %@     NEW:%@  ----->", newLocation, oldLocation);
         lastCoordinate = newLocation.coordinate;
         [self findBusinessesWithLocation:newLocation.coordinate];
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"LOCATION_CHANGE" object:newLocation];
         NSLog(@"<----------> CHANGING LOCATION <---------->");
     }
     

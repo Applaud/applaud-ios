@@ -40,6 +40,9 @@
     [self.navigationItem setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
                                                                                             target:self
                                                                                             action:@selector(refreshButtonPressed)]];
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"chicago"]]];
+    [self.tableView setBackgroundColor:[UIColor clearColor]];
+    
     self.navigationItem.title = @"Available Locations";
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] init];
     backButton.title = @"List View";

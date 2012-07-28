@@ -58,6 +58,7 @@
     }
     outbound_connections++;
     
+    extern int error_code;
     [NSURLConnection sendAsynchronousRequest:request
                                        queue:[NSOperationQueue mainQueue]
                            completionHandler:^(NSURLResponse *response, NSData *d, NSError *err) {
@@ -67,6 +68,7 @@
                                                               delegate:nil
                                                      cancelButtonTitle:@"OK"
                                                      otherButtonTitles:nil] show];
+                                   error_code = ERROR_NO_CONNECTION;
                                    NSLog(@"%@", err);
                                }
                                else {
@@ -156,15 +158,10 @@
 + (BOOL)authenticateWithUsername:(NSString *)username password:(NSString *)password {
     NSString *postString = [NSString stringWithFormat:@"username=%@&password=%@", username, password];
     
-    // Get the CSRF token from the login url itself
-//    NSString *csrfToken = [ConnectionManager getCSRFTokenFromURL:[NSString stringWithFormat:@"%@%@", SERVER_URL, LOGIN_URL]];
-
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc]
                                     initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",
                                                                       SERVER_URL, LOGIN_URL]]];
     [request setHTTPBody:[NSData dataWithBytes:[postString UTF8String] length:postString.length]];
-    // Put the CSRF token into the HTTP request. Kinda important.
-//    [request addValue:csrfToken forHTTPHeaderField:@"X-CSRFToken"];
     [request setHTTPMethod:@"POST"];
     
     NSError *error = nil;
@@ -173,6 +170,7 @@
     NSData * data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
     NSHTTPURLResponse *r = (NSHTTPURLResponse *)response;
     if ( error ) {
+        error_code = ERROR_NO_CONNECTION;
         NSLog(@"login error: %@",error.description);
         NSLog(@"LOGIN: %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
     }
