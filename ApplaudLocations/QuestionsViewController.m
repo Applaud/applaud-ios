@@ -146,12 +146,11 @@
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *CellIdentifier = @"Cell";
-    SurveyAccordionCell *cell = [self.questionsTable dequeueReusableCellWithIdentifier:CellIdentifier];
+    SurveyAccordionCell *cell = [self.questionsTable dequeueReusableCellWithIdentifier:[[self.survey.fields objectAtIndex:indexPath.section] label]];
     
     if ( nil == cell ) {
         cell = [[SurveyAccordionCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                          reuseIdentifier:CellIdentifier
+                                          reuseIdentifier:[[self.survey.fields objectAtIndex:indexPath.section] label]
                                                     field:[self.survey.fields objectAtIndex:indexPath.section]];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
@@ -160,7 +159,6 @@
             [cell layoutSubviews];
         }
     }
-    
     return cell;
 }
 

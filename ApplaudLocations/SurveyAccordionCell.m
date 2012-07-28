@@ -106,7 +106,6 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    
     CGRect contentRect = [self.containerView bounds];
     
     // We will never edit, but it's clean.
@@ -255,6 +254,7 @@
     }
     return [[NSArray alloc] init ]; // If we don't have an answer.
 }
+
 
 #pragma mark -
 #pragma mark Delegate Methods from UITextView/Field
