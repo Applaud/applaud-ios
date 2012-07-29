@@ -27,6 +27,12 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    // Listen for fatal errors
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(loginFailed:)
+                                                 name:@"FATAL_ERROR"
+                                               object:nil];
+    
      self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
     
@@ -55,20 +61,20 @@
         }
     }
     
-
-    //
-    // Set up view controllers and class members
-    //
-    // The "tracker" updates the NotificationCenter about changes in the user's location
-    // Since we want to track this throughout the application, we initialize it here.
-    self.tracker = [[BusinessLocationsTracker alloc] init];
-    
     // List view controller, for selecting the location
     self.masterViewController = [[MasterViewController alloc] init];
     self.masterViewController.appDelegate = self;
     self.masterViewController.settings = self.settings;
     // The tab bar, for navigation
     self.tabNavigator = [[UITabBarController alloc] init];
+    
+    //
+    // Set up view controllers and class members
+    //
+    // The "tracker" updates the NotificationCenter about changes in the user's location
+    // Since we want to track this throughout the application, we initialize it here.
+    self.tracker = [[BusinessLocationsTracker alloc] init];
+    [self.tracker startUpdatingLocation];
     
     [self refreshViewControllers];
     
@@ -77,50 +83,32 @@
     self.tabNavigator.delegate = self;
     [self.masterViewController setWindow:self.window];
    
-//    // Ipad initialization
-//    if ( [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad ) {
-//        NSArray *viewControllers = [NSArray arrayWithObjects:self.masterViewController, mapViewController, nil];
-//        UISplitViewController *splitView = [[UISplitViewController alloc] init];
-//        splitView.viewControllers = viewControllers;
-//        self.window.rootViewController = splitView;
-//    }
-//    // Iphone initialization 
-//    else {
+
+    // Setup the window for display
     self.navControl = [[UINavigationController alloc] initWithRootViewController:self.masterViewController];
     self.window.rootViewController = self.navControl;
-//    }
-    
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
+    // We want to be notified about login success or failure
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(loginSucceeded:)
+                                                 name:@"LOGIN_SUCCESS"
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(loginFailed:)
+                                                 name:@"LOGIN_FAILURE"
+                                               object:nil];
     
     // Authenticate the user
     NSString *username, *password;
     UIAlertView *loginAlert = [[UIAlertView alloc] initWithTitle:@"Login to Applaud" message:@"Please enter your login information." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
     loginAlert.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
+    
+    // Try to retrieve username and password from internal database
     if ( (username = self.settings.username) && (password = self.settings.password) ) {
-        extern int error_code;
-        BOOL loginSuccess = [ConnectionManager authenticateWithUsername:username password:password];
-        if ( error_code ) {
-            switch ( error_code ) {
-                case ERROR_NO_CONNECTION:
-                {
-                    ErrorViewController *evc = [[ErrorViewController alloc] init];
-                    self.window.rootViewController = evc;
-                }
-                    break;
-            }
-        }
-        NSLog(@"Login success is %d",loginSuccess);
-        if ( loginSuccess ) {
-            // Cache username and password in our program settings
-            [self.settings setUsername:username];
-            [self.settings setPassword:password];
-            NSError *err;
-            [self.managedObjectContext save:&err]; 
-        }
-        else {
-            [loginAlert show];    
-        }
+        // Perform login
+        [ConnectionManager authenticateWithUsername:username password:password];
     }
     else {
         [loginAlert show];
@@ -168,38 +156,10 @@
     
     // The OK button
     if ( buttonIndex == 1 ) {
-        if (! [ConnectionManager authenticateWithUsername:username password:password] ) {
-            extern int error_code;
-            if ( error_code ) {
-                switch ( error_code ) {
-                    case ERROR_NO_CONNECTION:
-                    {
-                        ErrorViewController *evc = [[ErrorViewController alloc] init];
-                        self.window.rootViewController = evc;
-                    }
-                        break;
-                }
-            }
-            UIAlertView *tryAgain = [[UIAlertView alloc] initWithTitle:@"Invalid Credentials"
-                                                               message:@"Please try again."
-                                                              delegate:self
-                                                     cancelButtonTitle:[alertView buttonTitleAtIndex:0]
-                                                     otherButtonTitles:[alertView buttonTitleAtIndex:1], nil];
-            tryAgain.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
-            alertView = nil;
-            [tryAgain show];
-        }
-        else {
-            // Cache username and password in our program settings
-            [self.settings setUsername:username];
-            [self.settings setPassword:password];
-            NSError *err;
-            [self.managedObjectContext save:&err]; 
-        }
+        [ConnectionManager authenticateWithUsername:username password:password];
     }
     // User hit 'cancel'
     else if ( buttonIndex == 0 ) {
-        error_code = ERROR_BAD_LOGIN;
         ErrorViewController *evc = [[ErrorViewController alloc] init];
         self.window.rootViewController = evc;
     }
@@ -255,23 +215,6 @@
     self.window.rootViewController = self.navControl;
     [self.masterViewController.tableView deselectRowAtIndexPath:[self.masterViewController.tableView indexPathForSelectedRow]
                                                        animated:NO];
-}
-
-#pragma mark -
-#pragma mark NSURLConnectionDelegate Methods
-
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-    NSLog(@"%@",error);
-}
-
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    [connectionData appendData:data];
-}
-
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-//    NSLog(@"%@", [[NSString alloc] initWithData:connectionData encoding:NSUTF8StringEncoding]);
-    connectionData = nil;
-    // proceed with application based on whether authentication worked or not.
 }
 
 #pragma mark -
@@ -343,6 +286,49 @@
     NSString *basePath = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
     
     return basePath;
+}
+
+#pragma mark -
+#pragma mark Login Success/Failure Methods
+
+/*
+ * Login was completely successful.
+ */
+- (void)loginSucceeded:(NSNotification *)notification {
+    NSArray *userPassword = notification.object;
+    
+    [self.settings setUsername:[userPassword objectAtIndex:0]];
+    [self.settings setPassword:[userPassword objectAtIndex:1]];
+    NSError *err;
+    [self.managedObjectContext save:&err];
+    
+}
+
+/*
+ * Login failed for some reason (could not connect to server, bad username/password combo)
+ */
+- (void)loginFailed:(NSNotification *)notification {
+    if ( ERROR_NO_CONNECTION == error_code ) {
+        ErrorViewController *evc = [[ErrorViewController alloc] init];
+        self.window.rootViewController = evc;
+    }
+    else {
+        UIAlertView *tryAgain = [[UIAlertView alloc] initWithTitle:@"Invalid Credentials"
+                                                           message:@"Please try again."
+                                                          delegate:self
+                                                 cancelButtonTitle:@"Cancel"
+                                                 otherButtonTitles:@"OK", nil];
+        tryAgain.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
+        [tryAgain show];
+    }
+}
+
+#pragma mark -
+#pragma mark Error Messages
+
+- (void)fatalError:(NSNotification *)notification {
+    ErrorViewController *evc = [[ErrorViewController alloc] init];
+    self.window.rootViewController = evc;
 }
 
 @end

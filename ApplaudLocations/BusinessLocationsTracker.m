@@ -20,11 +20,14 @@
         self.locMan = [[CLLocationManager alloc] init];
         self.locMan.desiredAccuracy = kCLLocationAccuracyBest;
         self.locMan.delegate = self;
-        [self.locMan startUpdatingLocation];
         serverData = [[NSMutableData alloc] init];
     }
     
     return self;
+}
+
+- (void)startUpdatingLocation {
+    [self.locMan startUpdatingLocation];
 }
 
 /**
@@ -40,10 +43,9 @@
     // Check distance
     if ( [[[CLLocation alloc] initWithLatitude:lastCoordinate.latitude longitude:lastCoordinate.longitude] distanceFromLocation:newLocation] > BUSINESS_RADIUS_EXIT) {
         // We left the business, or are starting up
-        NSLog(@"<----- OLD: %@     NEW:%@  ----->", newLocation, oldLocation);
         lastCoordinate = newLocation.coordinate;
         [self findBusinessesWithLocation:newLocation.coordinate];
-        NSLog(@"<----------> CHANGING LOCATION <---------->");
+        [self.locMan stopUpdatingLocation];
     }
     
 }
@@ -68,7 +70,10 @@
 - (void)findBusinessesWithLocation:(CLLocationCoordinate2D)location {
     NSLog(@"Location is.... %f, %f",location.latitude, location.longitude );
     
-    void (^callback)(NSData *) = ^(NSData *dat){
+    void (^callback)(NSHTTPURLResponse *, NSData *) = ^(NSHTTPURLResponse *r, NSData *dat){
+        if ( error_code )
+            return;
+        
         NSError *e;
         NSMutableDictionary *businesses = [NSJSONSerialization JSONObjectWithData:dat options:NSJSONReadingMutableLeaves | NSJSONReadingMutableContainers error:&e];
         NSMutableArray *businessArray = [[NSMutableArray alloc] init];

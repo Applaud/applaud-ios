@@ -125,7 +125,7 @@
     [ConnectionManager serverRequest:@"POST" 
                             withData:[NSJSONSerialization dataWithJSONObject:dict options:0 error:nil] 
                                  url:CHECKIN_URL
-                            callback:^(NSData *dat){
+                            callback:^(NSHTTPURLResponse *r, NSData *dat){
                                 NSLog(@"here is my checkin data: %@", [[NSString alloc] initWithData:dat encoding:NSUTF8StringEncoding]);
                                 // Set app delegate's current business from what was returned by the server
                                 NSLog(@"Business from server: %@",bus.description);
@@ -161,7 +161,7 @@
 }
 
 -(void)refreshButtonPressed {
-    [self.appDelegate.tracker findBusinessesWithLocation:self.appDelegate.tracker.locMan.location.coordinate];
+    [self.appDelegate.tracker startUpdatingLocation];
 }
 
 - (void) downloadFinished:(NSNotification *)notification {
