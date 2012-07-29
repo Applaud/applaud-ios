@@ -253,9 +253,7 @@
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-//    NSLog(@"%@", [[NSString alloc] initWithData:connectionData encoding:NSUTF8StringEncoding]);
     connectionData = nil;
-    // proceed with application based on whether authentication worked or not.
 }
 
 #pragma mark -
@@ -312,8 +310,7 @@
     persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel: [self managedObjectModel]];
     
     if (![persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeUrl options:nil error:&error]) {
-        NSLog(@"Could not initiate a persistent store for some reason. %@", error);
-        // Handle the error.
+        
     }    
 
     return persistentStoreCoordinator;

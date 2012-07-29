@@ -37,9 +37,7 @@
         
         // Put the CSRF token into the HTTP request. Kinda important.
         [request addValue:token forHTTPHeaderField:@"X-CSRFToken"];
-        NSLog(@"Here, the data is....%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding ]);
         [request setHTTPBody:data];
-        NSLog(@"The url is....%@", url);
         request.HTTPMethod = requestType;
         request.URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", SERVER_URL, url]];
     }
@@ -48,9 +46,6 @@
     //[request addValue:[self.staticInstance sessionCookie] forHTTPHeaderField:@"Cookie"];
     NSString *token = [ConnectionManager getCSRFTokenFromURL:[NSString stringWithFormat:@"%@%@",SERVER_URL,url]];
     [request addValue:[NSString stringWithFormat:@"csrftoken=%@; %@", token, [[ConnectionManager staticInstance] sessionCookie]] forHTTPHeaderField:@"Cookie"];
-    NSLog(@"Sending the following cookie: %@", [request.allHTTPHeaderFields objectForKey:@"Cookie"]);
-    
-    NSLog(@"Requesting from %@", [request.URL description]);
     
     // Display network activity indicator if we are going from 0 --> >0 connections
     if ( outbound_connections == 0 ) {
@@ -109,11 +104,9 @@
     NSData *data = nil;
     
     if ( [requestType isEqualToString:@"POST"] ) {
-        NSLog(@"The params are....%@", params);
         data = [NSJSONSerialization dataWithJSONObject:params
                                                options:0
                                                  error:nil];
-        NSLog(@"Then the JSON object is......%@", [[NSString alloc] initWithData:data encoding: NSUTF8StringEncoding]);
     }
     else if ( [requestType isEqualToString:@"GET"] ) {
         NSString *dictAsString = [self GETStringFromDict:params];
@@ -148,7 +141,6 @@
     NSError *err = nil;
     NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&err];
     NSString *html = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    NSLog(@"CSRF token is %@",html);
     return html;
 }
 
@@ -167,16 +159,14 @@
     NSError *error = nil;
     __block NSString *cookieString = nil;
     NSURLResponse *response;
-    NSData * data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+    [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
     NSHTTPURLResponse *r = (NSHTTPURLResponse *)response;
     if ( error ) {
         error_code = ERROR_NO_CONNECTION;
         NSLog(@"login error: %@",error.description);
-        NSLog(@"LOGIN: %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
     }
     else {
         if ( 200 == r.statusCode ) {
-            NSLog(@"%@",@"Login success!");
             NSError *regexError = nil;
             cookieString = [r.allHeaderFields objectForKey:@"Set-Cookie"];
             NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"sessionid=[a-f0-9]+;"
@@ -188,7 +178,6 @@
             // Finds the sessionID in the cookie string
             cookieString = [cookieString substringWithRange:regexRange];
             [[ConnectionManager staticInstance] setSessionCookie:cookieString];
-            NSLog(@"%@", cookieString);
             
             return YES;
         }

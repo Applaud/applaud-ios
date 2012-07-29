@@ -55,7 +55,6 @@
 		1BD494F215BF1E05006A01A9 /* NFTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BD494F115BF1E05006A01A9 /* NFTableViewCell.m */; };
 		1BFF2E7E158D9CDC00753F94 /* EmployeeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BFF2E7C158D9CDB00753F94 /* EmployeeListViewController.m */; };
 		1BFF2E7F158D9CDC00753F94 /* EmployeeListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1BFF2E7D158D9CDC00753F94 /* EmployeeListViewController.xib */; };
-		6F0B5C3315A3CB030060D1B5 /* UIImage+Scale.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0B5C3215A3CB030060D1B5 /* UIImage+Scale.m */; };
 		6F2A39171587B2AB0024FB52 /* Business.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F2A39161587B2AB0024FB52 /* Business.m */; };
 		6F37B93B1589400E001DD06D /* NFItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F37B9391589400D001DD06D /* NFItemViewController.m */; };
 		6F37B93C1589400E001DD06D /* NFItemViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F37B93A1589400D001DD06D /* NFItemViewController.xib */; };
@@ -166,8 +165,6 @@
 		1BFF2E7B158D9CDB00753F94 /* EmployeeListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmployeeListViewController.h; sourceTree = "<group>"; };
 		1BFF2E7C158D9CDB00753F94 /* EmployeeListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmployeeListViewController.m; sourceTree = "<group>"; };
 		1BFF2E7D158D9CDC00753F94 /* EmployeeListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmployeeListViewController.xib; sourceTree = "<group>"; };
-		6F0B5C3115A3CB030060D1B5 /* UIImage+Scale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Scale.h"; sourceTree = "<group>"; };
-		6F0B5C3215A3CB030060D1B5 /* UIImage+Scale.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Scale.m"; sourceTree = "<group>"; };
 		6F2A39151587B2AB0024FB52 /* Business.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Business.h; sourceTree = "<group>"; };
 		6F2A39161587B2AB0024FB52 /* Business.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Business.m; sourceTree = "<group>"; };
 		6F37B9381589400D001DD06D /* NFItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NFItemViewController.h; sourceTree = "<group>"; };
@@ -354,8 +351,6 @@
 				6F2A39161587B2AB0024FB52 /* Business.m */,
 				1B9389B91584EF010088F468 /* BusinessLocationsTracker.h */,
 				1B9389BA1584EF010088F468 /* BusinessLocationsTracker.m */,
-				6F0B5C3115A3CB030060D1B5 /* UIImage+Scale.h */,
-				6F0B5C3215A3CB030060D1B5 /* UIImage+Scale.m */,
 				1B9528BE1590D87500103723 /* ConnectionManager.h */,
 				1B9528BF1590D87500103723 /* ConnectionManager.m */,
 				1BA358EE1582F05E00EB8F32 /* Supporting Files */,
@@ -534,7 +529,6 @@
 				1B514016158FA233008CB057 /* ApplaudProgramSettingsModel.m in Sources */,
 				1B9528C01590D87500103723 /* ConnectionManager.m in Sources */,
 				6F875EF61591594600555390 /* FirstTimeNavigatorViewController.m in Sources */,
-				6F0B5C3315A3CB030060D1B5 /* UIImage+Scale.m in Sources */,
 				1B12763215B89B9600980AA2 /* MasterViewController.m in Sources */,
 				1B9C3A6815BA0637000EEF1A /* SurveyAccordionCell.m in Sources */,
 				1BD494F215BF1E05006A01A9 /* NFTableViewCell.m in Sources */,

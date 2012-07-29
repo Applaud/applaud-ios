@@ -107,10 +107,6 @@
     
     // Show the activity indicator in the status bar
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    
-    NSLog(@"Checking in at business: %@", bus.description);
-    NSLog(@"Types are.....");
-
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
                           bus.latitude, @"latitude",
                           bus.longitude, @"longitude",
@@ -119,19 +115,11 @@
                           bus.types, @"types",
                           nil];
 
-//    NSURL *url = [[NSURL alloc] initWithString:urlString];
-//    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
-//    request.HTTPMethod = @"POST";
-//    request.HTTPBody = [NSJSONSerialization dataWithJSONObject:dict options:0 error:nil];
-//    [request addValue:[ConnectionManager getCSRFTokenFromURL:urlString] forHTTPHeaderField:@"X-CSRFToken"];
-
-    [ConnectionManager serverRequest:@"POST" 
+    [ConnectionManager serverRequest:@"POST"
                             withData:[NSJSONSerialization dataWithJSONObject:dict options:0 error:nil] 
                                  url:CHECKIN_URL
                             callback:^(NSData *dat){
-                                NSLog(@"here is my checkin data: %@", [[NSString alloc] initWithData:dat encoding:NSUTF8StringEncoding]);
                                 // Set app delegate's current business from what was returned by the server
-                                NSLog(@"Business from server: %@",bus.description);
                                 NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:dat options:0 error:nil];
                                 Business *business = [[Business alloc] initWithName:[dict objectForKey:@"name"]
                                                                             goog_id:[dict objectForKey:@"goog_id"]
@@ -143,8 +131,6 @@
                                 [business setBusiness_id:[dict[@"business_id"] intValue]];
                                 self.appDelegate.currentBusiness = business;
 
-                                NSLog(@"The current business primary is: %@",bus.primaryColor);
-                                
                                 // Listen for when network downloads have stopped.
                                 [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(downloadFinished:) name:@"DOWNLOAD_FINISHED" object:nil];
                                 

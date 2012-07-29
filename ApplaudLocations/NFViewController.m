@@ -210,7 +210,6 @@
         NSLog(@"%@", error);
     }
     [ConnectionManager serverRequest:@"POST" withParams:dict url:NEWSFEED_URL callback:^(NSData *data) {
-        NSLog(@"Newsfeeds: %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
         NSError *e;
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data
                                                              options:NSJSONReadingAllowFragments
@@ -221,8 +220,7 @@
         
         // Get rid of any old newsfeeds.
         self.newsFeeds = [[NSMutableArray alloc] init];
-        NSLog(@"%d", self.newsFeeds.count);
-        
+
         [format setDateFormat:@"MM/dd/yyyy"];
         for ( NSDictionary *feed in items ) {
             NSString *imageURLString = @"";
@@ -254,7 +252,6 @@
         NSDate *prevDate = nil;
         for ( int i=0; i<self.newsFeeds.count; i++ ) {
             if ( 0 == i || ![prevDate isEqualToDate:[[self.newsFeeds objectAtIndex:i] date]] ) {
-                NSLog(@"%@", self.newsFeeds);
                 prevDate = [[self.newsFeeds objectAtIndex:i] date];
                 NSMutableArray *newList = [[NSMutableArray alloc] init];
                 [newList addObject:[self.newsFeeds objectAtIndex:i]];

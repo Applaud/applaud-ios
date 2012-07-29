@@ -38,7 +38,6 @@
         self.navigationController.navigationBar.tintColor = self.appDelegate.currentBusiness.primaryColor;
         self.questionsTable.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
         self.view.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
-        NSLog(@"color!: %@", self.appDelegate.currentBusiness.primaryColor);
     }
 }
 
@@ -208,21 +207,19 @@
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     SurveyAccordionCell *acccell = (SurveyAccordionCell*)cell;
-    NSLog(@"Label for cell was %@",acccell.questionLabel.text);
-    NSLog(@"Number of cells: %d",self.questionsTable.numberOfSections);
     
     // Set color and shape
-    cell.backgroundColor = [UIColor whiteColor];
-    cell.contentView.backgroundColor = [UIColor whiteColor];
-    cell.contentView.layer.cornerRadius = 7.0f;
-    cell.contentView.layer.borderWidth = 1.0f;
-    cell.contentView.layer.borderColor = [[UIColor grayColor] CGColor];
-    [[(SurveyAccordionCell*)cell containerView].layer setMasksToBounds:YES];
+    acccell.backgroundColor = [UIColor whiteColor];
+    acccell.contentView.backgroundColor = [UIColor whiteColor];
+    acccell.contentView.layer.cornerRadius = 7.0f;
+    acccell.contentView.layer.borderWidth = 1.0f;
+    acccell.contentView.layer.borderColor = [[UIColor grayColor] CGColor];
+    [[acccell containerView].layer setMasksToBounds:YES];
     
     // Some nice visual FX
-    cell.contentView.layer.shadowRadius = 5.0f;
-    cell.contentView.layer.shadowOpacity = 0.2f;
-    cell.contentView.layer.shadowOffset = CGSizeMake(1, 0);
+    acccell.contentView.layer.shadowRadius = 5.0f;
+    acccell.contentView.layer.shadowOpacity = 0.2f;
+    acccell.contentView.layer.shadowOffset = CGSizeMake(1, 0);
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -342,8 +339,6 @@
  */
 - (void)handleSurveyData:(NSData *)d {
     // Grabbing the JSON data from the server's response
-    NSLog(@"Survey data is......");
-    NSLog(@"%@", [[NSString alloc] initWithData:d encoding:NSUTF8StringEncoding]);
     NSError *e = [[NSError alloc] init];
     NSDictionary *surveyData = [NSJSONSerialization JSONObjectWithData:d
                                                                options:NSJSONReadingAllowFragments
@@ -382,8 +377,6 @@
     SurveyField *temp = [fields objectAtIndex:0];
     [fields setObject:[fields objectAtIndex:genFeedbackIndex] atIndexedSubscript:0];
     [fields setObject:temp atIndexedSubscript:genFeedbackIndex];
-
-    NSLog(@"%@",fields.description);
     
     // Creating the survey model
     Survey *survey = [[Survey alloc] initWithTitle:[surveyData objectForKey:@"title"]
@@ -439,8 +432,7 @@
     }
     NSDictionary *params = [[NSDictionary alloc] initWithObjectsAndKeys:surveyAnswers, @"answers", nil];
     
-    NSLog(@"Sending these survey responses: %@",params);
-    
+
     [ConnectionManager serverRequest:@"POST"
                           withParams:params
                                  url:RESPONSE_URL

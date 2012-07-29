@@ -43,13 +43,11 @@
         NSLog(@"<----- OLD: %@     NEW:%@  ----->", newLocation, oldLocation);
         lastCoordinate = newLocation.coordinate;
         [self findBusinessesWithLocation:newLocation.coordinate];
-        NSLog(@"<----------> CHANGING LOCATION <---------->");
     }
     
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
-    NSLog(@"Location is.... %f, %f",manager.location.coordinate.latitude, manager.location.coordinate.longitude );
     UIAlertView *connection_problem = [[UIAlertView alloc] initWithTitle:@"Connection error"
                                                                  message:@"Couldn't get business data"
                                                                 delegate:nil
@@ -66,8 +64,6 @@
  * What we do when we want to find businesses around a certain location.
  */
 - (void)findBusinessesWithLocation:(CLLocationCoordinate2D)location {
-    NSLog(@"Location is.... %f, %f",location.latitude, location.longitude );
-    
     void (^callback)(NSData *) = ^(NSData *dat){
         NSError *e;
         NSMutableDictionary *businesses = [NSJSONSerialization JSONObjectWithData:dat options:NSJSONReadingMutableLeaves | NSJSONReadingMutableContainers error:&e];
@@ -80,13 +76,7 @@
                                               primaryColor:nil
                                             secondaryColor: nil
                                                      types:[dict objectForKey:@"types"]];
-            NSLog(@"The primary color is.....%@",[dict objectForKey:@"primary"]);
-            NSLog(@"The primary secondary is.....%@",[dict objectForKey:@"secondary"]);
-            
-            NSLog(@"The business_id is....%d",[[dict objectForKey:@"business_id"] intValue]);
             bus.business_id = [[dict objectForKey:@"business_id"] intValue];
-            NSLog(@"Got business: %@", bus.description);
-            NSLog(@"%@", [dict objectForKey:@"primary"]);
             [businessArray addObject:bus];
         }
         
@@ -97,7 +87,6 @@
                               cancelButtonTitle:@"OK"
                               otherButtonTitles:@"Refresh", nil] show];
         }
-        NSLog(@"sent BUSINESS_RECEIVED");
         // put some info in the notificationcenter
         [[NSNotificationCenter defaultCenter] postNotificationName:@"BUSINESS_RECEIVED" object:businessArray];
     };

@@ -154,7 +154,6 @@
                                                                   + CELL_ELEMENT_PADDING
                                                                   + 2*CELL_PADDING) + 2 * CELL_PADDING + TITLE_LABEL_HEIGHT + CELL_GAP + 20;
 
-    NSLog(@"Profile view: %f at origin and %f for height", self.profileView.frame.origin.y, self.profileView.frame.size.height);
     [self.tableView setFrame:CGRectMake(0, 
                                         self.profileView.frame.origin.y + self.profileView.frame.size.height - CELL_GAP - 15,
                                         self.view.frame.size.width, 
@@ -380,7 +379,6 @@
     
     // Reset the slider
     [slider setValue:0.0f animated:YES];
-    NSLog(@"Slider value is %f",slider.value);
     // Reset the value label
     [valueLabel setText:NO_RATING_TEXT];
     [valueLabel setTextColor:[UIColor blackColor]];
@@ -402,7 +400,6 @@
     float red = (5.0f - slider.value)/5.0f;
     float green = slider.value/5.6f;
     float blue = 0.0f;
-    NSLog(@"red: %f green: %f blue: %f", red, green, blue);
     valueLabel.textColor = [UIColor colorWithRed:red green:green blue:blue alpha:1.0f];
 
     // Note that the slider is active

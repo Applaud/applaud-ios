@@ -30,7 +30,6 @@
     if (self) {
         [self setTitle:@"Employees"];
         _employeeControllers = [[NSMutableArray alloc] init];
-        NSLog(@"elvc registering for notification");
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(notificationReceived:)
                                                      name:@"BUSINESS_SET"
@@ -116,6 +115,8 @@
             [cell.textLabel setText:[[self.employeeArray objectAtIndex:indexPath.row] description]];
             [cell.imageView setImageWithURL:[(Employee*)[self.employeeArray objectAtIndex:indexPath.row] imageURL]
                            placeholderImage:[UIImage imageNamed:@"blankPerson.jpg"]];
+            cell.imageView.layer.cornerRadius = 7.0f;
+            cell.imageView.layer.masksToBounds = YES;
             tableView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
         }
         cell.textLabel.font = [UIFont boldSystemFontOfSize:TITLE_SIZE];
@@ -160,8 +161,6 @@
     NSArray *valArray = [[NSArray alloc] initWithObjects:@(self.appDelegate.currentBusiness.business_id), nil];
     NSDictionary *dict = [[NSDictionary alloc] initWithObjects:valArray forKeys:keyArray];
     [ConnectionManager serverRequest:@"POST" withParams:dict url:EMPLOYEES_URL callback:^(NSData *dat) {
-        NSLog(@"Employee JSON object is......");
-        NSLog(@"%@", [[NSString alloc] initWithData:dat encoding:NSUTF8StringEncoding]);
         NSError *err = [[NSError alloc] init]; // for debugging, probably not needed anymore
         NSArray *employeeData = [NSJSONSerialization JSONObjectWithData:dat
                                                                 options:NSJSONReadingAllowFragments
@@ -170,7 +169,6 @@
         
         // employeeArray is a list of dictionaries, each containing information about an employee
         for ( NSDictionary *dict in employeeData ) {
-            NSLog(@"Employee with id:%d",(int)[[dict objectForKey:@"id"] intValue]);
             NSString *imageURLString = @"";
             if ( ![[dict objectForKey:@"image"] isEqualToString:@""] ) {
                 imageURLString = [[NSString alloc] initWithFormat:@"%@%@",
@@ -186,7 +184,6 @@
                                                    dimensions:[[dict objectForKey:@"ratings"]
                                                                objectForKey:@"dimensions"]
                                                   employee_id:[[dict objectForKey:@"id"] intValue]];
-            NSLog(@"Employee image:%@",e.imageURL);
             // employeeArray will hold all the employees
             [self.employeeArray addObject:e];
             
