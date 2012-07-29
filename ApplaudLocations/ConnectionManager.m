@@ -7,76 +7,40 @@
 //
 
 #import "ConnectionManager.h"
+#import "ErrorViewController.h"
 #import <CoreData/CoreData.h>
 
 @implementation ConnectionManager
 
 @synthesize sessionCookie = _sessionCookie;
 
-/**
- * requestType : either GET or POST
- * params : arguments to pass to the server
- * returns : the server's response to the request
- */
-+ (NSData *)serverRequest:(NSString *)requestType withData:(NSData *)data url:(NSString *)url callback:(void(^)(NSData *))callback {
-    
-    // Keeps track of how many connections we have
-    static int outbound_connections = 0;
-    
-    __block NSData *ret;
-    NSString *urlPostfix = url;
-    NSMutableURLRequest *request = nil;
-    
-    if ( [requestType isEqualToString:@"GET"] ) {
-        request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", SERVER_URL, urlPostfix]]];
-        [request setHTTPBody:data];
-    }
-    else if ( [requestType isEqualToString:@"POST"] ) {
-        request = [[NSMutableURLRequest alloc] init];
-        NSString *token = [ConnectionManager getCSRFTokenFromURL:[NSString stringWithFormat:@"%@%@",SERVER_URL,url]];
-        
-        // Put the CSRF token into the HTTP request. Kinda important.
-        [request addValue:token forHTTPHeaderField:@"X-CSRFToken"];
-        [request setHTTPBody:data];
-        request.HTTPMethod = requestType;
-        request.URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", SERVER_URL, url]];
-    }
-    
-    // Include our session cookie
-    //[request addValue:[self.staticInstance sessionCookie] forHTTPHeaderField:@"Cookie"];
-    NSString *token = [ConnectionManager getCSRFTokenFromURL:[NSString stringWithFormat:@"%@%@",SERVER_URL,url]];
-    [request addValue:[NSString stringWithFormat:@"csrftoken=%@; %@", token, [[ConnectionManager staticInstance] sessionCookie]] forHTTPHeaderField:@"Cookie"];
-    
+// Keeps track of outbound connections
+static int outbound_connections;
+
++ (void)makeRequest:(NSURLRequest*)request callback:(void(^)(NSHTTPURLResponse *, NSData *))callback {
     // Display network activity indicator if we are going from 0 --> >0 connections
     if ( outbound_connections == 0 ) {
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     }
     outbound_connections++;
     
-    extern int error_code;
     [NSURLConnection sendAsynchronousRequest:request
                                        queue:[NSOperationQueue mainQueue]
-                           completionHandler:^(NSURLResponse *response, NSData *d, NSError *err) {
+                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *err) {
+                               NSHTTPURLResponse *r = (NSHTTPURLResponse *)response;
+                               
                                if(err) {
-                                   [[[UIAlertView alloc] initWithTitle:@"Connection Error"
-                                                               message:@"Apatapa couldn't connect to the internet."
-                                                              delegate:nil
-                                                     cancelButtonTitle:@"OK"
-                                                     otherButtonTitles:nil] show];
                                    error_code = ERROR_NO_CONNECTION;
+                                   [[NSNotificationCenter defaultCenter] postNotificationName:@"FATAL_ERROR" object:nil];
+                                   
                                    NSLog(@"%@", err);
                                }
                                else {
-                                   NSHTTPURLResponse *r = (NSHTTPURLResponse *)response;
                                    if ( r.statusCode == 500 ) {
                                        NSLog(@"========== SERVER ERROR ===========\n --> %@ <--",
                                              [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+                                       error_code = ERROR_SERVER_ERROR;
                                    }
-                                   ret = d;
-                                   if ( callback ) {
-                                       callback(d);
-                                   }
-                                   
                                }
                                
                                // Decrement # of connections
@@ -87,11 +51,60 @@
                                    // Let interested bodies know that all network comm. is finished.
                                    [[NSNotificationCenter defaultCenter] postNotificationName:@"DOWNLOAD_FINISHED" object:nil];
                                }
+                               
+                               if ( callback ) {
+                                   callback(r, data);
+                               }
                            }];
-    return ret;
+
 }
 
-+ (NSData *)serverRequest:(NSString *)requestType withData:(NSData *)data url:(NSString *)url {
+/**
+ * requestType : either GET or POST
+ * params : arguments to pass to the server
+ * returns : the server's response to the request
+ */
++ (void)serverRequest:(NSString *)requestType withData:(NSData *)data url:(NSString *)url callback:(void(^)(NSHTTPURLResponse *, NSData *))callback {
+    
+    // Keeps track of how many connections we have
+    outbound_connections = 0;
+    
+    NSString *urlPostfix = url;
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    // Set timeout to 10 seconds
+    request.timeoutInterval = 10.0;
+    
+    __block NSString *cookieString = [[ConnectionManager staticInstance] sessionCookie];
+    
+    if ( [requestType isEqualToString:@"GET"] ) {
+        request.URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", SERVER_URL, urlPostfix]];
+        NSLog(@"Requesting from URL (GET): %@",[NSString stringWithFormat:@"%@%@",SERVER_URL,urlPostfix]);
+        [request setHTTPBody:data];
+        [request addValue:cookieString forHTTPHeaderField:@"Cookie"];
+        
+        [ConnectionManager makeRequest:request callback:callback];
+    }
+    else if ( [requestType isEqualToString:@"POST"] ) {
+        [ConnectionManager getCSRFTokenFromURL:url
+                                  withCallback:^(NSHTTPURLResponse *r, NSString *csrf, NSError *e) {
+                                      // Put the CSRF token into the HTTP request. Kinda important.
+                                      NSLog(@"Here, the data is....%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding ]);
+                                      [request setHTTPBody:data];
+                                      NSLog(@"The url is....%@", url);
+                                      request.HTTPMethod = requestType;
+                                      request.URL = [NSURL URLWithString:url];
+                                      cookieString = [NSString stringWithFormat:@"csrftoken=%@; %@", csrf, cookieString];
+                                      [request addValue:cookieString forHTTPHeaderField:@"Cookie"];
+                                      NSLog(@"Requesting from URL (POST): %@",request.URL.absoluteString);
+                                      
+                                      [ConnectionManager makeRequest:request callback:callback];
+                                  }];
+        
+
+    }
+}
+
++ (void)serverRequest:(NSString *)requestType withData:(NSData *)data url:(NSString *)url {
     return [ConnectionManager serverRequest:requestType withData:data url:url callback:nil];
 }
 
@@ -100,7 +113,7 @@
  * params : arguments to pass to the server
  * returns : the server's response to the request
  */
-+ (NSData *)serverRequest:(NSString *)requestType withParams:(NSDictionary *)params url:(NSString *)url callback:(void(^)(NSData *))callback {
++ (void)serverRequest:(NSString *)requestType withParams:(NSDictionary *)params url:(NSString *)url callback:(void(^)(NSHTTPURLResponse *, NSData *))callback {
     NSData *data = nil;
     
     if ( [requestType isEqualToString:@"POST"] ) {
@@ -113,11 +126,11 @@
         url = [[NSString alloc] initWithFormat:@"%@%@", url,dictAsString];
     }
     
-    return [ConnectionManager serverRequest:requestType withData:data url:url callback:callback];
+    [ConnectionManager serverRequest:requestType withData:data url:url callback:callback];
 }
 
-+ (NSData *)serverRequest:(NSString *)requestType withParams:(NSDictionary *)params url:(NSString *)url {
-    return [ConnectionManager serverRequest:requestType withParams:params url:url callback:nil];
++ (void)serverRequest:(NSString *)requestType withParams:(NSDictionary *)params url:(NSString *)url {
+    [ConnectionManager serverRequest:requestType withParams:params url:url callback:nil];
 }
 
 /**
@@ -134,56 +147,74 @@
 /*
  * Sends a GET to the server and grabs a CSRF token. I really hope this works.
  */
-+ (NSString *)getCSRFTokenFromURL:(NSString *)urlString {
++ (void)getCSRFTokenFromURL:(NSString *)urlString withCallback:(void(^)(NSHTTPURLResponse *, NSString *, NSError *))callback {
+    NSLog(@"CSRF token from url: %@", urlString);
     NSURL *url = [[NSURL alloc] initWithString:urlString];
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
-    NSURLResponse *response = nil;
-    NSError *err = nil;
-    NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&err];
-    NSString *html = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    return html;
+    [NSURLConnection sendAsynchronousRequest:request
+                                       queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *r, NSData *d, NSError *e) {
+                               NSString *csrf = [[NSString alloc] initWithData:d encoding:NSUTF8StringEncoding];
+                               callback((NSHTTPURLResponse*)r,csrf,e);
+                           }];
 }
 
 /**
  * logins and logouts
  */
-+ (BOOL)authenticateWithUsername:(NSString *)username password:(NSString *)password {
++ (void)authenticateWithUsername:(NSString *)username password:(NSString *)password {
+    outbound_connections = 0;
+    
     NSString *postString = [NSString stringWithFormat:@"username=%@&password=%@", username, password];
     
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]
-                                    initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",
-                                                                      SERVER_URL, LOGIN_URL]]];
-    [request setHTTPBody:[NSData dataWithBytes:[postString UTF8String] length:postString.length]];
-    [request setHTTPMethod:@"POST"];
-    
-    NSError *error = nil;
     __block NSString *cookieString = nil;
-    NSURLResponse *response;
-    [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-    NSHTTPURLResponse *r = (NSHTTPURLResponse *)response;
-    if ( error ) {
-        error_code = ERROR_NO_CONNECTION;
-        NSLog(@"login error: %@",error.description);
+
+    // Display network activity indicator if we are going from 0 --> >0 connections
+    if ( outbound_connections == 0 ) {
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     }
-    else {
-        if ( 200 == r.statusCode ) {
-            NSError *regexError = nil;
-            cookieString = [r.allHeaderFields objectForKey:@"Set-Cookie"];
-            NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"sessionid=[a-f0-9]+;"
-                                                                                   options:0
-                                                                                     error:&regexError];
-            NSRange regexRange = [regex rangeOfFirstMatchInString:cookieString
-                                                          options:0
-                                                            range:NSMakeRange(0, cookieString.length)];
-            // Finds the sessionID in the cookie string
-            cookieString = [cookieString substringWithRange:regexRange];
-            [[ConnectionManager staticInstance] setSessionCookie:cookieString];
-            
-            return YES;
-        }
-    }
+    outbound_connections++;
     
-    return NO;
+    [ConnectionManager serverRequest:@"POST"
+                            withData:[NSData dataWithBytes:[postString UTF8String] length:postString.length]
+                                 url:[NSString stringWithFormat:@"%@%@", SERVER_URL, LOGIN_URL]
+                            callback:^(NSHTTPURLResponse *r, NSData *d) {
+                                
+                                // We are ok, login was successful
+                                if ( ! error_code && r.statusCode == 200 ) {
+                                    NSArray *userPassword = [NSArray arrayWithObjects:username, password, nil];
+                                    [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGIN_SUCCESS" object:userPassword];
+                                    
+                                    NSError *regexError = nil;
+                                    cookieString = [r.allHeaderFields objectForKey:@"Set-Cookie"];
+                                    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"sessionid=[a-f0-9]+;"
+                                                                                                           options:0
+                                                                                                             error:&regexError];
+                                    NSRange regexRange = [regex rangeOfFirstMatchInString:cookieString
+                                                                                  options:0
+                                                                                    range:NSMakeRange(0, cookieString.length)];
+                                    // Finds the sessionID in the cookie string
+                                    cookieString = [cookieString substringWithRange:regexRange];
+                                    [[ConnectionManager staticInstance] setSessionCookie:cookieString];
+                                    NSLog(@"%@", cookieString);
+                                }
+                                
+                                // Login did not succeed (could not connect to server, bad username/password combo)
+                                else {
+                                    if (! error_code )
+                                        error_code = ERROR_BAD_LOGIN;
+                                    
+                                    NSLog(@"Status code was %d.", r.statusCode);
+                                    
+                                    [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGIN_FAILURE" object:nil];
+                                }
+                                
+                                outbound_connections--;
+                                // No more connections --> stop showing network activity indicator
+                                if ( outbound_connections == 0 ) {
+                                    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+                                }
+                            }];
 }
 
 

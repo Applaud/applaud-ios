@@ -20,5 +20,8 @@
 - (void)showAlertView:(NSString *)msg;
 
 - (void)findBusinessesWithLocation:(CLLocationCoordinate2D)location;
+- (void)startUpdatingLocation;
+
+extern int error_code;
 
 @end

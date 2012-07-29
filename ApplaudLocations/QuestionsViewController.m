@@ -326,7 +326,7 @@
     [ConnectionManager serverRequest:@"POST"
                             withParams:dict
                                  url:SURVEY_URL
-                            callback: ^(NSData *d) {
+                            callback: ^(NSHTTPURLResponse *r, NSData *d) {
                                 [self handleSurveyData:d];
                             }];
 }
@@ -436,7 +436,7 @@
     [ConnectionManager serverRequest:@"POST"
                           withParams:params
                                  url:RESPONSE_URL
-                            callback:^(NSData* dat) {
+                            callback:^(NSHTTPURLResponse *r, NSData* dat) {
                                 // Collapse all table cells, but retain responses.
                                 for (int i=0; i<self.questionsTable.numberOfSections; i++) {
                                     SurveyAccordionCell *cell = (SurveyAccordionCell*)[self.questionsTable cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:i]];

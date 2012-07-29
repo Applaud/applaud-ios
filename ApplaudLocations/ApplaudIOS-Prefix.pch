@@ -33,6 +33,7 @@ int error_code;
 
 #define ERROR_NO_CONNECTION -1  // Could not connect to the internet
 #define ERROR_BAD_LOGIN -2      // Bad credentials when logging in, and user gave up
+#define ERROR_SERVER_ERROR -3   // Server had a 500
 
 
 #define BACK_BUTTON_TITLE @"Locations"

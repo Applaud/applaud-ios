@@ -52,9 +52,6 @@
     [self.tableView setBackgroundColor:[UIColor clearColor]];
     
     self.navigationItem.title = @"Available Locations";
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] init];
-    backButton.title = @"List View";
-    self.navigationItem.backBarButtonItem = backButton;
     [self.view addSubview:tableView];
     
     // Show our title
@@ -118,7 +115,7 @@
     [ConnectionManager serverRequest:@"POST"
                             withData:[NSJSONSerialization dataWithJSONObject:dict options:0 error:nil] 
                                  url:CHECKIN_URL
-                            callback:^(NSData *dat){
+                            callback:^(NSHTTPURLResponse *r, NSData *dat){
                                 // Set app delegate's current business from what was returned by the server
                                 NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:dat options:0 error:nil];
                                 Business *business = [[Business alloc] initWithName:[dict objectForKey:@"name"]
@@ -150,7 +147,7 @@
 }
 
 -(void)refreshButtonPressed {
-    [self.appDelegate.tracker findBusinessesWithLocation:self.appDelegate.tracker.locMan.location.coordinate];
+    [self.appDelegate.tracker startUpdatingLocation];
 }
 
 - (void) downloadFinished:(NSNotification *)notification {

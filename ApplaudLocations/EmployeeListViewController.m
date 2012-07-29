@@ -160,7 +160,8 @@
     NSArray *keyArray = [[NSArray alloc] initWithObjects:@"business_id", nil];
     NSArray *valArray = [[NSArray alloc] initWithObjects:@(self.appDelegate.currentBusiness.business_id), nil];
     NSDictionary *dict = [[NSDictionary alloc] initWithObjects:valArray forKeys:keyArray];
-    [ConnectionManager serverRequest:@"POST" withParams:dict url:EMPLOYEES_URL callback:^(NSData *dat) {
+    [ConnectionManager serverRequest:@"POST" withParams:dict url:EMPLOYEES_URL callback:^(NSHTTPURLResponse *r, NSData *dat) {
+        NSLog(@"Employee JSON object is......");
         NSError *err = [[NSError alloc] init]; // for debugging, probably not needed anymore
         NSArray *employeeData = [NSJSONSerialization JSONObjectWithData:dat
                                                                 options:NSJSONReadingAllowFragments
