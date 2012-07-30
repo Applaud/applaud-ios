@@ -181,7 +181,10 @@
             
             [cell layoutSubviews];
         }
-        cell.contentView.layer.shadowPath = [[UIBezierPath bezierPathWithRoundedRect:cell.contentView.frame cornerRadius:5.0f] CGPath];
+        cell.contentView.layer.shadowPath = [[UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0,
+                                                                                                cell.frame.size.width - 2*CELL_MARGIN,
+                                                                                                cell.contentView.frame.size.height)
+                                                                        cornerRadius:5.0f] CGPath];
     }
     return cell;
 }
@@ -266,7 +269,9 @@
         CABasicAnimation *theAnimation = [CABasicAnimation animationWithKeyPath:@"shadowPath"];
         theAnimation.duration = ACCORDION_TIME;
         theAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
-        cell.contentView.layer.shadowPath = [[UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, 300, cell.contentView.frame.size.height)
+        cell.contentView.layer.shadowPath = [[UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0,
+                                                                                                cell.frame.size.width - 2*CELL_MARGIN,
+                                                                                                cell.contentView.frame.size.height)
                                                                         cornerRadius:5.0f] CGPath];
         [cell.contentView.layer addAnimation:theAnimation forKey:@"shadowPath"];
                
@@ -310,8 +315,7 @@
     theAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
     CGRect expandedRect = CGRectMake(0,
                                      0,
-//                                     cell.contentView.frame.size.width,
-                                     300,
+                                     cell.frame.size.width - 2*CELL_MARGIN,
                                      [cell expandedHeight]);
     cell.contentView.layer.shadowPath = [[UIBezierPath bezierPathWithRoundedRect:expandedRect cornerRadius:5.0f] CGPath];
     [cell.contentView.layer addAnimation:theAnimation forKey:@"shadowPath"];
