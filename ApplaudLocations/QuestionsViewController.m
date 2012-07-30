@@ -181,6 +181,7 @@
             
             [cell layoutSubviews];
         }
+        cell.contentView.layer.shadowPath = [[UIBezierPath bezierPathWithRoundedRect:cell.contentView.frame cornerRadius:5.0f] CGPath];
     }
     return cell;
 }
@@ -307,16 +308,14 @@
     
     // Animate shadow
     CABasicAnimation *theAnimation = [CABasicAnimation animationWithKeyPath:@"shadowPath"];
-    cell.contentView.layer.shadowPath = [[UIBezierPath bezierPathWithRoundedRect:cell.contentView.frame cornerRadius:5.0f] CGPath];
 
     // Some nice visual FX
     theAnimation.duration = ACCORDION_TIME;
-    CGRect expandedRect = CGRectMake(cell.frame.origin.x,
-                                     cell.frame.origin.y,
+    CGRect expandedRect = CGRectMake(0,
+                                     0,
                                      cell.frame.size.width,
                                      [cell expandedHeight]);
-    theAnimation.fromValue = (id)[UIBezierPath bezierPathWithRoundedRect:cell.frame cornerRadius:5.0f];
-    theAnimation.toValue = (id)[UIBezierPath bezierPathWithRoundedRect:expandedRect cornerRadius:5.0f];
+    cell.contentView.layer.shadowPath = [[UIBezierPath bezierPathWithRoundedRect:expandedRect cornerRadius:5.0f] CGPath];
     [cell.contentView.layer addAnimation:theAnimation forKey:@"shadowPath"];
 
     [UIView animateWithDuration:ACCORDION_TIME
