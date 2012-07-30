@@ -12,8 +12,6 @@
 
 @implementation BusinessLocationsTracker
 
-@synthesize locMan = _locMan;
-
 - (id)init {
     self = [super init];
     if ( self ) {
@@ -22,7 +20,6 @@
         self.locMan.delegate = self;
         serverData = [[NSMutableData alloc] init];
     }
-    
     return self;
 }
 
@@ -74,15 +71,15 @@
         NSError *e;
         NSMutableDictionary *businesses = [NSJSONSerialization JSONObjectWithData:dat options:NSJSONReadingMutableLeaves | NSJSONReadingMutableContainers error:&e];
         NSMutableArray *businessArray = [[NSMutableArray alloc] init];
-        for(NSDictionary *dict in [businesses objectForKey:@"nearby_businesses"]) {
-            Business *bus = [[Business alloc] initWithName:[dict objectForKey:@"name"]
-                                                   goog_id:[dict objectForKey:@"goog_id"]
-                                                  latitude:[dict objectForKey:@"latitude"]
-                                                 longitude:[dict objectForKey:@"longitude"]
+        for(NSDictionary *dict in businesses[@"nearby_businesses"]) {
+            Business *bus = [[Business alloc] initWithName:dict[@"name"]
+                                                   goog_id:dict[@"goog_id"]
+                                                  latitude:dict[@"latitude"]
+                                                 longitude:dict[@"longitude"]
                                               primaryColor:nil
-                                            secondaryColor: nil
-                                                     types:[dict objectForKey:@"types"]];
-            bus.business_id = [[dict objectForKey:@"business_id"] intValue];
+                                            secondaryColor:nil
+                                                     types:dict[@"types"]];
+            bus.business_id = [dict[@"business_id"] intValue];
             [businessArray addObject:bus];
         }
         
@@ -96,13 +93,8 @@
         // put some info in the notificationcenter
         [[NSNotificationCenter defaultCenter] postNotificationName:@"BUSINESS_RECEIVED" object:businessArray];
     };
-    
     NSDictionary *getDict = @{ @"latitude" : @(location.latitude),
                                @"longitude" : @(location.longitude) };
-
-    // dummy businesses for debugging
-    // [ConnectionManager serverRequest:@"GET" withParams:nil url:EXAMPLE_URL callback:callback];
-
     [ConnectionManager serverRequest:@"GET" withParams:getDict url:WHEREAMI_URL callback:callback];
 }
 

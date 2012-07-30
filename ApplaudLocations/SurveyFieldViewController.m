@@ -16,9 +16,6 @@
 
 @implementation SurveyFieldViewController
 
-@synthesize field = _field;
-@synthesize questionLabel = _questionLabel;
-@synthesize labels = _labels; // For relating checkbox groups to their labels.
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -80,15 +77,14 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     UINavigationController *parent = (UINavigationController *)self.parentViewController;
-    QuestionsViewController *qvc = [parent.viewControllers objectAtIndex:0];
+    QuestionsViewController *qvc = parent.viewControllers[0];
     // Find the index at which this question is located.
     NSUInteger row = [qvc.survey.fields indexOfObject:self.field];
     NSArray *answer = [self getAnswer];
     if(answer) {
-        [qvc.survey.answers replaceObjectAtIndex:row withObject:answer];
+        qvc.survey.answers[row] = answer;
         UITableViewCell *answerCell = [qvc.questionsTable cellForRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0]];
         answerCell.detailTextLabel.text = [answer componentsJoinedByString:@", "];
-//        answerCell.contentView.backgroundColor = [UIColor greenColor];
     }
     [qvc.questionsTable reloadData];        
 }
@@ -187,7 +183,7 @@
                 if([view isKindOfClass:[UITextView class]]) {
                     textView = (UITextView *)view;
                     if(textView.text) {
-                        return [NSArray arrayWithObject:textView.text];
+                        return @[textView.text];
                     }
                 }
             }
@@ -200,7 +196,7 @@
                 if([view isKindOfClass:[UITextField class]]) {
                     textField = (UITextField *)view;
                     if(textField.text) {
-                        return [NSArray arrayWithObject:textField.text];
+                        return @[textField.text];
                     }
                 }
             }
@@ -213,7 +209,7 @@
                 if([view isKindOfClass:[UISegmentedControl class]]) {
                     radioGroup = (UISegmentedControl *)view;
                     if(radioGroup.selectedSegmentIndex != UISegmentedControlNoSegment) {
-                        return [NSArray arrayWithObject:[radioGroup titleForSegmentAtIndex:radioGroup.selectedSegmentIndex]];
+                        return @[[radioGroup titleForSegmentAtIndex:radioGroup.selectedSegmentIndex]];
                     }
                 }
             }

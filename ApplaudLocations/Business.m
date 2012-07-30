@@ -9,14 +9,6 @@
 #import "Business.h"
 
 @implementation Business
-@synthesize name = _name;
-@synthesize business_id = _business_id;
-@synthesize goog_id = _goog_id;
-@synthesize latitude = _latitude;
-@synthesize longitude = _longitude;
-@synthesize primaryColor = _primaryColor;
-@synthesize secondaryColor = _secondaryColor;
-@synthesize types = _types;
 
 - (id)initWithName:(NSString *)name goog_id:(NSString *)goog_id
           latitude:(NSNumber *) latitude longitude:(NSNumber *) longitude

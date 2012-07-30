@@ -16,14 +16,7 @@
 
 @implementation AppDelegate
 
-@synthesize window = _window;
-@synthesize tracker;
 @synthesize managedObjectContext, managedObjectModel, persistentStoreCoordinator, applicationDocumentPath;
-@synthesize settings = _settings;
-@synthesize currentBusiness = _currentBusiness;
-@synthesize masterViewController = _masterViewController;
-@synthesize navControl = _navControl;
-@synthesize tabNavigator = _tabNavigator;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -40,11 +33,12 @@
     // Retrieve program settings
     // 
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"ApplaudProgramSettings" inManagedObjectContext:[self managedObjectContext]];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"ApplaudProgramSettings"
+                                              inManagedObjectContext:[self managedObjectContext]];
     [request setEntity:entity];
     
     NSError *error = nil;    
-    NSMutableArray *mutableFetchResults = [[managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+    NSMutableArray *mutableFetchResults = [[self.managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
     if (mutableFetchResults == nil) {
         NSLog(@"%@",error);
     }
@@ -52,11 +46,12 @@
         if ( mutableFetchResults.count == 0 ) {
             // first time launching
             // Create some settings here
-            _settings = (ApplaudProgramSettingsModel *)[NSEntityDescription insertNewObjectForEntityForName:@"ApplaudProgramSettings" inManagedObjectContext:managedObjectContext];
+            _settings = (ApplaudProgramSettingsModel *)[NSEntityDescription insertNewObjectForEntityForName:@"ApplaudProgramSettings"
+                                                                                     inManagedObjectContext:self.managedObjectContext];
             _settings.firstTimeLaunching = YES;
         }
         else {
-            _settings = [mutableFetchResults objectAtIndex:0];
+            _settings = mutableFetchResults[0];
             _settings.firstTimeLaunching = NO;
         }
     }
@@ -102,7 +97,11 @@
     
     // Authenticate the user
     NSString *username, *password;
-    UIAlertView *loginAlert = [[UIAlertView alloc] initWithTitle:@"Login to Applaud" message:@"Please enter your login information." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
+    UIAlertView *loginAlert = [[UIAlertView alloc] initWithTitle:@"Login to Applaud"
+                                                         message:@"Please enter your login information."
+                                                        delegate:self
+                                               cancelButtonTitle:@"Cancel"
+                                               otherButtonTitles:@"OK", nil];
     loginAlert.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
     
     // Try to retrieve username and password from internal database
@@ -203,11 +202,7 @@
                                                            image:[UIImage imageNamed:@"newsfeed"]
                                                              tag:102];
     nfvc.tabBarItem = newsItem;
-    self.tabNavigator.viewControllers = [NSArray arrayWithObjects:
-                                         newsNav,
-                                         questionNav,
-                                         employeeNav,
-                                         nil];
+    self.tabNavigator.viewControllers = @[newsNav, questionNav, employeeNav];
 }
 
 -(void)backButtonPressed {
@@ -265,12 +260,17 @@
         return persistentStoreCoordinator;
     }
     
-    NSURL *storeUrl = [NSURL fileURLWithPath: [[self applicationDocumentsDirectory] stringByAppendingPathComponent: @"Applaud.data"]];
+    NSURL *storeUrl = [NSURL fileURLWithPath: [[self applicationDocumentsDirectory]
+                                               stringByAppendingPathComponent: @"Applaud.data"]];
     
     NSError *error;
     persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel: [self managedObjectModel]];
     
-    if (![persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeUrl options:nil error:&error]) {
+    if (![persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType
+                                                  configuration:nil
+                                                            URL:storeUrl
+                                                        options:nil
+                                                          error:&error]) {
         
     }    
 
@@ -282,8 +282,7 @@
  */
 - (NSString *)applicationDocumentsDirectory {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *basePath = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
-    
+    NSString *basePath = ([paths count] > 0) ? paths[0] : nil;
     return basePath;
 }
 
@@ -295,12 +294,10 @@
  */
 - (void)loginSucceeded:(NSNotification *)notification {
     NSArray *userPassword = notification.object;
-    
-    [self.settings setUsername:[userPassword objectAtIndex:0]];
-    [self.settings setPassword:[userPassword objectAtIndex:1]];
+    self.settings.username = userPassword[0];
+    self.settings.password = userPassword[1];
     NSError *err;
     [self.managedObjectContext save:&err];
-    
 }
 
 /*

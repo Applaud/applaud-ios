@@ -21,9 +21,6 @@
 
 @implementation ErrorViewController
 
-@synthesize errorTitle = _errorTitle;
-@synthesize errorBody = _errorBody;
-
 - (id)init {
     self = [super init];
     if ( self ) {
