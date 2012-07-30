@@ -45,9 +45,9 @@
         // We left the business, or are starting up
         lastCoordinate = newLocation.coordinate;
         [self findBusinessesWithLocation:newLocation.coordinate];
-        [self.locMan stopUpdatingLocation];
     }
     
+    [self.locMan stopUpdatingLocation];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
