@@ -264,14 +264,9 @@
         
         // Some nice visual FX
         CABasicAnimation *theAnimation = [CABasicAnimation animationWithKeyPath:@"shadowPath"];
-        cell.contentView.layer.shadowPath = [[UIBezierPath bezierPathWithRoundedRect:cell.contentView.frame cornerRadius:5.0f] CGPath];
         theAnimation.duration = ACCORDION_TIME;
-        CGRect expandedRect = CGRectMake(cell.frame.origin.x,
-                                         cell.frame.origin.y,
-                                         cell.frame.size.width,
-                                         [cell expandedHeight]);
-        theAnimation.fromValue = (id)[UIBezierPath bezierPathWithRoundedRect:expandedRect cornerRadius:5.0f];
-        theAnimation.toValue = (id)[UIBezierPath bezierPathWithRoundedRect:cell.contentView.frame cornerRadius:5.0f];
+        cell.contentView.layer.shadowPath = [[UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, 300, cell.contentView.frame.size.height)
+                                                                        cornerRadius:5.0f] CGPath];
         [cell.contentView.layer addAnimation:theAnimation forKey:@"shadowPath"];
                
         [UIView animateWithDuration:ACCORDION_TIME
@@ -313,7 +308,8 @@
     theAnimation.duration = ACCORDION_TIME;
     CGRect expandedRect = CGRectMake(0,
                                      0,
-                                     cell.frame.size.width,
+//                                     cell.contentView.frame.size.width,
+                                     300,
                                      [cell expandedHeight]);
     cell.contentView.layer.shadowPath = [[UIBezierPath bezierPathWithRoundedRect:expandedRect cornerRadius:5.0f] CGPath];
     [cell.contentView.layer addAnimation:theAnimation forKey:@"shadowPath"];
