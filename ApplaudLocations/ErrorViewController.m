@@ -36,15 +36,10 @@
     // Do any additional setup after loading the view from its nib.
 
     // Background image
-    UIImage *backgroundImage = [UIImage imageNamed:@"Default"];
-    CGRect cropRect = CGRectMake(0,
-                                 (self.navigationController.navigationBar.frame.size.height
-                                 + [[UIScreen mainScreen] applicationFrame].origin.y)*[[UIScreen mainScreen] scale],
-                                 backgroundImage.size.width*[[UIScreen mainScreen] scale],
-                                 backgroundImage.size.height*[[UIScreen mainScreen] scale]);
-    CGImageRef backgroundImageRef = CGImageCreateWithImageInRect(backgroundImage.CGImage, cropRect);
-    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageWithCGImage:backgroundImageRef]]];
-    CGImageRelease(backgroundImageRef);
+    self.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Default"]];
+    self.backgroundView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+    self.backgroundView.contentMode = UIViewContentModeBottom;
+    [self.view addSubview:self.backgroundView];
     
     // Error text
     extern int error_code;

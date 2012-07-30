@@ -48,13 +48,13 @@
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
-    UIAlertView *connection_problem = [[UIAlertView alloc] initWithTitle:@"Connection error"
-                                                                 message:@"Couldn't get business data"
-                                                                delegate:nil
-                                                       cancelButtonTitle:nil
-                                                       otherButtonTitles:@"OK", nil];
-    [connection_problem show];
-    NSLog(@"Error finding location: %@",error);
+//    UIAlertView *connection_problem = [[UIAlertView alloc] initWithTitle:@"Connection error"
+//                                                                 message:@"Couldn't get business data"
+//                                                                delegate:nil
+//                                                       cancelButtonTitle:nil
+//                                                       otherButtonTitles:@"OK", nil];
+//    [connection_problem show];
+//    NSLog(@"Error finding location: %@",error);
 }
 
 #pragma mark -
