@@ -216,22 +216,22 @@
     switch(self.field.type) {
         case TEXTAREA:
         {
-            UITextView *textView = (UITextView*)[self.questionWidgets objectAtIndex:0];
+            UITextView *textView = (UITextView*)self.questionWidgets[0];
             if ( [textView hasText] )
-                return [NSArray arrayWithObject:textView.text];
+                return @[textView.text];
         }
         case TEXTFIELD:
         {
-            UITextField *textField = (UITextField*)[self.questionWidgets objectAtIndex:0];
+            UITextField *textField = (UITextField*)self.questionWidgets[0];
             if ( [textField hasText] )
-                return [NSArray arrayWithObject:textField.text];
+                return @[textField.text];
         }
             break;
         case RADIO:
         {
-            UISegmentedControl *radioGroup = (UISegmentedControl*)[self.questionWidgets objectAtIndex:0];
+            UISegmentedControl *radioGroup = (UISegmentedControl*)self.questionWidgets[0];
             if(radioGroup.selectedSegmentIndex != UISegmentedControlNoSegment) {
-                return [NSArray arrayWithObject:[radioGroup titleForSegmentAtIndex:radioGroup.selectedSegmentIndex]];
+                return @[[radioGroup titleForSegmentAtIndex:radioGroup.selectedSegmentIndex]];
             }
         }
             break;
@@ -263,7 +263,7 @@
  * resign keyboard on 'return'
  */
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [(UITextView*)[self.questionWidgets objectAtIndex:0] resignFirstResponder];
+    [(UITextView*)self.questionWidgets[0] resignFirstResponder];
     return NO;
 }
 
@@ -272,7 +272,7 @@
  */
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
     if ( [text isEqualToString:@"\n"] ) {
-        [(UITextView*)[self.questionWidgets objectAtIndex:0] resignFirstResponder];
+        [(UITextView*)self.questionWidgets[0] resignFirstResponder];
         return NO;
     }
     return YES;

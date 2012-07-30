@@ -25,7 +25,10 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.locationsArray = [[NSMutableArray alloc] init];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(businessReceived:) name:@"BUSINESS_RECEIVED" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(businessReceived:)
+                                                     name:@"BUSINESS_RECEIVED"
+                                                   object:nil];
     }
     return self;
 }
@@ -92,8 +95,8 @@
     }
     
     // Configure the cell...
-    Business *business = [locationsArray objectAtIndex:indexPath.row];
-    [[cell textLabel] setText:business.name];
+    Business *business = locationsArray[indexPath.row];
+    cell.textLabel.text = business.name;
     return cell;
 }
 
@@ -102,30 +105,24 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     __block Business *bus = [locationsArray objectAtIndex:indexPath.row];
-    
     // Show the activity indicator in the status bar
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
-                          bus.latitude, @"latitude",
-                          bus.longitude, @"longitude",
-                          bus.goog_id, @"goog_id",
-                          bus.name, @"name",
-                          bus.types, @"types",
-                          nil];
-
+    NSDictionary *dict = @{@"latitude": bus.latitude, @"longitude": bus.longitude,
+                           @"goog_id": bus.goog_id, @"name": bus.name,
+                           @"types": bus.types};
     [ConnectionManager serverRequest:@"POST"
                             withData:[NSJSONSerialization dataWithJSONObject:dict options:0 error:nil] 
                                  url:CHECKIN_URL
                             callback:^(NSHTTPURLResponse *r, NSData *dat){
                                 // Set app delegate's current business from what was returned by the server
                                 NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:dat options:0 error:nil];
-                                Business *business = [[Business alloc] initWithName:[dict objectForKey:@"name"]
-                                                                            goog_id:[dict objectForKey:@"goog_id"]
-                                                                           latitude:[dict objectForKey:@"latitude"]
-                                                                          longitude:[dict objectForKey:@"longitude"]
-                                                                       primaryColor:[dict objectForKey:@"primary"]
-                                                                     secondaryColor:[dict objectForKey:@"secondary"]
-                                                                              types:[dict objectForKey:@"types"]];
+                                Business *business = [[Business alloc] initWithName:dict[@"name"]
+                                                                            goog_id:dict[@"goog_id"]
+                                                                           latitude:dict[@"latitude"]
+                                                                          longitude:dict[@"longitude"]
+                                                                       primaryColor:dict[@"primary"]
+                                                                     secondaryColor:dict[@"secondary"]
+                                                                              types:dict[@"types"]];
                                 [business setBusiness_id:[dict[@"business_id"] intValue]];
                                 self.appDelegate.currentBusiness = business;
 

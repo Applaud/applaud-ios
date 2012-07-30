@@ -152,7 +152,7 @@
  */
 - (void)viewWillDisappear:(BOOL)animated {
     UINavigationController *parent = (UINavigationController *)self.parentViewController;
-    UITableView *tableView = [[parent.viewControllers objectAtIndex:0] tableView];
+    UITableView *tableView = [parent.viewControllers[0] tableView];
     NSIndexPath *path = [tableView indexPathForSelectedRow];
     [tableView deselectRowAtIndexPath:path animated:YES];
 }

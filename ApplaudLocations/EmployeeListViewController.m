@@ -96,7 +96,7 @@
     if ( self.employeeArray.count == 0 )
         cellIdentifier = cellDefaultIdentifier;
     else {
-        employeeName = [[self.employeeArray objectAtIndex:indexPath.row] description];
+        employeeName = [self.employeeArray[indexPath.row] description];
         cellIdentifier = employeeName;
     }
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
@@ -112,8 +112,8 @@
             
         }
         else {
-            [cell.textLabel setText:[[self.employeeArray objectAtIndex:indexPath.row] description]];
-            [cell.imageView setImageWithURL:[(Employee*)[self.employeeArray objectAtIndex:indexPath.row] imageURL]
+            [cell.textLabel setText:[self.employeeArray[indexPath.row] description]];
+            [cell.imageView setImageWithURL:[(Employee*)self.employeeArray[indexPath.row] imageURL]
                            placeholderImage:[UIImage imageNamed:@"blankPerson.jpg"]];
             cell.imageView.layer.cornerRadius = 7.0f;
             cell.imageView.layer.masksToBounds = YES;
@@ -138,17 +138,17 @@
         // Don't do anything.
         return;
     }
-    Employee *employee = [self.employeeArray objectAtIndex:indexPath.row];
+    Employee *employee = self.employeeArray[indexPath.row];
     EmployeeViewController *evc;
     if([[self.employeeControllers objectAtIndex:indexPath.row] isKindOfClass:[NSNull class]]) {
         evc = [[EmployeeViewController alloc] initWithEmployee:employee];
         evc.appDelegate = self.appDelegate;
-        [self.employeeControllers replaceObjectAtIndex:indexPath.row withObject:evc];
+        self.employeeControllers[indexPath.row] = evc;
         evc.view.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
         evc.title = [NSString stringWithFormat:@"%@ %@",employee.firstName,employee.lastName];
     }
     else {
-        evc = [self.employeeControllers objectAtIndex:indexPath.row];
+        evc = self.employeeControllers[indexPath.row];
     }
     [self.navigationController pushViewController:evc animated:YES];
 }
@@ -157,9 +157,7 @@
 #pragma mark Other Methods
 
 - (void)getEmployees {
-    NSArray *keyArray = [[NSArray alloc] initWithObjects:@"business_id", nil];
-    NSArray *valArray = [[NSArray alloc] initWithObjects:@(self.appDelegate.currentBusiness.business_id), nil];
-    NSDictionary *dict = [[NSDictionary alloc] initWithObjects:valArray forKeys:keyArray];
+    NSDictionary *dict = @{@"business_id": @(self.appDelegate.currentBusiness.business_id)};
     [ConnectionManager serverRequest:@"POST" withParams:dict url:EMPLOYEES_URL callback:^(NSHTTPURLResponse *r, NSData *dat) {
         NSLog(@"Employee JSON object is......");
         NSError *err = [[NSError alloc] init]; // for debugging, probably not needed anymore
@@ -171,20 +169,18 @@
         // employeeArray is a list of dictionaries, each containing information about an employee
         for ( NSDictionary *dict in employeeData ) {
             NSString *imageURLString = @"";
-            if ( ![[dict objectForKey:@"image"] isEqualToString:@""] ) {
+            if ( ![dict[@"image"] isEqualToString:@""] ) {
                 imageURLString = [[NSString alloc] initWithFormat:@"%@%@",
-                                  SERVER_URL, [dict objectForKey:@"image"]];
+                                  SERVER_URL, dict[@"image"]];
             }
             //TODO: cache images
-            Employee *e = [[Employee alloc] initWithFirstName:[dict objectForKey:@"first_name"]
-                                                     lastName:[dict objectForKey:@"last_name"]
-                                                          bio:[dict objectForKey:@"bio"]
+            Employee *e = [[Employee alloc] initWithFirstName:dict[@"first_name"]
+                                                     lastName:dict[@"last_name"]
+                                                          bio:dict[@"bio"]
                                                      imageURL:[[NSURL alloc] initWithString:imageURLString]
-                                                 profileTitle:[[dict objectForKey:@"ratings"]
-                                                               objectForKey:@"rating_title"]
-                                                   dimensions:[[dict objectForKey:@"ratings"]
-                                                               objectForKey:@"dimensions"]
-                                                  employee_id:[[dict objectForKey:@"id"] intValue]];
+                                                 profileTitle:dict[@"ratings"][@"rating_title"]
+                                                   dimensions:dict[@"ratings"][@"dimensions"]
+                                                  employee_id:[dict[@"id"] intValue]];
             // employeeArray will hold all the employees
             [self.employeeArray addObject:e];
             

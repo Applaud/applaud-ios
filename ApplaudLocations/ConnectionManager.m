@@ -81,7 +81,6 @@ static int outbound_connections;
         NSLog(@"Requesting from URL (GET): %@",[NSString stringWithFormat:@"%@%@",SERVER_URL,urlPostfix]);
         [request setHTTPBody:data];
         [request addValue:cookieString forHTTPHeaderField:@"Cookie"];
-        
         [ConnectionManager makeRequest:request callback:callback];
     }
     else if ( [requestType isEqualToString:@"POST"] ) {
@@ -97,11 +96,8 @@ static int outbound_connections;
                                       [request addValue:cookieString forHTTPHeaderField:@"Cookie"];
                                       [request addValue:csrf forHTTPHeaderField:@"X-CSRFToken"];
                                       NSLog(@"Requesting from URL (POST): %@",request.URL.absoluteString);
-                                      
                                       [ConnectionManager makeRequest:request callback:callback];
                                   }];
-        
-
     }
 }
 
@@ -116,7 +112,6 @@ static int outbound_connections;
  */
 + (void)serverRequest:(NSString *)requestType withParams:(NSDictionary *)params url:(NSString *)url callback:(void(^)(NSHTTPURLResponse *, NSData *))callback {
     NSData *data = nil;
-    
     if ( [requestType isEqualToString:@"POST"] ) {
         data = [NSJSONSerialization dataWithJSONObject:params
                                                options:0
@@ -126,7 +121,6 @@ static int outbound_connections;
         NSString *dictAsString = [self GETStringFromDict:params];
         url = [[NSString alloc] initWithFormat:@"%@%@", url,dictAsString];
     }
-    
     [ConnectionManager serverRequest:requestType withData:data url:url callback:callback];
 }
 

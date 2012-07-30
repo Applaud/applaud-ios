@@ -88,14 +88,7 @@
     
     [super viewDidUnload];
     // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
-
-//- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-//{
-//    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-//    return UIInterfaceOrientationIsLandscape(interfaceOrientation);
-//}
 
 #pragma mark -
 #pragma mark Table View data source methods
@@ -150,10 +143,9 @@
     
     if ( nil == cell ) {
         cell = [[SurveyAccordionCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                          reuseIdentifier:[[self.survey.fields objectAtIndex:indexPath.section] label]
-                                                    field:[self.survey.fields objectAtIndex:indexPath.section]];
+                                          reuseIdentifier:[self.survey.fields[indexPath.section] label]
+                                                    field:self.survey.fields[indexPath.section]];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
         if ( indexPath.section == 0 ) {
             UIImageView *sytImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"shareyourthoughts"]];
             sytImage.frame = CGRectMake(self.view.frame.size.width - CELL_MARGIN - CELL_PADDING - sytImage.frame.size.width,
@@ -161,7 +153,6 @@
                                         sytImage.frame.size.width,
                                         sytImage.frame.size.height);
             [cell.contentView addSubview:sytImage];
-            
             [cell expand];
             [cell layoutSubviews];
         }
@@ -193,7 +184,7 @@
     
     // Showing the content of the question upon selection
     if ( [self cellIsSelectedAtIndexPath:indexPath] ) {
-        return [[questionSelections objectAtIndex:indexPath.section] floatValue];
+        return [questionSelections[indexPath.section] floatValue];
     }
     // Showing just the title and whether or not the question has been answered
     else {
@@ -243,8 +234,7 @@
     
     // Note selected state of currently selected question by putting adjusted height (expanded height)
     // into the questionSelections array.
-    [questionSelections replaceObjectAtIndex:indexPath.section 
-                                  withObject:[NSNumber numberWithFloat:[cell expandedHeight]]];
+    questionSelections[indexPath.section] = @([cell expandedHeight]);
 
     // Perform animation
     [self.questionsTable beginUpdates];
@@ -314,14 +304,7 @@
 #pragma mark Other Methods
 
 -(void)getSurveys {
-//    NSDictionary *dict = [[NSDictionary alloc]
-//                          initWithObjectsAndKeys: self.appDelegate.currentBusiness.goog_id],
-//                          @"goog_id",
-//                          nil];
-    NSArray *keyArray = [[NSArray alloc] initWithObjects:@"business_id", nil];
-    NSArray *valArray = [[NSArray alloc] initWithObjects:@(self.appDelegate.currentBusiness.business_id), nil];
-    NSDictionary *dict = [[NSDictionary alloc] initWithObjects:valArray forKeys:keyArray];
-                            
+    NSDictionary *dict = @{@"business_id": @(self.appDelegate.currentBusiness.business_id)};
     
     [ConnectionManager serverRequest:@"POST"
                             withParams:dict
@@ -347,13 +330,13 @@
     // Creating the fields of the survey
     NSMutableArray *fields = [[NSMutableArray alloc] init];
     int genFeedbackIndex = 0;
-    for ( int i=0; i<[(NSArray*)[surveyData objectForKey:@"questions"] count]; i++) {
-        NSDictionary *dict = [[surveyData objectForKey:@"questions"] objectAtIndex:i];
+    for ( int i=0; i<[(NSArray*)surveyData[@"questions"] count]; i++) {
+        NSDictionary *dict = [surveyData[@"questions"] objectAtIndex:i];
         
-        if ( [[dict objectForKey:@"general_feedback"] boolValue] )
+        if ( [dict[@"general_feedback"] boolValue] )
             genFeedbackIndex = i;
         
-        NSString *type = [dict objectForKey:@"type"];
+        NSString *type = dict[@"type"];
         QuestionType widgetType;
         if([type isEqualToString:@"TF"]) {
             widgetType = TEXTFIELD;
@@ -367,20 +350,19 @@
         else {
             widgetType = RADIO;
         }
-        SurveyField *sf = [[SurveyField alloc] initWithLabel:[dict objectForKey:@"label"]
-                                                          id:[[dict objectForKey:@"id"] intValue]
+        SurveyField *sf = [[SurveyField alloc] initWithLabel:dict[@"label"]
+                                                          id:[dict [@"id"] intValue]
                                                         type:widgetType
-                                                     options:[dict objectForKey:@"options"]
-                           ];
+                                                     options:dict[@"options"]];
         [fields addObject:sf];
     }
-    SurveyField *temp = [fields objectAtIndex:0];
+    SurveyField *temp = fields[0];
     [fields setObject:[fields objectAtIndex:genFeedbackIndex] atIndexedSubscript:0];
     [fields setObject:temp atIndexedSubscript:genFeedbackIndex];
     
     // Creating the survey model
-    Survey *survey = [[Survey alloc] initWithTitle:[surveyData objectForKey:@"title"]
-                                           summary:[surveyData objectForKey:@"description"]
+    Survey *survey = [[Survey alloc] initWithTitle:surveyData[@"title"]
+                                           summary:surveyData[@"description"]
                                        business_id:self.appDelegate.currentBusiness.business_id
                                             fields:fields];
 
@@ -421,18 +403,13 @@
         NSArray *response = [cell getAnswer];
         if (! response)
             response = [[NSArray alloc] init];
-        
-        NSDictionary *responseDict = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                      response, @"response",
-                                      [[self.survey.fields objectAtIndex:i] label], @"label",
-                                      [NSNumber numberWithInt:[[self.survey.fields objectAtIndex:i] id]], @"id",
-                                      nil];
+        NSDictionary *responseDict = @{@"response": response,
+                                       @"label": [self.survey.fields[i] label],
+                                       @"id": @([self.survey.fields[i] id])};
         
         [surveyAnswers addObject:responseDict];
     }
-    NSDictionary *params = [[NSDictionary alloc] initWithObjectsAndKeys:surveyAnswers, @"answers", nil];
-    
-
+    NSDictionary *params = @{@"answers": surveyAnswers};
     [ConnectionManager serverRequest:@"POST"
                           withParams:params
                                  url:RESPONSE_URL
@@ -441,7 +418,7 @@
                                 for (int i=0; i<self.questionsTable.numberOfSections; i++) {
                                     SurveyAccordionCell *cell = (SurveyAccordionCell*)[self.questionsTable cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:i]];
                                     [cell contract];
-                                    [questionSelections replaceObjectAtIndex:i withObject:[NSNumber numberWithBool:NO]];
+                                    [questionSelections replaceObjectAtIndex:i withObject:@(NO)];
                                     [self.questionsTable reloadData];
                                 }
                             }];
@@ -461,6 +438,6 @@
 }
 
 - (BOOL)cellIsSelectedAtIndexPath:(NSIndexPath *)indexPath {
-    return ![[questionSelections objectAtIndex:indexPath.section] isEqualToNumber:[NSNumber numberWithBool:NO]];
+    return ![[questionSelections objectAtIndex:indexPath.section] isEqualToNumber:@(NO)];
 }
 @end
