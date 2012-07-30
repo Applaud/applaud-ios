@@ -17,14 +17,6 @@
 #import <QuartzCore/QuartzCore.h>
 
 @implementation EmployeeViewController
-@synthesize appDelegate = _appDelegate;
-@synthesize submitButton;
-@synthesize employee = _employee;
-@synthesize scrollView = _scrollView;
-@synthesize image, nameLabel, titleLabel, bioContentLabel, bioLabel;
-@synthesize tableView = _tableView;
-@synthesize ratingDimensions = _ratingDimensions;
-
 
 - (id)initWithEmployee:(Employee *)e {
     if ( self = [super init] ) {

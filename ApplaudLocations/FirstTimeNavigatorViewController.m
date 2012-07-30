@@ -10,9 +10,6 @@
 
 @implementation FirstTimeNavigatorViewController
 
-@synthesize tabBarController;
-@synthesize window = _window;
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -40,23 +37,23 @@
 }
 
 - (IBAction)employeeView:(id)sender {
-    [tabBarController setSelectedIndex:0];
-    _window.rootViewController = tabBarController;
+    [self.tabBarController setSelectedIndex:0];
+    _window.rootViewController = self.tabBarController;
 }
 
 - (IBAction)questionsView:(id)sender {
-    [tabBarController setSelectedIndex:3];
-    _window.rootViewController = tabBarController;
+    [self.tabBarController setSelectedIndex:3];
+    _window.rootViewController = self.tabBarController;
 }
 
 - (IBAction)feedbackView:(id)sender {
-    [tabBarController setSelectedIndex:2];
-    _window.rootViewController = tabBarController;
+    [self.tabBarController setSelectedIndex:2];
+    _window.rootViewController = self.tabBarController;
 }
 
 - (IBAction)newsfeedView:(id)sender {
-    [tabBarController setSelectedIndex:4];
-    _window.rootViewController = tabBarController;
+    [self.tabBarController setSelectedIndex:4];
+    _window.rootViewController = self.tabBarController;
 }
 
 @end

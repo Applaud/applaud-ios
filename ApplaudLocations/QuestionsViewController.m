@@ -12,12 +12,6 @@
 
 @implementation QuestionsViewController
 
-@synthesize appDelegate = _appDelegate;
-@synthesize survey = _survey;
-@synthesize surveyControllers = _surveyControllers; // For caching SurveyFieldViewControllers.
-@synthesize questionsTable = _questionsTable;
-@synthesize navigationController = _navigationController;
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];

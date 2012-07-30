@@ -16,9 +16,6 @@
 
 @implementation SurveyFieldViewController
 
-@synthesize field = _field;
-@synthesize questionLabel = _questionLabel;
-@synthesize labels = _labels; // For relating checkbox groups to their labels.
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

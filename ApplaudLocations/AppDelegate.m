@@ -16,14 +16,7 @@
 
 @implementation AppDelegate
 
-@synthesize window = _window;
-@synthesize tracker;
 @synthesize managedObjectContext, managedObjectModel, persistentStoreCoordinator, applicationDocumentPath;
-@synthesize settings = _settings;
-@synthesize currentBusiness = _currentBusiness;
-@synthesize masterViewController = _masterViewController;
-@synthesize navControl = _navControl;
-@synthesize tabNavigator = _tabNavigator;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -45,7 +38,7 @@
     [request setEntity:entity];
     
     NSError *error = nil;    
-    NSMutableArray *mutableFetchResults = [[managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+    NSMutableArray *mutableFetchResults = [[self.managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
     if (mutableFetchResults == nil) {
         NSLog(@"%@",error);
     }
@@ -54,7 +47,7 @@
             // first time launching
             // Create some settings here
             _settings = (ApplaudProgramSettingsModel *)[NSEntityDescription insertNewObjectForEntityForName:@"ApplaudProgramSettings"
-                                                                                     inManagedObjectContext:managedObjectContext];
+                                                                                     inManagedObjectContext:self.managedObjectContext];
             _settings.firstTimeLaunching = YES;
         }
         else {

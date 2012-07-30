@@ -12,8 +12,6 @@
 
 @implementation ConnectionManager
 
-@synthesize sessionCookie = _sessionCookie;
-
 // Keeps track of outbound connections
 static int outbound_connections;
 

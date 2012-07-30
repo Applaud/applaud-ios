@@ -11,9 +11,6 @@
 
 @implementation EmployeeBioCell
 
-@synthesize employee = _employee;
-@synthesize bioLabel = _bioLabel;
-
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier employee:(Employee *)employee
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];

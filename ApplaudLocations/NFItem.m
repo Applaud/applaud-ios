@@ -13,11 +13,6 @@
  */
 
 @implementation NFItem
-@synthesize body = _body;
-@synthesize title = _title;
-@synthesize subtitle = _subtitle;
-@synthesize date = _date;
-@synthesize imageURL = _imageURL;
 
 -(id)initWithTitle:(NSString *)title subtitle:(NSString *)subtitle body:(NSString *)body date:(NSDate *)date imageURL:(NSURL *)imageURL {
     if(self = [super init]) {

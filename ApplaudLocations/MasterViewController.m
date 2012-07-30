@@ -16,10 +16,6 @@
 
 @implementation MasterViewController
 
-@synthesize locationsArray, tableView, tabBarController, window=_window;
-@synthesize settings = _settings;
-@synthesize appDelegate = _appDelegate;
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -56,7 +52,7 @@
     [self.tableView setBackgroundColor:[UIColor clearColor]];
     
     self.navigationItem.title = @"Available Locations";
-    [self.view addSubview:tableView];
+    [self.view addSubview:self.tableView];
     
     // Show our title
     [self setTitle:@"Available Locations"];
@@ -95,7 +91,7 @@
     }
     
     // Configure the cell...
-    Business *business = locationsArray[indexPath.row];
+    Business *business = self.locationsArray[indexPath.row];
     cell.textLabel.text = business.name;
     return cell;
 }
@@ -104,7 +100,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    __block Business *bus = [locationsArray objectAtIndex:indexPath.row];
+    __block Business *bus = self.locationsArray[indexPath.row];
     // Show the activity indicator in the status bar
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     NSDictionary *dict = @{@"latitude": bus.latitude, @"longitude": bus.longitude,
@@ -141,7 +137,7 @@
 
 - (void) businessReceived:(NSNotification *)notification {
     self.locationsArray = [notification object];
-    [tableView reloadData];
+    [self.tableView reloadData];
 }
 
 -(void)refreshButtonPressed {
@@ -157,8 +153,8 @@
     }
     else {
         // This corresponds to the newsfeed.
-        [tabBarController setSelectedIndex:4];
-        _window.rootViewController = tabBarController;
+        [self.tabBarController setSelectedIndex:4];
+        _window.rootViewController = self.tabBarController;
     }
 }
 

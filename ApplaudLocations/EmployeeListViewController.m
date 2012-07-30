@@ -18,12 +18,6 @@
 
 @implementation EmployeeListViewController
 
-@synthesize appDelegate = _appDelegate;
-@synthesize employeeArray = _employeeArray;
-@synthesize tableView = _tableView;
-@synthesize navigationController = _navigationController;
-@synthesize employeeControllers = _employeeControllers;
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];

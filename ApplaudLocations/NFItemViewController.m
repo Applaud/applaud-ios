@@ -16,13 +16,6 @@
 
 @implementation NFItemViewController
 
-@synthesize item = _item;
-@synthesize titleLabel = _titleLabel;
-@synthesize bodyText = _bodyText;
-@synthesize subtitleLabel = _subtitleLabel;
-@synthesize dateLabel = _dateLabel;
-@synthesize image = _image;
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];

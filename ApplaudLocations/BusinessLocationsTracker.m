@@ -12,8 +12,6 @@
 
 @implementation BusinessLocationsTracker
 
-@synthesize locMan = _locMan;
-
 - (id)init {
     self = [super init];
     if ( self ) {

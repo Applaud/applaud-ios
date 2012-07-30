@@ -12,12 +12,6 @@
 
 @implementation NFTableViewCell
 
-@synthesize titleLabel = _titleLabel;
-@synthesize bodyLabel = _bodyLabel;
-@synthesize newsfeed = _newsfeed;
-@synthesize containerView = _containerView;
-@synthesize height = _height;
-
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier newsfeed:(NFItem *)newsfeed
 {
     __weak NFTableViewCell *weakSelf = [super initWithStyle:style reuseIdentifier:reuseIdentifier];

@@ -17,11 +17,6 @@
 
 @implementation NFViewController
 
-@synthesize appDelegate = _appDelegate;
-@synthesize newsFeeds = _newsFeeds;
-@synthesize navigationController = _navigationController;
-@synthesize tableView = _tableView;
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];

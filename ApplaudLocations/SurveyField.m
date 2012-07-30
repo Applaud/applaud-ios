@@ -9,10 +9,6 @@
 #import "SurveyField.h"
 
 @implementation SurveyField
-@synthesize label = _label;
-@synthesize id = _id;
-@synthesize type = _type;
-@synthesize options = _options;
 
 -(id)initWithLabel:(NSString *)label id:(int)id type:(QuestionType)type options:(NSMutableArray *)options {
   if(self = [super init]) {
