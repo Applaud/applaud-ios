@@ -25,7 +25,12 @@
 @synthesize errorBody = _errorBody;
 
 - (id)init {
-    return [super init];
+    self = [super init];
+    if ( self ) {
+        self.errorTitle = [[UILabel alloc] init];
+        self.errorBody = [[UILabel alloc] init];
+    }
+    return self;
 }
 
 - (void)viewDidLoad
@@ -36,10 +41,10 @@
     // Background image
     UIImage *backgroundImage = [UIImage imageNamed:@"Default"];
     CGRect cropRect = CGRectMake(0,
-                                 self.navigationController.navigationBar.frame.size.height
-                                 + [[UIScreen mainScreen] applicationFrame].origin.y,
-                                 backgroundImage.size.width,
-                                 backgroundImage.size.height);
+                                 (self.navigationController.navigationBar.frame.size.height
+                                 + [[UIScreen mainScreen] applicationFrame].origin.y)*[[UIScreen mainScreen] scale],
+                                 backgroundImage.size.width*[[UIScreen mainScreen] scale],
+                                 backgroundImage.size.height*[[UIScreen mainScreen] scale]);
     CGImageRef backgroundImageRef = CGImageCreateWithImageInRect(backgroundImage.CGImage, cropRect);
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageWithCGImage:backgroundImageRef]]];
     CGImageRelease(backgroundImageRef);
@@ -56,36 +61,49 @@
             self.errorTitle.text = tERROR_NO_CONNECTION;
             self.errorBody.text = bERROR_NO_CONNECTION;
             break;
+        default:
+            self.errorTitle.text = @"PLACEHOLDER TITLE";
+            self.errorBody.text = @"PLACEHOLDER BODY";
     }
     
+    NSLog(@"%@ : %@",self.errorTitle.text, self.errorBody.text);
+    
     self.errorTitle.font = [UIFont boldSystemFontOfSize:TITLE_SIZE];
-    UIView *titleWrapper = [[UIView alloc] initWithFrame:CGRectMake(VIEW_PADDING,
-                                                                    VIEW_PADDING,
-                                                                    self.view.frame.size.width - 2*VIEW_PADDING,
-                                                                    self.errorTitle.frame.size.height + 2*CONTENT_PADDING)];
-    titleWrapper.backgroundColor = [UIColor whiteColor];
-    titleWrapper.layer.cornerRadius = 3.0f;
-    titleWrapper.layer.masksToBounds = YES;
-    [titleWrapper addSubview:self.errorTitle];
-    [self.view addSubview:titleWrapper];
+    self.errorTitle.numberOfLines = 0;
+    self.errorTitle.lineBreakMode = UILineBreakModeWordWrap;
+    CGSize titleSize = CGSizeMake( self.view.frame.size.width - 2*(VIEW_PADDING + CONTENT_PADDING),
+                                  [self.errorTitle.text sizeWithFont:[UIFont systemFontOfSize:TITLE_SIZE]
+                                                   constrainedToSize:CGSizeMake( self.view.frame.size.width - 2*(VIEW_PADDING + CONTENT_PADDING), 400)
+                                                       lineBreakMode:UILineBreakModeWordWrap].height );
     self.errorTitle.frame = CGRectMake(CONTENT_PADDING,
                                        CONTENT_PADDING,
                                        self.view.frame.size.width - 2*(VIEW_PADDING + CONTENT_PADDING),
-                                       22.0f);
-    
+                                       titleSize.height);
+    UIView *titleWrapper = [[UIView alloc] initWithFrame:CGRectMake(VIEW_PADDING,
+                                                                    VIEW_PADDING,
+                                                                    self.view.frame.size.width - 2*VIEW_PADDING,
+                                                                    titleSize.height + 2*CONTENT_PADDING)];
+    titleWrapper.backgroundColor = [UIColor whiteColor];
+    titleWrapper.layer.cornerRadius = 3.0f;
+    titleWrapper.layer.masksToBounds = YES;
+
+    [titleWrapper addSubview:self.errorTitle];
+    [self.view addSubview:titleWrapper];
     
     CGSize bodySize = CGSizeMake( self.view.frame.size.width - 2*(VIEW_PADDING + CONTENT_PADDING),
-                                  [self.errorBody.text sizeWithFont:[UIFont systemFontOfSize:12.0f]
+                                  [self.errorBody.text sizeWithFont:[UIFont systemFontOfSize:BODY_SIZE]
                                                   constrainedToSize:CGSizeMake( self.view.frame.size.width - 2*(VIEW_PADDING + CONTENT_PADDING), 400)
                                                       lineBreakMode:UILineBreakModeWordWrap].height );
-    UIView *bodyWrapper = [[UIView alloc] initWithFrame:CGRectMake(VIEW_PADDING,
-                                                                   titleWrapper.frame.origin.y + titleWrapper.frame.size.height + VIEW_ELEMENT_PADDING,
-                                                                   self.view.frame.size.width - 2*VIEW_PADDING,
-                                                                   bodySize.height + 2*CONTENT_PADDING)];
     self.errorBody.frame = CGRectMake(CONTENT_PADDING,
                                       CONTENT_PADDING,
                                       self.view.frame.size.width - 2*(VIEW_PADDING + CONTENT_PADDING),
                                       bodySize.height);
+    self.errorBody.lineBreakMode = UILineBreakModeWordWrap;
+    self.errorBody.numberOfLines = 0;
+    UIView *bodyWrapper = [[UIView alloc] initWithFrame:CGRectMake(VIEW_PADDING,
+                                                                   titleWrapper.frame.origin.y + titleWrapper.frame.size.height + VIEW_ELEMENT_PADDING,
+                                                                   self.view.frame.size.width - 2*VIEW_PADDING,
+                                                                   bodySize.height + 2*CONTENT_PADDING)];
     bodyWrapper.backgroundColor = [UIColor whiteColor];
     bodyWrapper.layer.cornerRadius = 3.0f;
     bodyWrapper.layer.masksToBounds = YES;
