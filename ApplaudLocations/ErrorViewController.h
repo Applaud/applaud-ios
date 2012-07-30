@@ -24,4 +24,8 @@
 #define tERROR_BAD_LOGIN @"Apatapa couldn't log you in."
 #define bERROR_BAD_LOGIN @"To register with Apatapa, visit http://apatapa.com/accounts/member/. If you're sure you already have an account, you can recover your password at http://apatapa.com/accounts/password/reset/."
 
+// ERROR_SERVER_ERROR
+#define tERROR_SERVER_ERROR @"Apatapa had an error."
+#define bERROR_SERVER_ERROR @"Something went wrong on our server. We'll have everything up and running as soon as possible."
+
 @end

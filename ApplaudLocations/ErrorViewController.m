@@ -61,6 +61,10 @@
             self.errorTitle.text = tERROR_NO_CONNECTION;
             self.errorBody.text = bERROR_NO_CONNECTION;
             break;
+        case ERROR_SERVER_ERROR:
+            self.errorTitle.text = tERROR_SERVER_ERROR;
+            self.errorBody.text = bERROR_SERVER_ERROR;
+            break;
         default:
             self.errorTitle.text = @"PLACEHOLDER TITLE";
             self.errorBody.text = @"PLACEHOLDER BODY";
