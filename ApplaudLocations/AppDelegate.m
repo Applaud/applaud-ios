@@ -307,7 +307,8 @@
  * Login failed for some reason (could not connect to server, bad username/password combo)
  */
 - (void)loginFailed:(NSNotification *)notification {
-    if ( ERROR_NO_CONNECTION == error_code ) {
+    if ( ERROR_NO_CONNECTION == error_code ||
+        ERROR_SERVER_ERROR == error_code) {
         ErrorViewController *evc = [[ErrorViewController alloc] init];
         self.window.rootViewController = evc;
     }
