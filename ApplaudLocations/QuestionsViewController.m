@@ -265,6 +265,7 @@
         // Some nice visual FX
         CABasicAnimation *theAnimation = [CABasicAnimation animationWithKeyPath:@"shadowPath"];
         theAnimation.duration = ACCORDION_TIME;
+        theAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
         cell.contentView.layer.shadowPath = [[UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, 300, cell.contentView.frame.size.height)
                                                                         cornerRadius:5.0f] CGPath];
         [cell.contentView.layer addAnimation:theAnimation forKey:@"shadowPath"];
@@ -306,6 +307,7 @@
 
     // Some nice visual FX
     theAnimation.duration = ACCORDION_TIME;
+    theAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
     CGRect expandedRect = CGRectMake(0,
                                      0,
 //                                     cell.contentView.frame.size.width,
