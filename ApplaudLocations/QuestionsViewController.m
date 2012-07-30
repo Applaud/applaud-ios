@@ -275,7 +275,7 @@
                
         [UIView animateWithDuration:ACCORDION_TIME
                               delay:0.0
-                            options:UIViewAnimationCurveEaseInOut
+                            options:UIViewAnimationCurveLinear
                          animations:^{
                              cell.containerView.frame = CGRectMake(cell.containerView.frame.origin.x,
                                                                    cell.containerView.frame.origin.y,
@@ -297,12 +297,9 @@
     [questionSelections replaceObjectAtIndex:indexPath.section 
                                   withObject:[NSNumber numberWithFloat:[cell expandedHeight]]];
 
-
-    
     // Perform animation
     [self.questionsTable beginUpdates];
     [self.questionsTable endUpdates];
-
     
     // Show question body
     [cell expand];
@@ -311,6 +308,7 @@
     // Animate shadow
     CABasicAnimation *theAnimation = [CABasicAnimation animationWithKeyPath:@"shadowPath"];
     cell.contentView.layer.shadowPath = [[UIBezierPath bezierPathWithRoundedRect:cell.contentView.frame cornerRadius:5.0f] CGPath];
+
     // Some nice visual FX
     theAnimation.duration = ACCORDION_TIME;
     CGRect expandedRect = CGRectMake(cell.frame.origin.x,
@@ -323,7 +321,7 @@
 
     [UIView animateWithDuration:ACCORDION_TIME
                           delay:0.0
-                        options:UIViewAnimationCurveEaseInOut
+                        options:UIViewAnimationCurveLinear
                      animations:^{
                          cell.containerView.frame = CGRectMake(cell.containerView.frame.origin.x,
                                                                cell.containerView.frame.origin.y,
