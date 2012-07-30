@@ -49,6 +49,7 @@
                                  backgroundImage.size.height);
     CGImageRef backgroundImageRef = CGImageCreateWithImageInRect(backgroundImage.CGImage, cropRect);
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageWithCGImage:backgroundImageRef]]];
+    CGImageRelease(backgroundImageRef);
     [self.tableView setBackgroundColor:[UIColor clearColor]];
     
     self.navigationItem.title = @"Available Locations";

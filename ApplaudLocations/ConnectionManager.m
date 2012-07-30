@@ -92,9 +92,10 @@ static int outbound_connections;
                                       [request setHTTPBody:data];
                                       NSLog(@"The url is....%@", url);
                                       request.HTTPMethod = requestType;
-                                      request.URL = [NSURL URLWithString:url];
+                                      request.URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", SERVER_URL, url]];
                                       cookieString = [NSString stringWithFormat:@"csrftoken=%@; %@", csrf, cookieString];
                                       [request addValue:cookieString forHTTPHeaderField:@"Cookie"];
+                                      [request addValue:csrf forHTTPHeaderField:@"X-CSRFToken"];
                                       NSLog(@"Requesting from URL (POST): %@",request.URL.absoluteString);
                                       
                                       [ConnectionManager makeRequest:request callback:callback];
@@ -148,13 +149,13 @@ static int outbound_connections;
  * Sends a GET to the server and grabs a CSRF token. I really hope this works.
  */
 + (void)getCSRFTokenFromURL:(NSString *)urlString withCallback:(void(^)(NSHTTPURLResponse *, NSString *, NSError *))callback {
-    NSLog(@"CSRF token from url: %@", urlString);
-    NSURL *url = [[NSURL alloc] initWithString:urlString];
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", SERVER_URL, urlString]]];
+    NSLog(@"CSRF token from url: %@", request.URL.absoluteString);
     [NSURLConnection sendAsynchronousRequest:request
                                        queue:[NSOperationQueue mainQueue]
                            completionHandler:^(NSURLResponse *r, NSData *d, NSError *e) {
                                NSString *csrf = [[NSString alloc] initWithData:d encoding:NSUTF8StringEncoding];
+                               NSLog(@"CSRF: %@",csrf);
                                callback((NSHTTPURLResponse*)r,csrf,e);
                            }];
 }
@@ -177,7 +178,7 @@ static int outbound_connections;
     
     [ConnectionManager serverRequest:@"POST"
                             withData:[NSData dataWithBytes:[postString UTF8String] length:postString.length]
-                                 url:[NSString stringWithFormat:@"%@%@", SERVER_URL, LOGIN_URL]
+                                 url:LOGIN_URL
                             callback:^(NSHTTPURLResponse *r, NSData *d) {
                                 
                                 // We are ok, login was successful

@@ -42,6 +42,7 @@
                                  backgroundImage.size.height);
     CGImageRef backgroundImageRef = CGImageCreateWithImageInRect(backgroundImage.CGImage, cropRect);
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageWithCGImage:backgroundImageRef]]];
+    CGImageRelease(backgroundImageRef);
     
     // Error text
     extern int error_code;
