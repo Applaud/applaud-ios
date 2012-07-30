@@ -142,12 +142,28 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if ( indexPath.section == 0 ) {
             UIImageView *sytImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"shareyourthoughts"]];
-            sytImage.frame = CGRectMake(self.view.frame.size.width - CELL_MARGIN - CELL_PADDING - sytImage.frame.size.width,
+            sytImage.frame = CGRectMake(self.view.frame.size.width - CELL_MARGIN - CELL_PADDING - sytImage.frame.size.width - 10,
                                         CELL_PADDING - 3,
                                         sytImage.frame.size.width,
                                         sytImage.frame.size.height);
             [cell.contentView addSubview:sytImage];
             [cell expand];
+            
+            cell.containerView.frame = CGRectMake(cell.containerView.frame.origin.x,
+                                                  cell.containerView.frame.origin.y,
+                                                  cell.frame.size.width - 2*CELL_PADDING,
+                                                  cell.expandedHeight + 2*CELL_PADDING);
+            
+            [cell layoutSubviews];
+        } else {
+            CGSize questionLabelSize = [cell.questionLabel.text
+                                        sizeWithFont:[UIFont boldSystemFontOfSize:TITLE_SIZE]
+                                        constrainedToSize:CGSizeMake(cell.frame.size.width - 2*CELL_PADDING,400)
+                                        lineBreakMode:UILineBreakModeWordWrap];
+            cell.containerView.frame = CGRectMake(0, 0,
+                                                  cell.frame.size.width - 2*CELL_PADDING,
+                                                  questionLabelSize.height + 2*CELL_PADDING);
+            
             [cell layoutSubviews];
         }
     }
@@ -203,7 +219,7 @@
     
     // Some nice visual FX
     acccell.contentView.layer.shadowRadius = 5.0f;
-    acccell.contentView.layer.shadowOpacity = 0.2f;
+    acccell.contentView.layer.shadowOpacity = 0.9f;
     acccell.contentView.layer.shadowOffset = CGSizeMake(1, 0);
 }
 
@@ -216,13 +232,48 @@
     
     // Collapse all questions
     for ( int i=0; i<self.survey.fields.count; i++ ){
+        // Don't collapse cell we just selected
+        if ( i == indexPath.section )
+            continue;
+        
         SurveyAccordionCell *cell = (SurveyAccordionCell*)[self.questionsTable 
                                                            cellForRowAtIndexPath:
                                                            [NSIndexPath indexPathForRow:0 
                                                                               inSection:i]];
         
         [cell contract];
+        [cell layoutSubviews];
+        
+        NSLog(@"%d collapsed: %f x %f", i, cell.contentView.frame.size.width, cell.contentView.frame.size.height);
+        
+        // Some nice visual FX
+        CABasicAnimation *theAnimation = [CABasicAnimation animationWithKeyPath:@"shadowPath"];
+        cell.contentView.layer.shadowPath = [[UIBezierPath bezierPathWithRoundedRect:cell.contentView.frame cornerRadius:5.0f] CGPath];
+        theAnimation.duration = ACCORDION_TIME;
+        CGRect expandedRect = CGRectMake(cell.frame.origin.x,
+                                         cell.frame.origin.y,
+                                         cell.frame.size.width,
+                                         [cell expandedHeight]);
+        theAnimation.fromValue = (id)[UIBezierPath bezierPathWithRoundedRect:expandedRect cornerRadius:5.0f];
+        theAnimation.toValue = (id)[UIBezierPath bezierPathWithRoundedRect:cell.contentView.frame cornerRadius:5.0f];
+        [cell.contentView.layer addAnimation:theAnimation forKey:@"shadowPath"];
                
+        [UIView animateWithDuration:ACCORDION_TIME
+                              delay:0.0
+                            options:UIViewAnimationCurveLinear
+                         animations:^{
+                             cell.containerView.frame = CGRectMake(cell.containerView.frame.origin.x,
+                                                                   cell.containerView.frame.origin.y,
+                                                                   cell.frame.size.width - 2*CELL_PADDING,
+                                                                   cell.contentView.frame.size.height);
+                         } completion:^(BOOL finished) {
+                             if ( finished )
+                                 cell.containerView.frame = CGRectMake(cell.containerView.frame.origin.x,
+                                                                       cell.containerView.frame.origin.y,
+                                                                       cell.frame.size.width - 2*CELL_PADDING,
+                                                                       cell.contentView.frame.size.height);
+                         }];
+        
         [questionSelections replaceObjectAtIndex:i withObject:[NSNumber numberWithBool:NO]];
     }
     
@@ -236,6 +287,37 @@
     
     // Show question body
     [cell expand];
+    [cell layoutSubviews];
+    
+    // Animate shadow
+    CABasicAnimation *theAnimation = [CABasicAnimation animationWithKeyPath:@"shadowPath"];
+    cell.contentView.layer.shadowPath = [[UIBezierPath bezierPathWithRoundedRect:cell.contentView.frame cornerRadius:5.0f] CGPath];
+
+    // Some nice visual FX
+    theAnimation.duration = ACCORDION_TIME;
+    CGRect expandedRect = CGRectMake(cell.frame.origin.x,
+                                     cell.frame.origin.y,
+                                     cell.frame.size.width,
+                                     [cell expandedHeight]);
+    theAnimation.fromValue = (id)[UIBezierPath bezierPathWithRoundedRect:cell.frame cornerRadius:5.0f];
+    theAnimation.toValue = (id)[UIBezierPath bezierPathWithRoundedRect:expandedRect cornerRadius:5.0f];
+    [cell.contentView.layer addAnimation:theAnimation forKey:@"shadowPath"];
+
+    [UIView animateWithDuration:ACCORDION_TIME
+                          delay:0.0
+                        options:UIViewAnimationCurveLinear
+                     animations:^{
+                         cell.containerView.frame = CGRectMake(cell.containerView.frame.origin.x,
+                                                               cell.containerView.frame.origin.y,
+                                                               cell.frame.size.width - 2*CELL_PADDING,
+                                                               cell.expandedHeight);
+                     } completion:^(BOOL finished) {
+                         if ( finished )
+                             cell.containerView.frame = CGRectMake(cell.containerView.frame.origin.x,
+                                                                   cell.containerView.frame.origin.y,
+                                                                   cell.frame.size.width - 2*CELL_PADDING,
+                                                                   cell.expandedHeight);
+                     }];
 }
 
 #pragma mark -
@@ -257,7 +339,7 @@
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationBeginsFromCurrentState:YES];
 
-    [UIView setAnimationDuration:SCROLL_LENGTH];
+    [UIView setAnimationDuration:SCROLL_TIME];
     [self.view setFrame:viewFrame];
     [UIView commitAnimations];
     
@@ -282,7 +364,7 @@
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationBeginsFromCurrentState:YES];
     
-    [UIView setAnimationDuration:SCROLL_LENGTH];
+    [UIView setAnimationDuration:SCROLL_TIME];
     [self.view setFrame:viewFrame];
     [UIView commitAnimations];
     

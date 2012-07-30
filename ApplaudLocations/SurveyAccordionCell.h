@@ -11,7 +11,10 @@
 #import <UIKit/UIKit.h>
 #import "SurveyField.h"
 
-@interface SurveyAccordionCell : UITableViewCell <UITextFieldDelegate, UITextViewDelegate>
+@interface SurveyAccordionCell : UITableViewCell <UITextFieldDelegate, UITextViewDelegate> {
+    BOOL isExpanded;
+    NSTimer *timer;
+}
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier field:(SurveyField *)field;
 - (void)expand;

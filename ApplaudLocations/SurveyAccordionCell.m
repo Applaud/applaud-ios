@@ -87,7 +87,8 @@
         }
         
         // Start off question body as hidden
-        [self contract];
+        isExpanded = NO;
+        [self hideWidgets];
         
         // Add all cell content
         [self.containerView addSubview:self.questionLabel];
@@ -95,6 +96,9 @@
             [self.containerView addSubview:widget];
         }
         [self.contentView addSubview:self.containerView];
+        
+        [self layoutSubviews];
+        self.containerView.frame = self.contentView.frame;
     }
     return self;
 }
@@ -183,23 +187,51 @@
                 break;
         }
         
+        if ( ! isExpanded ) {
+            self.contentView.frame = CGRectMake(self.contentView.frame.origin.x,
+                                                self.contentView.frame.origin.y,
+                                                self.contentView.frame.size.width,
+                                                questionLabelSize.height + 2*CELL_PADDING);
+        } else {
+            self.contentView.frame = CGRectMake(self.contentView.frame.origin.x,
+                                                self.contentView.frame.origin.y,
+                                                self.contentView.frame.size.width,
+                                                _expandedHeight);
+        }
     }
-    
-    [self.containerView setFrame:CGRectMake(0, 0, self.contentView.frame.size.width, self.contentView.frame.size.height)];
-    
 }
 
 - (void)expand {
+    if ( isExpanded )
+        return;
+    
     for ( UIView *widget in self.questionWidgets ) {
         [widget setHidden:NO];
     }
+
+    isExpanded = YES;
+}
+
+- (void)hideWidgets {
+    for ( UIView *widget in self.questionWidgets ) {
+        [widget setHidden:YES];
+    }
+    [timer invalidate];
 }
 
 - (void)contract {
+    if (! isExpanded )
+        return;
+    
+    timer = [NSTimer scheduledTimerWithTimeInterval:ACCORDION_TIME
+                                             target:self
+                                           selector:@selector(hideWidgets)
+                                           userInfo:nil
+                                            repeats:NO];
     for ( UIView *widget in self.questionWidgets ) {
-        [widget setHidden:YES];
         [widget resignFirstResponder];
     }
+    isExpanded = NO;
 }
 
 /*
