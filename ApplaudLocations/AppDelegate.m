@@ -133,9 +133,23 @@
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 }
 
+/*
+ * If there's an error screen up, try to get businesses again.
+ */
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    if([self.window.rootViewController isKindOfClass:[ErrorViewController class]]) {
+        error_code = 0;
+        self.masterViewController = [[MasterViewController alloc] init];
+        self.masterViewController.appDelegate = self;
+        self.masterViewController.settings = self.settings;
+		[self.tracker startUpdatingLocation];
+		[self refreshViewControllers];
+        self.masterViewController.tabBarController = self.tabNavigator;
+        self.masterViewController.window = self.window;
+        self.navControl.viewControllers = @[self.masterViewController];
+        self.window.rootViewController = self.navControl;
+    }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -210,6 +224,7 @@
     self.window.rootViewController = self.navControl;
     [self.masterViewController.tableView deselectRowAtIndexPath:[self.masterViewController.tableView indexPathForSelectedRow]
                                                        animated:NO];
+    self.tabNavigator.selectedIndex = 0;
 }
 
 #pragma mark -
@@ -302,12 +317,16 @@
 
 /*
  * Login failed for some reason (could not connect to server, bad username/password combo)
+ *
  */
 - (void)loginFailed:(NSNotification *)notification {
-    if ( ERROR_NO_CONNECTION == error_code ||
-        ERROR_SERVER_ERROR == error_code) {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    if ((ERROR_NO_CONNECTION == error_code ||
+         ERROR_SERVER_ERROR == error_code)) {
         ErrorViewController *evc = [[ErrorViewController alloc] init];
-        self.window.rootViewController = evc;
+        evc.appDelegate = self;
+        [self.navControl popToViewController:self.masterViewController animated:NO];
+        [self.navControl pushViewController:evc animated:YES];
     }
     else {
         UIAlertView *tryAgain = [[UIAlertView alloc] initWithTitle:@"Invalid Credentials"
@@ -323,9 +342,9 @@
 #pragma mark -
 #pragma mark Error Messages
 
-- (void)fatalError:(NSNotification *)notification {
+/*- (void)fatalError:(NSNotification *)notification {
     ErrorViewController *evc = [[ErrorViewController alloc] init];
     self.window.rootViewController = evc;
-}
+}*/
 
 @end

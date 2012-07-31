@@ -8,10 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+@class AppDelegate;
+
 @interface ErrorViewController : UIViewController
 
 @property (nonatomic, strong) UILabel *errorTitle;
 @property (nonatomic, strong) UILabel *errorBody;
+@property (nonatomic, weak) AppDelegate *appDelegate;
 
 // These are error title and body definitions for each
 // error code.

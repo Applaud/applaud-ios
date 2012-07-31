@@ -115,7 +115,11 @@
                                                  newsfeed:self.newsFeeds[indexPath.section][indexPath.row]];
         }
     }
-     
+    else if([cell isKindOfClass:[UITableViewCell class]]) {
+        cell = [[NFTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                      reuseIdentifier:cellIdentifier
+                                             newsfeed:self.newsFeeds[indexPath.section][indexPath.row]];
+    }
     return cell;
 }
 

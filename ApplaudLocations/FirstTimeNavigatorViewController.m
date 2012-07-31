@@ -37,22 +37,17 @@
 }
 
 - (IBAction)employeeView:(id)sender {
-    [self.tabBarController setSelectedIndex:0];
-    _window.rootViewController = self.tabBarController;
-}
-
-- (IBAction)questionsView:(id)sender {
-    [self.tabBarController setSelectedIndex:3];
-    _window.rootViewController = self.tabBarController;
-}
-
-- (IBAction)feedbackView:(id)sender {
     [self.tabBarController setSelectedIndex:2];
     _window.rootViewController = self.tabBarController;
 }
 
+- (IBAction)questionsView:(id)sender {
+    [self.tabBarController setSelectedIndex:1];
+    _window.rootViewController = self.tabBarController;
+}
+
 - (IBAction)newsfeedView:(id)sender {
-    [self.tabBarController setSelectedIndex:4];
+    [self.tabBarController setSelectedIndex:0];
     _window.rootViewController = self.tabBarController;
 }
 

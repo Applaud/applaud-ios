@@ -8,6 +8,7 @@
 
 #import "ErrorViewController.h"
 #import <QuartzCore/QuartzCore.h>
+#import "AppDelegate.h"
 
 #define VIEW_PADDING 10.f
 #define CONTENT_PADDING 10.0f
@@ -33,8 +34,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-
     // Background image
     UIImage *backgroundImage = [UIImage imageNamed:@"Default"];
     CGRect cropRect = CGRectMake(0,
@@ -123,6 +122,14 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+/*
+ * Gross and hacky!
+ */
+-(void)viewWillDisappear:(BOOL)animated {
+    error_code = 0;
+    [self.appDelegate application:nil didFinishLaunchingWithOptions:nil];
 }
 
 @end
