@@ -334,7 +334,7 @@
                                                                                CELL_PADDING + 8,
                                                                                16,
                                                                                16)];
-            [clearButton setBackgroundImage:[UIImage imageNamed:@"cancelup.png"] forState:UIControlStateNormal];
+            [clearButton setBackgroundImage:[UIImage imageNamed:@"cancelrating"] forState:UIControlStateNormal];
             [clearButton addTarget:self action:@selector(clearButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
             clearButton.tag = responseWidgetTag;
             clearButtonTable[[@(responseWidgetTag) description]] = clearButton;
