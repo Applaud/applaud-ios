@@ -36,7 +36,6 @@
 @property (strong, nonatomic) IBOutlet UIView *profileView;         // Contains image, name, title, bio as subviews
 @property (strong, nonatomic) NSMutableDictionary *ratingDimensions;
 @property (weak, nonatomic) IBOutlet UIImageView *image;
-@property (weak, nonatomic) IBOutlet UIButton *submitButton;
 
 - (id)initWithEmployee:(Employee *)e;
 - (IBAction)submitButtonPressed:(UIButton *)sender;
