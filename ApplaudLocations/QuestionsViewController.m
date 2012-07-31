@@ -170,6 +170,7 @@
                                                                                                 cell.frame.size.width - 2*CELL_MARGIN,
                                                                                                 cell.contentView.frame.size.height)
                                                                         cornerRadius:5.0f] CGPath];
+        cell.backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
     }
     return cell;
 }
@@ -216,9 +217,9 @@
     // Set color and shape
     acccell.backgroundColor = [UIColor whiteColor];
     acccell.contentView.backgroundColor = [UIColor whiteColor];
-    acccell.contentView.layer.cornerRadius = 7.0f;
+    acccell.contentView.layer.cornerRadius = CELL_CORNER_RADIUS;
     acccell.contentView.layer.borderWidth = 1.0f;
-    acccell.contentView.layer.borderColor = [[UIColor grayColor] CGColor];
+    acccell.contentView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     [[acccell containerView].layer setMasksToBounds:YES];
     
     // Some nice visual FX
@@ -397,6 +398,9 @@
                                                      options:dict[@"options"]];
         [fields addObject:sf];
     }
+    if ( fields.count == 0 )
+        // Wait for loading to finish.
+        return;
     SurveyField *temp = fields[0];
     [fields setObject:[fields objectAtIndex:genFeedbackIndex] atIndexedSubscript:0];
     [fields setObject:temp atIndexedSubscript:genFeedbackIndex];

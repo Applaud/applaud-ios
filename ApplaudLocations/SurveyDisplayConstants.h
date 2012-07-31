@@ -9,6 +9,7 @@
 #ifndef ApplaudIOS_SurveyDisplayConstants_h
 #define ApplaudIOS_SurveyDisplayConstants_h
 
+#define CELL_CORNER_RADIUS 7.0f     // radius of corners on cell
 #define CELL_ELEMENT_PADDING 5.0f   // how much space between things inside of the cell
 #define CELL_PADDING 10.0f          // space between cell wall and anything else
 #define CELL_MARGIN 10.0f           // space between outside of the cell and edge of the screen
