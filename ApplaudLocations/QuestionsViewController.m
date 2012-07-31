@@ -25,6 +25,11 @@
     return self;
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    return UIInterfaceOrientationIsPortrait(interfaceOrientation);
+}
+
 -(void)notificationReceived:(NSNotification *)notification {
     if([notification.name isEqualToString:@"BUSINESS_SET"]) {
         [self getSurveys];

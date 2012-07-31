@@ -63,12 +63,13 @@
     [super viewDidUnload];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    return UIInterfaceOrientationIsPortrait(interfaceOrientation);
 }
 
 #pragma mark -
-#pragma mark - Table view data source/delegation
+#pragma mark Table view data source/delegation
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
