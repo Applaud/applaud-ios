@@ -39,6 +39,10 @@ static int outbound_connections;
                                              [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
                                        error_code = ERROR_SERVER_ERROR;
                                    }
+                                   
+                                   if ( callback ) {
+                                       callback(r, data);
+                                   }
                                }
                                
                                // Decrement # of connections
@@ -46,13 +50,13 @@ static int outbound_connections;
                                // No more connections --> stop showing network activity indicator
                                if ( outbound_connections == 0 ) {
                                    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-                                   // Let interested bodies know that all network comm. is finished.
-                                   [[NSNotificationCenter defaultCenter] postNotificationName:@"DOWNLOAD_FINISHED" object:nil];
+                                   
+                                   if (! err) {
+                                       // Let interested bodies know that all network comm. is finished.
+                                       [[NSNotificationCenter defaultCenter] postNotificationName:@"DOWNLOAD_FINISHED" object:nil];
+                                   }
                                }
                                
-                               if ( callback ) {
-                                   callback(r, data);
-                               }
                            }];
 
 }
@@ -174,7 +178,10 @@ static int outbound_connections;
                             callback:^(NSHTTPURLResponse *r, NSData *d) {
                                 
                                 // We are ok, login was successful
-                                if ( ! error_code && r.statusCode == 200 ) {
+                                if ( r.statusCode == 200 ) {
+                                    // Reset error code
+                                    error_code = 0;
+                                    
                                     NSArray *userPassword = [NSArray arrayWithObjects:username, password, nil];
                                     [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGIN_SUCCESS" object:userPassword];
                                     

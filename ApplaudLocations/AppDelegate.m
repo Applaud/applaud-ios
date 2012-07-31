@@ -174,7 +174,9 @@
     // User hit 'cancel'
     else if ( buttonIndex == 0 ) {
         ErrorViewController *evc = [[ErrorViewController alloc] init];
-        self.window.rootViewController = evc;
+        evc.appDelegate = self;
+        [self.navControl popToViewController:self.masterViewController animated:NO];
+        [self.navControl pushViewController:evc animated:YES];
     }
 }
 
@@ -320,8 +322,8 @@
  *
  */
 - (void)loginFailed:(NSNotification *)notification {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    if (error_code) {
+    if ( error_code && ERROR_BAD_LOGIN != error_code ) {
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
         ErrorViewController *evc = [[ErrorViewController alloc] init];
         evc.appDelegate = self;
         [self.navControl popToViewController:self.masterViewController animated:NO];
