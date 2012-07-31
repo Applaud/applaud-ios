@@ -48,13 +48,7 @@
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
-//    UIAlertView *connection_problem = [[UIAlertView alloc] initWithTitle:@"Connection error"
-//                                                                 message:@"Couldn't get business data"
-//                                                                delegate:nil
-//                                                       cancelButtonTitle:nil
-//                                                       otherButtonTitles:@"OK", nil];
-//    [connection_problem show];
-//    NSLog(@"Error finding location: %@",error);
+    NSLog(@"Error finding location: %@",error);
 }
 
 #pragma mark -
@@ -82,14 +76,6 @@
             bus.business_id = [dict[@"business_id"] intValue];
             [businessArray addObject:bus];
         }
-        
-        if( ! businessArray.count ){
-            [[[UIAlertView alloc] initWithTitle:@"Sorry..."
-                                        message:@"There aren't any businesses in your area"
-                                       delegate:self
-                              cancelButtonTitle:@"OK"
-                              otherButtonTitles:@"Refresh", nil] show];
-        }
         // put some info in the notificationcenter
         [[NSNotificationCenter defaultCenter] postNotificationName:@"BUSINESS_RECEIVED" object:businessArray];
     };
@@ -113,29 +99,6 @@
     
     serverData = nil;
     urlConnection = nil;
-}
-
-#pragma mark -
-#pragma UIAlertViewDelegate methods
-
--(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if(buttonIndex == 0) {
-        exit(0);
-    }
-    else if(buttonIndex == 1) {
-        [self findBusinessesWithLocation:self.locMan.location.coordinate];
-    }
-}
-
-#pragma mark -
-#pragma mark Other Methods
-
-/**
- * Convenient way to display a alert to the user with only an 'OK' button.
- */
-- (void)showAlertView:(NSString *)msg {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Applaud" message:msg delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    [alert show];
 }
 
 @end
