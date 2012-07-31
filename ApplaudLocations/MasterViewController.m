@@ -40,16 +40,11 @@
                                                                                             target:self
                                                                                             action:@selector(refreshButtonPressed)]];
     
-    UIImage *backgroundImage = [UIImage imageNamed:@"Default"];
-    CGRect cropRect = CGRectMake(0,
-                                 self.navigationController.navigationBar.frame.size.height
-                                 + [[UIScreen mainScreen] applicationFrame].origin.y,
-                                 backgroundImage.size.width,
-                                 backgroundImage.size.height);
-    CGImageRef backgroundImageRef = CGImageCreateWithImageInRect(backgroundImage.CGImage, cropRect);
-    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageWithCGImage:backgroundImageRef]]];
-    CGImageRelease(backgroundImageRef);
-    [self.tableView setBackgroundColor:[UIColor clearColor]];
+    // Background image
+    self.backgroundImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Default"]];
+    self.backgroundImage.contentMode = UIViewContentModeBottom;
+    self.backgroundImage.frame = self.tableView.frame;
+    self.tableView.backgroundView = self.backgroundImage;
     
     self.navigationItem.title = @"Available Locations";
     [self.view addSubview:self.tableView];

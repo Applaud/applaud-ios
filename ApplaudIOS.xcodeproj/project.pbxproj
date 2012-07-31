@@ -21,10 +21,8 @@
 		1B514013158F9441008CB057 /* ApplaudProgramState.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1B514011158F9441008CB057 /* ApplaudProgramState.xcdatamodeld */; };
 		1B514016158FA233008CB057 /* ApplaudProgramSettingsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B514015158FA233008CB057 /* ApplaudProgramSettingsModel.m */; };
 		1B51401C158FA4A9008CB057 /* FirstTimeNavigatorViewControllerIphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B51401B158FA4A9008CB057 /* FirstTimeNavigatorViewControllerIphone.xib */; };
-		1B5D02FF15C44CF400976D33 /* chicago@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B5D02FB15C44CF400976D33 /* chicago@2x~ipad.png */; };
-		1B5D030015C44CF400976D33 /* chicago@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B5D02FC15C44CF400976D33 /* chicago@2x~iphone.png */; };
-		1B5D030115C44CF400976D33 /* chicago~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B5D02FD15C44CF400976D33 /* chicago~ipad.png */; };
-		1B5D030215C44CF400976D33 /* chicago~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B5D02FE15C44CF400976D33 /* chicago~iphone.png */; };
+		1B5D02FF15C44CF400976D33 /* Default@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B5D02FB15C44CF400976D33 /* Default@2x~ipad.png */; };
+		1B5D030115C44CF400976D33 /* Default~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B5D02FD15C44CF400976D33 /* Default~ipad.png */; };
 		1B5D030A15C4564300976D33 /* ErrorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B5D030815C4564300976D33 /* ErrorViewController.m */; };
 		1B5D030E15C456E700976D33 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B5D030C15C456E700976D33 /* Default.png */; };
 		1B5D030F15C456E700976D33 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B5D030D15C456E700976D33 /* Default@2x.png */; };
@@ -119,10 +117,8 @@
 		1B514014158FA233008CB057 /* ApplaudProgramSettingsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplaudProgramSettingsModel.h; sourceTree = "<group>"; };
 		1B514015158FA233008CB057 /* ApplaudProgramSettingsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplaudProgramSettingsModel.m; sourceTree = "<group>"; };
 		1B51401B158FA4A9008CB057 /* FirstTimeNavigatorViewControllerIphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FirstTimeNavigatorViewControllerIphone.xib; sourceTree = "<group>"; };
-		1B5D02FB15C44CF400976D33 /* chicago@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chicago@2x~ipad.png"; path = "assets/chicago@2x~ipad.png"; sourceTree = "<group>"; };
-		1B5D02FC15C44CF400976D33 /* chicago@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chicago@2x~iphone.png"; path = "assets/chicago@2x~iphone.png"; sourceTree = "<group>"; };
-		1B5D02FD15C44CF400976D33 /* chicago~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chicago~ipad.png"; path = "assets/chicago~ipad.png"; sourceTree = "<group>"; };
-		1B5D02FE15C44CF400976D33 /* chicago~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chicago~iphone.png"; path = "assets/chicago~iphone.png"; sourceTree = "<group>"; };
+		1B5D02FB15C44CF400976D33 /* Default@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x~ipad.png"; path = "assets/Default@2x~ipad.png"; sourceTree = "<group>"; };
+		1B5D02FD15C44CF400976D33 /* Default~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default~ipad.png"; path = "assets/Default~ipad.png"; sourceTree = "<group>"; };
 		1B5D030715C4564300976D33 /* ErrorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ErrorViewController.h; sourceTree = "<group>"; };
 		1B5D030815C4564300976D33 /* ErrorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ErrorViewController.m; sourceTree = "<group>"; };
 		1B5D030C15C456E700976D33 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = assets/Default.png; sourceTree = "<group>"; };
@@ -371,10 +367,8 @@
 			children = (
 				1B5D030C15C456E700976D33 /* Default.png */,
 				1B5D030D15C456E700976D33 /* Default@2x.png */,
-				1B5D02FB15C44CF400976D33 /* chicago@2x~ipad.png */,
-				1B5D02FC15C44CF400976D33 /* chicago@2x~iphone.png */,
-				1B5D02FD15C44CF400976D33 /* chicago~ipad.png */,
-				1B5D02FE15C44CF400976D33 /* chicago~iphone.png */,
+				1B5D02FB15C44CF400976D33 /* Default@2x~ipad.png */,
+				1B5D02FD15C44CF400976D33 /* Default~ipad.png */,
 				1B688DBF15C3A94700FCDCEE /* shareyourthoughts.png */,
 				1B688DB315C3811900FCDCEE /* dialog.png */,
 				1B688DB415C3811900FCDCEE /* dialog@2x.png */,
@@ -490,10 +484,8 @@
 				1B688DBD15C3811900FCDCEE /* newsfeed.png in Resources */,
 				1B688DBE15C3811900FCDCEE /* newsfeed@2x.png in Resources */,
 				1B688DC015C3A94700FCDCEE /* shareyourthoughts.png in Resources */,
-				1B5D02FF15C44CF400976D33 /* chicago@2x~ipad.png in Resources */,
-				1B5D030015C44CF400976D33 /* chicago@2x~iphone.png in Resources */,
-				1B5D030115C44CF400976D33 /* chicago~ipad.png in Resources */,
-				1B5D030215C44CF400976D33 /* chicago~iphone.png in Resources */,
+				1B5D02FF15C44CF400976D33 /* Default@2x~ipad.png in Resources */,
+				1B5D030115C44CF400976D33 /* Default~ipad.png in Resources */,
 				1B5D030E15C456E700976D33 /* Default.png in Resources */,
 				1B5D030F15C456E700976D33 /* Default@2x.png in Resources */,
 			);

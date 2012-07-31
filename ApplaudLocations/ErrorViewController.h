@@ -15,6 +15,7 @@
 @property (nonatomic, strong) UILabel *errorTitle;
 @property (nonatomic, strong) UILabel *errorBody;
 @property (nonatomic, weak) AppDelegate *appDelegate;
+@property (nonatomic, strong) IBOutlet UIImageView *backgroundView;
 
 // These are error title and body definitions for each
 // error code.
