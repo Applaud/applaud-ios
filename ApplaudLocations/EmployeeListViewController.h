@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
+#import "EmployeeCell.h"
+
 @class AppDelegate;
 
 @interface EmployeeListViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>

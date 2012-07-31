@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 Applaud, Inc. All rights reserved.
 //
 
+#import <QuartzCore/QuartzCore.h>
+
 #import "QuestionsViewController.h"
 #import "SurveyDisplayConstants.h"
 #import "SurveyAccordionCell.h"

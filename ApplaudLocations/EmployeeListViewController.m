@@ -36,8 +36,6 @@
     if([notification.name isEqualToString:@"BUSINESS_SET"]) {
         [self getEmployees];
         self.navigationController.navigationBar.tintColor = self.appDelegate.currentBusiness.primaryColor;
-        self.tableView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
-        self.view.opaque = NO;
         self.view.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
     }
 }
@@ -51,6 +49,7 @@
     [super viewDidLoad];
     
     // Do any additional setup after loading the view from its nib.
+    self.tableView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:BACK_BUTTON_TITLE
                                                                              style:UIBarButtonItemStylePlain
                                                                             target:self
@@ -97,20 +96,20 @@
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
     if ( nil == cell ) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
+        cell = [[EmployeeCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
     
         // Configure the cell...
         if(self.employeeArray.count == 0) {
             cell.textLabel.numberOfLines = 0;
             cell.textLabel.text = NO_EMPLOYEES_MESSAGE;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            
+            cell.contentView.backgroundColor = [UIColor whiteColor];
         }
         else {
             [cell.textLabel setText:[self.employeeArray[indexPath.row] description]];
             [cell.imageView setImageWithURL:[(Employee*)self.employeeArray[indexPath.row] imageURL]
                            placeholderImage:[UIImage imageNamed:@"blankPerson.jpg"]];
-            cell.imageView.layer.cornerRadius = 7.0f;
+            cell.imageView.layer.cornerRadius = 10.0f;
             cell.imageView.layer.masksToBounds = YES;
             tableView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
         }
@@ -146,6 +145,18 @@
         evc = self.employeeControllers[indexPath.row];
     }
     [self.navigationController pushViewController:evc animated:YES];
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Set shape and color
+    cell.backgroundColor = [UIColor whiteColor];
+    cell.contentView.backgroundColor = [UIColor whiteColor];
+    cell.contentView.layer.cornerRadius = 7.0f;
+    
+    // Some nice visual FX
+    cell.contentView.layer.shadowRadius = 5.0f;
+    cell.contentView.layer.shadowOpacity = 0.2f;
+    cell.contentView.layer.shadowOffset = CGSizeMake(1, 0);
 }
 
 #pragma mark -

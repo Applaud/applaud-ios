@@ -115,7 +115,8 @@
                                                  newsfeed:self.newsFeeds[indexPath.section][indexPath.row]];
         }
     }
-    else if([cell isKindOfClass:[UITableViewCell class]]) {
+    else if([cell isKindOfClass:[UITableViewCell class]] &&
+            self.newsFeeds.count != 0) {
         cell = [[NFTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                       reuseIdentifier:cellIdentifier
                                              newsfeed:self.newsFeeds[indexPath.section][indexPath.row]];

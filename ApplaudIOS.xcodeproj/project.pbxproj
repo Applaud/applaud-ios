@@ -58,6 +58,7 @@
 		6F40324C158BA1B700024402 /* Survey.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F40324B158BA1B700024402 /* Survey.m */; };
 		6F403250158BA4C400024402 /* SurveyField.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F40324F158BA4C400024402 /* SurveyField.m */; };
 		6F462623158A8BDE007EA86E /* NFItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F462622158A8BDE007EA86E /* NFItem.m */; };
+		6F6F702715C85F0E007C8DF7 /* EmployeeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F6F702615C85F0E007C8DF7 /* EmployeeCell.m */; };
 		6F875EF61591594600555390 /* FirstTimeNavigatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F875EF51591594600555390 /* FirstTimeNavigatorViewController.m */; };
 		6F8C8A2B158C03DB00BB4BA0 /* Employee.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F8C8A2A158C03DB00BB4BA0 /* Employee.m */; };
 		6FAB07A01587BF0700C9F1DF /* BusinessAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FAB079F1587BF0700C9F1DF /* BusinessAnnotation.m */; };
@@ -168,6 +169,8 @@
 		6F40324F158BA4C400024402 /* SurveyField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SurveyField.m; sourceTree = "<group>"; };
 		6F462621158A8BDE007EA86E /* NFItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NFItem.h; sourceTree = "<group>"; };
 		6F462622158A8BDE007EA86E /* NFItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NFItem.m; sourceTree = "<group>"; };
+		6F6F702515C85F0E007C8DF7 /* EmployeeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmployeeCell.h; sourceTree = "<group>"; };
+		6F6F702615C85F0E007C8DF7 /* EmployeeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmployeeCell.m; sourceTree = "<group>"; };
 		6F809438158EF7E800961971 /* ApplaudIOS-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "ApplaudIOS-Info.plist"; sourceTree = "<group>"; };
 		6F809439158EF7E800961971 /* ApplaudIOS-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ApplaudIOS-Prefix.pch"; sourceTree = "<group>"; };
 		6F875EF41591594600555390 /* FirstTimeNavigatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstTimeNavigatorViewController.h; sourceTree = "<group>"; };
@@ -232,6 +235,8 @@
 			isa = PBXGroup;
 			children = (
 				1BB4AC9C15BF3B58003E8B29 /* EmployeeDisplayConstants.h */,
+				6F6F702515C85F0E007C8DF7 /* EmployeeCell.h */,
+				6F6F702615C85F0E007C8DF7 /* EmployeeCell.m */,
 				1BB4AC9D15BF3E68003E8B29 /* EmployeeBioCell.h */,
 				1BB4AC9E15BF3E68003E8B29 /* EmployeeBioCell.m */,
 				1B301C64158858430038A5BE /* EmployeeViewController.h */,
@@ -512,6 +517,7 @@
 				1BD494F215BF1E05006A01A9 /* NFTableViewCell.m in Sources */,
 				1BB4AC9F15BF3E68003E8B29 /* EmployeeBioCell.m in Sources */,
 				1B5D030A15C4564300976D33 /* ErrorViewController.m in Sources */,
+				6F6F702715C85F0E007C8DF7 /* EmployeeCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
