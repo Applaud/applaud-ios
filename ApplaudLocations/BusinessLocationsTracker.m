@@ -18,7 +18,6 @@
         self.locMan = [[CLLocationManager alloc] init];
         self.locMan.desiredAccuracy = kCLLocationAccuracyBest;
         self.locMan.delegate = self;
-        serverData = [[NSMutableData alloc] init];
     }
     return self;
 }
@@ -82,23 +81,6 @@
     NSDictionary *getDict = @{ @"latitude" : @(location.latitude),
                                @"longitude" : @(location.longitude) };
     [ConnectionManager serverRequest:@"GET" withParams:getDict url:WHEREAMI_URL callback:callback];
-}
-
-/**
- * Got a chunk of data from the server.
- */
-- (void)connection:(NSURLConnection *)conn didReceiveData:(NSData *)data {
-    [serverData appendData:data];
-}
-
-/**
- * Could not connect to the server.
- */
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-    [self showAlertView:[NSString stringWithFormat:@"Connection error: %@",error]];
-    
-    serverData = nil;
-    urlConnection = nil;
 }
 
 @end

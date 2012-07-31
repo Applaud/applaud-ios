@@ -321,8 +321,7 @@
  */
 - (void)loginFailed:(NSNotification *)notification {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    if ((ERROR_NO_CONNECTION == error_code ||
-         ERROR_SERVER_ERROR == error_code)) {
+    if (error_code) {
         ErrorViewController *evc = [[ErrorViewController alloc] init];
         evc.appDelegate = self;
         [self.navControl popToViewController:self.masterViewController animated:NO];
