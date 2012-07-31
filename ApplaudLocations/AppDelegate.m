@@ -173,6 +173,7 @@
     }
     // User hit 'cancel'
     else if ( buttonIndex == 0 ) {
+        error_code = ERROR_BAD_LOGIN;
         ErrorViewController *evc = [[ErrorViewController alloc] init];
         evc.appDelegate = self;
         [self.navControl popToViewController:self.masterViewController animated:NO];

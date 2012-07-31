@@ -36,7 +36,6 @@
     [super viewDidLoad];
     // Background image
     self.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Default"]];
-    self.backgroundView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     self.backgroundView.contentMode = UIViewContentModeBottom;
     [self.view addSubview:self.backgroundView];
     
@@ -57,8 +56,8 @@
             self.errorBody.text = bERROR_SERVER_ERROR;
             break;
         default:
-            self.errorTitle.text = @"PLACEHOLDER TITLE";
-            self.errorBody.text = @"PLACEHOLDER BODY";
+            self.errorTitle.text = @"Unknown error.";
+            self.errorBody.text = @"You do not see me!";
     }
     
     NSLog(@"%@ : %@",self.errorTitle.text, self.errorBody.text);
