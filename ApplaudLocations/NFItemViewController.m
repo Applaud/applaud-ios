@@ -16,13 +16,6 @@
 
 @implementation NFItemViewController
 
-@synthesize item = _item;
-@synthesize titleLabel = _titleLabel;
-@synthesize bodyText = _bodyText;
-@synthesize subtitleLabel = _subtitleLabel;
-@synthesize dateLabel = _dateLabel;
-@synthesize image = _image;
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -144,7 +137,7 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    return UIInterfaceOrientationIsPortrait(interfaceOrientation);
 }
 
 /*
@@ -152,7 +145,7 @@
  */
 - (void)viewWillDisappear:(BOOL)animated {
     UINavigationController *parent = (UINavigationController *)self.parentViewController;
-    UITableView *tableView = [[parent.viewControllers objectAtIndex:0] tableView];
+    UITableView *tableView = [parent.viewControllers[0] tableView];
     NSIndexPath *path = [tableView indexPathForSelectedRow];
     [tableView deselectRowAtIndexPath:path animated:YES];
 }

@@ -17,6 +17,7 @@
 @property (nonatomic, strong) NSMutableArray *locationsArray;
 @property (nonatomic, weak) UIWindow *window;
 @property (nonatomic, weak) AppDelegate *appDelegate;
+@property (nonatomic, strong) IBOutlet UIImageView *backgroundImage;
 
 // Program settings
 @property (nonatomic, strong) ApplaudProgramSettingsModel *settings;

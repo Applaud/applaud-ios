@@ -21,12 +21,9 @@
 		1B514013158F9441008CB057 /* ApplaudProgramState.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1B514011158F9441008CB057 /* ApplaudProgramState.xcdatamodeld */; };
 		1B514016158FA233008CB057 /* ApplaudProgramSettingsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B514015158FA233008CB057 /* ApplaudProgramSettingsModel.m */; };
 		1B51401C158FA4A9008CB057 /* FirstTimeNavigatorViewControllerIphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B51401B158FA4A9008CB057 /* FirstTimeNavigatorViewControllerIphone.xib */; };
-		1B5D02FF15C44CF400976D33 /* chicago@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B5D02FB15C44CF400976D33 /* chicago@2x~ipad.png */; };
-		1B5D030015C44CF400976D33 /* chicago@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B5D02FC15C44CF400976D33 /* chicago@2x~iphone.png */; };
-		1B5D030115C44CF400976D33 /* chicago~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B5D02FD15C44CF400976D33 /* chicago~ipad.png */; };
-		1B5D030215C44CF400976D33 /* chicago~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B5D02FE15C44CF400976D33 /* chicago~iphone.png */; };
+		1B5D02FF15C44CF400976D33 /* Default@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B5D02FB15C44CF400976D33 /* Default@2x~ipad.png */; };
+		1B5D030115C44CF400976D33 /* Default~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B5D02FD15C44CF400976D33 /* Default~ipad.png */; };
 		1B5D030A15C4564300976D33 /* ErrorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B5D030815C4564300976D33 /* ErrorViewController.m */; };
-		1B5D030B15C4564300976D33 /* ErrorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B5D030915C4564300976D33 /* ErrorViewController.xib */; };
 		1B5D030E15C456E700976D33 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B5D030C15C456E700976D33 /* Default.png */; };
 		1B5D030F15C456E700976D33 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B5D030D15C456E700976D33 /* Default@2x.png */; };
 		1B688DB915C3811900FCDCEE /* dialog.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B688DB315C3811900FCDCEE /* dialog.png */; };
@@ -55,7 +52,6 @@
 		1BD494F215BF1E05006A01A9 /* NFTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BD494F115BF1E05006A01A9 /* NFTableViewCell.m */; };
 		1BFF2E7E158D9CDC00753F94 /* EmployeeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BFF2E7C158D9CDB00753F94 /* EmployeeListViewController.m */; };
 		1BFF2E7F158D9CDC00753F94 /* EmployeeListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1BFF2E7D158D9CDC00753F94 /* EmployeeListViewController.xib */; };
-		6F0B5C3315A3CB030060D1B5 /* UIImage+Scale.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0B5C3215A3CB030060D1B5 /* UIImage+Scale.m */; };
 		6F2A39171587B2AB0024FB52 /* Business.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F2A39161587B2AB0024FB52 /* Business.m */; };
 		6F37B93B1589400E001DD06D /* NFItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F37B9391589400D001DD06D /* NFItemViewController.m */; };
 		6F37B93C1589400E001DD06D /* NFItemViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F37B93A1589400D001DD06D /* NFItemViewController.xib */; };
@@ -64,12 +60,11 @@
 		6F40324C158BA1B700024402 /* Survey.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F40324B158BA1B700024402 /* Survey.m */; };
 		6F403250158BA4C400024402 /* SurveyField.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F40324F158BA4C400024402 /* SurveyField.m */; };
 		6F462623158A8BDE007EA86E /* NFItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F462622158A8BDE007EA86E /* NFItem.m */; };
+		6F6F702715C85F0E007C8DF7 /* EmployeeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F6F702615C85F0E007C8DF7 /* EmployeeCell.m */; };
 		6F875EF61591594600555390 /* FirstTimeNavigatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F875EF51591594600555390 /* FirstTimeNavigatorViewController.m */; };
 		6F8C8A2B158C03DB00BB4BA0 /* Employee.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F8C8A2A158C03DB00BB4BA0 /* Employee.m */; };
 		6F9E60D915C06E37006BD49A /* BusinessPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F9E60D815C06E37006BD49A /* BusinessPhoto.m */; };
 		6FAB07A01587BF0700C9F1DF /* BusinessAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FAB079F1587BF0700C9F1DF /* BusinessAnnotation.m */; };
-		6FFAD3E1158E60A5000CE190 /* SurveyFieldViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FFAD3DF158E60A5000CE190 /* SurveyFieldViewController.m */; };
-		6FFAD3E2158E60A5000CE190 /* SurveyFieldViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6FFAD3E0158E60A5000CE190 /* SurveyFieldViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -124,13 +119,10 @@
 		1B514014158FA233008CB057 /* ApplaudProgramSettingsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplaudProgramSettingsModel.h; sourceTree = "<group>"; };
 		1B514015158FA233008CB057 /* ApplaudProgramSettingsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplaudProgramSettingsModel.m; sourceTree = "<group>"; };
 		1B51401B158FA4A9008CB057 /* FirstTimeNavigatorViewControllerIphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FirstTimeNavigatorViewControllerIphone.xib; sourceTree = "<group>"; };
-		1B5D02FB15C44CF400976D33 /* chicago@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chicago@2x~ipad.png"; path = "assets/chicago@2x~ipad.png"; sourceTree = "<group>"; };
-		1B5D02FC15C44CF400976D33 /* chicago@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chicago@2x~iphone.png"; path = "assets/chicago@2x~iphone.png"; sourceTree = "<group>"; };
-		1B5D02FD15C44CF400976D33 /* chicago~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chicago~ipad.png"; path = "assets/chicago~ipad.png"; sourceTree = "<group>"; };
-		1B5D02FE15C44CF400976D33 /* chicago~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chicago~iphone.png"; path = "assets/chicago~iphone.png"; sourceTree = "<group>"; };
+		1B5D02FB15C44CF400976D33 /* Default@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x~ipad.png"; path = "assets/Default@2x~ipad.png"; sourceTree = "<group>"; };
+		1B5D02FD15C44CF400976D33 /* Default~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default~ipad.png"; path = "assets/Default~ipad.png"; sourceTree = "<group>"; };
 		1B5D030715C4564300976D33 /* ErrorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ErrorViewController.h; sourceTree = "<group>"; };
 		1B5D030815C4564300976D33 /* ErrorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ErrorViewController.m; sourceTree = "<group>"; };
-		1B5D030915C4564300976D33 /* ErrorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ErrorViewController.xib; sourceTree = "<group>"; };
 		1B5D030C15C456E700976D33 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = assets/Default.png; sourceTree = "<group>"; };
 		1B5D030D15C456E700976D33 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "assets/Default@2x.png"; sourceTree = "<group>"; };
 		1B688DB315C3811900FCDCEE /* dialog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dialog.png; path = assets/dialog.png; sourceTree = "<group>"; };
@@ -169,8 +161,6 @@
 		1BFF2E7B158D9CDB00753F94 /* EmployeeListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmployeeListViewController.h; sourceTree = "<group>"; };
 		1BFF2E7C158D9CDB00753F94 /* EmployeeListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmployeeListViewController.m; sourceTree = "<group>"; };
 		1BFF2E7D158D9CDC00753F94 /* EmployeeListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmployeeListViewController.xib; sourceTree = "<group>"; };
-		6F0B5C3115A3CB030060D1B5 /* UIImage+Scale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Scale.h"; sourceTree = "<group>"; };
-		6F0B5C3215A3CB030060D1B5 /* UIImage+Scale.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Scale.m"; sourceTree = "<group>"; };
 		6F2A39151587B2AB0024FB52 /* Business.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Business.h; sourceTree = "<group>"; };
 		6F2A39161587B2AB0024FB52 /* Business.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Business.m; sourceTree = "<group>"; };
 		6F37B9381589400D001DD06D /* NFItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NFItemViewController.h; sourceTree = "<group>"; };
@@ -185,6 +175,8 @@
 		6F40324F158BA4C400024402 /* SurveyField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SurveyField.m; sourceTree = "<group>"; };
 		6F462621158A8BDE007EA86E /* NFItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NFItem.h; sourceTree = "<group>"; };
 		6F462622158A8BDE007EA86E /* NFItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NFItem.m; sourceTree = "<group>"; };
+		6F6F702515C85F0E007C8DF7 /* EmployeeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmployeeCell.h; sourceTree = "<group>"; };
+		6F6F702615C85F0E007C8DF7 /* EmployeeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmployeeCell.m; sourceTree = "<group>"; };
 		6F809438158EF7E800961971 /* ApplaudIOS-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "ApplaudIOS-Info.plist"; sourceTree = "<group>"; };
 		6F809439158EF7E800961971 /* ApplaudIOS-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ApplaudIOS-Prefix.pch"; sourceTree = "<group>"; };
 		6F875EF41591594600555390 /* FirstTimeNavigatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstTimeNavigatorViewController.h; sourceTree = "<group>"; };
@@ -195,9 +187,6 @@
 		6F9E60D815C06E37006BD49A /* BusinessPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessPhoto.m; sourceTree = "<group>"; };
 		6FAB079E1587BF0700C9F1DF /* BusinessAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessAnnotation.h; sourceTree = "<group>"; };
 		6FAB079F1587BF0700C9F1DF /* BusinessAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessAnnotation.m; sourceTree = "<group>"; };
-		6FFAD3DE158E60A5000CE190 /* SurveyFieldViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SurveyFieldViewController.h; sourceTree = "<group>"; };
-		6FFAD3DF158E60A5000CE190 /* SurveyFieldViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SurveyFieldViewController.m; sourceTree = "<group>"; };
-		6FFAD3E0158E60A5000CE190 /* SurveyFieldViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SurveyFieldViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -254,6 +243,8 @@
 			isa = PBXGroup;
 			children = (
 				1BB4AC9C15BF3B58003E8B29 /* EmployeeDisplayConstants.h */,
+				6F6F702515C85F0E007C8DF7 /* EmployeeCell.h */,
+				6F6F702615C85F0E007C8DF7 /* EmployeeCell.m */,
 				1BB4AC9D15BF3E68003E8B29 /* EmployeeBioCell.h */,
 				1BB4AC9E15BF3E68003E8B29 /* EmployeeBioCell.m */,
 				1B301C64158858430038A5BE /* EmployeeViewController.h */,
@@ -277,9 +268,6 @@
 				1B301C6A158858560038A5BE /* QuestionsViewController.h */,
 				1B301C6B158858560038A5BE /* QuestionsViewController.m */,
 				1B301C6C158858560038A5BE /* QuestionsViewController.xib */,
-				6FFAD3DE158E60A5000CE190 /* SurveyFieldViewController.h */,
-				6FFAD3DF158E60A5000CE190 /* SurveyFieldViewController.m */,
-				6FFAD3E0158E60A5000CE190 /* SurveyFieldViewController.xib */,
 				6F40324A158BA1B700024402 /* Survey.h */,
 				6F40324B158BA1B700024402 /* Survey.m */,
 				6F40324E158BA4C400024402 /* SurveyField.h */,
@@ -355,7 +343,6 @@
 				1BA358F71582F05E00EB8F32 /* AppDelegate.m */,
 				1B5D030715C4564300976D33 /* ErrorViewController.h */,
 				1B5D030815C4564300976D33 /* ErrorViewController.m */,
-				1B5D030915C4564300976D33 /* ErrorViewController.xib */,
 				6F875EF41591594600555390 /* FirstTimeNavigatorViewController.h */,
 				6F875EF51591594600555390 /* FirstTimeNavigatorViewController.m */,
 				1B51401B158FA4A9008CB057 /* FirstTimeNavigatorViewControllerIphone.xib */,
@@ -363,8 +350,6 @@
 				6F2A39161587B2AB0024FB52 /* Business.m */,
 				1B9389B91584EF010088F468 /* BusinessLocationsTracker.h */,
 				1B9389BA1584EF010088F468 /* BusinessLocationsTracker.m */,
-				6F0B5C3115A3CB030060D1B5 /* UIImage+Scale.h */,
-				6F0B5C3215A3CB030060D1B5 /* UIImage+Scale.m */,
 				1B9528BE1590D87500103723 /* ConnectionManager.h */,
 				1B9528BF1590D87500103723 /* ConnectionManager.m */,
 				1BA358EE1582F05E00EB8F32 /* Supporting Files */,
@@ -388,10 +373,8 @@
 			children = (
 				1B5D030C15C456E700976D33 /* Default.png */,
 				1B5D030D15C456E700976D33 /* Default@2x.png */,
-				1B5D02FB15C44CF400976D33 /* chicago@2x~ipad.png */,
-				1B5D02FC15C44CF400976D33 /* chicago@2x~iphone.png */,
-				1B5D02FD15C44CF400976D33 /* chicago~ipad.png */,
-				1B5D02FE15C44CF400976D33 /* chicago~iphone.png */,
+				1B5D02FB15C44CF400976D33 /* Default@2x~ipad.png */,
+				1B5D02FD15C44CF400976D33 /* Default~ipad.png */,
 				1B688DBF15C3A94700FCDCEE /* shareyourthoughts.png */,
 				1B688DB315C3811900FCDCEE /* dialog.png */,
 				1B688DB415C3811900FCDCEE /* dialog@2x.png */,
@@ -506,7 +489,6 @@
 				1B301C6E158858560038A5BE /* QuestionsViewController.xib in Resources */,
 				6F37B93C1589400E001DD06D /* NFItemViewController.xib in Resources */,
 				1BFF2E7F158D9CDC00753F94 /* EmployeeListViewController.xib in Resources */,
-				6FFAD3E2158E60A5000CE190 /* SurveyFieldViewController.xib in Resources */,
 				1B51401C158FA4A9008CB057 /* FirstTimeNavigatorViewControllerIphone.xib in Resources */,
 				6F3EA47815BE039D006E66A8 /* BusinessPhotoViewController.xib in Resources */,
 				1B12763315B89B9600980AA2 /* MasterViewController.xib in Resources */,
@@ -520,11 +502,8 @@
 				1B688DBD15C3811900FCDCEE /* newsfeed.png in Resources */,
 				1B688DBE15C3811900FCDCEE /* newsfeed@2x.png in Resources */,
 				1B688DC015C3A94700FCDCEE /* shareyourthoughts.png in Resources */,
-				1B5D02FF15C44CF400976D33 /* chicago@2x~ipad.png in Resources */,
-				1B5D030015C44CF400976D33 /* chicago@2x~iphone.png in Resources */,
-				1B5D030115C44CF400976D33 /* chicago~ipad.png in Resources */,
-				1B5D030215C44CF400976D33 /* chicago~iphone.png in Resources */,
-				1B5D030B15C4564300976D33 /* ErrorViewController.xib in Resources */,
+				1B5D02FF15C44CF400976D33 /* Default@2x~ipad.png in Resources */,
+				1B5D030115C44CF400976D33 /* Default~ipad.png in Resources */,
 				1B5D030E15C456E700976D33 /* Default.png in Resources */,
 				1B5D030F15C456E700976D33 /* Default@2x.png in Resources */,
 			);
@@ -551,12 +530,10 @@
 				6F403250158BA4C400024402 /* SurveyField.m in Sources */,
 				6F8C8A2B158C03DB00BB4BA0 /* Employee.m in Sources */,
 				1BFF2E7E158D9CDC00753F94 /* EmployeeListViewController.m in Sources */,
-				6FFAD3E1158E60A5000CE190 /* SurveyFieldViewController.m in Sources */,
 				1B514013158F9441008CB057 /* ApplaudProgramState.xcdatamodeld in Sources */,
 				1B514016158FA233008CB057 /* ApplaudProgramSettingsModel.m in Sources */,
 				1B9528C01590D87500103723 /* ConnectionManager.m in Sources */,
 				6F875EF61591594600555390 /* FirstTimeNavigatorViewController.m in Sources */,
-				6F0B5C3315A3CB030060D1B5 /* UIImage+Scale.m in Sources */,
 				6F3EA47715BE039D006E66A8 /* BusinessPhotoViewController.m in Sources */,
 				1B12763215B89B9600980AA2 /* MasterViewController.m in Sources */,
 				1B9C3A6815BA0637000EEF1A /* SurveyAccordionCell.m in Sources */,
@@ -564,6 +541,7 @@
 				1BD494F215BF1E05006A01A9 /* NFTableViewCell.m in Sources */,
 				1BB4AC9F15BF3E68003E8B29 /* EmployeeBioCell.m in Sources */,
 				1B5D030A15C4564300976D33 /* ErrorViewController.m in Sources */,
+				6F6F702715C85F0E007C8DF7 /* EmployeeCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -644,6 +622,7 @@
 				INFOPLIST_FILE = "ApplaudLocations/ApplaudIOS-Info.plist";
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -656,6 +635,7 @@
 				INFOPLIST_FILE = "ApplaudLocations/ApplaudIOS-Info.plist";
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

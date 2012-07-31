@@ -14,11 +14,6 @@
 
 @implementation SurveyAccordionCell
 
-@synthesize questionLabel, questionWidgets;
-@synthesize expandedHeight = _expandedHeight;
-@synthesize containerView = _containerView;
-@synthesize field = _field;
-
 - (id)initWithStyle:(UITableViewCellStyle)style 
     reuseIdentifier:(NSString *)reuseIdentifier 
               field:(SurveyField *)field {
@@ -28,18 +23,18 @@
         self.containerView = [[UIView alloc] initWithFrame:CGRectZero];
         
         // Initialize UI elements, starting with the question label...
-        questionLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        questionLabel.text = field.label;
-        questionLabel.numberOfLines = 0;
-        questionLabel.lineBreakMode = UILineBreakModeWordWrap;
-        questionLabel.font = [UIFont boldSystemFontOfSize:TITLE_SIZE];
+        self.questionLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        self.questionLabel.text = field.label;
+        self.questionLabel.numberOfLines = 0;
+        self.questionLabel.lineBreakMode = UILineBreakModeWordWrap;
+        self.questionLabel.font = [UIFont boldSystemFontOfSize:TITLE_SIZE];
         
         if( self.field.type == RADIO ){
             self.field.type = TEXTAREA;
         }
         
         // ...and then the question widgets
-        questionWidgets = [[NSMutableArray alloc] init];
+        self.questionWidgets = [[NSMutableArray alloc] init];
         switch ( [field type] ) {
             case TEXTAREA:
             {
@@ -50,11 +45,11 @@
                 [textView setReturnKeyType:UIReturnKeyDone];
                 textView.delegate = self;
                 textView.font = [UIFont systemFontOfSize:16.0];
-                [questionWidgets addObject:textView];
+                [self.questionWidgets addObject:textView];
             }
                 break;
             case RADIO:
-                [questionWidgets addObject:[[UISegmentedControl alloc] initWithItems:[field options]]];
+                [self.questionWidgets addObject:[[UISegmentedControl alloc] initWithItems:[field options]]];
                 break;
             case CHECKBOX:
             {
@@ -71,8 +66,8 @@
                                                  [NSArray arrayWithObjects:@"yes", @"no", nil]];
                     yesNo.tag = -i;
                     
-                    [questionWidgets addObject:optionLabel];
-                    [questionWidgets addObject:yesNo];
+                    [self.questionWidgets addObject:optionLabel];
+                    [self.questionWidgets addObject:yesNo];
                     
                     i++;
                 }
@@ -86,20 +81,24 @@
                 textField.layer.borderWidth = 2.0;
                 [textField setReturnKeyType:UIReturnKeyDone];
                 textField.delegate = self;
-                [questionWidgets addObject:textField];
+                [self.questionWidgets addObject:textField];
             }
                 break;
         }
         
         // Start off question body as hidden
-        [self contract];
+        isExpanded = NO;
+        [self hideWidgets];
         
         // Add all cell content
-        [self.containerView addSubview:questionLabel];
-        for ( UIView *widget in questionWidgets ) {
+        [self.containerView addSubview:self.questionLabel];
+        for ( UIView *widget in self.questionWidgets ) {
             [self.containerView addSubview:widget];
         }
         [self.contentView addSubview:self.containerView];
+        
+        [self layoutSubviews];
+        self.containerView.frame = self.contentView.frame;
     }
     return self;
 }
@@ -128,9 +127,9 @@
         switch ( self.field.type ) {
             case TEXTAREA:
             {
-                UIView *textArea = [questionWidgets objectAtIndex:0];
+                UIView *textArea = [self.questionWidgets objectAtIndex:0];
                 [textArea setFrame:CGRectMake(CELL_PADDING, 
-                                              questionLabel.frame.origin.y + questionLabel.frame
+                                              self.questionLabel.frame.origin.y + self.questionLabel.frame
                                               .size.height + 2*CELL_ELEMENT_PADDING, 
                                               contentRect.size.width - 2*CELL_PADDING, 
                                               2*WIDGET_HEIGHT)];
@@ -139,9 +138,9 @@
                 break;
             case TEXTFIELD:
             {
-                UIView *textField = [questionWidgets objectAtIndex:0];
+                UIView *textField = [self.questionWidgets objectAtIndex:0];
                 [textField setFrame:CGRectMake(CELL_PADDING,
-                                               questionLabel.frame.origin.y + questionLabel.frame
+                                               self.questionLabel.frame.origin.y + self.questionLabel.frame
                                                .size.height + 2*CELL_ELEMENT_PADDING, 
                                                contentRect.size.width - 2*CELL_PADDING, 
                                                WIDGET_HEIGHT)];
@@ -150,9 +149,9 @@
                 break;
             case RADIO:
             {
-                UIView *radioGroup = [questionWidgets objectAtIndex:0];
+                UIView *radioGroup = [self.questionWidgets objectAtIndex:0];
                 [radioGroup setFrame:CGRectMake(CELL_PADDING, 
-                                                questionLabel.frame.origin.y + questionLabel.frame
+                                                self.questionLabel.frame.origin.y + self.questionLabel.frame
                                                 .size.height + 2*CELL_ELEMENT_PADDING, 
                                                 contentRect.size.width - 2*CELL_PADDING, 
                                                 WIDGET_HEIGHT)];
@@ -163,11 +162,11 @@
             {
                 int boxCount = 0;
                 // layout for the option views.
-                for ( UIView *widget in questionWidgets ) {
+                for ( UIView *widget in self.questionWidgets ) {
                     if ( [widget isKindOfClass:[UILabel class]] ) {
                         [widget setFrame:CGRectMake(CELL_PADDING, 
                                                     (widget.tag-1)*(CELL_ELEMENT_PADDING + WIDGET_HEIGHT)
-                                                    + questionLabel.frame.origin.y + questionLabel.frame.size.height + 2*CELL_ELEMENT_PADDING,
+                                                    + self.questionLabel.frame.origin.y + self.questionLabel.frame.size.height + 2*CELL_ELEMENT_PADDING,
                                                     (contentRect.size.width - 2*CELL_PADDING)/2, 
                                                     WIDGET_HEIGHT)];
                     }
@@ -175,7 +174,7 @@
                         [widget setFrame:CGRectMake((contentRect.size.width - 2*CELL_PADDING)/2
                                                     + CELL_ELEMENT_PADDING, 
                                                     ((-widget.tag)-1)*(CELL_ELEMENT_PADDING + WIDGET_HEIGHT)
-                                                    + questionLabel.frame.origin.y + questionLabel.frame.size.height + 2*CELL_ELEMENT_PADDING,
+                                                    + self.questionLabel.frame.origin.y + self.questionLabel.frame.size.height + 2*CELL_ELEMENT_PADDING,
                                                     (contentRect.size.width - 2*CELL_PADDING)/2 
                                                     - CELL_ELEMENT_PADDING, 
                                                     WIDGET_HEIGHT)];
@@ -188,23 +187,51 @@
                 break;
         }
         
+        if ( ! isExpanded ) {
+            self.contentView.frame = CGRectMake(self.contentView.frame.origin.x,
+                                                self.contentView.frame.origin.y,
+                                                self.contentView.frame.size.width,
+                                                questionLabelSize.height + 2*CELL_PADDING);
+        } else {
+            self.contentView.frame = CGRectMake(self.contentView.frame.origin.x,
+                                                self.contentView.frame.origin.y,
+                                                self.contentView.frame.size.width,
+                                                _expandedHeight);
+        }
     }
-    
-    [self.containerView setFrame:CGRectMake(0, 0, self.contentView.frame.size.width, self.contentView.frame.size.height)];
-    
 }
 
 - (void)expand {
-    for ( UIView *widget in questionWidgets ) {
+    if ( isExpanded )
+        return;
+    
+    for ( UIView *widget in self.questionWidgets ) {
         [widget setHidden:NO];
     }
+
+    isExpanded = YES;
+}
+
+- (void)hideWidgets {
+    for ( UIView *widget in self.questionWidgets ) {
+        [widget setHidden:YES];
+    }
+    [timer invalidate];
 }
 
 - (void)contract {
-    for ( UIView *widget in questionWidgets ) {
-        [widget setHidden:YES];
+    if (! isExpanded )
+        return;
+    
+    timer = [NSTimer scheduledTimerWithTimeInterval:ACCORDION_TIME
+                                             target:self
+                                           selector:@selector(hideWidgets)
+                                           userInfo:nil
+                                            repeats:NO];
+    for ( UIView *widget in self.questionWidgets ) {
         [widget resignFirstResponder];
     }
+    isExpanded = NO;
 }
 
 /*
@@ -216,22 +243,22 @@
     switch(self.field.type) {
         case TEXTAREA:
         {
-            UITextView *textView = (UITextView*)[self.questionWidgets objectAtIndex:0];
+            UITextView *textView = (UITextView*)self.questionWidgets[0];
             if ( [textView hasText] )
-                return [NSArray arrayWithObject:textView.text];
+                return @[textView.text];
         }
         case TEXTFIELD:
         {
-            UITextField *textField = (UITextField*)[self.questionWidgets objectAtIndex:0];
+            UITextField *textField = (UITextField*)self.questionWidgets[0];
             if ( [textField hasText] )
-                return [NSArray arrayWithObject:textField.text];
+                return @[textField.text];
         }
             break;
         case RADIO:
         {
-            UISegmentedControl *radioGroup = (UISegmentedControl*)[self.questionWidgets objectAtIndex:0];
+            UISegmentedControl *radioGroup = (UISegmentedControl*)self.questionWidgets[0];
             if(radioGroup.selectedSegmentIndex != UISegmentedControlNoSegment) {
-                return [NSArray arrayWithObject:[radioGroup titleForSegmentAtIndex:radioGroup.selectedSegmentIndex]];
+                return @[[radioGroup titleForSegmentAtIndex:radioGroup.selectedSegmentIndex]];
             }
         }
             break;
@@ -263,7 +290,7 @@
  * resign keyboard on 'return'
  */
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [(UITextView*)[self.questionWidgets objectAtIndex:0] resignFirstResponder];
+    [(UITextView*)self.questionWidgets[0] resignFirstResponder];
     return NO;
 }
 
@@ -272,7 +299,7 @@
  */
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
     if ( [text isEqualToString:@"\n"] ) {
-        [(UITextView*)[self.questionWidgets objectAtIndex:0] resignFirstResponder];
+        [(UITextView*)self.questionWidgets[0] resignFirstResponder];
         return NO;
     }
     return YES;

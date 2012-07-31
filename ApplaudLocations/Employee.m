@@ -9,13 +9,6 @@
 #import "Employee.h"
 
 @implementation Employee
-@synthesize firstName = _firstName;
-@synthesize lastName = _lastName;
-@synthesize bio = _bio;
-@synthesize imageURL = _imageURL;
-@synthesize ratingDimensions = _ratingDimensions;
-@synthesize employee_id = _employee_id;
-@synthesize ratingProfileTitle = _ratingProfileTitle;
 
 -(id)initWithFirstName:(NSString *)name
               lastName:(NSString *)lastname

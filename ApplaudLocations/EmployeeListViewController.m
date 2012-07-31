@@ -18,19 +18,12 @@
 
 @implementation EmployeeListViewController
 
-@synthesize appDelegate = _appDelegate;
-@synthesize employeeArray = _employeeArray;
-@synthesize tableView = _tableView;
-@synthesize navigationController = _navigationController;
-@synthesize employeeControllers = _employeeControllers;
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         [self setTitle:@"Employees"];
         _employeeControllers = [[NSMutableArray alloc] init];
-        NSLog(@"elvc registering for notification");
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(notificationReceived:)
                                                      name:@"BUSINESS_SET"
@@ -43,8 +36,6 @@
     if([notification.name isEqualToString:@"BUSINESS_SET"]) {
         [self getEmployees];
         self.navigationController.navigationBar.tintColor = self.appDelegate.currentBusiness.primaryColor;
-        self.tableView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
-        self.view.opaque = NO;
         self.view.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
     }
 }
@@ -58,6 +49,7 @@
     [super viewDidLoad];
     
     // Do any additional setup after loading the view from its nib.
+    self.tableView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:BACK_BUTTON_TITLE
                                                                              style:UIBarButtonItemStylePlain
                                                                             target:self
@@ -70,12 +62,13 @@
     [super viewDidUnload];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    return UIInterfaceOrientationIsPortrait(interfaceOrientation);
 }
 
 #pragma mark -
-#pragma mark - Table view data source/delegation
+#pragma mark Table view data source/delegation
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -97,25 +90,27 @@
     if ( self.employeeArray.count == 0 )
         cellIdentifier = cellDefaultIdentifier;
     else {
-        employeeName = [[self.employeeArray objectAtIndex:indexPath.row] description];
+        employeeName = [self.employeeArray[indexPath.row] description];
         cellIdentifier = employeeName;
     }
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
     if ( nil == cell ) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
+        cell = [[EmployeeCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
     
         // Configure the cell...
         if(self.employeeArray.count == 0) {
             cell.textLabel.numberOfLines = 0;
             cell.textLabel.text = NO_EMPLOYEES_MESSAGE;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            
+            cell.contentView.backgroundColor = [UIColor whiteColor];
         }
         else {
-            [cell.textLabel setText:[[self.employeeArray objectAtIndex:indexPath.row] description]];
-            [cell.imageView setImageWithURL:[(Employee*)[self.employeeArray objectAtIndex:indexPath.row] imageURL]
+            [cell.textLabel setText:[self.employeeArray[indexPath.row] description]];
+            [cell.imageView setImageWithURL:[(Employee*)self.employeeArray[indexPath.row] imageURL]
                            placeholderImage:[UIImage imageNamed:@"blankPerson.jpg"]];
+            cell.imageView.layer.cornerRadius = 7.0f;
+            cell.imageView.layer.masksToBounds = YES;
             tableView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
         }
         cell.textLabel.font = [UIFont boldSystemFontOfSize:TITLE_SIZE];
@@ -137,31 +132,40 @@
         // Don't do anything.
         return;
     }
-    Employee *employee = [self.employeeArray objectAtIndex:indexPath.row];
+    Employee *employee = self.employeeArray[indexPath.row];
     EmployeeViewController *evc;
     if([[self.employeeControllers objectAtIndex:indexPath.row] isKindOfClass:[NSNull class]]) {
         evc = [[EmployeeViewController alloc] initWithEmployee:employee];
         evc.appDelegate = self.appDelegate;
-        [self.employeeControllers replaceObjectAtIndex:indexPath.row withObject:evc];
+        self.employeeControllers[indexPath.row] = evc;
         evc.view.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
         evc.title = [NSString stringWithFormat:@"%@ %@",employee.firstName,employee.lastName];
     }
     else {
-        evc = [self.employeeControllers objectAtIndex:indexPath.row];
+        evc = self.employeeControllers[indexPath.row];
     }
     [self.navigationController pushViewController:evc animated:YES];
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Set shape and color
+    cell.backgroundColor = [UIColor whiteColor];
+    cell.contentView.backgroundColor = [UIColor whiteColor];
+    cell.contentView.layer.cornerRadius = 7.0f;
+    
+    // Some nice visual FX
+    cell.contentView.layer.shadowRadius = 5.0f;
+    cell.contentView.layer.shadowOpacity = 0.2f;
+    cell.contentView.layer.shadowOffset = CGSizeMake(1, 0);
 }
 
 #pragma mark -
 #pragma mark Other Methods
 
 - (void)getEmployees {
-    NSArray *keyArray = [[NSArray alloc] initWithObjects:@"business_id", nil];
-    NSArray *valArray = [[NSArray alloc] initWithObjects:@(self.appDelegate.currentBusiness.business_id), nil];
-    NSDictionary *dict = [[NSDictionary alloc] initWithObjects:valArray forKeys:keyArray];
-    [ConnectionManager serverRequest:@"POST" withParams:dict url:EMPLOYEES_URL callback:^(NSData *dat) {
+    NSDictionary *dict = @{@"business_id": @(self.appDelegate.currentBusiness.business_id)};
+    [ConnectionManager serverRequest:@"POST" withParams:dict url:EMPLOYEES_URL callback:^(NSHTTPURLResponse *r, NSData *dat) {
         NSLog(@"Employee JSON object is......");
-        NSLog(@"%@", [[NSString alloc] initWithData:dat encoding:NSUTF8StringEncoding]);
         NSError *err = [[NSError alloc] init]; // for debugging, probably not needed anymore
         NSArray *employeeData = [NSJSONSerialization JSONObjectWithData:dat
                                                                 options:NSJSONReadingAllowFragments
@@ -170,23 +174,19 @@
         
         // employeeArray is a list of dictionaries, each containing information about an employee
         for ( NSDictionary *dict in employeeData ) {
-            NSLog(@"Employee with id:%d",(int)[[dict objectForKey:@"id"] intValue]);
             NSString *imageURLString = @"";
-            if ( ![[dict objectForKey:@"image"] isEqualToString:@""] ) {
+            if ( ![dict[@"image"] isEqualToString:@""] ) {
                 imageURLString = [[NSString alloc] initWithFormat:@"%@%@",
-                                  SERVER_URL, [dict objectForKey:@"image"]];
+                                  SERVER_URL, dict[@"image"]];
             }
             //TODO: cache images
-            Employee *e = [[Employee alloc] initWithFirstName:[dict objectForKey:@"first_name"]
-                                                     lastName:[dict objectForKey:@"last_name"]
-                                                          bio:[dict objectForKey:@"bio"]
+            Employee *e = [[Employee alloc] initWithFirstName:dict[@"first_name"]
+                                                     lastName:dict[@"last_name"]
+                                                          bio:dict[@"bio"]
                                                      imageURL:[[NSURL alloc] initWithString:imageURLString]
-                                                 profileTitle:[[dict objectForKey:@"ratings"]
-                                                               objectForKey:@"rating_title"]
-                                                   dimensions:[[dict objectForKey:@"ratings"]
-                                                               objectForKey:@"dimensions"]
-                                                  employee_id:[[dict objectForKey:@"id"] intValue]];
-            NSLog(@"Employee image:%@",e.imageURL);
+                                                 profileTitle:dict[@"ratings"][@"rating_title"]
+                                                   dimensions:dict[@"ratings"][@"dimensions"]
+                                                  employee_id:[dict[@"id"] intValue]];
             // employeeArray will hold all the employees
             [self.employeeArray addObject:e];
             

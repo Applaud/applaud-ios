@@ -10,7 +10,6 @@
 #import "BusinessLocationsTracker.h"
 #import "NFItemViewController.h"
 #import "NFItem.h"
-#import "UIImage+Scale.h"
 
 @class AppDelegate;
 

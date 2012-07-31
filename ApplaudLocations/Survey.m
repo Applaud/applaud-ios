@@ -9,11 +9,6 @@
 #import "Survey.h"
 
 @implementation Survey
-@synthesize title = _title;
-@synthesize summary = _summary;
-@synthesize fields = _fields;
-@synthesize answers = _answers;
-@synthesize business_id = _business_id;
 
 -(id) initWithTitle:(NSString *)title summary:(NSString *)summary business_id:(int)business_id fields:(NSMutableArray *)fields {
     if(self = [super init]) {
@@ -26,7 +21,6 @@
         for(i = 0; i < _fields.count; i++) {
             [_answers addObject:[[NSNull alloc] init]];
         }
-        NSLog(@"Fields: %d, Answers: %d", self.fields.count, self.answers.count);
     }
     return self;
 }

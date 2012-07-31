@@ -19,6 +19,5 @@
 - (IBAction)employeeView:(id)sender;
 - (IBAction)questionsView:(id)sender;
 - (IBAction)newsfeedView:(id)sender;
-- (IBAction)feedbackView:(id)sender;
 
 @end

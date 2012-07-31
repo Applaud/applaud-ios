@@ -17,14 +17,6 @@
 #import <QuartzCore/QuartzCore.h>
 
 @implementation EmployeeViewController
-@synthesize appDelegate = _appDelegate;
-@synthesize submitButton;
-@synthesize employee = _employee;
-@synthesize scrollView = _scrollView;
-@synthesize image, nameLabel, titleLabel, bioContentLabel, bioLabel;
-@synthesize tableView = _tableView;
-@synthesize ratingDimensions = _ratingDimensions;
-
 
 - (id)initWithEmployee:(Employee *)e {
     if ( self = [super init] ) {
@@ -154,7 +146,6 @@
                                                                   + CELL_ELEMENT_PADDING
                                                                   + 2*CELL_PADDING) + 2 * CELL_PADDING + TITLE_LABEL_HEIGHT + CELL_GAP + 20;
 
-    NSLog(@"Profile view: %f at origin and %f for height", self.profileView.frame.origin.y, self.profileView.frame.size.height);
     [self.tableView setFrame:CGRectMake(0, 
                                         self.profileView.frame.origin.y + self.profileView.frame.size.height - CELL_GAP - 15,
                                         self.view.frame.size.width, 
@@ -186,14 +177,14 @@
  */
 - (void)viewWillDisappear:(BOOL)animated {
     UINavigationController *parent = (UINavigationController *)self.parentViewController;
-    UITableView *tableView = [[parent.viewControllers objectAtIndex:0] tableView];
+    UITableView *tableView = [parent.viewControllers[0] tableView];
     NSIndexPath *path = [tableView indexPathForSelectedRow];
     [tableView deselectRowAtIndexPath:path animated:YES];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    return UIInterfaceOrientationIsPortrait(interfaceOrientation);
 }
 
 #pragma mark -
@@ -228,7 +219,7 @@
     NSDictionary* userInfo = [n userInfo];
     
     // get the size of the keyboard
-    CGSize keyboardSize = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    CGSize keyboardSize = [userInfo[UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     
     CGPoint offsetPoint = selectedTextRect.origin;
     offsetPoint.x = 0;
@@ -299,19 +290,19 @@
                                                                                  self.tableView.frame.size.width/2
                                                                                  - CELL_PADDING - VIEW_PADDING,
                                                                                  TITLE_LABEL_HEIGHT)];
-        ratedDimensionLabel.text = [[self.employee.ratingDimensions objectAtIndex:indexPath.row-1] objectForKey:@"title"];
+        ratedDimensionLabel.text = self.employee.ratingDimensions[indexPath.row-1][@"title"];
         [cell.contentView addSubview:ratedDimensionLabel];
         
         // Add correct widget for this rateddimension
         UIView *responseWidget = nil;
-        int responseWidgetTag = [[[self.employee.ratingDimensions objectAtIndex:indexPath.row-1] objectForKey:@"id"] intValue];
+        int responseWidgetTag = [self.employee.ratingDimensions[indexPath.row-1][@"id"] intValue];
         CGRect responseFrame = CGRectMake(CELL_PADDING,
                                           CELL_PADDING + TITLE_LABEL_HEIGHT + CELL_ELEMENT_PADDING,
                                           self.tableView.frame.size.width
                                           - 2*CELL_PADDING - 2*VIEW_PADDING,
                                           RATING_FIELD_HEIGHT);
         
-        if ( [[[self.employee.ratingDimensions objectAtIndex:indexPath.row-1] objectForKey:@"is_text"] boolValue] ) {
+        if ( [self.employee.ratingDimensions[indexPath.row-1][@"is_text"] boolValue] ) {
             UITextField *textField = [[UITextField alloc] initWithFrame:responseFrame];
             [textField setReturnKeyType:UIReturnKeyDone];
             [textField setDelegate:self];
@@ -326,7 +317,7 @@
             [slider setMaximumValue:5.0f];
             [slider addTarget:self action:@selector(sliderValueChanged:)
                forControlEvents:UIControlEventValueChanged];
-            [sliderTable setObject:slider forKey:[[NSNumber numberWithInt:responseWidgetTag] description]];
+            sliderTable[[@(responseWidgetTag) description]] = slider;
             responseWidget = slider;
             
             // Add a label to show value of the slider
@@ -337,8 +328,7 @@
             sliderValue.textAlignment = UITextAlignmentRight;
             sliderValue.text = NO_RATING_TEXT;
             sliderValue.tag = responseWidgetTag;
-            [sliderLabelTable setObject:sliderValue forKey:[[NSNumber numberWithInt:responseWidgetTag] description]];
-            
+            sliderLabelTable[[@(responseWidgetTag) description]] = sliderValue;
             // Add a button to clear the rating, to be activated when the slider has been touched
             UIButton *clearButton = [[UIButton alloc] initWithFrame:CGRectMake(self.tableView.frame.size.width - CELL_PADDING - 35,
                                                                                CELL_PADDING + 8,
@@ -347,14 +337,14 @@
             [clearButton setBackgroundImage:[UIImage imageNamed:@"cancelup.png"] forState:UIControlStateNormal];
             [clearButton addTarget:self action:@selector(clearButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
             clearButton.tag = responseWidgetTag;
-            [clearButtonTable setObject:clearButton forKey:[[NSNumber numberWithInt:responseWidgetTag] description]];
+            clearButtonTable[[@(responseWidgetTag) description]] = clearButton;
            
             [cell.contentView addSubview:clearButton];
             [cell.contentView addSubview:slider];
             [cell.contentView addSubview:sliderValue];
             
             // Note that the slider is untouched (i.e., inactive)
-            [activityTable setObject:[NSNumber numberWithBool:NO] forKey:[[NSNumber numberWithInt:responseWidgetTag] description]];
+            activityTable[[@(responseWidgetTag) description]] = @(NO);
         }
         // Set the tag of the widget based on the ID of the RatedDimension
         responseWidget.tag = responseWidgetTag;
@@ -373,40 +363,37 @@
 /*
  * This gets called for a clear button pressed.
  */
-- (IBAction)clearButtonPressed:(id)sender {
+- (void)clearButtonPressed:(id)sender {
     UIButton *clearButton = (UIButton*)sender;
-    UILabel *valueLabel = (UILabel*)[sliderLabelTable objectForKey:[[NSNumber numberWithInt:clearButton.tag] description]];
-    UISlider *slider = (UISlider*)[sliderTable objectForKey:[[NSNumber numberWithInt:clearButton.tag] description]];
-    
+    UILabel *valueLabel = (UILabel *)sliderLabelTable[[@(clearButton.tag) description]];
+    UISlider *slider = (UISlider *)sliderTable[[@(clearButton.tag) description]];
     // Reset the slider
     [slider setValue:0.0f animated:YES];
-    NSLog(@"Slider value is %f",slider.value);
     // Reset the value label
     [valueLabel setText:NO_RATING_TEXT];
     [valueLabel setTextColor:[UIColor blackColor]];
     
     // Note that the slider is no longer active
-    [activityTable setObject:[NSNumber numberWithBool:NO] forKey:[[NSNumber numberWithInt:valueLabel.tag] description]];
+    activityTable[[@(valueLabel.tag) description]] = @(NO);
 }
 
 /*
  * This gets when when a rating slider is touched
  */
-- (IBAction)sliderValueChanged:(id)sender {
+- (void)sliderValueChanged:(id)sender {
     // Set value on corresponding label
     UISlider *slider = (UISlider*)sender;
-    UILabel *valueLabel = (UILabel*)[sliderLabelTable objectForKey:[[NSNumber numberWithInt:slider.tag] description]];
+    UILabel *valueLabel = (UILabel *)sliderLabelTable[[@(slider.tag) description]];
     valueLabel.text = [NSString stringWithFormat:@"%1.1f",slider.value];
     
     // Change text color
     float red = (5.0f - slider.value)/5.0f;
     float green = slider.value/5.6f;
     float blue = 0.0f;
-    NSLog(@"red: %f green: %f blue: %f", red, green, blue);
     valueLabel.textColor = [UIColor colorWithRed:red green:green blue:blue alpha:1.0f];
 
     // Note that the slider is active
-    [activityTable setObject:[NSNumber numberWithBool:YES] forKey:[[NSNumber numberWithInt:valueLabel.tag] description]];
+    activityTable[[@(valueLabel.tag) description]] = @(YES);
 }
 
 - (void) submitButtonPressed:(UIButton *)sender {
@@ -415,10 +402,11 @@
 
 - (void)submit {
     // Basic employee information: first name, last name, id
-    NSMutableDictionary *em = [[NSMutableDictionary alloc] init];
-    [em setObject:self.employee.firstName forKey:@"first_name"];
-    [em setObject:self.employee.lastName forKey:@"last_name"];
-    [em setObject:[NSNumber numberWithInt: self.employee.employee_id] forKey:@"id"];
+    // NSDictionary literals are immutable...
+    NSMutableDictionary *em = [[NSMutableDictionary alloc] initWithDictionary:
+                               @{@"first_name": self.employee.firstName,
+                               @"last_name": self.employee.lastName,
+                               @"id": @(self.employee.employee_id)}];
     
     // Build dictionary for ratings
     NSMutableDictionary *ratings = [[NSMutableDictionary alloc] init];
@@ -427,20 +415,18 @@
             continue;
         if([view isKindOfClass:[UISlider class]]){
             UISlider *slider = (UISlider *)view;
-            [ratings setObject:[NSNumber numberWithFloat:slider.value*5.0]
-                        forKey:[[NSNumber numberWithInt:slider.tag] description]];
+            ratings[[@(slider.tag) description]] = @(slider.value*5.0);
         }
         else if([view isKindOfClass:[UITextField class]]) {
             UITextField *field = (UITextField *)view;
-            [ratings setObject:field.text
-                        forKey:[[NSNumber numberWithInt:field.tag] description]];
+            ratings[[@(field.tag) description]] = field.text;
         }
     }
     
     // Build the final dictionary to send to the server in JSON
-    NSMutableDictionary *ret = [[NSMutableDictionary alloc] init];
-    [ret setObject:em forKey:@"employee"];
-    [ret setObject:ratings forKey:@"ratings"];
+    NSMutableDictionary *ret = [[NSMutableDictionary alloc] initWithDictionary:
+                                @{@"employee": em,
+                                @"ratings": ratings}];
     
     // Send request to the server
     [ConnectionManager serverRequest:@"POST" withParams:ret url:EVALUATE_URL callback:nil];
@@ -456,7 +442,7 @@
     [(UITabBarController *)self.appDelegate.window.rootViewController setSelectedIndex:4];
     UINavigationController *parent = (UINavigationController *)self.parentViewController;
     [parent popViewControllerAnimated:NO];
-    EmployeeListViewController *elvc = [parent.viewControllers objectAtIndex:0];
+    EmployeeListViewController *elvc = parent.viewControllers[0];
     // Are we nulling out the employee view here???
     [elvc.employeeControllers replaceObjectAtIndex:[[elvc.tableView indexPathForSelectedRow] row] withObject:[[NSNull alloc] init]];
     [elvc.tableView deselectRowAtIndexPath:[elvc.tableView indexPathForSelectedRow] animated:NO];
@@ -466,7 +452,7 @@
 # pragma mark Other Methods
 
 - (BOOL)sliderHasValue:(UISlider*)slider {
-    return [[activityTable objectForKey:[[NSNumber numberWithInt:slider.tag] description]] boolValue];
+    return [activityTable[[@(slider.tag) description]] boolValue];
 }
 
 @end

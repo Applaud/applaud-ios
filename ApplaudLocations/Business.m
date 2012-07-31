@@ -9,20 +9,11 @@
 #import "Business.h"
 
 @implementation Business
-@synthesize name = _name;
-@synthesize business_id = _business_id;
-@synthesize goog_id = _goog_id;
-@synthesize latitude = _latitude;
-@synthesize longitude = _longitude;
-@synthesize primaryColor = _primaryColor;
-@synthesize secondaryColor = _secondaryColor;
-@synthesize types = _types;
 
 - (id)initWithName:(NSString *)name goog_id:(NSString *)goog_id
           latitude:(NSNumber *) latitude longitude:(NSNumber *) longitude
         primaryColor:(NSString *)primaryColor secondaryColor:(NSString *)secondaryColor
         types: (NSDictionary *)types {
-    NSLog(@"%@   %@", primaryColor, secondaryColor);
     if(self = [super init]) {
         _name = name;
         _goog_id = goog_id;
@@ -48,7 +39,6 @@
     NSString *red = [hexString substringWithRange:NSMakeRange(1, 2)];
     NSString *green = [hexString substringWithRange:NSMakeRange(3, 2)];
     NSString *blue = [hexString substringWithRange:NSMakeRange(5, 2)];
-    NSLog(@"Colors?: %@ %@ %@ %@", hexString, red, green, blue);
     unsigned int redVal;
     unsigned int greenVal;
     unsigned int blueVal;

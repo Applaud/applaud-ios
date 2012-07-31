@@ -6,17 +6,13 @@
 //  Copyright (c) 2012 Applaud, Inc. All rights reserved.
 //
 
+#import <QuartzCore/QuartzCore.h>
+
 #import "QuestionsViewController.h"
 #import "SurveyDisplayConstants.h"
 #import "SurveyAccordionCell.h"
 
 @implementation QuestionsViewController
-
-@synthesize appDelegate = _appDelegate;
-@synthesize survey = _survey;
-@synthesize surveyControllers = _surveyControllers; // For caching SurveyFieldViewControllers.
-@synthesize questionsTable = _questionsTable;
-@synthesize navigationController = _navigationController;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -31,6 +27,11 @@
     return self;
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    return UIInterfaceOrientationIsPortrait(interfaceOrientation);
+}
+
 -(void)notificationReceived:(NSNotification *)notification {
     if([notification.name isEqualToString:@"BUSINESS_SET"]) {
         [self getSurveys];
@@ -38,7 +39,6 @@
         self.navigationController.navigationBar.tintColor = self.appDelegate.currentBusiness.primaryColor;
         self.questionsTable.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
         self.view.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
-        NSLog(@"color!: %@", self.appDelegate.currentBusiness.primaryColor);
     }
 }
 
@@ -89,14 +89,7 @@
     
     [super viewDidUnload];
     // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
-
-//- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-//{
-//    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-//    return UIInterfaceOrientationIsLandscape(interfaceOrientation);
-//}
 
 #pragma mark -
 #pragma mark Table View data source methods
@@ -151,21 +144,40 @@
     
     if ( nil == cell ) {
         cell = [[SurveyAccordionCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                          reuseIdentifier:[[self.survey.fields objectAtIndex:indexPath.section] label]
-                                                    field:[self.survey.fields objectAtIndex:indexPath.section]];
+                                          reuseIdentifier:[self.survey.fields[indexPath.section] label]
+                                                    field:self.survey.fields[indexPath.section]];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
         if ( indexPath.section == 0 ) {
             UIImageView *sytImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"shareyourthoughts"]];
-            sytImage.frame = CGRectMake(self.view.frame.size.width - CELL_MARGIN - CELL_PADDING - sytImage.frame.size.width,
+            sytImage.frame = CGRectMake(self.view.frame.size.width - CELL_MARGIN - CELL_PADDING - sytImage.frame.size.width - 10,
                                         CELL_PADDING - 3,
                                         sytImage.frame.size.width,
                                         sytImage.frame.size.height);
             [cell.contentView addSubview:sytImage];
-            
             [cell expand];
+            
+            cell.containerView.frame = CGRectMake(cell.containerView.frame.origin.x,
+                                                  cell.containerView.frame.origin.y,
+                                                  cell.frame.size.width - 2*CELL_PADDING,
+                                                  cell.expandedHeight + 2*CELL_PADDING);
+            
+            [cell layoutSubviews];
+        } else {
+            CGSize questionLabelSize = [cell.questionLabel.text
+                                        sizeWithFont:[UIFont boldSystemFontOfSize:TITLE_SIZE]
+                                        constrainedToSize:CGSizeMake(cell.frame.size.width - 2*CELL_PADDING,400)
+                                        lineBreakMode:UILineBreakModeWordWrap];
+            cell.containerView.frame = CGRectMake(0, 0,
+                                                  cell.frame.size.width - 2*CELL_PADDING,
+                                                  questionLabelSize.height + 2*CELL_PADDING);
+            
             [cell layoutSubviews];
         }
+        cell.contentView.layer.shadowPath = [[UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0,
+                                                                                                cell.frame.size.width - 2*CELL_MARGIN,
+                                                                                                cell.contentView.frame.size.height)
+                                                                        cornerRadius:5.0f] CGPath];
+        cell.backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
     }
     return cell;
 }
@@ -194,7 +206,7 @@
     
     // Showing the content of the question upon selection
     if ( [self cellIsSelectedAtIndexPath:indexPath] ) {
-        return [[questionSelections objectAtIndex:indexPath.section] floatValue];
+        return [questionSelections[indexPath.section] floatValue];
     }
     // Showing just the title and whether or not the question has been answered
     else {
@@ -208,21 +220,19 @@
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     SurveyAccordionCell *acccell = (SurveyAccordionCell*)cell;
-    NSLog(@"Label for cell was %@",acccell.questionLabel.text);
-    NSLog(@"Number of cells: %d",self.questionsTable.numberOfSections);
     
     // Set color and shape
-    cell.backgroundColor = [UIColor whiteColor];
-    cell.contentView.backgroundColor = [UIColor whiteColor];
-    cell.contentView.layer.cornerRadius = 7.0f;
-    cell.contentView.layer.borderWidth = 1.0f;
-    cell.contentView.layer.borderColor = [[UIColor grayColor] CGColor];
-    [[(SurveyAccordionCell*)cell containerView].layer setMasksToBounds:YES];
+    acccell.backgroundColor = [UIColor whiteColor];
+    acccell.contentView.backgroundColor = [UIColor whiteColor];
+    acccell.contentView.layer.cornerRadius = CELL_CORNER_RADIUS;
+    acccell.contentView.layer.borderWidth = 1.0f;
+    acccell.contentView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+    [[acccell containerView].layer setMasksToBounds:YES];
     
     // Some nice visual FX
-    cell.contentView.layer.shadowRadius = 5.0f;
-    cell.contentView.layer.shadowOpacity = 0.2f;
-    cell.contentView.layer.shadowOffset = CGSizeMake(1, 0);
+    acccell.contentView.layer.shadowRadius = 5.0f;
+    acccell.contentView.layer.shadowOpacity = 0.9f;
+    acccell.contentView.layer.shadowOffset = CGSizeMake(1, 0);
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -234,20 +244,16 @@
     
     // Collapse all questions
     for ( int i=0; i<self.survey.fields.count; i++ ){
-        SurveyAccordionCell *cell = (SurveyAccordionCell*)[self.questionsTable 
-                                                           cellForRowAtIndexPath:
-                                                           [NSIndexPath indexPathForRow:0 
-                                                                              inSection:i]];
+        // Don't collapse cell we just selected
+        if ( i == indexPath.section )
+            continue;
         
-        [cell contract];
-               
-        [questionSelections replaceObjectAtIndex:i withObject:[NSNumber numberWithBool:NO]];
+        [self collapseCellAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:i]];
     }
     
     // Note selected state of currently selected question by putting adjusted height (expanded height)
     // into the questionSelections array.
-    [questionSelections replaceObjectAtIndex:indexPath.section 
-                                  withObject:[NSNumber numberWithFloat:[cell expandedHeight]]];
+    questionSelections[indexPath.section] = @([cell expandedHeight]);
 
     // Perform animation
     [self.questionsTable beginUpdates];
@@ -255,6 +261,36 @@
     
     // Show question body
     [cell expand];
+    [cell layoutSubviews];
+    
+    // Animate shadow
+    CABasicAnimation *theAnimation = [CABasicAnimation animationWithKeyPath:@"shadowPath"];
+
+    // Some nice visual FX
+    theAnimation.duration = ACCORDION_TIME;
+    theAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
+    CGRect expandedRect = CGRectMake(0,
+                                     0,
+                                     cell.frame.size.width - 2*CELL_MARGIN,
+                                     [cell expandedHeight]);
+    cell.contentView.layer.shadowPath = [[UIBezierPath bezierPathWithRoundedRect:expandedRect cornerRadius:5.0f] CGPath];
+    [cell.contentView.layer addAnimation:theAnimation forKey:@"shadowPath"];
+
+    [UIView animateWithDuration:ACCORDION_TIME
+                          delay:0.0
+                        options:UIViewAnimationCurveLinear
+                     animations:^{
+                         cell.containerView.frame = CGRectMake(cell.containerView.frame.origin.x,
+                                                               cell.containerView.frame.origin.y,
+                                                               cell.frame.size.width - 2*CELL_PADDING,
+                                                               cell.expandedHeight);
+                     } completion:^(BOOL finished) {
+                         if ( finished )
+                             cell.containerView.frame = CGRectMake(cell.containerView.frame.origin.x,
+                                                                   cell.containerView.frame.origin.y,
+                                                                   cell.frame.size.width - 2*CELL_PADDING,
+                                                                   cell.expandedHeight);
+                     }];
 }
 
 #pragma mark -
@@ -276,7 +312,7 @@
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationBeginsFromCurrentState:YES];
 
-    [UIView setAnimationDuration:SCROLL_LENGTH];
+    [UIView setAnimationDuration:SCROLL_TIME];
     [self.view setFrame:viewFrame];
     [UIView commitAnimations];
     
@@ -301,7 +337,7 @@
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationBeginsFromCurrentState:YES];
     
-    [UIView setAnimationDuration:SCROLL_LENGTH];
+    [UIView setAnimationDuration:SCROLL_TIME];
     [self.view setFrame:viewFrame];
     [UIView commitAnimations];
     
@@ -317,19 +353,12 @@
 #pragma mark Other Methods
 
 -(void)getSurveys {
-//    NSDictionary *dict = [[NSDictionary alloc]
-//                          initWithObjectsAndKeys: self.appDelegate.currentBusiness.goog_id],
-//                          @"goog_id",
-//                          nil];
-    NSArray *keyArray = [[NSArray alloc] initWithObjects:@"business_id", nil];
-    NSArray *valArray = [[NSArray alloc] initWithObjects:@(self.appDelegate.currentBusiness.business_id), nil];
-    NSDictionary *dict = [[NSDictionary alloc] initWithObjects:valArray forKeys:keyArray];
-                            
+    NSDictionary *dict = @{@"business_id": @(self.appDelegate.currentBusiness.business_id)};
     
     [ConnectionManager serverRequest:@"POST"
                             withParams:dict
                                  url:SURVEY_URL
-                            callback: ^(NSData *d) {
+                            callback: ^(NSHTTPURLResponse *r, NSData *d) {
                                 [self handleSurveyData:d];
                             }];
 }
@@ -342,8 +371,6 @@
  */
 - (void)handleSurveyData:(NSData *)d {
     // Grabbing the JSON data from the server's response
-    NSLog(@"Survey data is......");
-    NSLog(@"%@", [[NSString alloc] initWithData:d encoding:NSUTF8StringEncoding]);
     NSError *e = [[NSError alloc] init];
     NSDictionary *surveyData = [NSJSONSerialization JSONObjectWithData:d
                                                                options:NSJSONReadingAllowFragments
@@ -352,13 +379,13 @@
     // Creating the fields of the survey
     NSMutableArray *fields = [[NSMutableArray alloc] init];
     int genFeedbackIndex = 0;
-    for ( int i=0; i<[(NSArray*)[surveyData objectForKey:@"questions"] count]; i++) {
-        NSDictionary *dict = [[surveyData objectForKey:@"questions"] objectAtIndex:i];
+    for ( int i=0; i<[(NSArray*)surveyData[@"questions"] count]; i++) {
+        NSDictionary *dict = [surveyData[@"questions"] objectAtIndex:i];
         
-        if ( [[dict objectForKey:@"general_feedback"] boolValue] )
+        if ( [dict[@"general_feedback"] boolValue] )
             genFeedbackIndex = i;
         
-        NSString *type = [dict objectForKey:@"type"];
+        NSString *type = dict[@"type"];
         QuestionType widgetType;
         if([type isEqualToString:@"TF"]) {
             widgetType = TEXTFIELD;
@@ -372,22 +399,22 @@
         else {
             widgetType = RADIO;
         }
-        SurveyField *sf = [[SurveyField alloc] initWithLabel:[dict objectForKey:@"label"]
-                                                          id:[[dict objectForKey:@"id"] intValue]
+        SurveyField *sf = [[SurveyField alloc] initWithLabel:dict[@"label"]
+                                                          id:[dict [@"id"] intValue]
                                                         type:widgetType
-                                                     options:[dict objectForKey:@"options"]
-                           ];
+                                                     options:dict[@"options"]];
         [fields addObject:sf];
     }
-    SurveyField *temp = [fields objectAtIndex:0];
+    if ( fields.count == 0 )
+        // Wait for loading to finish.
+        return;
+    SurveyField *temp = fields[0];
     [fields setObject:[fields objectAtIndex:genFeedbackIndex] atIndexedSubscript:0];
     [fields setObject:temp atIndexedSubscript:genFeedbackIndex];
-
-    NSLog(@"%@",fields.description);
     
     // Creating the survey model
-    Survey *survey = [[Survey alloc] initWithTitle:[surveyData objectForKey:@"title"]
-                                           summary:[surveyData objectForKey:@"description"]
+    Survey *survey = [[Survey alloc] initWithTitle:surveyData[@"title"]
+                                           summary:surveyData[@"description"]
                                        business_id:self.appDelegate.currentBusiness.business_id
                                             fields:fields];
 
@@ -428,30 +455,22 @@
         NSArray *response = [cell getAnswer];
         if (! response)
             response = [[NSArray alloc] init];
-        
-        NSDictionary *responseDict = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                      response, @"response",
-                                      [[self.survey.fields objectAtIndex:i] label], @"label",
-                                      [NSNumber numberWithInt:[[self.survey.fields objectAtIndex:i] id]], @"id",
-                                      nil];
+        NSDictionary *responseDict = @{@"response": response,
+                                       @"label": [self.survey.fields[i] label],
+                                       @"id": @([self.survey.fields[i] id])};
         
         [surveyAnswers addObject:responseDict];
     }
-    NSDictionary *params = [[NSDictionary alloc] initWithObjectsAndKeys:surveyAnswers, @"answers", nil];
-    
-    NSLog(@"Sending these survey responses: %@",params);
-    
+    NSDictionary *params = @{@"answers": surveyAnswers};
     [ConnectionManager serverRequest:@"POST"
                           withParams:params
                                  url:RESPONSE_URL
-                            callback:^(NSData* dat) {
+                            callback:^(NSHTTPURLResponse *r, NSData* dat) {
                                 // Collapse all table cells, but retain responses.
                                 for (int i=0; i<self.questionsTable.numberOfSections; i++) {
-                                    SurveyAccordionCell *cell = (SurveyAccordionCell*)[self.questionsTable cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:i]];
-                                    [cell contract];
-                                    [questionSelections replaceObjectAtIndex:i withObject:[NSNumber numberWithBool:NO]];
-                                    [self.questionsTable reloadData];
+                                    [self collapseCellAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:i]];
                                 }
+                                [self.questionsTable reloadData];
                             }];
     
     [[[UIAlertView alloc] initWithTitle:@"Thanks!"
@@ -469,6 +488,48 @@
 }
 
 - (BOOL)cellIsSelectedAtIndexPath:(NSIndexPath *)indexPath {
-    return ![[questionSelections objectAtIndex:indexPath.section] isEqualToNumber:[NSNumber numberWithBool:NO]];
+    return ![[questionSelections objectAtIndex:indexPath.section] isEqualToNumber:@(NO)];
+}
+
+- (void)collapseCellAtIndexPath:(NSIndexPath*)indexPath {
+    int i = indexPath.section;
+    
+    SurveyAccordionCell *cell = (SurveyAccordionCell*)[self.questionsTable
+                                                       cellForRowAtIndexPath:
+                                                       [NSIndexPath indexPathForRow:0
+                                                                          inSection:i]];
+    
+    [cell contract];
+    [cell layoutSubviews];
+    
+    NSLog(@"%d collapsed: %f x %f", i, cell.contentView.frame.size.width, cell.contentView.frame.size.height);
+    
+    // Some nice visual FX
+    CABasicAnimation *theAnimation = [CABasicAnimation animationWithKeyPath:@"shadowPath"];
+    theAnimation.duration = ACCORDION_TIME;
+    theAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
+    cell.contentView.layer.shadowPath = [[UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0,
+                                                                                            cell.frame.size.width - 2*CELL_MARGIN,
+                                                                                            cell.contentView.frame.size.height)
+                                                                    cornerRadius:5.0f] CGPath];
+    [cell.contentView.layer addAnimation:theAnimation forKey:@"shadowPath"];
+    
+    [UIView animateWithDuration:ACCORDION_TIME
+                          delay:0.0
+                        options:UIViewAnimationCurveLinear
+                     animations:^{
+                         cell.containerView.frame = CGRectMake(cell.containerView.frame.origin.x,
+                                                               cell.containerView.frame.origin.y,
+                                                               cell.frame.size.width - 2*CELL_PADDING,
+                                                               cell.contentView.frame.size.height);
+                     } completion:^(BOOL finished) {
+                         if ( finished )
+                             cell.containerView.frame = CGRectMake(cell.containerView.frame.origin.x,
+                                                                   cell.containerView.frame.origin.y,
+                                                                   cell.frame.size.width - 2*CELL_PADDING,
+                                                                   cell.contentView.frame.size.height);
+                     }];
+    
+    [questionSelections replaceObjectAtIndex:i withObject:[NSNumber numberWithBool:NO]];
 }
 @end

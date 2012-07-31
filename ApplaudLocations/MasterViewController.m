@@ -16,16 +16,15 @@
 
 @implementation MasterViewController
 
-@synthesize locationsArray, tableView, tabBarController, window=_window;
-@synthesize settings = _settings;
-@synthesize appDelegate = _appDelegate;
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.locationsArray = [[NSMutableArray alloc] init];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(businessReceived:) name:@"BUSINESS_RECEIVED" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(businessReceived:)
+                                                     name:@"BUSINESS_RECEIVED"
+                                                   object:nil];
     }
     return self;
 }
@@ -41,21 +40,14 @@
                                                                                             target:self
                                                                                             action:@selector(refreshButtonPressed)]];
     
-    UIImage *backgroundImage = [UIImage imageNamed:@"Default"];
-    CGRect cropRect = CGRectMake(0,
-                                 self.navigationController.navigationBar.frame.size.height
-                                 + [[UIScreen mainScreen] applicationFrame].origin.y,
-                                 backgroundImage.size.width,
-                                 backgroundImage.size.height);
-    CGImageRef backgroundImageRef = CGImageCreateWithImageInRect(backgroundImage.CGImage, cropRect);
-    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageWithCGImage:backgroundImageRef]]];
-    [self.tableView setBackgroundColor:[UIColor clearColor]];
+    // Background image
+    self.backgroundImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Default"]];
+    self.backgroundImage.contentMode = UIViewContentModeBottom;
+    self.backgroundImage.frame = self.tableView.frame;
+    self.tableView.backgroundView = self.backgroundImage;
     
     self.navigationItem.title = @"Available Locations";
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] init];
-    backButton.title = @"List View";
-    self.navigationItem.backBarButtonItem = backButton;
-    [self.view addSubview:tableView];
+    [self.view addSubview:self.tableView];
     
     // Show our title
     [self setTitle:@"Available Locations"];
@@ -69,7 +61,7 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return YES;
+    return UIInterfaceOrientationIsPortrait(interfaceOrientation);
 }
 
 #pragma mark - Table view data source
@@ -94,8 +86,8 @@
     }
     
     // Configure the cell...
-    Business *business = [locationsArray objectAtIndex:indexPath.row];
-    [[cell textLabel] setText:business.name];
+    Business *business = self.locationsArray[indexPath.row];
+    cell.textLabel.text = business.name;
     return cell;
 }
 
@@ -103,48 +95,28 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    __block Business *bus = [locationsArray objectAtIndex:indexPath.row];
-    
+    __block Business *bus = self.locationsArray[indexPath.row];
     // Show the activity indicator in the status bar
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    
-    NSLog(@"Checking in at business: %@", bus.description);
-    NSLog(@"Types are.....");
-
-    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
-                          bus.latitude, @"latitude",
-                          bus.longitude, @"longitude",
-                          bus.goog_id, @"goog_id",
-                          bus.name, @"name",
-                          bus.types, @"types",
-                          nil];
-
-//    NSURL *url = [[NSURL alloc] initWithString:urlString];
-//    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
-//    request.HTTPMethod = @"POST";
-//    request.HTTPBody = [NSJSONSerialization dataWithJSONObject:dict options:0 error:nil];
-//    [request addValue:[ConnectionManager getCSRFTokenFromURL:urlString] forHTTPHeaderField:@"X-CSRFToken"];
-
-    [ConnectionManager serverRequest:@"POST" 
+    NSDictionary *dict = @{@"latitude": bus.latitude, @"longitude": bus.longitude,
+                           @"goog_id": bus.goog_id, @"name": bus.name,
+                           @"types": bus.types};
+    [ConnectionManager serverRequest:@"POST"
                             withData:[NSJSONSerialization dataWithJSONObject:dict options:0 error:nil] 
                                  url:CHECKIN_URL
-                            callback:^(NSData *dat){
-                                NSLog(@"here is my checkin data: %@", [[NSString alloc] initWithData:dat encoding:NSUTF8StringEncoding]);
+                            callback:^(NSHTTPURLResponse *r, NSData *dat){
                                 // Set app delegate's current business from what was returned by the server
-                                NSLog(@"Business from server: %@",bus.description);
                                 NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:dat options:0 error:nil];
-                                Business *business = [[Business alloc] initWithName:[dict objectForKey:@"name"]
-                                                                            goog_id:[dict objectForKey:@"goog_id"]
-                                                                           latitude:[dict objectForKey:@"latitude"]
-                                                                          longitude:[dict objectForKey:@"longitude"]
-                                                                       primaryColor:[dict objectForKey:@"primary"]
-                                                                     secondaryColor:[dict objectForKey:@"secondary"]
-                                                                              types:[dict objectForKey:@"types"]];
+                                Business *business = [[Business alloc] initWithName:dict[@"name"]
+                                                                            goog_id:dict[@"goog_id"]
+                                                                           latitude:dict[@"latitude"]
+                                                                          longitude:dict[@"longitude"]
+                                                                       primaryColor:dict[@"primary"]
+                                                                     secondaryColor:dict[@"secondary"]
+                                                                              types:dict[@"types"]];
                                 [business setBusiness_id:[dict[@"business_id"] intValue]];
                                 self.appDelegate.currentBusiness = business;
 
-                                NSLog(@"The current business primary is: %@",bus.primaryColor);
-                                
                                 // Listen for when network downloads have stopped.
                                 [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(downloadFinished:) name:@"DOWNLOAD_FINISHED" object:nil];
                                 
@@ -160,11 +132,11 @@
 
 - (void) businessReceived:(NSNotification *)notification {
     self.locationsArray = [notification object];
-    [tableView reloadData];
+    [self.tableView reloadData];
 }
 
 -(void)refreshButtonPressed {
-    [self.appDelegate.tracker findBusinessesWithLocation:self.appDelegate.tracker.locMan.location.coordinate];
+    [self.appDelegate.tracker startUpdatingLocation];
 }
 
 - (void) downloadFinished:(NSNotification *)notification {
@@ -176,8 +148,8 @@
     }
     else {
         // This corresponds to the newsfeed.
-        [tabBarController setSelectedIndex:4];
-        _window.rootViewController = tabBarController;
+        [self.tabBarController setSelectedIndex:0];
+        _window.rootViewController = self.tabBarController;
     }
 }
 

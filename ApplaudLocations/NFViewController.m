@@ -17,11 +17,6 @@
 
 @implementation NFViewController
 
-@synthesize appDelegate = _appDelegate;
-@synthesize newsFeeds = _newsFeeds;
-@synthesize navigationController = _navigationController;
-@synthesize tableView = _tableView;
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -73,7 +68,7 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    return UIInterfaceOrientationIsPortrait(interfaceOrientation);
 }
 
 #pragma mark -
@@ -85,7 +80,7 @@
     }
     NSDateFormatter *format = [[NSDateFormatter alloc] init];
     format.dateStyle = NSDateFormatterLongStyle;
-    return [format stringFromDate:[[[self.newsFeeds objectAtIndex:section] objectAtIndex:0] date]];
+    return [format stringFromDate:[self.newsFeeds[section][0] date]];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -99,7 +94,7 @@
     if(self.newsFeeds.count == 0) {
         return 1;
     }
-    return [[self.newsFeeds objectAtIndex:section] count];
+    return [self.newsFeeds[section] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -117,11 +112,15 @@
         else {
             cell = [[NFTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                           reuseIdentifier:cellIdentifier
-                                                 newsfeed:[[self.newsFeeds objectAtIndex:indexPath.section]
-                                                           objectAtIndex:indexPath.row]];
+                                                 newsfeed:self.newsFeeds[indexPath.section][indexPath.row]];
         }
     }
-     
+    else if([cell isKindOfClass:[UITableViewCell class]] &&
+            self.newsFeeds.count != 0) {
+        cell = [[NFTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                      reuseIdentifier:cellIdentifier
+                                             newsfeed:self.newsFeeds[indexPath.section][indexPath.row]];
+    }
     return cell;
 }
 
@@ -148,7 +147,7 @@
                                      lineBreakMode:UILineBreakModeWordWrap].height + 20;
     }
     CGSize constraintSize;
-    NFItem *nfItem = [[self.newsFeeds objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    NFItem *nfItem = self.newsFeeds[indexPath.section][indexPath.row];
     if ( ! [[nfItem.imageURL absoluteString] isEqualToString:@""] ) {
         constraintSize = CGSizeMake(self.view.bounds.size.width 
                                     - 2*CELL_PADDING 
@@ -187,7 +186,7 @@
         return;
     }
     NFItemViewController *nfivc = [[NFItemViewController alloc] initWithNibName:@"NFItemViewController" bundle:nil];
-    nfivc.item = [[self.newsFeeds objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    nfivc.item = self.newsFeeds[indexPath.section][indexPath.row];
     nfivc.view.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
     nfivc.bodyText.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
     [self.navigationController pushViewController:nfivc animated:YES];
@@ -201,39 +200,33 @@
  * this is called when we load up the news feed is selected
  */
 - (void) getNewsFeeds {
-    NSArray *keyArray = [[NSArray alloc] initWithObjects:@"business_id", nil];
-    NSArray *valArray = [[NSArray alloc] initWithObjects:@(self.appDelegate.currentBusiness.business_id), nil];
-    NSDictionary *dict = [[NSDictionary alloc] initWithObjects:valArray forKeys:keyArray];
-
+    NSDictionary *dict = @{@"business_id": @(self.appDelegate.currentBusiness.business_id)};
     NSError *error = nil;
     if(error) {
         NSLog(@"%@", error);
     }
-    [ConnectionManager serverRequest:@"POST" withParams:dict url:NEWSFEED_URL callback:^(NSData *data) {
+    [ConnectionManager serverRequest:@"POST" withParams:dict url:NEWSFEED_URL callback:^(NSHTTPURLResponse *r, NSData *data) {
         NSLog(@"Newsfeeds: %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
         NSError *e;
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data
                                                              options:NSJSONReadingAllowFragments
                                                                error:&e];
-        
-        NSArray *items = [dict objectForKey:@"newsfeed_items"];
+        NSArray *items = dict[@"newsfeed_items"];
         NSDateFormatter *format = [[NSDateFormatter alloc] init];
         
         // Get rid of any old newsfeeds.
         self.newsFeeds = [[NSMutableArray alloc] init];
-        NSLog(@"%d", self.newsFeeds.count);
-        
+
         [format setDateFormat:@"MM/dd/yyyy"];
         for ( NSDictionary *feed in items ) {
             NSString *imageURLString = @"";
             if (! [[feed objectForKey:@"image"] isEqualToString:@""] ) {
-                imageURLString = [NSString stringWithFormat:@"%@%@", SERVER_URL, [feed objectForKey:@"image"]];
+                imageURLString = [NSString stringWithFormat:@"%@%@", SERVER_URL, feed[@"image"]];
             }
-            
-            [self.newsFeeds addObject:[[NFItem alloc] initWithTitle:[feed objectForKey:@"title"]
-                                                           subtitle:[feed objectForKey:@"subtitle"]
-                                                               body:[feed objectForKey:@"body"]
-                                                               date:[format dateFromString:[feed objectForKey:@"date"]]
+            [self.newsFeeds addObject:[[NFItem alloc] initWithTitle:feed[@"title"]
+                                                           subtitle:feed[@"subtitle"]
+                                                               body:feed[@"body"]
+                                                               date:[format dateFromString:feed[@"date"]]
                                                            imageURL:[NSURL URLWithString:imageURLString]]];
         }
      
@@ -253,19 +246,17 @@
         NSMutableArray *dateBuckets = [[NSMutableArray alloc] init];
         NSDate *prevDate = nil;
         for ( int i=0; i<self.newsFeeds.count; i++ ) {
-            if ( 0 == i || ![prevDate isEqualToDate:[[self.newsFeeds objectAtIndex:i] date]] ) {
-                NSLog(@"%@", self.newsFeeds);
-                prevDate = [[self.newsFeeds objectAtIndex:i] date];
+            if ( 0 == i || ![prevDate isEqualToDate:[self.newsFeeds[i] date]] ) {
+                prevDate = [self.newsFeeds[i] date];
                 NSMutableArray *newList = [[NSMutableArray alloc] init];
-                [newList addObject:[self.newsFeeds objectAtIndex:i]];
+                [newList addObject:self.newsFeeds[i]];
                 [dateBuckets addObject:newList];
             }
             else {
-                [[dateBuckets objectAtIndex:dateBuckets.count-1] addObject:[self.newsFeeds objectAtIndex:i]];
+                [[dateBuckets objectAtIndex:dateBuckets.count-1] addObject:self.newsFeeds[i]];
             }
         }
         self.newsFeeds = dateBuckets;
-        
         [self.tableView reloadData];
     }];
 }

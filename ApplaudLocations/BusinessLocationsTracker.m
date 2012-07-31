@@ -12,19 +12,18 @@
 
 @implementation BusinessLocationsTracker
 
-@synthesize locMan = _locMan;
-
 - (id)init {
     self = [super init];
     if ( self ) {
         self.locMan = [[CLLocationManager alloc] init];
         self.locMan.desiredAccuracy = kCLLocationAccuracyBest;
         self.locMan.delegate = self;
-        [self.locMan startUpdatingLocation];
-        serverData = [[NSMutableData alloc] init];
     }
-    
     return self;
+}
+
+- (void)startUpdatingLocation {
+    [self.locMan startUpdatingLocation];
 }
 
 /**
@@ -40,22 +39,14 @@
     // Check distance
     if ( [[[CLLocation alloc] initWithLatitude:lastCoordinate.latitude longitude:lastCoordinate.longitude] distanceFromLocation:newLocation] > BUSINESS_RADIUS_EXIT) {
         // We left the business, or are starting up
-        NSLog(@"<----- OLD: %@     NEW:%@  ----->", newLocation, oldLocation);
         lastCoordinate = newLocation.coordinate;
         [self findBusinessesWithLocation:newLocation.coordinate];
-        NSLog(@"<----------> CHANGING LOCATION <---------->");
     }
     
+    [self.locMan stopUpdatingLocation];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
-    NSLog(@"Location is.... %f, %f",manager.location.coordinate.latitude, manager.location.coordinate.longitude );
-    UIAlertView *connection_problem = [[UIAlertView alloc] initWithTitle:@"Connection error"
-                                                                 message:@"Couldn't get business data"
-                                                                delegate:nil
-                                                       cancelButtonTitle:nil
-                                                       otherButtonTitles:@"OK", nil];
-    [connection_problem show];
     NSLog(@"Error finding location: %@",error);
 }
 
@@ -66,89 +57,30 @@
  * What we do when we want to find businesses around a certain location.
  */
 - (void)findBusinessesWithLocation:(CLLocationCoordinate2D)location {
-    NSLog(@"Location is.... %f, %f",location.latitude, location.longitude );
-    
-    void (^callback)(NSData *) = ^(NSData *dat){
+    void (^callback)(NSHTTPURLResponse *, NSData *) = ^(NSHTTPURLResponse *r, NSData *dat){
+        if ( error_code )
+            return;
+
         NSError *e;
         NSMutableDictionary *businesses = [NSJSONSerialization JSONObjectWithData:dat options:NSJSONReadingMutableLeaves | NSJSONReadingMutableContainers error:&e];
         NSMutableArray *businessArray = [[NSMutableArray alloc] init];
-        for(NSDictionary *dict in [businesses objectForKey:@"nearby_businesses"]) {
-            Business *bus = [[Business alloc] initWithName:[dict objectForKey:@"name"]
-                                                   goog_id:[dict objectForKey:@"goog_id"]
-                                                  latitude:[dict objectForKey:@"latitude"]
-                                                 longitude:[dict objectForKey:@"longitude"]
+        for(NSDictionary *dict in businesses[@"nearby_businesses"]) {
+            Business *bus = [[Business alloc] initWithName:dict[@"name"]
+                                                   goog_id:dict[@"goog_id"]
+                                                  latitude:dict[@"latitude"]
+                                                 longitude:dict[@"longitude"]
                                               primaryColor:nil
-                                            secondaryColor: nil
-                                                     types:[dict objectForKey:@"types"]];
-            NSLog(@"The primary color is.....%@",[dict objectForKey:@"primary"]);
-            NSLog(@"The primary secondary is.....%@",[dict objectForKey:@"secondary"]);
-            
-            NSLog(@"The business_id is....%d",[[dict objectForKey:@"business_id"] intValue]);
-            bus.business_id = [[dict objectForKey:@"business_id"] intValue];
-            NSLog(@"Got business: %@", bus.description);
-            NSLog(@"%@", [dict objectForKey:@"primary"]);
+                                            secondaryColor:nil
+                                                     types:dict[@"types"]];
+            bus.business_id = [dict[@"business_id"] intValue];
             [businessArray addObject:bus];
         }
-        
-        if( ! businessArray.count ){
-            [[[UIAlertView alloc] initWithTitle:@"Sorry..."
-                                        message:@"There aren't any businesses in your area"
-                                       delegate:self
-                              cancelButtonTitle:@"OK"
-                              otherButtonTitles:@"Refresh", nil] show];
-        }
-        NSLog(@"sent BUSINESS_RECEIVED");
         // put some info in the notificationcenter
         [[NSNotificationCenter defaultCenter] postNotificationName:@"BUSINESS_RECEIVED" object:businessArray];
     };
-    
     NSDictionary *getDict = @{ @"latitude" : @(location.latitude),
                                @"longitude" : @(location.longitude) };
-
-    // dummy businesses for debugging
-    // [ConnectionManager serverRequest:@"GET" withParams:nil url:EXAMPLE_URL callback:callback];
-
     [ConnectionManager serverRequest:@"GET" withParams:getDict url:WHEREAMI_URL callback:callback];
-}
-
-/**
- * Got a chunk of data from the server.
- */
-- (void)connection:(NSURLConnection *)conn didReceiveData:(NSData *)data {
-    [serverData appendData:data];
-}
-
-/**
- * Could not connect to the server.
- */
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-    [self showAlertView:[NSString stringWithFormat:@"Connection error: %@",error]];
-    
-    serverData = nil;
-    urlConnection = nil;
-}
-
-#pragma mark -
-#pragma UIAlertViewDelegate methods
-
--(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if(buttonIndex == 0) {
-        exit(0);
-    }
-    else if(buttonIndex == 1) {
-        [self findBusinessesWithLocation:self.locMan.location.coordinate];
-    }
-}
-
-#pragma mark -
-#pragma mark Other Methods
-
-/**
- * Convenient way to display a alert to the user with only an 'OK' button.
- */
-- (void)showAlertView:(NSString *)msg {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Applaud" message:msg delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    [alert show];
 }
 
 @end
