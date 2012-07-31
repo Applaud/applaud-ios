@@ -103,28 +103,26 @@
 
 -(void)getPhotos {
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:self.appDelegate.currentBusiness.business_id], @"id", nil];
-//    NSDictionary *foo = @{@"id": @(self.appDelegate.currentBusiness.business_id)};
-//    NSLog(@"%@", foo[@"id"]);
-    NSData *photoData = [ConnectionManager serverRequest:@"GET"
-                                              withParams:params
-                                                     url:GET_PHOTO_URL
-                                                callback:^(NSData *d) {
-                                                    [self handlePhotoData:[NSJSONSerialization JSONObjectWithData:d
-                                                                                                          options:0
-                                                                                                            error:nil]];
-                                                }];
+    [ConnectionManager serverRequest:@"GET"
+                          withParams:params
+                                 url:GET_PHOTO_URL
+                            callback:^(NSHTTPURLResponse *r, NSData *d) {
+                                [self handlePhotoData:[NSJSONSerialization JSONObjectWithData:d
+                                                                                      options:0
+                                                                                        error:nil]];
+                            }];
 }
 
 // Do stuff with the photos from the server.
 -(void)handlePhotoData:(NSDictionary *)photoData {
     for(NSDictionary *photoDict in [photoData objectForKey:@"photos"]) {
         BusinessPhoto *photo = [[BusinessPhoto alloc] initWithImage:nil
-                                                               tags:[photoDict objectForKey:@"tags"]
-                                                            upvotes:[[photoDict objectForKey:@"upvotes"] intValue]
-                                                          downvotes:[[photoDict objectForKey:@"downvotes"] intValue]
-                                                           business:[[photoDict objectForKey:@"business_id"] intValue]
-                                                        uploaded_by:[[photoDict objectForKey:@"uploaded_by"] intValue]
-                                                             active:[[photoDict objectForKey:@"active"] isEqual:@"true"] ? YES : NO];
+                                                               tags:photoDict[@"tags"]
+                                                            upvotes:[photoDict[@"upvotes"] intValue]
+                                                          downvotes:[photoDict[@"downvotes"] intValue]
+                                                           business:[photoDict[@"business_id"] intValue]
+                                                        uploaded_by:photoDict[@"uploaded_by"]
+                                                             active:[photoDict[@"active"] boolValue]];
         [self.businessPhotos addObject:photo];
     }
 }

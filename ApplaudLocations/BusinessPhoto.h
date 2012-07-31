@@ -17,11 +17,11 @@
 @property (nonatomic) int upvotes;
 @property (nonatomic) int downvotes;
 @property (nonatomic) int business;
-@property (nonatomic) int uploaded_by;
+@property (nonatomic) NSDictionary *uploaded_by;
 @property (nonatomic) BOOL active;
 
 -(id)initWithImage:(UIImage *)image tags:(NSArray *)tags
            upvotes:(int)upvotes downvotes:(int)downvotes
-          business:(int)business uploaded_by:(int)uploaded_by
+          business:(int)business uploaded_by:(NSDictionary *)uploaded_by
             active:(BOOL)active;
 @end
