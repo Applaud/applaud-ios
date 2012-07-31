@@ -89,8 +89,9 @@
                                delegate:nil
                       cancelButtonTitle:@"OK"
                       otherButtonTitles:nil] show];
-    UIImage *userImage = [editingInfo objectForKey:@"UIImagePickerControllerOriginalImage"];
-    [self postPhotoData:userImage];
+    NSLog(@"image, whee %@", image);
+    [self postPhotoData:image];
+    [self.imagePicker dismissViewControllerAnimated:YES completion:nil];
 }
 // Called when the user presses the cancel button.
 // We'll do nothing for now.
@@ -133,14 +134,6 @@
     NSMutableData *body = [[NSMutableData alloc] init];
     // Boundary data strings.
     NSData *start = [[NSString stringWithFormat:@"--%@\r\n", BOUNDARY] dataUsingEncoding:NSUTF8StringEncoding];
-//    NSData *end = [[NSString stringWithFormat:@"%@\r\n", BOUNDARY] dataUsingEncoding:NSUTF8StringEncoding];
-    // First add the image.
-    [body appendData:start];
-    [body appendData:[@"Content-Disposition: form-data; name=\"image\"; filename=\"image.jpg\"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-    [body appendData:[@"Content-Type: image/jpeg\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-    [body appendData:UIImageJPEGRepresentation(photo, 1.0)];
-    [body appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-    // Then add the rest of the parameters.
     // These are a dictionary, so we can use a loop.
     NSDictionary *params = [[NSDictionary alloc]
                             initWithObjectsAndKeys:[NSNumber numberWithInt:self.appDelegate.currentBusiness.business_id],
@@ -153,16 +146,30 @@
         [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", param] dataUsingEncoding:NSUTF8StringEncoding]];
         [body appendData:[[NSString stringWithFormat:@"%@\r\n", [params objectForKey:param]] dataUsingEncoding:NSUTF8StringEncoding]];
     }
+
+    // Add the image.
+    [body appendData:start];
+    [body appendData:[@"Content-Disposition: form-data; name=\"image\"; filename=\"image.jpg\"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:[@"Content-Type: image/jpeg\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:UIImageJPEGRepresentation(photo, .5)];
+    [body appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+ 
     // Now make the request.
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    request.timeoutInterval = 10;
     request.HTTPMethod = @"POST";
     NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", BOUNDARY];
     [request setValue:contentType forHTTPHeaderField:@"Content-Type"];
     request.HTTPBody = body;
-    request.URL = [NSString stringWithFormat:@"%@%@", SERVER_URL, PHOTO_URL];
-    [NSURLConnection sendSynchronousRequest:request
-                          returningResponse:nil
-                                      error:nil];
+    request.URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", SERVER_URL, PHOTO_URL]];
+    [ConnectionManager getCSRFTokenFromURL:PHOTO_URL withCallback:^(NSHTTPURLResponse *response, NSString *csrf, NSError *error) {
+        [request addValue:csrf forHTTPHeaderField:@"X-CSRFToken"];
+        [NSURLConnection sendAsynchronousRequest:request
+                                           queue:[NSOperationQueue mainQueue]
+                               completionHandler:^(NSURLResponse *r, NSData *d, NSError *e) {
+            NSLog(@"response %@ :: error %@ :: data %@", r, e, [[NSString alloc] initWithData:d encoding:NSUTF8StringEncoding]);
+        }];
+    }];
 }
 
 // Called when the user presses the camera button. Pretty straightforward.
