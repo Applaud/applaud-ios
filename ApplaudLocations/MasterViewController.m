@@ -11,7 +11,6 @@
 #import "EmployeeListViewController.h"
 #import "Business.h"
 #import "ApplaudProgramSettingsModel.h"
-#import "FirstTimeNavigatorViewController.h"
 #import "ConnectionManager.h"
 
 @implementation MasterViewController
@@ -140,17 +139,9 @@
 }
 
 - (void) downloadFinished:(NSNotification *)notification {
-    if ( self.settings.firstTimeLaunching ) {
-        FirstTimeNavigatorViewController *ftnvc = [[FirstTimeNavigatorViewController alloc] initWithNibName:@"FirstTimeNavigatorViewControllerIphone" bundle:nil];
-        ftnvc.tabBarController = self.tabBarController;
-        ftnvc.window = _window;
-        _window.rootViewController = ftnvc;
-    }
-    else {
-        // This corresponds to the newsfeed.
-        [self.tabBarController setSelectedIndex:0];
-        _window.rootViewController = self.tabBarController;
-    }
+    // This corresponds to the newsfeed.
+    [self.tabBarController setSelectedIndex:0];
+    _window.rootViewController = self.tabBarController;
 }
 
 @end
