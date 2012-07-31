@@ -240,43 +240,7 @@
         if ( i == indexPath.section )
             continue;
         
-        SurveyAccordionCell *cell = (SurveyAccordionCell*)[self.questionsTable 
-                                                           cellForRowAtIndexPath:
-                                                           [NSIndexPath indexPathForRow:0 
-                                                                              inSection:i]];
-        
-        [cell contract];
-        [cell layoutSubviews];
-        
-        NSLog(@"%d collapsed: %f x %f", i, cell.contentView.frame.size.width, cell.contentView.frame.size.height);
-        
-        // Some nice visual FX
-        CABasicAnimation *theAnimation = [CABasicAnimation animationWithKeyPath:@"shadowPath"];
-        theAnimation.duration = ACCORDION_TIME;
-        theAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
-        cell.contentView.layer.shadowPath = [[UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0,
-                                                                                                cell.frame.size.width - 2*CELL_MARGIN,
-                                                                                                cell.contentView.frame.size.height)
-                                                                        cornerRadius:5.0f] CGPath];
-        [cell.contentView.layer addAnimation:theAnimation forKey:@"shadowPath"];
-               
-        [UIView animateWithDuration:ACCORDION_TIME
-                              delay:0.0
-                            options:UIViewAnimationCurveLinear
-                         animations:^{
-                             cell.containerView.frame = CGRectMake(cell.containerView.frame.origin.x,
-                                                                   cell.containerView.frame.origin.y,
-                                                                   cell.frame.size.width - 2*CELL_PADDING,
-                                                                   cell.contentView.frame.size.height);
-                         } completion:^(BOOL finished) {
-                             if ( finished )
-                                 cell.containerView.frame = CGRectMake(cell.containerView.frame.origin.x,
-                                                                       cell.containerView.frame.origin.y,
-                                                                       cell.frame.size.width - 2*CELL_PADDING,
-                                                                       cell.contentView.frame.size.height);
-                         }];
-        
-        [questionSelections replaceObjectAtIndex:i withObject:[NSNumber numberWithBool:NO]];
+        [self collapseCellAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:i]];
     }
     
     // Note selected state of currently selected question by putting adjusted height (expanded height)
@@ -493,11 +457,9 @@
                             callback:^(NSHTTPURLResponse *r, NSData* dat) {
                                 // Collapse all table cells, but retain responses.
                                 for (int i=0; i<self.questionsTable.numberOfSections; i++) {
-                                    SurveyAccordionCell *cell = (SurveyAccordionCell*)[self.questionsTable cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:i]];
-                                    [cell contract];
-                                    [questionSelections replaceObjectAtIndex:i withObject:@(NO)];
-                                    [self.questionsTable reloadData];
+                                    [self collapseCellAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:i]];
                                 }
+                                [self.questionsTable reloadData];
                             }];
     
     [[[UIAlertView alloc] initWithTitle:@"Thanks!"
@@ -516,5 +478,47 @@
 
 - (BOOL)cellIsSelectedAtIndexPath:(NSIndexPath *)indexPath {
     return ![[questionSelections objectAtIndex:indexPath.section] isEqualToNumber:@(NO)];
+}
+
+- (void)collapseCellAtIndexPath:(NSIndexPath*)indexPath {
+    int i = indexPath.section;
+    
+    SurveyAccordionCell *cell = (SurveyAccordionCell*)[self.questionsTable
+                                                       cellForRowAtIndexPath:
+                                                       [NSIndexPath indexPathForRow:0
+                                                                          inSection:i]];
+    
+    [cell contract];
+    [cell layoutSubviews];
+    
+    NSLog(@"%d collapsed: %f x %f", i, cell.contentView.frame.size.width, cell.contentView.frame.size.height);
+    
+    // Some nice visual FX
+    CABasicAnimation *theAnimation = [CABasicAnimation animationWithKeyPath:@"shadowPath"];
+    theAnimation.duration = ACCORDION_TIME;
+    theAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
+    cell.contentView.layer.shadowPath = [[UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0,
+                                                                                            cell.frame.size.width - 2*CELL_MARGIN,
+                                                                                            cell.contentView.frame.size.height)
+                                                                    cornerRadius:5.0f] CGPath];
+    [cell.contentView.layer addAnimation:theAnimation forKey:@"shadowPath"];
+    
+    [UIView animateWithDuration:ACCORDION_TIME
+                          delay:0.0
+                        options:UIViewAnimationCurveLinear
+                     animations:^{
+                         cell.containerView.frame = CGRectMake(cell.containerView.frame.origin.x,
+                                                               cell.containerView.frame.origin.y,
+                                                               cell.frame.size.width - 2*CELL_PADDING,
+                                                               cell.contentView.frame.size.height);
+                     } completion:^(BOOL finished) {
+                         if ( finished )
+                             cell.containerView.frame = CGRectMake(cell.containerView.frame.origin.x,
+                                                                   cell.containerView.frame.origin.y,
+                                                                   cell.frame.size.width - 2*CELL_PADDING,
+                                                                   cell.contentView.frame.size.height);
+                     }];
+    
+    [questionSelections replaceObjectAtIndex:i withObject:[NSNumber numberWithBool:NO]];
 }
 @end
