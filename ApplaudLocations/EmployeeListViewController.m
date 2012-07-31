@@ -109,7 +109,7 @@
             [cell.textLabel setText:[self.employeeArray[indexPath.row] description]];
             [cell.imageView setImageWithURL:[(Employee*)self.employeeArray[indexPath.row] imageURL]
                            placeholderImage:[UIImage imageNamed:@"blankPerson.jpg"]];
-            cell.imageView.layer.cornerRadius = 10.0f;
+            cell.imageView.layer.cornerRadius = 7.0f;
             cell.imageView.layer.masksToBounds = YES;
             tableView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
         }
