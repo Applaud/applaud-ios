@@ -108,14 +108,9 @@
     // Set up bio labels
     CGRect bioTextRect;
     if ( self.employee.bio.length == 0 ) {
-        [self.bioLabel setHidden:YES];
         bioTextRect = titleTextRect;
     } else {
         // Label "Bio:"
-        CGRect bioLabelRect = self.bioLabel.frame;
-        bioLabelRect.origin.x = VIEW_PADDING + self.image.frame.size.width + VIEW_ELEMENT_PADDING;
-        bioLabelRect.origin.y = imageRect.origin.y + imageRect.size.height - BIO_LABEL_HEIGHT;
-        self.bioLabel.frame = bioLabelRect;
         
         // Bio content label
         [self.bioContentLabel setText:self.employee.bio];
@@ -129,7 +124,7 @@
         self.bioContentLabel.frame = bioTextRect;
     }
     
-    // Set up the profile view. This contains the name, title, bio, biolabel as subviews
+    // Set up the profile view. This contains the name, title, and bio as subviews
     self.profileView.frame = CGRectMake(0, 0,
                                         self.view.frame.size.width,
                                         bioTextRect.origin.y + bioTextRect.size.height+VIEW_ELEMENT_PADDING);
