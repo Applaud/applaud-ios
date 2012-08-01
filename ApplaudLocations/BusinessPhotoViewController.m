@@ -29,6 +29,7 @@
         if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
             self.imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
             self.imagePicker.delegate = self;
+            self.imagePicker.allowsEditing = NO;
         }
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                selector:@selector(notificationReceived:)
@@ -146,7 +147,9 @@
         [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", param] dataUsingEncoding:NSUTF8StringEncoding]];
         [body appendData:[[NSString stringWithFormat:@"%@\r\n", [params objectForKey:param]] dataUsingEncoding:NSUTF8StringEncoding]];
     }
-
+    
+    NSLog(@"photo: %@ PNG : %@", photo, UIImageJPEGRepresentation(photo, .1));
+    
     // Add the image.
     [body appendData:start];
     [body appendData:[@"Content-Disposition: form-data; name=\"image\"; filename=\"image.jpg\"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
