@@ -95,9 +95,6 @@
 #pragma mark Table View data source methods
 
 -(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    if ( self.survey.fields.count > 0 && section == 0 ) {
-        return self.survey.summary;
-    }
     return nil;
 }
 

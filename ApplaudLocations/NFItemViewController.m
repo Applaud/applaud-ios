@@ -47,7 +47,7 @@
 
 - (void)loadViewWithImage:(UIImage *)img {
     // Take care of dynamic layout
-    CGRect titleTextFrame, subtitleTextFrame;
+    CGRect titleTextFrame;
     if ( img ) {
         // Set the image
         float scaleFactor = img.size.width * img.scale / IMAGE_SIZE;
@@ -65,13 +65,7 @@
         titleTextFrame.origin.y = VIEW_PADDING;
         self.titleLabel.frame = titleTextFrame;
         
-        // Size and position the subtitle label
-        subtitleTextFrame = self.subtitleLabel.frame;
-        subtitleTextFrame.origin.y = VIEW_PADDING + imageRect.size.height + ELEMENT_PADDING;
-        subtitleTextFrame.origin.x = VIEW_PADDING;
-        subtitleTextFrame.size.width = self.view.frame.size.width - 2*VIEW_PADDING;
-        self.subtitleLabel.frame = subtitleTextFrame;
-    } 
+    }
     // Adjusting x-coords of frames here
     else {
         // Size and position the title label
@@ -81,27 +75,18 @@
         titleTextFrame.size.width = self.view.frame.size.width - 2*VIEW_PADDING;
         self.titleLabel.frame = titleTextFrame;
         
-        // Size and position the subtitle label
-        subtitleTextFrame = self.subtitleLabel.frame;
-        subtitleTextFrame.origin.y = titleTextFrame.origin.y + titleTextFrame.size.height + ELEMENT_PADDING;
-        subtitleTextFrame.origin.x = VIEW_PADDING;
-        subtitleTextFrame.size.width = self.view.frame.size.width - 2*VIEW_PADDING;
-        self.subtitleLabel.frame = subtitleTextFrame;
     }
     
     // Set the title label
     self.titleLabel.text = self.item.title;
     [self.titleLabel sizeToFit];
     
-    // Set the subtitle label
-    self.subtitleLabel.text = self.item.subtitle;
-    
     // Format, set, and position the date label
     NSDateFormatter *format = [[NSDateFormatter alloc] init];
     format.dateStyle = NSDateFormatterLongStyle;
     self.dateLabel.text = [format stringFromDate:self.item.date];
     CGRect dateTextFrame = self.dateLabel.frame;
-    dateTextFrame.origin.y = subtitleTextFrame.origin.y + subtitleTextFrame.size.height + ELEMENT_PADDING;
+    dateTextFrame.origin.y = titleTextFrame.origin.y + titleTextFrame.size.height + ELEMENT_PADDING;
     dateTextFrame.origin.x = VIEW_PADDING;
     self.dateLabel.frame = dateTextFrame;
     
@@ -117,7 +102,6 @@
     [(UIScrollView*)self.view setContentSize:CGSizeMake(self.view.frame.size.width, 
                                                         2*VIEW_PADDING 
                                                         + titleTextFrame.size.height
-                                                        + subtitleTextFrame.size.height
                                                         + dateTextFrame.size.height
                                                         + bodyTextFrame.size.height
                                                         + 3*ELEMENT_PADDING)];
@@ -127,7 +111,6 @@
 - (void)viewDidUnload
 {
     [self setBodyText:nil];
-    [self setSubtitleLabel:nil];
     [self setDateLabel:nil];
     [self setImage:nil];
     [super viewDidUnload];
