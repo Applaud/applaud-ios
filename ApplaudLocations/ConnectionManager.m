@@ -178,18 +178,20 @@ static int outbound_connections;
                             callback:^(NSHTTPURLResponse *r, NSData *d) {
                                 
                                 // We are ok, login was successful
-                                if ( r.statusCode == 200 ) {
+                                if ( r.statusCode == 200 && [r.allHeaderFields objectForKey:@"Set-Cookie"] != nil) {
                                     // Reset error code
                                     error_code = 0;
                                     
                                     NSArray *userPassword = [NSArray arrayWithObjects:username, password, nil];
                                     [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGIN_SUCCESS" object:userPassword];
-                                    
+                                    NSLog(@"All headers of the response: %@", r.allHeaderFields);
                                     NSError *regexError = nil;
                                     cookieString = [r.allHeaderFields objectForKey:@"Set-Cookie"];
                                     NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"sessionid=[a-f0-9]+;"
                                                                                                            options:0
                                                                                                              error:&regexError];
+                                    NSLog(@"This is the status code: %d", r.statusCode);
+                                    NSLog(@"This is the cookie string's length: %d and this is the string: %@", cookieString.length, cookieString);
                                     NSRange regexRange = [regex rangeOfFirstMatchInString:cookieString
                                                                                   options:0
                                                                                     range:NSMakeRange(0, cookieString.length)];
@@ -198,7 +200,11 @@ static int outbound_connections;
                                     [[ConnectionManager staticInstance] setSessionCookie:cookieString];
                                     NSLog(@"%@", cookieString);
                                 }
-                                
+                                else if([r.allHeaderFields objectForKey:@"Set-Cookie"] == nil) {
+                                    if(!error_code)
+                                        error_code = ERROR_NO_CONNECTION;
+                                    [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGIN_FAILURE" object:nil];
+                                }
                                 // Login did not succeed (could not connect to server, bad username/password combo)
                                 else {
                                     if (! error_code )
