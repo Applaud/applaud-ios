@@ -157,6 +157,11 @@
     cell.contentView.layer.shadowRadius = 5.0f;
     cell.contentView.layer.shadowOpacity = 0.2f;
     cell.contentView.layer.shadowOffset = CGSizeMake(1, 0);
+    cell.contentView.layer.shadowPath = [[UIBezierPath bezierPathWithRoundedRect:CGRectMake(0,
+                                                                                            0,
+                                                                                            cell.frame.size.width,
+                                                                                            cell.frame.size.height)
+                                                                    cornerRadius:7.0f] CGPath];
 }
 
 #pragma mark -
