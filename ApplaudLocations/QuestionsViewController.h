@@ -16,6 +16,8 @@
 @interface QuestionsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate> {
     // Tracks what questions have been selected. 
     NSMutableArray *questionSelections;
+    // Stores cells, since we have all unique cells
+    NSMutableDictionary *cellMap;
     // Whether or not the keyboard is displayed at this moment
     BOOL keyboardIsShown;
 }
