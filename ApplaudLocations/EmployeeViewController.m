@@ -62,7 +62,6 @@
 {
     [self setNameLabel:nil];
     [self setScrollView:nil];
-    [self setSubmitButton:nil];
     [self setImage:nil];
     [self setTableView:nil];
     [super viewDidUnload];
@@ -151,13 +150,8 @@
                                         self.view.frame.size.width, 
                                         tableHeight)];
     self.tableView.scrollEnabled = NO;
-    
-    // Set up the 'submit' button
-    self.submitButton.frame = CGRectMake(VIEW_PADDING,
-                                         self.tableView.frame.origin.y + tableHeight + VIEW_ELEMENT_PADDING,
-                                         self.view.frame.size.width - 2*VIEW_PADDING,
-                                         50);
-    // Make a submit button on the navigation bar as well
+  
+    // Make a submit button on the navigation bar
     UIBarButtonItem *submitItem = [[UIBarButtonItem alloc] initWithTitle:@"Submit"
                                                                    style:UIBarButtonItemStyleBordered
                                                                   target:self
@@ -166,8 +160,9 @@
     
     // Set up the scrollable area for the scrollview
     self.scrollView.contentSize = CGSizeMake(self.view.frame.size.width,
-                                             self.submitButton.frame.origin.y
-                                             + self.submitButton.frame.size.height
+                                             self.tableView.frame.origin.y
+                                             + tableHeight
+                                             + VIEW_ELEMENT_PADDING
                                              + VIEW_PADDING);
 }
 
@@ -334,7 +329,7 @@
                                                                                CELL_PADDING + 8,
                                                                                16,
                                                                                16)];
-            [clearButton setBackgroundImage:[UIImage imageNamed:@"cancelup.png"] forState:UIControlStateNormal];
+            [clearButton setBackgroundImage:[UIImage imageNamed:@"cancelrating"] forState:UIControlStateNormal];
             [clearButton addTarget:self action:@selector(clearButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
             clearButton.tag = responseWidgetTag;
             clearButtonTable[[@(responseWidgetTag) description]] = clearButton;
