@@ -228,7 +228,7 @@
     
     // Some nice visual FX
     acccell.contentView.layer.shadowRadius = 5.0f;
-    acccell.contentView.layer.shadowOpacity = 0.9f;
+    acccell.contentView.layer.shadowOpacity = 0.2f;
     acccell.contentView.layer.shadowOffset = CGSizeMake(1, 0);
 }
 
