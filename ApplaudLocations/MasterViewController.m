@@ -144,6 +144,11 @@
 }
 
 - (void) downloadFinished:(NSNotification *)notification {
+    // Remove our observer
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:@"DOWNLOAD_FINISHED"
+                                                  object:nil];
+    
     // This corresponds to the newsfeed.
     [self.tabBarController setSelectedIndex:0];
     _window.rootViewController = self.tabBarController;
