@@ -14,6 +14,8 @@
 #import <QuartzCore/QuartzCore.h>
 
 #define NO_NEWSFEED_MESSAGE @"This business doesn't have any news items yet. Check back later!"
+#define GENERIC_MESSAGE_1 @"Welcome to the Newsfeed! You can find everything from upcoming events to daily deals posted here."
+#define GENERIC_MESSAGE_2 [NSString stringWithFormat:@"%@%@%@",@"If learning about new offers and events interests you, tell ",self.appDelegate.currentBusiness.name,@" to start using this feature of Apatapa!"]
 
 @implementation NFViewController
 
@@ -91,9 +93,10 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if(self.newsFeeds.count == 0) {
+    if ( self.appDelegate.currentBusiness.generic )
+        return 2;
+    else if(self.newsFeeds.count == 0)
         return 1;
-    }
     return [self.newsFeeds[section] count];
 }
 
@@ -102,17 +105,48 @@
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
     if ( nil == cell ) {
-        if(self.newsFeeds.count == 0) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        // Business is a generic
+        if ( self.appDelegate.currentBusiness.generic ) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
             cell.textLabel.lineBreakMode = UILineBreakModeWordWrap;
             cell.textLabel.numberOfLines = 0;
-            cell.textLabel.text = NO_NEWSFEED_MESSAGE;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.textLabel.font = [UIFont systemFontOfSize:TEASER_SIZE];
+            
+            // Set the message and photo
+            switch ( indexPath.row ) {
+                case 0:
+                {
+                    cell.textLabel.text = GENERIC_MESSAGE_1;
+                    UIImage *logoImage = [UIImage imageNamed:@"logo"];
+                    float scaleFactor = logoImage.size.width * logoImage.scale / IMAGE_SIZE;
+                    cell.imageView.image = [UIImage imageWithCGImage:logoImage.CGImage
+                                                               scale:scaleFactor
+                                                         orientation:UIImageOrientationUp];
+                    cell.imageView.layer.cornerRadius = 5.0f;
+                    cell.imageView.layer.masksToBounds = YES;
+                }
+                    break;
+                case 1:
+                    cell.textLabel.text = GENERIC_MESSAGE_2;
+                    break;
+            }
+
         }
+        // Registered business
         else {
-            cell = [[NFTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                          reuseIdentifier:cellIdentifier
-                                                 newsfeed:self.newsFeeds[indexPath.section][indexPath.row]];
+            if (self.newsFeeds.count == 0) {
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+                cell.textLabel.lineBreakMode = UILineBreakModeWordWrap;
+                cell.textLabel.numberOfLines = 0;
+                cell.textLabel.text = NO_NEWSFEED_MESSAGE;
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            }
+            else {
+                cell = [[NFTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                              reuseIdentifier:cellIdentifier
+                                                     newsfeed:self.newsFeeds[indexPath.section][indexPath.row]];
+            }
         }
     }
     else if([cell isKindOfClass:[UITableViewCell class]] &&
@@ -145,6 +179,22 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Generic newsfeed cells
+    if ( self.appDelegate.currentBusiness.generic ) {
+        switch ( indexPath.row ) {
+            case 0:
+                return MAX(IMAGE_SIZE, [GENERIC_MESSAGE_1 sizeWithFont:[UIFont systemFontOfSize:TEASER_SIZE]
+                                                     constrainedToSize:CGSizeMake(300, 1000)
+                                                         lineBreakMode:UILineBreakModeWordWrap].height) + 2*CELL_PADDING;
+                break;
+            case 1:
+                return [GENERIC_MESSAGE_2 sizeWithFont:[UIFont systemFontOfSize:TEASER_SIZE]
+                                     constrainedToSize:CGSizeMake(300, 1000)
+                                         lineBreakMode:UILineBreakModeWordWrap].height + 2*CELL_PADDING;
+                break;
+        }
+        
+    }
     // Return the number of lines we'll need, plus a bit of padding.
     if(self.newsFeeds.count == 0) {
         return [NO_NEWSFEED_MESSAGE sizeWithFont:[UIFont systemFontOfSize:20.0f]
