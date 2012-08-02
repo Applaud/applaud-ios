@@ -34,10 +34,12 @@ int error_code;
 #define ERROR_NO_CONNECTION -1  // Could not connect to the internet
 #define ERROR_BAD_LOGIN -2      // Bad credentials when logging in, and user gave up
 #define ERROR_SERVER_ERROR -3   // Server had a 500
+#define ERROR_NO_LOCATION -4    // Could not use the LocationManager to update the user's location
 
 
 #define BACK_BUTTON_TITLE @"Locations"
 #define BUSINESS_RADIUS_ENTRY 10000
 #define BUSINESS_RADIUS_EXIT 250
+//#define SERVER_URL @"http://ec2-50-112-71-198.us-west-2.compute.amazonaws.com"
 #define SERVER_URL @"http://ec2-107-22-6-55.compute-1.amazonaws.com"
 //#define SERVER_URL @"http://127.0.0.1:8000"

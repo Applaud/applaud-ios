@@ -34,10 +34,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     // Background image
     self.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Default"]];
     self.backgroundView.contentMode = UIViewContentModeBottom;
     [self.view addSubview:self.backgroundView];
+    
+    // Title
+    self.title = @"An Error Occurred";
     
     // Error text
     extern int error_code;
@@ -54,6 +58,10 @@
         case ERROR_SERVER_ERROR:
             self.errorTitle.text = tERROR_SERVER_ERROR;
             self.errorBody.text = bERROR_SERVER_ERROR;
+            break;
+        case ERROR_NO_LOCATION:
+            self.errorTitle.text = tERROR_NO_LOCATION;
+            self.errorBody.text = bERROR_NO_LOCATION;
             break;
         default:
             self.errorTitle.text = @"Unknown error.";
@@ -122,7 +130,12 @@
  * Gross and hacky!
  */
 -(void)viewWillDisappear:(BOOL)animated {
+    NSLog(@"viewWillDisappear called in ErrorViewController.");
+    [super viewWillDisappear:animated];
+    
+    // Reset the error code
     error_code = 0;
+    // Restart the application
     [self.appDelegate application:nil didFinishLaunchingWithOptions:nil];
 }
 

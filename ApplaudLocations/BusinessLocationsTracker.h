@@ -9,10 +9,13 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 
+@class AppDelegate;
+
 @interface BusinessLocationsTracker : NSObject <CLLocationManagerDelegate, UIAlertViewDelegate> {
     CLLocationCoordinate2D lastCoordinate; // The last coordinate we were recorded in
 }
 @property (strong, nonatomic) CLLocationManager *locMan;  // The location manager
+@property (weak, nonatomic) AppDelegate *appDelegate;     // The app delegate
 
 - (void)findBusinessesWithLocation:(CLLocationCoordinate2D)location;
 - (void)startUpdatingLocation;

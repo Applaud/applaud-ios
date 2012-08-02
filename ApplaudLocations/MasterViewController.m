@@ -11,7 +11,6 @@
 #import "EmployeeListViewController.h"
 #import "Business.h"
 #import "ApplaudProgramSettingsModel.h"
-#import "FirstTimeNavigatorViewController.h"
 #import "ConnectionManager.h"
 
 @implementation MasterViewController
@@ -24,6 +23,10 @@
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(businessReceived:)
                                                      name:@"BUSINESS_RECEIVED"
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(loginSucceeded:)
+                                                     name:@"LOGIN_SUCCESS"
                                                    object:nil];
     }
     return self;
@@ -51,6 +54,12 @@
     
     // Show our title
     [self setTitle:@"Available Locations"];
+    
+    // Set our back button (i.e., "back to" this screen)
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] init];
+    backButton.image = [UIImage imageNamed:@"home"];
+    backButton.title = @"Apatapa";
+    self.navigationItem.backBarButtonItem = backButton;
 }
 
 - (void)viewDidUnload
@@ -101,6 +110,7 @@
     NSDictionary *dict = @{@"latitude": bus.latitude, @"longitude": bus.longitude,
                            @"goog_id": bus.goog_id, @"name": bus.name,
                            @"types": bus.types};
+    NSLog(@"Checking into this bitch: %@",dict);
     [ConnectionManager serverRequest:@"POST"
                             withData:[NSJSONSerialization dataWithJSONObject:dict options:0 error:nil] 
                                  url:CHECKIN_URL
@@ -113,9 +123,11 @@
                                                                           longitude:dict[@"longitude"]
                                                                        primaryColor:dict[@"primary"]
                                                                      secondaryColor:dict[@"secondary"]
+                                                                            generic:[dict[@"generic"] boolValue]
                                                                               types:dict[@"types"]];
                                 [business setBusiness_id:[dict[@"business_id"] intValue]];
                                 self.appDelegate.currentBusiness = business;
+                                NSLog(@"Business name at checkin: %@",business.name);
 
                                 // Listen for when network downloads have stopped.
                                 [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(downloadFinished:) name:@"DOWNLOAD_FINISHED" object:nil];
@@ -140,17 +152,18 @@
 }
 
 - (void) downloadFinished:(NSNotification *)notification {
-    if ( self.settings.firstTimeLaunching ) {
-        FirstTimeNavigatorViewController *ftnvc = [[FirstTimeNavigatorViewController alloc] initWithNibName:@"FirstTimeNavigatorViewControllerIphone" bundle:nil];
-        ftnvc.tabBarController = self.tabBarController;
-        ftnvc.window = _window;
-        _window.rootViewController = ftnvc;
-    }
-    else {
-        // This corresponds to the newsfeed.
-        [self.tabBarController setSelectedIndex:0];
-        _window.rootViewController = self.tabBarController;
-    }
+    // Remove our observer
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:@"DOWNLOAD_FINISHED"
+                                                  object:nil];
+    
+    // This corresponds to the newsfeed.
+    [self.tabBarController setSelectedIndex:0];
+    _window.rootViewController = self.tabBarController;
+}
+
+- (void)loginSucceeded:(NSNotification*)notification {
+    self.tableView.userInteractionEnabled = YES;
 }
 
 @end

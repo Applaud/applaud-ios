@@ -32,4 +32,8 @@
 #define tERROR_SERVER_ERROR @"Apatapa had an error."
 #define bERROR_SERVER_ERROR @"Something went wrong on our server. We'll have everything up and running as soon as possible."
 
+// ERROR_NO_LOCATION
+#define tERROR_NO_LOCATION @"Location Services Disabled."
+#define bERROR_NO_LOCATION @"You have disabled Location Services for Apatapa. To enable this app to access your location, please find \"Apatapa\" in your Settings app under \"Location Services.\" Your location will be used to discover businesses nearby."
+
 @end

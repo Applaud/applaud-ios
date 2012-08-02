@@ -14,6 +14,8 @@
 #import <QuartzCore/QuartzCore.h>
 
 #define NO_NEWSFEED_MESSAGE @"This business doesn't have any news items yet. Check back later!"
+#define GENERIC_MESSAGE_1 @"Welcome to the Newsfeed! You can find everything from upcoming events to daily deals posted here."
+#define GENERIC_MESSAGE_2 [NSString stringWithFormat:@"%@%@%@",@"If learning about new offers and events interests you, tell ",self.appDelegate.currentBusiness.name,@" to start using this feature of Apatapa!"]
 
 @implementation NFViewController
 
@@ -21,8 +23,6 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Let us know about updates from the newsfeed.
-        // [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newfeedReceived:) name:@"NEWSFEED_RECEIVED" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(notificationReceived:)
                                                      name:@"BUSINESS_SET"
@@ -74,13 +74,35 @@
 #pragma mark -
 #pragma mark UITableView data source methods
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+- (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    CGRect sectionFrame = CGRectMake(0.0, 0, 320.0, SECTION_TITLE_HEIGHT);
+    CGRect labelFrame = CGRectMake(CELL_MARGIN, CELL_MARGIN, 310.0, 22.0);
+
+    UIView *view = [[UIView alloc] initWithFrame:sectionFrame];
+    view.backgroundColor = [UIColor clearColor];
+    
+    NSString *titleString = nil;
     if(self.newsFeeds.count == 0) {
-        return @"";
+        titleString =  @"";
     }
-    NSDateFormatter *format = [[NSDateFormatter alloc] init];
-    format.dateStyle = NSDateFormatterLongStyle;
-    return [format stringFromDate:[self.newsFeeds[section][0] date]];
+    else {
+        NSDateFormatter *format = [[NSDateFormatter alloc] init];
+        format.dateStyle = NSDateFormatterLongStyle;
+        titleString = [format stringFromDate:[self.newsFeeds[section][0] date]];
+    }
+    
+    UILabel *sectionLabel = [[UILabel alloc] initWithFrame:labelFrame];
+    sectionLabel.text = titleString;
+    sectionLabel.font = [UIFont boldSystemFontOfSize:SECTION_TITLE_SIZE];
+    sectionLabel.textColor = [UIColor darkGrayColor];
+    sectionLabel.backgroundColor = [UIColor clearColor];
+    [view addSubview:sectionLabel];
+    
+    return view;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return SECTION_TITLE_HEIGHT;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -91,9 +113,10 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if(self.newsFeeds.count == 0) {
+    if ( self.appDelegate.currentBusiness.generic )
+        return 2;
+    else if(self.newsFeeds.count == 0)
         return 1;
-    }
     return [self.newsFeeds[section] count];
 }
 
@@ -102,17 +125,48 @@
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
     if ( nil == cell ) {
-        if(self.newsFeeds.count == 0) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        // Business is a generic
+        if ( self.appDelegate.currentBusiness.generic ) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
             cell.textLabel.lineBreakMode = UILineBreakModeWordWrap;
             cell.textLabel.numberOfLines = 0;
-            cell.textLabel.text = NO_NEWSFEED_MESSAGE;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.textLabel.font = [UIFont systemFontOfSize:TEASER_SIZE];
+            
+            // Set the message and photo
+            switch ( indexPath.row ) {
+                case 0:
+                {
+                    cell.textLabel.text = GENERIC_MESSAGE_1;
+                    UIImage *logoImage = [UIImage imageNamed:@"logo"];
+                    float scaleFactor = logoImage.size.width * logoImage.scale / IMAGE_SIZE;
+                    cell.imageView.image = [UIImage imageWithCGImage:logoImage.CGImage
+                                                               scale:scaleFactor
+                                                         orientation:UIImageOrientationUp];
+                    cell.imageView.layer.cornerRadius = 5.0f;
+                    cell.imageView.layer.masksToBounds = YES;
+                }
+                    break;
+                case 1:
+                    cell.textLabel.text = GENERIC_MESSAGE_2;
+                    break;
+            }
+
         }
+        // Registered business
         else {
-            cell = [[NFTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                          reuseIdentifier:cellIdentifier
-                                                 newsfeed:self.newsFeeds[indexPath.section][indexPath.row]];
+            if (self.newsFeeds.count == 0) {
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+                cell.textLabel.lineBreakMode = UILineBreakModeWordWrap;
+                cell.textLabel.numberOfLines = 0;
+                cell.textLabel.text = NO_NEWSFEED_MESSAGE;
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            }
+            else {
+                cell = [[NFTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                              reuseIdentifier:cellIdentifier
+                                                     newsfeed:self.newsFeeds[indexPath.section][indexPath.row]];
+            }
         }
     }
     else if([cell isKindOfClass:[UITableViewCell class]] &&
@@ -135,16 +189,37 @@
     
     // Some nice visual FX
     cell.contentView.layer.shadowRadius = 5.0f;
-    cell.contentView.layer.shadowOpacity = 0.2f;
-    cell.contentView.layer.shadowOffset = CGSizeMake(1, 0);
+    cell.contentView.layer.shadowOpacity = 0.1f;
+    cell.contentView.layer.shadowOffset = CGSizeMake(0, 0);
+    cell.contentView.layer.shadowPath = [[UIBezierPath bezierPathWithRoundedRect:CGRectMake(0,
+                                                                                            0,
+                                                                                            cell.frame.size.width,
+                                                                                            cell.frame.size.height)
+                                                                    cornerRadius:7.0f] CGPath];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Generic newsfeed cells
+    if ( self.appDelegate.currentBusiness.generic ) {
+        switch ( indexPath.row ) {
+            case 0:
+                return MAX(IMAGE_SIZE, [GENERIC_MESSAGE_1 sizeWithFont:[UIFont systemFontOfSize:TEASER_SIZE]
+                                                     constrainedToSize:CGSizeMake(300, 1000)
+                                                         lineBreakMode:UILineBreakModeWordWrap].height) + 2*CELL_PADDING;
+                break;
+            case 1:
+                return [GENERIC_MESSAGE_2 sizeWithFont:[UIFont systemFontOfSize:TEASER_SIZE]
+                                     constrainedToSize:CGSizeMake(300, 1000)
+                                         lineBreakMode:UILineBreakModeWordWrap].height + 2*CELL_PADDING;
+                break;
+        }
+        
+    }
     // Return the number of lines we'll need, plus a bit of padding.
     if(self.newsFeeds.count == 0) {
         return [NO_NEWSFEED_MESSAGE sizeWithFont:[UIFont systemFontOfSize:20.0f]
-                                 constrainedToSize:CGSizeMake(300, 1000)
-                                     lineBreakMode:UILineBreakModeWordWrap].height + 20;
+                               constrainedToSize:CGSizeMake(300, 1000)
+                                   lineBreakMode:UILineBreakModeWordWrap].height + 2*CELL_PADDING;
     }
     CGSize constraintSize;
     NFItem *nfItem = self.newsFeeds[indexPath.section][indexPath.row];
@@ -161,7 +236,7 @@
     }
     
     CGSize sizeRectTitle = [nfItem.title
-                            sizeWithFont:[UIFont systemFontOfSize:TITLE_SIZE]
+                            sizeWithFont:[UIFont boldSystemFontOfSize:TITLE_SIZE]
                             constrainedToSize:constraintSize 
                             lineBreakMode:UILineBreakModeWordWrap];
     NSString *bodyTeaserText = [nfItem.body 
@@ -169,12 +244,14 @@
     bodyTeaserText = [NSString stringWithFormat:@"%@...",bodyTeaserText];
     CGSize sizeRectBody = [bodyTeaserText
                            sizeWithFont:[UIFont systemFontOfSize:TEASER_SIZE]
-                           constrainedToSize:CGSizeMake(self.view.bounds.size.width
+                           constrainedToSize:CGSizeMake(self.tableView.frame.size.width
                                                         - 2*CELL_MARGIN
-                                                        - 2*CELL_ELEMENT_PADDING,
+                                                        - 2*CELL_PADDING,
                                                         400)
                            lineBreakMode:UILineBreakModeWordWrap];
-    return MAX(sizeRectTitle.height, IMAGE_SIZE) + sizeRectBody.height + CELL_ELEMENT_PADDING + 2*CELL_PADDING;
+    NFItem *item = self.newsFeeds[indexPath.section][indexPath.row];
+    return MAX(sizeRectTitle.height, [item.imageURL.absoluteString isEqualToString:@""] ? 0 : IMAGE_SIZE)
+               + sizeRectBody.height + CELL_ELEMENT_PADDING + 2*CELL_PADDING;
 }
 
 /*
@@ -185,10 +262,9 @@
     if(self.newsFeeds.count == 0 ) {
         return;
     }
-    NFItemViewController *nfivc = [[NFItemViewController alloc] initWithNibName:@"NFItemViewController" bundle:nil];
+    NFItemViewController *nfivc = [[NFItemViewController alloc] init];
     nfivc.item = self.newsFeeds[indexPath.section][indexPath.row];
-    nfivc.view.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
-    nfivc.bodyText.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+    nfivc.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
     [self.navigationController pushViewController:nfivc animated:YES];
 }
 

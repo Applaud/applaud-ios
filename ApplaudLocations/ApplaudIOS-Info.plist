@@ -16,6 +16,8 @@
 			<array>
 				<string>Default.png</string>
 				<string>Default@2x.png</string>
+				<string>favicon.png</string>
+				<string>favicon@2x.png</string>
 			</array>
 		</dict>
 	</dict>

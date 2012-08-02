@@ -15,6 +15,7 @@
 #import "AppDelegate.h"
 
 #define NO_EMPLOYEES_MESSAGE @"This business hasn't added any employees yet. Check back later!"
+#define GENERIC_MESSAGE [NSString stringWithFormat:@"%@%@%@\n\n%@",@"Applaud is the employee evaluation feature of Apatapa. Applaud allows employees to gain recognition for their hard work. By telling ",self.appDelegate.currentBusiness.name,@" to use this feature, you are playing an important part in giving employees more control over their future.",@"If you are interested in helping this business improve, check out the Feedback button below!"]
 
 @implementation EmployeeListViewController
 
@@ -99,11 +100,19 @@
         cell = [[EmployeeCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
     
         // Configure the cell...
-        if(self.employeeArray.count == 0) {
+        if ( self.appDelegate.currentBusiness.generic ) {
+            cell.textLabel.numberOfLines = 0;
+            cell.textLabel.text = GENERIC_MESSAGE;
+            cell.textLabel.font = [UIFont systemFontOfSize:CONTENT_SIZE];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.contentView.backgroundColor = [UIColor whiteColor];
+        }
+        else if(self.employeeArray.count == 0) {
             cell.textLabel.numberOfLines = 0;
             cell.textLabel.text = NO_EMPLOYEES_MESSAGE;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.contentView.backgroundColor = [UIColor whiteColor];
+            cell.textLabel.font = [UIFont boldSystemFontOfSize:TITLE_SIZE];
         }
         else {
             [cell.textLabel setText:[self.employeeArray[indexPath.row] description]];
@@ -112,8 +121,8 @@
             cell.imageView.layer.cornerRadius = 7.0f;
             cell.imageView.layer.masksToBounds = YES;
             tableView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+            cell.textLabel.font = [UIFont boldSystemFontOfSize:TITLE_SIZE];
         }
-        cell.textLabel.font = [UIFont boldSystemFontOfSize:TITLE_SIZE];
     }
     
     return cell;
@@ -121,7 +130,13 @@
 
 // If it's NO_EMPLOYEES_MESSAGE, return an appropriate size. Else return the default.
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if(self.employeeArray.count == 0 && indexPath.row == 0) {
+    if ( self.appDelegate.currentBusiness.generic ) {
+        NSString *genericString = GENERIC_MESSAGE;
+        return 2*CELL_PADDING + [genericString sizeWithFont:[UIFont systemFontOfSize:CONTENT_SIZE]
+                                          constrainedToSize:CGSizeMake(self.view.frame.size.width - 2*CELL_MARGIN - 2*CELL_PADDING, 400)
+                                              lineBreakMode:UILineBreakModeWordWrap].height;
+    }
+    else if (self.employeeArray.count == 0 && indexPath.row == 0) {
         return 100;
     }
     else return 60;
@@ -155,8 +170,13 @@
     
     // Some nice visual FX
     cell.contentView.layer.shadowRadius = 5.0f;
-    cell.contentView.layer.shadowOpacity = 0.2f;
-    cell.contentView.layer.shadowOffset = CGSizeMake(1, 0);
+    cell.contentView.layer.shadowOpacity = 0.1f;
+    cell.contentView.layer.shadowOffset = CGSizeMake(0, 0);
+    cell.contentView.layer.shadowPath = [[UIBezierPath bezierPathWithRoundedRect:CGRectMake(0,
+                                                                                            0,
+                                                                                            cell.frame.size.width,
+                                                                                            cell.frame.size.height)
+                                                                    cornerRadius:7.0f] CGPath];
 }
 
 #pragma mark -
