@@ -7,6 +7,7 @@
 //
 
 #import "BusinessLocationsTracker.h"
+#import "AppDelegate.h"
 #import "Business.h"
 #import "ConnectionManager.h"
 
@@ -36,18 +37,17 @@
     if (t < -180)
         return;
     
-    // Check distance
-    if ( [[[CLLocation alloc] initWithLatitude:lastCoordinate.latitude longitude:lastCoordinate.longitude] distanceFromLocation:newLocation] > BUSINESS_RADIUS_EXIT) {
-        // We left the business, or are starting up
-        lastCoordinate = newLocation.coordinate;
-        [self findBusinessesWithLocation:newLocation.coordinate];
-    }
+    // Store our location. We can use this later to determine how far we have traveled,
+    // or if we've left the location we were just in.
+    lastCoordinate = newLocation.coordinate;
+    [self findBusinessesWithLocation:newLocation.coordinate];
     
     [self.locMan stopUpdatingLocation];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
-    NSLog(@"Error finding location: %@",error);
+    error_code = ERROR_NO_LOCATION;
+    [self.appDelegate fatalError];
 }
 
 #pragma mark -

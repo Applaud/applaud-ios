@@ -42,8 +42,8 @@
 -(void)backButtonPressed;
 - (NSString *)applicationDocumentsDirectory;
 
-
 // For error handling
 extern int error_code;
+- (void)fatalError;
 
 @end

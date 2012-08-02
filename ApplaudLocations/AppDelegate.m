@@ -69,11 +69,11 @@
     // The "tracker" updates the NotificationCenter about changes in the user's location
     // Since we want to track this throughout the application, we initialize it here.
     self.tracker = [[BusinessLocationsTracker alloc] init];
+    self.tracker.appDelegate = self;
     [self.tracker startUpdatingLocation];
     
     [self refreshViewControllers];
     
-    // TODO: should figure out how to set UITabBarItem images
     self.masterViewController.tabBarController = self.tabNavigator;
     self.tabNavigator.delegate = self;
     [self.masterViewController setWindow:self.window];
@@ -139,7 +139,6 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     if([self.window.rootViewController isKindOfClass:[ErrorViewController class]]) {
-        error_code = 0;
         self.masterViewController = [[MasterViewController alloc] init];
         self.masterViewController.appDelegate = self;
         self.masterViewController.settings = self.settings;
@@ -155,30 +154,6 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-}
-
-#pragma mark -
-#pragma mark UIAlertView Delegate
-
-/**
- * The user entered in login credentials. Send to the server securely somehow.
- */
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    NSString *username = [alertView textFieldAtIndex:0].text;
-    NSString *password = [alertView textFieldAtIndex:1].text;
-    
-    // The OK button
-    if ( buttonIndex == 1 ) {
-        [ConnectionManager authenticateWithUsername:username password:password];
-    }
-    // User hit 'cancel'
-    else if ( buttonIndex == 0 ) {
-        error_code = ERROR_BAD_LOGIN;
-        ErrorViewController *evc = [[ErrorViewController alloc] init];
-        evc.appDelegate = self;
-        [self.navControl popToViewController:self.masterViewController animated:NO];
-        [self.navControl pushViewController:evc animated:YES];
-    }
 }
 
 #pragma mark -
@@ -304,6 +279,31 @@
     return basePath;
 }
 
+
+#pragma mark -
+#pragma mark UIAlertView Delegate
+
+/**
+ * The user entered in login credentials. Send to the server securely somehow.
+ */
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    NSString *username = [alertView textFieldAtIndex:0].text;
+    NSString *password = [alertView textFieldAtIndex:1].text;
+    
+    // The OK button
+    if ( buttonIndex == 1 ) {
+        [ConnectionManager authenticateWithUsername:username password:password];
+    }
+    // User hit 'cancel'
+    else if ( buttonIndex == 0 ) {
+        error_code = ERROR_BAD_LOGIN;
+        [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                        name:@"LOGIN_FAILURE"
+                                                      object:nil];
+        [self fatalError];
+    }
+}
+
 #pragma mark -
 #pragma mark Login Success/Failure Methods
 
@@ -311,6 +311,7 @@
  * Login was completely successful.
  */
 - (void)loginSucceeded:(NSNotification *)notification {
+    NSLog(@"loginSucceeded called.");
     NSArray *userPassword = notification.object;
     self.settings.username = userPassword[0];
     self.settings.password = userPassword[1];
@@ -323,12 +324,11 @@
  *
  */
 - (void)loginFailed:(NSNotification *)notification {
-    if ( error_code && ERROR_BAD_LOGIN != error_code ) {
-        [[NSNotificationCenter defaultCenter] removeObserver:self];
-        ErrorViewController *evc = [[ErrorViewController alloc] init];
-        evc.appDelegate = self;
-        [self.navControl popToViewController:self.masterViewController animated:NO];
-        [self.navControl pushViewController:evc animated:YES];
+    if ( error_code ) {
+        [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                        name:@"LOGIN_FAILURE"
+                                                      object:nil];
+        [self fatalError];
     }
     else {
         UIAlertView *tryAgain = [[UIAlertView alloc] initWithTitle:@"Invalid Credentials"
@@ -344,9 +344,19 @@
 #pragma mark -
 #pragma mark Error Messages
 
-/*- (void)fatalError:(NSNotification *)notification {
+/*
+ * This can be used to show the error screen and push it on top of the
+ * MasterViewController
+ */
+- (void)fatalError {
+    // Only one error page at a time
+    if ( [self.navControl.visibleViewController isKindOfClass:[ErrorViewController class]] )
+        return;
+    
     ErrorViewController *evc = [[ErrorViewController alloc] init];
-    self.window.rootViewController = evc;
-}*/
+    evc.appDelegate = self;
+    [self.navControl popToViewController:self.masterViewController animated:NO];
+    [self.navControl pushViewController:evc animated:YES];
+}
 
 @end

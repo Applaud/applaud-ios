@@ -19,6 +19,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         _surveyControllers = [[NSMutableArray alloc] init];
+        cellMap = [[NSMutableDictionary alloc] init];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(notificationReceived:)
                                                      name:@"BUSINESS_SET"
@@ -137,12 +138,15 @@
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"Reuse id: %@",[self.survey.fields[indexPath.section] label]);
     SurveyAccordionCell *cell = [self.questionsTable dequeueReusableCellWithIdentifier:[[self.survey.fields objectAtIndex:indexPath.section] label]];
     
     if ( nil == cell ) {
         cell = [[SurveyAccordionCell alloc] initWithStyle:UITableViewCellStyleDefault
                                           reuseIdentifier:[self.survey.fields[indexPath.section] label]
                                                     field:self.survey.fields[indexPath.section]];
+        [cellMap setObject:cell forKey:[self.survey.fields[indexPath.section] label]];
+        
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if ( indexPath.section == 0 ) {
             UIImageView *sytImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"shareyourthoughts"]];
@@ -176,6 +180,8 @@
                                                                         cornerRadius:5.0f] CGPath];
         cell.backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
     }
+    
+    NSLog(@"Returning this cell: %@",cell);
     return cell;
 }
 
@@ -251,7 +257,7 @@
     // Note selected state of currently selected question by putting adjusted height (expanded height)
     // into the questionSelections array.
     questionSelections[indexPath.section] = @([cell expandedHeight]);
-
+    
     // Perform animation
     [self.questionsTable beginUpdates];
     [self.questionsTable endUpdates];
@@ -262,7 +268,7 @@
     
     // Animate shadow
     CABasicAnimation *theAnimation = [CABasicAnimation animationWithKeyPath:@"shadowPath"];
-
+    
     // Some nice visual FX
     theAnimation.duration = ACCORDION_TIME;
     theAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
@@ -272,7 +278,7 @@
                                      [cell expandedHeight]);
     cell.contentView.layer.shadowPath = [[UIBezierPath bezierPathWithRoundedRect:expandedRect cornerRadius:5.0f] CGPath];
     [cell.contentView.layer addAnimation:theAnimation forKey:@"shadowPath"];
-
+    
     [UIView animateWithDuration:ACCORDION_TIME
                           delay:0.0
                         options:UIViewAnimationCurveLinear
@@ -288,6 +294,11 @@
                                                                    cell.frame.size.width - 2*CELL_PADDING,
                                                                    cell.expandedHeight);
                      }];
+    
+    // Bring the cell into visible range in the scroll view
+    [self.questionsTable scrollToRowAtIndexPath:indexPath
+                               atScrollPosition:UITableViewScrollPositionMiddle
+                                       animated:YES];
 }
 
 #pragma mark -
@@ -339,7 +350,7 @@
     [UIView commitAnimations];
     
     [self.questionsTable scrollToRowAtIndexPath:[self.questionsTable indexPathForSelectedRow]
-                               atScrollPosition:UITableViewScrollPositionTop
+                               atScrollPosition:UITableViewScrollPositionBottom
                                        animated:YES];
     
     keyboardIsShown = YES;
@@ -447,8 +458,7 @@
 - (void)buttonPressed {
     NSMutableArray *surveyAnswers = [[NSMutableArray alloc] init];
     for ( int i=0; i<self.survey.fields.count; i++ ) {
-        SurveyAccordionCell *cell = (SurveyAccordionCell*)[self.questionsTable cellForRowAtIndexPath:
-                                                           [NSIndexPath indexPathForRow:0 inSection:i]];
+        SurveyAccordionCell *cell = [cellMap objectForKey:[self.survey.fields[i] label]];
         NSArray *response = [cell getAnswer];
         if (! response)
             response = [[NSArray alloc] init];
@@ -491,10 +501,7 @@
 - (void)collapseCellAtIndexPath:(NSIndexPath*)indexPath {
     int i = indexPath.section;
     
-    SurveyAccordionCell *cell = (SurveyAccordionCell*)[self.questionsTable
-                                                       cellForRowAtIndexPath:
-                                                       [NSIndexPath indexPathForRow:0
-                                                                          inSection:i]];
+    SurveyAccordionCell *cell = (SurveyAccordionCell*)[cellMap objectForKey:[[self.survey.fields objectAtIndex:i] label]];
     
     [cell contract];
     [cell layoutSubviews];
