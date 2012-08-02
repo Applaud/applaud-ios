@@ -79,8 +79,10 @@
                                   constrainedToSize:CGSizeMake(self.tableView.frame.size.width - 2*CELL_PADDING,
                                                                400)
                                       lineBreakMode:UILineBreakModeWordWrap].height;
-    CGFloat bodySize = [self.item.body sizeWithFont:[UIFont boldSystemFontOfSize:TEASER_SIZE]
-                                  constrainedToSize:CGSizeMake(self.tableView.frame.size.width - 2*CELL_PADDING,
+    CGFloat bodySize = [self.item.body sizeWithFont:[UIFont systemFontOfSize:TEASER_SIZE]
+                                  constrainedToSize:CGSizeMake(self.tableView.frame.size.width
+                                                               - 2*CELL_PADDING
+                                                               - 2*CELL_MARGIN,
                                                                400)
                                       lineBreakMode:UILineBreakModeWordWrap].height;
     NSLog(@"cell height: %f", MAX(titleSize, [self.item.imageURL.absoluteString isEqualToString:@""] ? 0 : DETAIL_IMAGE_SIZE) + bodySize + 2*CELL_PADDING + CELL_ELEMENT_PADDING);

@@ -33,7 +33,10 @@
         
         [self.imageView setImageWithURL:self.newsfeed.imageURL
                        placeholderImage:nil
-                                success:^(UIImage *image) {}
+                                success:^(UIImage *image) {
+                                    [weakSelf setNeedsDisplay];
+                                    [weakSelf setNeedsLayout];
+                                }
                                 failure:^(NSError *error) {}];
         
         [self.containerView addSubview:self.titleLabel];

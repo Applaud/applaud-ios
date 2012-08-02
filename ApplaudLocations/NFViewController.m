@@ -198,8 +198,8 @@
     // Return the number of lines we'll need, plus a bit of padding.
     if(self.newsFeeds.count == 0) {
         return [NO_NEWSFEED_MESSAGE sizeWithFont:[UIFont systemFontOfSize:20.0f]
-                                 constrainedToSize:CGSizeMake(300, 1000)
-                                     lineBreakMode:UILineBreakModeWordWrap].height + 20;
+                               constrainedToSize:CGSizeMake(300, 1000)
+                                   lineBreakMode:UILineBreakModeWordWrap].height + 2*CELL_PADDING;
     }
     CGSize constraintSize;
     NFItem *nfItem = self.newsFeeds[indexPath.section][indexPath.row];
@@ -216,7 +216,7 @@
     }
     
     CGSize sizeRectTitle = [nfItem.title
-                            sizeWithFont:[UIFont systemFontOfSize:TITLE_SIZE]
+                            sizeWithFont:[UIFont boldSystemFontOfSize:TITLE_SIZE]
                             constrainedToSize:constraintSize 
                             lineBreakMode:UILineBreakModeWordWrap];
     NSString *bodyTeaserText = [nfItem.body 
@@ -224,9 +224,9 @@
     bodyTeaserText = [NSString stringWithFormat:@"%@...",bodyTeaserText];
     CGSize sizeRectBody = [bodyTeaserText
                            sizeWithFont:[UIFont systemFontOfSize:TEASER_SIZE]
-                           constrainedToSize:CGSizeMake(self.view.bounds.size.width
+                           constrainedToSize:CGSizeMake(self.tableView.frame.size.width
                                                         - 2*CELL_MARGIN
-                                                        - 2*CELL_ELEMENT_PADDING,
+                                                        - 2*CELL_PADDING,
                                                         400)
                            lineBreakMode:UILineBreakModeWordWrap];
     NFItem *item = self.newsFeeds[indexPath.section][indexPath.row];
