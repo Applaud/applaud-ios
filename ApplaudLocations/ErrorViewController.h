@@ -34,6 +34,6 @@
 
 // ERROR_NO_LOCATION
 #define tERROR_NO_LOCATION @"Location Services Disabled."
-#define bERROR_NO_LOCATION @"It seems that you have disabled location services for Apatapa. Since the service this app provides to you requires your location, please enable it through your Settings app under \"Location Services\"."
+#define bERROR_NO_LOCATION @"You have disabled Location Services for Apatapa. To enable this app to access your location, please find \"Apatapa\" in your Settings app under \"Location Services.\" Your location will be used to discover businesses nearby."
 
 @end
