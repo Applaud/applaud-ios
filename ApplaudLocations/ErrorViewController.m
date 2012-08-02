@@ -68,9 +68,6 @@
             self.errorBody.text = @"You do not see me!";
     }
     
-    // Reset the error code
-    error_code = 0;
-    
     NSLog(@"%@ : %@",self.errorTitle.text, self.errorBody.text);
     
     self.errorTitle.font = [UIFont boldSystemFontOfSize:TITLE_SIZE];
@@ -133,7 +130,12 @@
  * Gross and hacky!
  */
 -(void)viewWillDisappear:(BOOL)animated {
+    NSLog(@"viewWillDisappear called in ErrorViewController.");
     [super viewWillDisappear:animated];
+    
+    // Reset the error code
+    error_code = 0;
+    // Restart the application
     [self.appDelegate application:nil didFinishLaunchingWithOptions:nil];
 }
 

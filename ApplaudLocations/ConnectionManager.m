@@ -200,18 +200,18 @@ static int outbound_connections;
                                     [[ConnectionManager staticInstance] setSessionCookie:cookieString];
                                     NSLog(@"%@", cookieString);
                                 }
-                                else if([r.allHeaderFields objectForKey:@"Set-Cookie"] == nil) {
-                                    if(!error_code)
-                                        error_code = ERROR_NO_CONNECTION;
-                                    [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGIN_FAILURE" object:nil];
-                                }
+//                                else if([r.allHeaderFields objectForKey:@"Set-Cookie"] == nil) {
+//                                    if(!error_code)
+//                                        error_code = ERROR_NO_CONNECTION;
+//                                    [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGIN_FAILURE" object:nil];
+//                                }
                                 // Login did not succeed (could not connect to server, bad username/password combo)
                                 else {
-                                    if (! error_code )
-                                        error_code = ERROR_BAD_LOGIN;
-                                    
-                                    NSLog(@"Status code was %d.", r.statusCode);
-                                    
+//                                    if (! error_code )
+//                                        error_code = ERROR_BAD_LOGIN;
+//                                    
+//                                    NSLog(@"Status code was %d.", r.statusCode);
+//                                    
                                     [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGIN_FAILURE" object:nil];
                                 }
                                 

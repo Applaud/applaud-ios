@@ -24,6 +24,10 @@
                                                  selector:@selector(businessReceived:)
                                                      name:@"BUSINESS_RECEIVED"
                                                    object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(loginSucceeded:)
+                                                     name:@"LOGIN_SUCCESS"
+                                                   object:nil];
     }
     return self;
 }
@@ -51,9 +55,10 @@
     // Show our title
     [self setTitle:@"Available Locations"];
     
-    // Set our title for navigation purposes
+    // Set our back button (i.e., "back to" this screen)
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] init];
-    backButton.title = @"List";
+    backButton.image = [UIImage imageNamed:@"home"];
+    backButton.title = @"Apatapa";
     self.navigationItem.backBarButtonItem = backButton;
 }
 
@@ -152,6 +157,10 @@
     // This corresponds to the newsfeed.
     [self.tabBarController setSelectedIndex:0];
     _window.rootViewController = self.tabBarController;
+}
+
+- (void)loginSucceeded:(NSNotification*)notification {
+    self.tableView.userInteractionEnabled = YES;
 }
 
 @end

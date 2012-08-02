@@ -157,30 +157,6 @@
 }
 
 #pragma mark -
-#pragma mark UIAlertView Delegate
-
-/**
- * The user entered in login credentials. Send to the server securely somehow.
- */
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    NSString *username = [alertView textFieldAtIndex:0].text;
-    NSString *password = [alertView textFieldAtIndex:1].text;
-    
-    // The OK button
-    if ( buttonIndex == 1 ) {
-        [ConnectionManager authenticateWithUsername:username password:password];
-    }
-    // User hit 'cancel'
-    else if ( buttonIndex == 0 ) {
-        error_code = ERROR_BAD_LOGIN;
-        ErrorViewController *evc = [[ErrorViewController alloc] init];
-        evc.appDelegate = self;
-        [self.navControl popToViewController:self.masterViewController animated:NO];
-        [self.navControl pushViewController:evc animated:YES];
-    }
-}
-
-#pragma mark -
 #pragma Back button methods
 
 -(void)refreshViewControllers {
@@ -303,6 +279,31 @@
     return basePath;
 }
 
+
+#pragma mark -
+#pragma mark UIAlertView Delegate
+
+/**
+ * The user entered in login credentials. Send to the server securely somehow.
+ */
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    NSString *username = [alertView textFieldAtIndex:0].text;
+    NSString *password = [alertView textFieldAtIndex:1].text;
+    
+    // The OK button
+    if ( buttonIndex == 1 ) {
+        [ConnectionManager authenticateWithUsername:username password:password];
+    }
+    // User hit 'cancel'
+    else if ( buttonIndex == 0 ) {
+        error_code = ERROR_BAD_LOGIN;
+        [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                        name:@"LOGIN_FAILURE"
+                                                      object:nil];
+        [self fatalError];
+    }
+}
+
 #pragma mark -
 #pragma mark Login Success/Failure Methods
 
@@ -310,6 +311,7 @@
  * Login was completely successful.
  */
 - (void)loginSucceeded:(NSNotification *)notification {
+    NSLog(@"loginSucceeded called.");
     NSArray *userPassword = notification.object;
     self.settings.username = userPassword[0];
     self.settings.password = userPassword[1];
@@ -322,8 +324,10 @@
  *
  */
 - (void)loginFailed:(NSNotification *)notification {
-    if ( error_code && ERROR_BAD_LOGIN != error_code ) {
-        [[NSNotificationCenter defaultCenter] removeObserver:self];
+    if ( error_code ) {
+        [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                        name:@"LOGIN_FAILURE"
+                                                      object:nil];
         [self fatalError];
     }
     else {
@@ -345,6 +349,10 @@
  * MasterViewController
  */
 - (void)fatalError {
+    // Only one error page at a time
+    if ( [self.navControl.visibleViewController isKindOfClass:[ErrorViewController class]] )
+        return;
+    
     ErrorViewController *evc = [[ErrorViewController alloc] init];
     evc.appDelegate = self;
     [self.navControl popToViewController:self.masterViewController animated:NO];
