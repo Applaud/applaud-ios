@@ -23,8 +23,6 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Let us know about updates from the newsfeed.
-        // [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newfeedReceived:) name:@"NEWSFEED_RECEIVED" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(notificationReceived:)
                                                      name:@"BUSINESS_SET"
@@ -76,13 +74,35 @@
 #pragma mark -
 #pragma mark UITableView data source methods
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+- (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    CGRect sectionFrame = CGRectMake(0.0, 0, 320.0, SECTION_TITLE_HEIGHT);
+    CGRect labelFrame = CGRectMake(CELL_MARGIN, CELL_MARGIN, 310.0, 22.0);
+
+    UIView *view = [[UIView alloc] initWithFrame:sectionFrame];
+    view.backgroundColor = [UIColor clearColor];
+    
+    NSString *titleString = nil;
     if(self.newsFeeds.count == 0) {
-        return @"";
+        titleString =  @"";
     }
-    NSDateFormatter *format = [[NSDateFormatter alloc] init];
-    format.dateStyle = NSDateFormatterLongStyle;
-    return [format stringFromDate:[self.newsFeeds[section][0] date]];
+    else {
+        NSDateFormatter *format = [[NSDateFormatter alloc] init];
+        format.dateStyle = NSDateFormatterLongStyle;
+        titleString = [format stringFromDate:[self.newsFeeds[section][0] date]];
+    }
+    
+    UILabel *sectionLabel = [[UILabel alloc] initWithFrame:labelFrame];
+    sectionLabel.text = titleString;
+    sectionLabel.font = [UIFont boldSystemFontOfSize:SECTION_TITLE_SIZE];
+    sectionLabel.textColor = [UIColor darkGrayColor];
+    sectionLabel.backgroundColor = [UIColor clearColor];
+    [view addSubview:sectionLabel];
+    
+    return view;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return SECTION_TITLE_HEIGHT;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -169,8 +189,8 @@
     
     // Some nice visual FX
     cell.contentView.layer.shadowRadius = 5.0f;
-    cell.contentView.layer.shadowOpacity = 0.2f;
-    cell.contentView.layer.shadowOffset = CGSizeMake(1, 0);
+    cell.contentView.layer.shadowOpacity = 0.1f;
+    cell.contentView.layer.shadowOffset = CGSizeMake(0, 0);
     cell.contentView.layer.shadowPath = [[UIBezierPath bezierPathWithRoundedRect:CGRectMake(0,
                                                                                             0,
                                                                                             cell.frame.size.width,

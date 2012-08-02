@@ -170,8 +170,8 @@
     
     // Some nice visual FX
     cell.contentView.layer.shadowRadius = 5.0f;
-    cell.contentView.layer.shadowOpacity = 0.2f;
-    cell.contentView.layer.shadowOffset = CGSizeMake(1, 0);
+    cell.contentView.layer.shadowOpacity = 0.1f;
+    cell.contentView.layer.shadowOffset = CGSizeMake(0, 0);
     cell.contentView.layer.shadowPath = [[UIBezierPath bezierPathWithRoundedRect:CGRectMake(0,
                                                                                             0,
                                                                                             cell.frame.size.width,
