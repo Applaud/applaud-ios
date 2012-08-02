@@ -229,7 +229,9 @@
                                                         - 2*CELL_ELEMENT_PADDING,
                                                         400)
                            lineBreakMode:UILineBreakModeWordWrap];
-    return MAX(sizeRectTitle.height, IMAGE_SIZE) + sizeRectBody.height + CELL_ELEMENT_PADDING + 2*CELL_PADDING;
+    NFItem *item = self.newsFeeds[indexPath.section][indexPath.row];
+    return MAX(sizeRectTitle.height, [item.imageURL.absoluteString isEqualToString:@""] ? 0 : IMAGE_SIZE)
+               + sizeRectBody.height + CELL_ELEMENT_PADDING + 2*CELL_PADDING;
 }
 
 /*
@@ -240,10 +242,9 @@
     if(self.newsFeeds.count == 0 ) {
         return;
     }
-    NFItemViewController *nfivc = [[NFItemViewController alloc] initWithNibName:@"NFItemViewController" bundle:nil];
+    NFItemViewController *nfivc = [[NFItemViewController alloc] init];
     nfivc.item = self.newsFeeds[indexPath.section][indexPath.row];
-    nfivc.view.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
-    nfivc.bodyText.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+    nfivc.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
     [self.navigationController pushViewController:nfivc animated:YES];
 }
 

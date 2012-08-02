@@ -139,7 +139,7 @@
     CGFloat tableHeight = self.employee.ratingDimensions.count * (RATING_FIELD_HEIGHT 
                                                                   + TITLE_LABEL_HEIGHT 
                                                                   + CELL_ELEMENT_PADDING
-                                                                  + 2*CELL_PADDING) + 2 * CELL_PADDING + TITLE_LABEL_HEIGHT - VIEW_PADDING;
+                                                                  + 2*CELL_PADDING) + 2 * CELL_PADDING + TITLE_LABEL_HEIGHT - VIEW_PADDING  ;
 
     [self.tableView setFrame:CGRectMake(0,
                                         self.profileView.frame.origin.y + self.profileView.frame.size.height + 5,
@@ -260,20 +260,13 @@
                                       reuseIdentifier:cellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        // Blank cell at the top of the page
-        /*if ( indexPath.row == 0 ) {
-            UILabel *applaudLabel = [[UILabel alloc] initWithFrame:CGRectMake(CELL_PADDING, CELL_PADDING + CELL_GAP,
-                                                                              200, TITLE_LABEL_HEIGHT)];
-            applaudLabel.text = @"Applaud me";
-            applaudLabel.font = [UIFont boldSystemFontOfSize:TITLE_SIZE];
-            [cell.contentView addSubview:applaudLabel];
-            return cell;
-        }*/
-        
         // Label for the respective rated dimension title
+        // If it's a text label, we can use more space horizontally
         UILabel *ratedDimensionLabel = [[UILabel alloc] initWithFrame:CGRectMake(CELL_PADDING,
                                                                                  CELL_PADDING,
-                                                                                 self.tableView.frame.size.width/2
+                                                                                 [self.employee.ratingDimensions[indexPath.row][@"is_text"] boolValue] ?
+                                                                                 self.tableView.frame.size.width - 2*CELL_PADDING :
+                                                                                 9*self.tableView.frame.size.width/16
                                                                                  - CELL_PADDING - VIEW_PADDING,
                                                                                  TITLE_LABEL_HEIGHT)];
         ratedDimensionLabel.text = self.employee.ratingDimensions[indexPath.row][@"title"];

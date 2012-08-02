@@ -8,11 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "NFItem.h"
+#import "NFItemTableViewCell.h"
 
-@interface NFItemViewController : UIViewController
+@interface NFItemViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, strong) NFItem *item;
-@property IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *bodyText;
-@property (weak, nonatomic) IBOutlet UILabel *dateLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *image;
+@property (nonatomic, strong) UIColor *backgroundColor;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @end
