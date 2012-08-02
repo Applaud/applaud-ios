@@ -38,6 +38,8 @@
 		1B6D226915CA1BDE009A533B /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B6D226815CA1BDE009A533B /* home.png */; };
 		1B6D227015CA429C009A533B /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B6D226E15CA429C009A533B /* logo.png */; };
 		1B6D227115CA429C009A533B /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B6D226F15CA429C009A533B /* logo@2x.png */; };
+		1B6D228215CA7289009A533B /* favicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B6D228115CA7289009A533B /* favicon.png */; };
+		1B6D228415CA7292009A533B /* favicon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B6D228315CA7292009A533B /* favicon@2x.png */; };
 		1B73581D15BDF08F00D87F4E /* libSDWebImageARC.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B73581715BDF03D00D87F4E /* libSDWebImageARC.a */; };
 		1B73582015BDF0A500D87F4E /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B73581F15BDF0A500D87F4E /* ImageIO.framework */; };
 		1B9389AA1583CB460088F468 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B9389A91583CB460088F468 /* MapKit.framework */; };
@@ -139,6 +141,8 @@
 		1B6D226815CA1BDE009A533B /* home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = home.png; path = assets/home.png; sourceTree = "<group>"; };
 		1B6D226E15CA429C009A533B /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo.png; path = assets/logo.png; sourceTree = "<group>"; };
 		1B6D226F15CA429C009A533B /* logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "logo@2x.png"; path = "assets/logo@2x.png"; sourceTree = "<group>"; };
+		1B6D228115CA7289009A533B /* favicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = favicon.png; path = ../favicon.png; sourceTree = "<group>"; };
+		1B6D228315CA7292009A533B /* favicon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "favicon@2x.png"; path = "../favicon@2x.png"; sourceTree = "<group>"; };
 		1B73580B15BDF03C00D87F4E /* SDWebImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SDWebImage.xcodeproj; path = SDWebImage/SDWebImage.xcodeproj; sourceTree = "<group>"; };
 		1B73581F15BDF0A500D87F4E /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		1B9389A91583CB460088F468 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -371,6 +375,8 @@
 		1BD494ED15BDF6D3006A01A9 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				1B6D228315CA7292009A533B /* favicon@2x.png */,
+				1B6D228115CA7289009A533B /* favicon.png */,
 				1B6D226E15CA429C009A533B /* logo.png */,
 				1B6D226F15CA429C009A533B /* logo@2x.png */,
 				1B6D226815CA1BDE009A533B /* home.png */,
@@ -504,6 +510,8 @@
 				1B6D226915CA1BDE009A533B /* home.png in Resources */,
 				1B6D227015CA429C009A533B /* logo.png in Resources */,
 				1B6D227115CA429C009A533B /* logo@2x.png in Resources */,
+				1B6D228215CA7289009A533B /* favicon.png in Resources */,
+				1B6D228415CA7292009A533B /* favicon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

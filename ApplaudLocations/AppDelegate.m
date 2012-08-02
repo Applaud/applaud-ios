@@ -81,6 +81,7 @@
 
     // Setup the window for display
     self.navControl = [[UINavigationController alloc] initWithRootViewController:self.masterViewController];
+    self.navControl.navigationBar.tintColor = [UIColor darkGrayColor];
     self.window.rootViewController = self.navControl;
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
