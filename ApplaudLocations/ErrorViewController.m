@@ -34,6 +34,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     // Background image
     self.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Default"]];
     self.backgroundView.contentMode = UIViewContentModeBottom;
@@ -55,10 +56,17 @@
             self.errorTitle.text = tERROR_SERVER_ERROR;
             self.errorBody.text = bERROR_SERVER_ERROR;
             break;
+        case ERROR_NO_LOCATION:
+            self.errorTitle.text = tERROR_NO_LOCATION;
+            self.errorBody.text = bERROR_NO_LOCATION;
+            break;
         default:
             self.errorTitle.text = @"Unknown error.";
             self.errorBody.text = @"You do not see me!";
     }
+    
+    // Reset the error code
+    error_code = 0;
     
     NSLog(@"%@ : %@",self.errorTitle.text, self.errorBody.text);
     
@@ -122,7 +130,7 @@
  * Gross and hacky!
  */
 -(void)viewWillDisappear:(BOOL)animated {
-    error_code = 0;
+    [super viewWillDisappear:animated];
     [self.appDelegate application:nil didFinishLaunchingWithOptions:nil];
 }
 

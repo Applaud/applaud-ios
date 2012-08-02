@@ -7,6 +7,7 @@
 //
 
 #import "BusinessLocationsTracker.h"
+#import "AppDelegate.h"
 #import "Business.h"
 #import "ConnectionManager.h"
 
@@ -47,7 +48,8 @@
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
-    NSLog(@"Error finding location: %@",error);
+    error_code = ERROR_NO_LOCATION;
+    [self.appDelegate fatalError];
 }
 
 #pragma mark -

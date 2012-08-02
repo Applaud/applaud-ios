@@ -69,11 +69,11 @@
     // The "tracker" updates the NotificationCenter about changes in the user's location
     // Since we want to track this throughout the application, we initialize it here.
     self.tracker = [[BusinessLocationsTracker alloc] init];
+    self.tracker.appDelegate = self;
     [self.tracker startUpdatingLocation];
     
     [self refreshViewControllers];
     
-    // TODO: should figure out how to set UITabBarItem images
     self.masterViewController.tabBarController = self.tabNavigator;
     self.tabNavigator.delegate = self;
     [self.masterViewController setWindow:self.window];
@@ -139,7 +139,6 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     if([self.window.rootViewController isKindOfClass:[ErrorViewController class]]) {
-        error_code = 0;
         self.masterViewController = [[MasterViewController alloc] init];
         self.masterViewController.appDelegate = self;
         self.masterViewController.settings = self.settings;
@@ -325,10 +324,7 @@
 - (void)loginFailed:(NSNotification *)notification {
     if ( error_code && ERROR_BAD_LOGIN != error_code ) {
         [[NSNotificationCenter defaultCenter] removeObserver:self];
-        ErrorViewController *evc = [[ErrorViewController alloc] init];
-        evc.appDelegate = self;
-        [self.navControl popToViewController:self.masterViewController animated:NO];
-        [self.navControl pushViewController:evc animated:YES];
+        [self fatalError];
     }
     else {
         UIAlertView *tryAgain = [[UIAlertView alloc] initWithTitle:@"Invalid Credentials"
@@ -344,9 +340,15 @@
 #pragma mark -
 #pragma mark Error Messages
 
-/*- (void)fatalError:(NSNotification *)notification {
+/*
+ * This can be used to show the error screen and push it on top of the
+ * MasterViewController
+ */
+- (void)fatalError {
     ErrorViewController *evc = [[ErrorViewController alloc] init];
-    self.window.rootViewController = evc;
-}*/
+    evc.appDelegate = self;
+    [self.navControl popToViewController:self.masterViewController animated:NO];
+    [self.navControl pushViewController:evc animated:YES];
+}
 
 @end

@@ -50,6 +50,9 @@
     
     // Show our title
     [self setTitle:@"Available Locations"];
+    
+    // Set our title for navigation purposes
+    self.navigationItem.title = @"List";
 }
 
 - (void)viewDidUnload
