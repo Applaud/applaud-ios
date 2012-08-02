@@ -154,7 +154,7 @@
 		1B9C3A6415B9272A000EEF1A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		1B9C3A6615BA0637000EEF1A /* SurveyAccordionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SurveyAccordionCell.h; sourceTree = "<group>"; };
 		1B9C3A6715BA0637000EEF1A /* SurveyAccordionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SurveyAccordionCell.m; sourceTree = "<group>"; };
-		1BA358E31582F05E00EB8F32 /* ApplaudLocations.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ApplaudLocations.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1BA358E31582F05E00EB8F32 /* Apatapa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Apatapa.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BA358E71582F05E00EB8F32 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		1BA358E91582F05E00EB8F32 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1BA358EB1582F05E00EB8F32 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -317,7 +317,7 @@
 		1BA358E41582F05E00EB8F32 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1BA358E31582F05E00EB8F32 /* ApplaudLocations.app */,
+				1BA358E31582F05E00EB8F32 /* Apatapa.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -419,7 +419,7 @@
 			);
 			name = Apatapa;
 			productName = ApplaudLocations;
-			productReference = 1BA358E31582F05E00EB8F32 /* ApplaudLocations.app */;
+			productReference = 1BA358E31582F05E00EB8F32 /* Apatapa.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */

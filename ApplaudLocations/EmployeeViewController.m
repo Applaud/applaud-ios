@@ -309,11 +309,11 @@
             sliderValue.tag = responseWidgetTag;
             sliderLabelTable[[@(responseWidgetTag) description]] = sliderValue;
             // Add a button to clear the rating, to be activated when the slider has been touched
-            UIButton *clearButton = [[UIButton alloc] initWithFrame:CGRectMake(self.tableView.frame.size.width - CELL_PADDING - 35,
-                                                                               CELL_PADDING + 8,
-                                                                               16,
-                                                                               16)];
-            [clearButton setBackgroundImage:[UIImage imageNamed:@"cancelrating"] forState:UIControlStateNormal];
+            UIButton *clearButton = [[UIButton alloc] initWithFrame:CGRectMake(self.tableView.frame.size.width - CELL_PADDING - 43,
+                                                                               CELL_PADDING,
+                                                                               32,
+                                                                               32)];
+            [clearButton setImage:[UIImage imageNamed:@"cancelrating"] forState:UIControlStateNormal];
             [clearButton addTarget:self action:@selector(clearButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
             clearButton.tag = responseWidgetTag;
             clearButtonTable[[@(responseWidgetTag) description]] = clearButton;
