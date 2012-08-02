@@ -110,6 +110,7 @@
     NSDictionary *dict = @{@"latitude": bus.latitude, @"longitude": bus.longitude,
                            @"goog_id": bus.goog_id, @"name": bus.name,
                            @"types": bus.types};
+    NSLog(@"Checking into this bitch: %@",dict);
     [ConnectionManager serverRequest:@"POST"
                             withData:[NSJSONSerialization dataWithJSONObject:dict options:0 error:nil] 
                                  url:CHECKIN_URL
@@ -126,6 +127,7 @@
                                                                               types:dict[@"types"]];
                                 [business setBusiness_id:[dict[@"business_id"] intValue]];
                                 self.appDelegate.currentBusiness = business;
+                                NSLog(@"Business name at checkin: %@",business.name);
 
                                 // Listen for when network downloads have stopped.
                                 [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(downloadFinished:) name:@"DOWNLOAD_FINISHED" object:nil];
