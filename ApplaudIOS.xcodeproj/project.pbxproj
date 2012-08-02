@@ -398,9 +398,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1BA358E21582F05E00EB8F32 /* ApplaudLocations */ = {
+		1BA358E21582F05E00EB8F32 /* Apatapa */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1BA358FB1582F05E00EB8F32 /* Build configuration list for PBXNativeTarget "ApplaudLocations" */;
+			buildConfigurationList = 1BA358FB1582F05E00EB8F32 /* Build configuration list for PBXNativeTarget "Apatapa" */;
 			buildPhases = (
 				1BA358DF1582F05E00EB8F32 /* Sources */,
 				1BA358E01582F05E00EB8F32 /* Frameworks */,
@@ -411,7 +411,7 @@
 			dependencies = (
 				1B73581C15BDF06300D87F4E /* PBXTargetDependency */,
 			);
-			name = ApplaudLocations;
+			name = Apatapa;
 			productName = ApplaudLocations;
 			productReference = 1BA358E31582F05E00EB8F32 /* ApplaudLocations.app */;
 			productType = "com.apple.product-type.application";
@@ -443,7 +443,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				1BA358E21582F05E00EB8F32 /* ApplaudLocations */,
+				1BA358E21582F05E00EB8F32 /* Apatapa */,
 			);
 		};
 /* End PBXProject section */
@@ -648,7 +648,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		1BA358FB1582F05E00EB8F32 /* Build configuration list for PBXNativeTarget "ApplaudLocations" */ = {
+		1BA358FB1582F05E00EB8F32 /* Build configuration list for PBXNativeTarget "Apatapa" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1BA358FC1582F05E00EB8F32 /* Debug */,
