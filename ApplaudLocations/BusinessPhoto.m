@@ -10,12 +10,12 @@
 
 @implementation BusinessPhoto
 
--(id)initWithImage:(UIImage *)image tags:(NSArray *)tags
+-(id)initWithImage:(NSURL *)imageURL tags:(NSArray *)tags
            upvotes:(int)upvotes downvotes:(int)downvotes
           business:(int)business uploaded_by:(NSDictionary *)uploaded_by
             active:(BOOL)active {
     if(self = [super init]) {
-        _image = image;
+        _imageURL = imageURL;
         _tags = tags;
         _upvotes = upvotes;
         _downvotes = downvotes;
@@ -24,5 +24,10 @@
         _active = active;
     }
     return self;
+}
+
+-(NSString *)description {
+    return [NSString stringWithFormat:@"url: %@, business: %d, active: %@",
+            self.imageURL, self.business, self.active ? @"true" : @"false"];
 }
 @end

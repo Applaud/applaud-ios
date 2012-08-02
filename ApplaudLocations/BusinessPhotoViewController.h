@@ -16,7 +16,6 @@
 @property (nonatomic, weak) UINavigationController *navigationController;
 @property (nonatomic, strong) AppDelegate *appDelegate;
 @property (nonatomic, strong) UIImagePickerController *imagePicker;
-@property (weak, nonatomic) IBOutlet UIButton *cameraButton;
 @property (nonatomic, strong) NSMutableArray *businessPhotos;
-- (IBAction)cameraButtonPressed;
+@property (nonatomic, strong) UIButton *cameraButton;
 @end

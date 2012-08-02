@@ -185,7 +185,9 @@
     
     // BusinessPhotoViewController
     BusinessPhotoViewController *bpvc = [[BusinessPhotoViewController alloc] init];
-    bpvc.title = @"Take a photo!";
+    UINavigationController *photoNav = [[UINavigationController alloc] initWithRootViewController:bpvc];
+    bpvc.navigationController = photoNav;
+    bpvc.title = @"Photos";
     bpvc.appDelegate = self;
 
     // Set up the tab bar
@@ -205,7 +207,7 @@
                                                             image:nil
                                                               tag:103];
     bpvc.tabBarItem = photoItem;
-	self.tabNavigator.viewControllers = @[newsNav, questionNav, employeeNav, bpvc];
+	self.tabNavigator.viewControllers = @[newsNav, questionNav, employeeNav, photoNav];
 }
 
 -(void)backButtonPressed {

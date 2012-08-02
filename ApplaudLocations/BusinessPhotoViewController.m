@@ -15,15 +15,10 @@
 @end
 
 @implementation BusinessPhotoViewController
-@synthesize navigationController = _navigationController;
-@synthesize appDelegate = _appDelegate;
-@synthesize imagePicker = _imagePicker;
-@synthesize cameraButton = _cameraButton;
-@synthesize businessPhotos = _businessPhotos;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id) init
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super init];
     if (self) {
         self.imagePicker = [[UIImagePickerController alloc] init];
         if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
@@ -42,18 +37,30 @@
 -(void)notificationReceived:(NSNotification *)notification {
     if([notification.name isEqualToString:@"BUSINESS_SET"]) {
         [self getPhotos];
+        self.navigationController.navigationBar.tintColor = self.appDelegate.currentBusiness.primaryColor;
+        self.navigationItem.title = @"Photos";
     }
+}
+
+-(void)backButtonPressed {
+    [self.appDelegate backButtonPressed];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera
+                                                                                           target:self
+                                                                                           action:@selector(cameraButtonPressed)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:BACK_BUTTON_TITLE
+                                                                             style:UIBarButtonItemStylePlain
+                                                                            target:self
+                                                                            action:@selector(backButtonPressed)];
 }
 
 - (void)viewDidUnload
 {
-    [self setCameraButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -116,16 +123,22 @@
 
 // Do stuff with the photos from the server.
 -(void)handlePhotoData:(NSDictionary *)photoData {
+    self.businessPhotos = [[NSMutableArray alloc] init];
     for(NSDictionary *photoDict in [photoData objectForKey:@"photos"]) {
-        BusinessPhoto *photo = [[BusinessPhoto alloc] initWithImage:nil
+        BusinessPhoto *photo = [[BusinessPhoto alloc] initWithImage:photoDict[@"image"]
                                                                tags:photoDict[@"tags"]
                                                             upvotes:[photoDict[@"upvotes"] intValue]
                                                           downvotes:[photoDict[@"downvotes"] intValue]
-                                                           business:[photoDict[@"business_id"] intValue]
+                                                           business:[photoDict[@"business"] intValue]
                                                         uploaded_by:photoDict[@"uploaded_by"]
                                                              active:[photoDict[@"active"] boolValue]];
         [self.businessPhotos addObject:photo];
     }
+    [self addPhotos];
+}
+
+-(void)addPhotos {
+    
 }
 
 // Send an image to the server.
@@ -144,7 +157,6 @@
     for (NSString *param in params) {
         [body appendData:start];
         [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", param] dataUsingEncoding:NSUTF8StringEncoding]];
-        // [body appendData:[@"Content-Type: text/plain; charset=utf-8\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
         [body appendData:[[NSString stringWithFormat:@"%@\r\n", [params objectForKey:param]] dataUsingEncoding:NSUTF8StringEncoding]];
     }
     
@@ -152,7 +164,6 @@
     [body appendData:start];
     [body appendData:[@"Content-Disposition: file; name=\"image\"; filename=\"image.jpg\"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
     [body appendData:[@"Content-Type: image/jpeg\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-    // [body appendData:[@"Content-Transfer-Encoding: binary" dataUsingEncoding:NSUTF8StringEncoding]];
     [body appendData:UIImageJPEGRepresentation(photo, .1)];
     [body appendData:[[NSString stringWithFormat:@"--%@--\r\n", BOUNDARY] dataUsingEncoding:NSUTF8StringEncoding]];
  
@@ -169,12 +180,12 @@
         [request addValue:csrf forHTTPHeaderField:@"X-CSRFToken"];
         [NSURLConnection sendAsynchronousRequest:request
                                            queue:[NSOperationQueue mainQueue]
-                               completionHandler:^(NSURLResponse *r, NSData *d, NSError *e) {        }];
+                               completionHandler:^(NSURLResponse *r, NSData *d, NSError *e) {}];
     }];
 }
 
 // Called when the user presses the camera button. Pretty straightforward.
-- (IBAction)cameraButtonPressed {
+- (void)cameraButtonPressed {
     [self presentViewController:self.imagePicker
                        animated:YES
                      completion:nil];

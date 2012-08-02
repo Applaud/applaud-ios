@@ -9,10 +9,8 @@
 #import <Foundation/Foundation.h>
 
 @interface BusinessPhoto : NSObject
-// All these names line up with the Django model.
-// The only difference is that business and profile
-// are stored as database IDs instead of foreign keys.
-@property (strong, nonatomic) UIImage *image;
+
+@property (strong, nonatomic) NSURL *imageURL;
 @property (strong, nonatomic) NSArray *tags;
 @property (nonatomic) int upvotes;
 @property (nonatomic) int downvotes;
@@ -20,7 +18,7 @@
 @property (nonatomic) NSDictionary *uploaded_by;
 @property (nonatomic) BOOL active;
 
--(id)initWithImage:(UIImage *)image tags:(NSArray *)tags
+-(id)initWithImage:(NSURL *)imageURL tags:(NSArray *)tags
            upvotes:(int)upvotes downvotes:(int)downvotes
           business:(int)business uploaded_by:(NSDictionary *)uploaded_by
             active:(BOOL)active;
