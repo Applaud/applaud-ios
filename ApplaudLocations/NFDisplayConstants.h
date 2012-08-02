@@ -10,6 +10,7 @@
 #define ApplaudIOS_NFDisplayConstants_h
 
 #define IMAGE_SIZE 50.0f            // how big the image is
+#define DETAIL_IMAGE_SIZE 100.0f    // how big the image is in the detail view
 #define CELL_ELEMENT_PADDING 5.0f   // how much space between things inside of the cell
 #define CELL_PADDING 10.0f          // space between cell wall and anything else
 #define CELL_MARGIN 22.0f           // space between outside of the cell and edge of the screen
