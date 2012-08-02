@@ -71,6 +71,7 @@
                                                  longitude:dict[@"longitude"]
                                               primaryColor:nil
                                             secondaryColor:nil
+                                                   generic:[dict[@"generic"] boolValue]
                                                      types:dict[@"types"]];
             bus.business_id = [dict[@"business_id"] intValue];
             [businessArray addObject:bus];

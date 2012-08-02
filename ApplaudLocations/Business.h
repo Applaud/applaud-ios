@@ -17,6 +17,7 @@
 @property (nonatomic, strong) UIColor *primaryColor;
 @property (nonatomic, strong) UIColor *secondaryColor;
 @property (nonatomic, strong) NSDictionary *types;
+@property (nonatomic, readonly) BOOL generic;
 
 -(id) initWithName:(NSString *)name
            goog_id:(NSString *)goog_id
@@ -24,6 +25,7 @@
          longitude:(NSNumber *) longitude
       primaryColor:(NSString *)primaryColor
     secondaryColor:(NSString *)secondaryColor
+           generic:(BOOL)generic
              types:(NSDictionary *) types;
 
 @end

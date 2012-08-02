@@ -10,10 +10,14 @@
 
 @implementation Business
 
-- (id)initWithName:(NSString *)name goog_id:(NSString *)goog_id
-          latitude:(NSNumber *) latitude longitude:(NSNumber *) longitude
-        primaryColor:(NSString *)primaryColor secondaryColor:(NSString *)secondaryColor
-        types: (NSDictionary *)types {
+- (id)initWithName:(NSString *)name
+           goog_id:(NSString *)goog_id
+          latitude:(NSNumber *) latitude
+         longitude:(NSNumber *) longitude
+      primaryColor:(NSString *)primaryColor
+    secondaryColor:(NSString *)secondaryColor
+           generic:(BOOL)generic
+             types: (NSDictionary *)types {
     if(self = [super init]) {
         _name = name;
         _goog_id = goog_id;
@@ -21,6 +25,7 @@
         _longitude = longitude;
         _primaryColor = [self colorWithHex:primaryColor];
         _secondaryColor = [self colorWithHex:secondaryColor];
+        _generic = generic;
         _types = types;
     }
     return self;

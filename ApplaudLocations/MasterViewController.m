@@ -122,6 +122,7 @@
                                                                           longitude:dict[@"longitude"]
                                                                        primaryColor:dict[@"primary"]
                                                                      secondaryColor:dict[@"secondary"]
+                                                                            generic:[dict[@"generic"] boolValue]
                                                                               types:dict[@"types"]];
                                 [business setBusiness_id:[dict[@"business_id"] intValue]];
                                 self.appDelegate.currentBusiness = business;
