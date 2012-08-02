@@ -52,7 +52,9 @@
     [self setTitle:@"Available Locations"];
     
     // Set our title for navigation purposes
-    self.navigationItem.title = @"List";
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] init];
+    backButton.title = @"List";
+    self.navigationItem.backBarButtonItem = backButton;
 }
 
 - (void)viewDidUnload

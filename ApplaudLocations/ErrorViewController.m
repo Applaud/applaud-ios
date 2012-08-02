@@ -40,6 +40,9 @@
     self.backgroundView.contentMode = UIViewContentModeBottom;
     [self.view addSubview:self.backgroundView];
     
+    // Title
+    self.title = @"An Error Occurred";
+    
     // Error text
     extern int error_code;
 
