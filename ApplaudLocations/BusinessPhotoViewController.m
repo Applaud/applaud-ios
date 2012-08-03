@@ -26,6 +26,10 @@
             self.imagePicker.delegate = self;
             self.imagePicker.allowsEditing = NO;
         }
+        self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 64,
+                                                                         self.view.frame.size.width,
+                                                                         PHOTO_MARGIN)];
+        self.view = self.scrollView;
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                selector:@selector(notificationReceived:)
                                                    name:@"BUSINESS_SET"
@@ -68,7 +72,7 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    return UIInterfaceOrientationIsPortrait(interfaceOrientation);
 }
 
 #pragma mark -
@@ -97,8 +101,8 @@
                                delegate:nil
                       cancelButtonTitle:@"OK"
                       otherButtonTitles:nil] show];
-    [self postPhotoData:image];
     [self.imagePicker dismissViewControllerAnimated:YES completion:nil];
+    [self postPhotoData:image];
 }
 // Called when the user presses the cancel button.
 // We'll do nothing for now.
@@ -125,7 +129,7 @@
 -(void)handlePhotoData:(NSDictionary *)photoData {
     self.businessPhotos = [[NSMutableArray alloc] init];
     for(NSDictionary *photoDict in [photoData objectForKey:@"photos"]) {
-        BusinessPhoto *photo = [[BusinessPhoto alloc] initWithImage:photoDict[@"image"]
+        BusinessPhoto *photo = [[BusinessPhoto alloc] initWithImage:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", SERVER_URL, photoDict[@"image"]]]
                                                                tags:photoDict[@"tags"]
                                                             upvotes:[photoDict[@"upvotes"] intValue]
                                                           downvotes:[photoDict[@"downvotes"] intValue]
@@ -138,7 +142,40 @@
 }
 
 -(void)addPhotos {
-    
+    CGFloat currentHeight = PHOTO_MARGIN;
+    for(BusinessPhoto *photo in self.businessPhotos) {
+        UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(PHOTO_PADDING,
+                                                                       currentHeight,
+                                                                       self.view.frame.size.width,
+                                                                       2*PHOTO_PADDING + PHOTO_SIZE)];
+        UIButton *imageButton = [[UIButton alloc] initWithFrame:CGRectMake(PHOTO_PADDING,
+                                                                           PHOTO_PADDING,
+                                                                           PHOTO_SIZE,
+                                                                           PHOTO_SIZE)];
+        imageButton.imageView.frame = CGRectMake(0, 0,
+                                                 PHOTO_SIZE - 2*PHOTO_PADDING,
+                                                 PHOTO_SIZE - 2*PHOTO_PADDING);
+        [imageButton setImageWithURL:photo.imageURL
+                    placeholderImage:[UIImage imageNamed:@"blankPerson.jpg"]
+                             success:^(UIImage *image) {
+                                 
+                             }
+                             failure:nil];
+        [imageButton addTarget:self
+                        action:@selector(imageButtonPressed:)
+              forControlEvents:UIControlEventTouchUpInside];
+        [contentView addSubview:imageButton];
+        [self.view addSubview:contentView];
+        currentHeight += contentView.frame.size.height + PHOTO_MARGIN;
+        self.scrollView.contentSize = CGSizeMake(self.view.frame.size.width,
+                                                 currentHeight);
+    }
+}
+
+-(void)imageButtonPressed:(id)sender {
+    UIButton *button = (UIButton *)sender;
+    PhotoZoomViewController *pzvc = [[PhotoZoomViewController alloc] initWithImage:button.imageView.image];
+    [self.navigationController pushViewController:pzvc animated:YES];
 }
 
 // Send an image to the server.
@@ -163,8 +200,8 @@
     // Add the image.
     [body appendData:start];
     [body appendData:[@"Content-Disposition: file; name=\"image\"; filename=\"image.jpg\"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-    [body appendData:[@"Content-Type: image/jpeg\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-    [body appendData:UIImageJPEGRepresentation(photo, .1)];
+    [body appendData:[@"Content-Type: image/png\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:UIImageJPEGRepresentation(photo, 1)];
     [body appendData:[[NSString stringWithFormat:@"--%@--\r\n", BOUNDARY] dataUsingEncoding:NSUTF8StringEncoding]];
  
     // Now make the request.

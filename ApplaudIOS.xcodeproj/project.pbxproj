@@ -59,6 +59,7 @@
 		1BD494F215BF1E05006A01A9 /* NFTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BD494F115BF1E05006A01A9 /* NFTableViewCell.m */; };
 		1BFF2E7E158D9CDC00753F94 /* EmployeeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BFF2E7C158D9CDB00753F94 /* EmployeeListViewController.m */; };
 		1BFF2E7F158D9CDC00753F94 /* EmployeeListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1BFF2E7D158D9CDC00753F94 /* EmployeeListViewController.xib */; };
+		6F240AAC15CB529F00908238 /* PhotoZoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F240AAB15CB529F00908238 /* PhotoZoomViewController.m */; };
 		6F2A39171587B2AB0024FB52 /* Business.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F2A39161587B2AB0024FB52 /* Business.m */; };
 		6F37B93B1589400E001DD06D /* NFItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F37B9391589400D001DD06D /* NFItemViewController.m */; };
 		6F37B93C1589400E001DD06D /* NFItemViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F37B93A1589400D001DD06D /* NFItemViewController.xib */; };
@@ -174,6 +175,8 @@
 		1BFF2E7B158D9CDB00753F94 /* EmployeeListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmployeeListViewController.h; sourceTree = "<group>"; };
 		1BFF2E7C158D9CDB00753F94 /* EmployeeListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmployeeListViewController.m; sourceTree = "<group>"; };
 		1BFF2E7D158D9CDC00753F94 /* EmployeeListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmployeeListViewController.xib; sourceTree = "<group>"; };
+		6F240AAA15CB529F00908238 /* PhotoZoomViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoZoomViewController.h; sourceTree = "<group>"; };
+		6F240AAB15CB529F00908238 /* PhotoZoomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoZoomViewController.m; sourceTree = "<group>"; };
 		6F2A39151587B2AB0024FB52 /* Business.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Business.h; sourceTree = "<group>"; };
 		6F2A39161587B2AB0024FB52 /* Business.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Business.m; sourceTree = "<group>"; };
 		6F37B9381589400D001DD06D /* NFItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NFItemViewController.h; sourceTree = "<group>"; };
@@ -413,6 +416,8 @@
 			children = (
 				6F9E60D715C06E37006BD49A /* BusinessPhoto.h */,
 				6F9E60D815C06E37006BD49A /* BusinessPhoto.m */,
+				6F240AAA15CB529F00908238 /* PhotoZoomViewController.h */,
+				6F240AAB15CB529F00908238 /* PhotoZoomViewController.m */,
 				6F3EA47415BE039D006E66A8 /* BusinessPhotoViewController.h */,
 				6F3EA47515BE039D006E66A8 /* BusinessPhotoViewController.m */,
 			);
@@ -566,6 +571,7 @@
 				1B5D030A15C4564300976D33 /* ErrorViewController.m in Sources */,
 				6F6F702715C85F0E007C8DF7 /* EmployeeCell.m in Sources */,
 				6F66787615C9EFCE00A7AA1D /* NFItemTableViewCell.m in Sources */,
+				6F240AAC15CB529F00908238 /* PhotoZoomViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
