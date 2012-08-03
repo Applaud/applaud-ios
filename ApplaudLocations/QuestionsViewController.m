@@ -170,7 +170,7 @@
                                         lineBreakMode:UILineBreakModeWordWrap];
             cell.containerView.frame = CGRectMake(0, 0,
                                                   cell.frame.size.width - 2*CELL_PADDING,
-                                                  questionLabelSize.height + 2*CELL_PADDING + 20);
+                                                  questionLabelSize.height + 2*CELL_PADDING - 10);
             [cell layoutSubviews];
         }
         cell.contentView.layer.shadowPath = [[UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0,
