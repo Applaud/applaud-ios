@@ -97,6 +97,7 @@ static int outbound_connections;
                                       cookieString = [NSString stringWithFormat:@"csrftoken=%@; %@", csrf, cookieString];
                                       [request addValue:cookieString forHTTPHeaderField:@"Cookie"];
                                       [request addValue:csrf forHTTPHeaderField:@"X-CSRFToken"];
+                                      [request addValue:SERVER_URL forHTTPHeaderField:@"Referer"];
                                       NSLog(@"Requesting from URL (POST): %@",request.URL.absoluteString);
                                       [ConnectionManager makeRequest:request callback:callback];
                                   }];
