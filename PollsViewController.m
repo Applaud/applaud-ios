@@ -83,12 +83,12 @@
 }
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *CellIdentifier = @"PollCell";
-    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    NSString *cellIdentifier = [[self.polls objectAtIndex:indexPath.section] title];
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
     if ( nil == cell ){
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                      reuseIdentifier:CellIdentifier];
+                                      reuseIdentifier:cellIdentifier];
         cell.textLabel.text = [[self.polls objectAtIndex:indexPath.section] title];
     }
     
@@ -122,8 +122,12 @@
                                          options:[pollDict objectForKey:@"options"]
                                        responses:[pollDict objectForKey:@"responses"]
                                      business_id:self.appDelegate.currentBusiness.business_id];
+        NSLog(@"Poll created: %@",poll.description);
+        
         [self.polls addObject:poll];
     }
+    
+    [self.tableView reloadData];
 }
 
 @end

@@ -20,6 +20,7 @@
 		1B3769E015D05505001214B7 /* PollsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3769DE15D05505001214B7 /* PollsViewController.m */; };
 		1B3769E115D05505001214B7 /* PollsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B3769DF15D05505001214B7 /* PollsViewController.xib */; };
 		1B3769E515D057C4001214B7 /* Poll.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3769E415D057C4001214B7 /* Poll.m */; };
+		1B3769E815D0641C001214B7 /* PollAccordionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3769E715D0641C001214B7 /* PollAccordionCell.m */; };
 		1B51400F158F93F4008CB057 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B51400E158F93F4008CB057 /* CoreData.framework */; };
 		1B514013158F9441008CB057 /* ApplaudProgramState.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1B514011158F9441008CB057 /* ApplaudProgramState.xcdatamodeld */; };
 		1B514016158FA233008CB057 /* ApplaudProgramSettingsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B514015158FA233008CB057 /* ApplaudProgramSettingsModel.m */; };
@@ -128,6 +129,8 @@
 		1B3769DF15D05505001214B7 /* PollsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PollsViewController.xib; path = ../PollsViewController.xib; sourceTree = "<group>"; };
 		1B3769E315D057C4001214B7 /* Poll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Poll.h; sourceTree = "<group>"; };
 		1B3769E415D057C4001214B7 /* Poll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Poll.m; sourceTree = "<group>"; };
+		1B3769E615D0641C001214B7 /* PollAccordionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PollAccordionCell.h; sourceTree = "<group>"; };
+		1B3769E715D0641C001214B7 /* PollAccordionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PollAccordionCell.m; sourceTree = "<group>"; };
 		1B51400E158F93F4008CB057 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		1B514012158F9441008CB057 /* ApplaudProgramState.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ApplaudProgramState.xcdatamodel; sourceTree = "<group>"; };
 		1B514014158FA233008CB057 /* ApplaudProgramSettingsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplaudProgramSettingsModel.h; sourceTree = "<group>"; };
@@ -301,6 +304,8 @@
 		1B3769E215D0550C001214B7 /* Polls */ = {
 			isa = PBXGroup;
 			children = (
+				1B3769E615D0641C001214B7 /* PollAccordionCell.h */,
+				1B3769E715D0641C001214B7 /* PollAccordionCell.m */,
 				1B3769DD15D05505001214B7 /* PollsViewController.h */,
 				1B3769DE15D05505001214B7 /* PollsViewController.m */,
 				1B3769DF15D05505001214B7 /* PollsViewController.xib */,
@@ -590,6 +595,7 @@
 				6F66787615C9EFCE00A7AA1D /* NFItemTableViewCell.m in Sources */,
 				1B3769E015D05505001214B7 /* PollsViewController.m in Sources */,
 				1B3769E515D057C4001214B7 /* Poll.m in Sources */,
+				1B3769E815D0641C001214B7 /* PollAccordionCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
