@@ -14,6 +14,7 @@
 #define EVALUATE_URL @"/mobile/evaluate/"
 #define FEEDBACK_URL @"/mobile/general_feedback/"
 #define CHECKIN_URL @"/mobile/checkin/"
+#define POLLS_URL @"/mobile/get_polls/"
 #define NEWSFEED_URL @"/mobile/newsfeed/"
 #define SURVEY_URL @"/mobile/get_survey/"
 #define RESPONSE_URL @"/mobile/survey_respond/"

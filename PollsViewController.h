@@ -7,9 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AppDelegate.h"
 
-@interface PollsViewController : UIViewController
+@interface PollsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
+@property (strong, nonatomic) UINavigationController *navigationController;
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
+@property (nonatomic, weak) AppDelegate *appDelegate;
+@property (nonatomic, strong) NSMutableArray *polls;
 
 @end

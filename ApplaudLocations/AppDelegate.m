@@ -14,6 +14,7 @@
 #import "ErrorViewController.h"
 #import "ConnectionManager.h"
 #import "BusinessPhotoViewController.h"
+#import "PollsViewController.h"
 
 @implementation AppDelegate
 
@@ -169,6 +170,13 @@
     elvc.navigationController = employeeNav;
     elvc.appDelegate = self;
     
+    // Polls view controller
+    PollsViewController *pvc = [[PollsViewController alloc] init];
+    [pvc setTitle:@"Polls"];
+    UINavigationController *pollsNav = [[UINavigationController alloc] initWithRootViewController:pvc];
+    pvc.navigationController = pollsNav;
+    pvc.appDelegate = self;
+    
     // QuestionsViewController next
     QuestionsViewController *qvc = [[QuestionsViewController alloc] init];
     [qvc setTitle:@"Dialog"];
@@ -195,6 +203,12 @@
                                                                image:[UIImage imageNamed:@"employees"]
                                                                  tag:100];
     elvc.tabBarItem = employeeItem;
+//    UITabBarItem *pollsItem = [[UITabBarItem alloc] initWithTitle:@"Polls"
+//                                                               image:[UIImage imageNamed:@"employees"]
+//                                                                 tag:100];
+    UITabBarItem *pollsItem = [[UITabBarItem alloc] init];
+    pollsItem.title = @"Polls";
+    pvc.tabBarItem = pollsItem;
     UITabBarItem *questionItem = [[UITabBarItem alloc] initWithTitle:@"Feedback"
                                                                image:[UIImage imageNamed:@"dialog"]
                                                                  tag:101];
@@ -207,7 +221,7 @@
                                                             image:nil
                                                               tag:103];*/
     // bpvc.tabBarItem = photoItem;
-	self.tabNavigator.viewControllers = @[newsNav, questionNav, employeeNav]; //, photoNav];
+	self.tabNavigator.viewControllers = @[newsNav, pollsNav, questionNav, employeeNav]; //, photoNav];
 }
 
 -(void)backButtonPressed {
