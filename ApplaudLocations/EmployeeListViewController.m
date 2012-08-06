@@ -199,13 +199,28 @@
                 imageURLString = [[NSString alloc] initWithFormat:@"%@%@",
                                   SERVER_URL, dict[@"image"]];
             }
+            
+            //Ensure 'Comments:' is at the end of the employee's dimensions
+            NSMutableArray *dimensions = [[NSMutableArray alloc] init];
+            NSDictionary *comments = [[NSDictionary alloc] init];
+            for ( NSDictionary *dim in dict[@"ratings"][@"dimensions"] ){
+                if ( [dim[@"title"] isEqualToString: @"Comments:"] ){
+                    comments = dim;
+                }
+                else{
+                    [dimensions addObject:dim];
+                }
+            }
+            [dimensions addObject:comments];
+            
+            
             //TODO: cache images
             Employee *e = [[Employee alloc] initWithFirstName:dict[@"first_name"]
                                                      lastName:dict[@"last_name"]
                                                           bio:dict[@"bio"]
                                                      imageURL:[[NSURL alloc] initWithString:imageURLString]
                                                  profileTitle:dict[@"ratings"][@"rating_title"]
-                                                   dimensions:dict[@"ratings"][@"dimensions"]
+                                                   dimensions:dimensions
                                                   employee_id:[dict[@"id"] intValue]];
             // employeeArray will hold all the employees
             [self.employeeArray addObject:e];
