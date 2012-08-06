@@ -13,11 +13,11 @@
 @property (nonatomic, copy, readonly) NSString *title;
 @property (nonatomic, strong) NSMutableArray *options;
 @property (nonatomic, strong) NSMutableArray *responses;
-@property (nonatomic) int business_id;
+@property (nonatomic) int poll_id;
 
 -(id)initWithTitle:(NSString*)title
            options:(NSMutableArray*)options
          responses:(NSMutableArray*)responses
-       business_id:(int)business_id;
+           poll_id:(int)poll_id;
 
 @end

@@ -13,13 +13,13 @@
 -(id)initWithTitle:(NSString*)title
            options:(NSMutableArray*)options
          responses:(NSMutableArray*)responses
-       business_id:(int)business_id {
+           poll_id:(int)poll_id {
     self = [super init];
     if ( self ) {
         _title = title;
         _options = options;
         _responses = responses;
-        _business_id = business_id;
+        _poll_id = poll_id;
     }
     return self;
 }

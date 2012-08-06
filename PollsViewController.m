@@ -64,18 +64,38 @@
 #pragma mark UITableViewDelegate Methods
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    // This submits a response
+    NSDictionary *response =  @{ @"value" : @(indexPath.row),
+                                    @"id" : @([[self.polls objectAtIndex:indexPath.section] poll_id]) };
     
-}
-
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 0.0;
+    [ConnectionManager serverRequest:@"POST"
+                          withParams:response
+                                 url:POLL_SUBMIT_URL
+                            callback:^(NSHTTPURLResponse *r, NSData* dat) {
+                                NSError *e = [[NSError alloc] init];
+                                NSDictionary *pollData = [NSJSONSerialization JSONObjectWithData:dat
+                                                                                         options:NSJSONReadingAllowFragments
+                                                                                           error:&e];
+                                
+                                Poll *newPoll = [[Poll alloc] initWithTitle:[pollData objectForKey:@"title"]
+                                                                    options:[pollData objectForKey:@"options"]
+                                                                  responses:[pollData objectForKey:@"responses"]
+                                                                    poll_id:[[pollData objectForKey:@"id"] intValue]];
+                                
+                                // debugging:
+                                NSLog(@"Poll results: %@", newPoll.responses);
+                            }];
 }
 
 #pragma mark -
 #pragma mark UITableViewDataSource Methods
 
+-(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    return [[self.polls objectAtIndex:section] title];
+}
+
 -(int)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
+    return [[(Poll*)[self.polls objectAtIndex:section] options] count];
 }
 
 -(int)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -83,14 +103,16 @@
 }
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *cellIdentifier = [[self.polls objectAtIndex:indexPath.section] title];
-    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    static NSString *CellIdentifier = @"PollCell";
+    
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     if ( nil == cell ){
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                      reuseIdentifier:cellIdentifier];
-        cell.textLabel.text = [[self.polls objectAtIndex:indexPath.section] title];
+                                      reuseIdentifier:CellIdentifier];
     }
+    
+    cell.textLabel.text = [[(Poll*)[self.polls objectAtIndex:indexPath.section] options] objectAtIndex:indexPath.row];
     
     return cell;
 }
@@ -111,23 +133,30 @@
 
 - (void)handlePollsData:(NSData*)data {
     // Grabbing the JSON data from the server's response
+    self.polls = [self pollsFromJSON:data];
+    
+    [self.tableView reloadData];
+}
+    
+- (NSMutableArray*)pollsFromJSON:(NSData*)JSONData {
     NSError *e = [[NSError alloc] init];
-    NSArray *pollsData = [NSJSONSerialization JSONObjectWithData:data
+    NSArray *pollsData = [NSJSONSerialization JSONObjectWithData:JSONData
                                                          options:NSJSONReadingAllowFragments
                                                            error:&e];
-    self.polls = [[NSMutableArray alloc] init];
+    
+    NSMutableArray *polls = [[NSMutableArray alloc] init];
     
     for ( NSDictionary *pollDict in pollsData ) {
         Poll *poll = [[Poll alloc] initWithTitle:[pollDict objectForKey:@"title"]
                                          options:[pollDict objectForKey:@"options"]
                                        responses:[pollDict objectForKey:@"responses"]
-                                     business_id:self.appDelegate.currentBusiness.business_id];
+                                         poll_id:[[pollDict objectForKey:@"id"] intValue]];
         NSLog(@"Poll created: %@",poll.description);
         
-        [self.polls addObject:poll];
+        [polls addObject:poll];
     }
     
-    [self.tableView reloadData];
+    return polls;
 }
 
 @end
