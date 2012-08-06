@@ -14,6 +14,7 @@
 #import "ErrorViewController.h"
 #import "ConnectionManager.h"
 #import "BusinessPhotoViewController.h"
+#import "LoginRegisterViewController.h"
 
 @implementation AppDelegate
 
@@ -61,6 +62,7 @@
     self.masterViewController = [[MasterViewController alloc] init];
     self.masterViewController.appDelegate = self;
     self.masterViewController.settings = self.settings;
+    
     // The tab bar, for navigation
     self.tabNavigator = [[UITabBarController alloc] init];
     
@@ -87,11 +89,6 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
-    // We want to be notified about login success or failure
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(loginSucceeded:)
-                                                 name:@"LOGIN_SUCCESS"
-                                               object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(loginFailed:)
                                                  name:@"LOGIN_FAILURE"
@@ -112,7 +109,13 @@
         [ConnectionManager authenticateWithUsername:username password:password];
     }
     else {
-        [loginAlert show];
+        LoginRegisterViewController *LRVC = [[LoginRegisterViewController alloc] init];
+        LRVC.window = self.window;
+        LRVC.appDelegate = self;
+        
+        UINavigationController *LRNavBar = [[UINavigationController alloc] initWithRootViewController:LRVC];
+        
+        self.window.rootViewController = LRNavBar;
     }
        
     return YES;
@@ -293,44 +296,6 @@
 }
 
 
-#pragma mark -
-#pragma mark UIAlertView Delegate
-
-/**
- * The user entered in login credentials. Send to the server securely somehow.
- */
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    NSString *username = [alertView textFieldAtIndex:0].text;
-    NSString *password = [alertView textFieldAtIndex:1].text;
-    
-    // The OK button
-    if ( buttonIndex == 1 ) {
-        [ConnectionManager authenticateWithUsername:username password:password];
-    }
-    // User hit 'cancel'
-    else if ( buttonIndex == 0 ) {
-        error_code = ERROR_BAD_LOGIN;
-        [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                        name:@"LOGIN_FAILURE"
-                                                      object:nil];
-        [self fatalError];
-    }
-}
-
-#pragma mark -
-#pragma mark Login Success/Failure Methods
-
-/*
- * Login was completely successful.
- */
-- (void)loginSucceeded:(NSNotification *)notification {
-    NSLog(@"loginSucceeded called.");
-    NSArray *userPassword = notification.object;
-    self.settings.username = userPassword[0];
-    self.settings.password = userPassword[1];
-    NSError *err;
-    [self.managedObjectContext save:&err];
-}
 
 /*
  * Login failed for some reason (could not connect to server, bad username/password combo)
@@ -342,15 +307,6 @@
                                                         name:@"LOGIN_FAILURE"
                                                       object:nil];
         [self fatalError];
-    }
-    else {
-        UIAlertView *tryAgain = [[UIAlertView alloc] initWithTitle:@"Invalid Credentials"
-                                                           message:@"Please try again."
-                                                          delegate:self
-                                                 cancelButtonTitle:@"Cancel"
-                                                 otherButtonTitles:@"OK", nil];
-        tryAgain.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
-        [tryAgain show];
     }
 }
 

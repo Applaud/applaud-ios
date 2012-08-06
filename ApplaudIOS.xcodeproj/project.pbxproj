@@ -71,6 +71,9 @@
 		6F8C8A2B158C03DB00BB4BA0 /* Employee.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F8C8A2A158C03DB00BB4BA0 /* Employee.m */; };
 		6F9E60D915C06E37006BD49A /* BusinessPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F9E60D815C06E37006BD49A /* BusinessPhoto.m */; };
 		6FAB07A01587BF0700C9F1DF /* BusinessAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FAB079F1587BF0700C9F1DF /* BusinessAnnotation.m */; };
+		8A7B2D3415D044BD0053DCCF /* LoginRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A7B2D3315D044BD0053DCCF /* LoginRegisterViewController.m */; };
+		8A7B2D3715D051830053DCCF /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A7B2D3615D051830053DCCF /* SignInViewController.m */; };
+		8A7B2D3A15D083D80053DCCF /* RegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A7B2D3915D083D80053DCCF /* RegistrationViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -199,6 +202,13 @@
 		6F9E60D815C06E37006BD49A /* BusinessPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessPhoto.m; sourceTree = "<group>"; };
 		6FAB079E1587BF0700C9F1DF /* BusinessAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessAnnotation.h; sourceTree = "<group>"; };
 		6FAB079F1587BF0700C9F1DF /* BusinessAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessAnnotation.m; sourceTree = "<group>"; };
+		8A7B2D3215D044BD0053DCCF /* LoginRegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginRegisterViewController.h; sourceTree = "<group>"; };
+		8A7B2D3315D044BD0053DCCF /* LoginRegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginRegisterViewController.m; sourceTree = "<group>"; };
+		8A7B2D3515D051830053DCCF /* SignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInViewController.h; sourceTree = "<group>"; };
+		8A7B2D3615D051830053DCCF /* SignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInViewController.m; sourceTree = "<group>"; };
+		8A7B2D3815D083D80053DCCF /* RegistrationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrationViewController.h; sourceTree = "<group>"; };
+		8A7B2D3915D083D80053DCCF /* RegistrationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationViewController.m; sourceTree = "<group>"; };
+		8A7B2D3B15D084DC0053DCCF /* LoginRegistrationConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginRegistrationConstants.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -346,6 +356,7 @@
 		1BA358ED1582F05E00EB8F32 /* ApplaudLocations */ = {
 			isa = PBXGroup;
 			children = (
+				8A7B2D3115D0393D0053DCCF /* Login/Register */,
 				1BD494ED15BDF6D3006A01A9 /* Assets */,
 				1B514017158FA3C7008CB057 /* DBModels */,
 				1B301C69158858490038A5BE /* Questions */,
@@ -417,6 +428,20 @@
 				6F3EA47515BE039D006E66A8 /* BusinessPhotoViewController.m */,
 			);
 			name = "Business Photos";
+			sourceTree = "<group>";
+		};
+		8A7B2D3115D0393D0053DCCF /* Login/Register */ = {
+			isa = PBXGroup;
+			children = (
+				8A7B2D3215D044BD0053DCCF /* LoginRegisterViewController.h */,
+				8A7B2D3315D044BD0053DCCF /* LoginRegisterViewController.m */,
+				8A7B2D3815D083D80053DCCF /* RegistrationViewController.h */,
+				8A7B2D3915D083D80053DCCF /* RegistrationViewController.m */,
+				8A7B2D3B15D084DC0053DCCF /* LoginRegistrationConstants.h */,
+				8A7B2D3515D051830053DCCF /* SignInViewController.h */,
+				8A7B2D3615D051830053DCCF /* SignInViewController.m */,
+			);
+			name = Login/Register;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -566,6 +591,9 @@
 				1B5D030A15C4564300976D33 /* ErrorViewController.m in Sources */,
 				6F6F702715C85F0E007C8DF7 /* EmployeeCell.m in Sources */,
 				6F66787615C9EFCE00A7AA1D /* NFItemTableViewCell.m in Sources */,
+				8A7B2D3415D044BD0053DCCF /* LoginRegisterViewController.m in Sources */,
+				8A7B2D3715D051830053DCCF /* SignInViewController.m in Sources */,
+				8A7B2D3A15D083D80053DCCF /* RegistrationViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
