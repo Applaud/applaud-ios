@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LoginRegistrationConstants.h"
 #import "AppDelegate.h"
 #import "ConnectionManager.h"
+#import <string.h>
 
 @interface SignInViewController : UIViewController<UITextFieldDelegate>
 @property (nonatomic, strong) UITextField *username;

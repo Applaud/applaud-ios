@@ -19,6 +19,8 @@
 {
     self = [super init];
     if (self) {
+        self.navigationItem.title = @"Registration";
+        
         self.email = [[UITextField alloc] initWithFrame:CGRectMake(10,10,TEXTFIELD_WIDTH, TEXTFIELD_HEIGHT)];
         self.email.layer.cornerRadius = 5;
         self.email.layer.borderColor = [[[UIColor grayColor] colorWithAlphaComponent:0.5] CGColor];
@@ -50,7 +52,7 @@
         self.password.layer.cornerRadius = 5;
         self.password.layer.borderColor = [[[UIColor grayColor] colorWithAlphaComponent:0.5] CGColor];
         self.password.layer.borderWidth = 2.0;
-        [self.password setReturnKeyType:UIReturnKeyNext];
+        [self.password setReturnKeyType:UIReturnKeyGo];
         self.password.delegate = self;
         self.password.autocorrectionType = UITextAutocorrectionTypeNo;
         self.password.secureTextEntry = YES;
@@ -87,17 +89,73 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+-(BOOL)checkPassword:(NSString *)password {
+    if(password.length < 8) {
+        return NO;
+    }
+//    char *Cstring = [password cStringUsingEncoding:NSUTF8StringEncoding];
+//    return strpbrk(Cstring, "0123456789") && strpbrk(Cstring, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
+    NSError *err;
+    NSRegularExpression *regex = [[NSRegularExpression alloc] initWithPattern:@"^\\w{8,30}$"
+                                                                      options:0
+                                                                        error:&err];
+    if(err) NSLog(@"regex error! %@", err);
+    int num = [regex numberOfMatchesInString:password
+                                     options:0
+                                       range:NSMakeRange(0, password.length)];
+    return num;
+}
+
 - (void) registerButtonPressed
 {
+    if(![self checkPassword:self.password.text])
+        return;
     NSDictionary *dict = @{@"email":self.email.text,
-                 @"first_name":self.firstName.text,
-                   @"last_name":self.lastName.text,
-                    @"password":self.password.text};
+                           @"first_name":self.firstName.text,
+                           @"last_name":self.lastName.text,
+                           @"password":self.password.text};
     
     [ConnectionManager serverRequest:@"POST" withParams:dict url:REGISTER_URL callback:^(NSHTTPURLResponse *response, NSData *data){
+        
         [ConnectionManager authenticateWithUsername:dict[@"email"] password:dict[@"password"]];
+        
     }];
     
 }
+
+- (void) textFieldDidEndEditing:(UITextField *)textField
+{
+    if([textField isEqual:self.email]){
+        NSDictionary *dict = @{@"email":textField.text};
+        [ConnectionManager serverRequest:@"GET" withParams:dict url:CHECK_EMAIL_URL callback:^(NSHTTPURLResponse *urlResponse, NSData *data){
+            NSDictionary *returnData = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            //Email already exists
+            if([returnData[@"does_exist"] boolValue]){
+                
+                NSLog(@"That email already exists");
+                
+                
+            }
+            
+        }];
+    }
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if([textField isEqual:self.email])
+        [self.firstName becomeFirstResponder];
+    
+    else if([textField isEqual:self.firstName])
+        [self.lastName becomeFirstResponder];
+    
+    else if([textField isEqual:self.lastName])
+        [self.password becomeFirstResponder];
+    
+    else if([textField isEqual:self.password])
+        [self registerButtonPressed];
+    
+    return NO;
+}
+
 
 @end

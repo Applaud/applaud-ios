@@ -20,13 +20,15 @@
 {
     self = [super init];
     if (self) {
+        self.navigationItem.title = @"Sign In";
+        
         // Registering for login success/ failure
 
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginFailed:) name:@"LOGIN_FAILED" object:nil];
         
         // Username textfield
-        self.username = [[UITextField alloc] initWithFrame:CGRectMake(10, 10, 300, 30)];
-        self.username.layer.cornerRadius = 5;
+        self.username = [[UITextField alloc] initWithFrame:CGRectMake(10, 10, TEXTFIELD_WIDTH, TEXTFIELD_HEIGHT)];
+        self.username.layer.cornerRadius = 3;
         self.username.layer.borderColor = [[[UIColor grayColor] colorWithAlphaComponent:0.5] CGColor];
         self.username.layer.borderWidth = 2.0;
         [self.username setReturnKeyType:UIReturnKeyNext];
@@ -34,9 +36,9 @@
         self.username.autocorrectionType = UITextAutocorrectionTypeNo;
         
         // Password textfield
-        self.password = [[UITextField alloc] initWithFrame:CGRectMake(10, 50, 300, 30)];
+        self.password = [[UITextField alloc] initWithFrame:CGRectMake(10, 50, TEXTFIELD_WIDTH, TEXTFIELD_HEIGHT)];
         self.password.secureTextEntry = YES;
-        self.password.layer.cornerRadius = 5;
+        self.password.layer.cornerRadius = 3;
         self.password.layer.borderColor = [[[UIColor grayColor] colorWithAlphaComponent:0.5] CGColor];
         self.password.layer.borderWidth = 2.0;
         [self.password setReturnKeyType:UIReturnKeyGo];

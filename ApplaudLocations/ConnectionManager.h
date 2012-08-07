@@ -21,6 +21,7 @@
 #define PHOTO_URL @"/mobile/post_photo/"
 #define GET_PHOTO_URL @"/mobile/get_photos/"
 #define REGISTER_URL @"/mobile/register/"
+#define CHECK_EMAIL_URL @"/mobile/check_email/"
 
 @interface ConnectionManager : NSObject
 

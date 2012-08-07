@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <QuartzCore/QuartzCore.h>
 #import "ConnectionManager.h"
 #import "AppDelegate.h"
 #import "SignInViewController.h"
@@ -18,5 +19,7 @@
 @property (nonatomic, strong) UIButton *createAccount;
 @property (nonatomic, weak) AppDelegate *appDelegate;
 @property (nonatomic, strong) UIWindow *window;
+@property (nonatomic, strong) UIImageView *backgroundImage;
+@property (nonatomic, strong) UIImageView *logo;
 
 @end
