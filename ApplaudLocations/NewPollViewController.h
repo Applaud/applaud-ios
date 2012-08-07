@@ -12,7 +12,7 @@
 @interface NewPollViewController : UITableViewController <UITextFieldDelegate>
 
 @property (nonatomic, strong) NSMutableArray *options;
-@property (nonatomic, strong) NSString *title;
+@property (nonatomic, strong) NSString *pollTitle;
 @property (nonatomic, weak) AppDelegate *appDelegate;
 
 @end

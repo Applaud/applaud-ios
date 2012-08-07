@@ -23,7 +23,7 @@
         self.tableView = [[UITableView alloc] initWithFrame:self.view.frame
                                                       style:UITableViewStyleGrouped];
         self.options = [[NSMutableArray alloc] init];
-        self.title = @"";
+        self.pollTitle = @"";
     }
     return self;
 }
@@ -34,6 +34,9 @@
     
     // Add "Done"/"Edit" button
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    // Set our title
+    self.title = @"Create a Poll";
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -235,7 +238,7 @@
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     if ( textField.tag == -1 ) {
-        self.title = textField.text;
+        self.pollTitle = textField.text;
     } else {
         [self.options replaceObjectAtIndex:textField.tag withObject:textField.text];
     }
@@ -253,7 +256,7 @@
 
 - (void)submitPoll {
     
-    NSDictionary *params = @{ @"title" : self.title,
+    NSDictionary *params = @{ @"title" : self.pollTitle,
     @"options" : self.options,
     @"business_id" : @(self.appDelegate.currentBusiness.business_id)};
     
