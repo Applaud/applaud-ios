@@ -270,9 +270,11 @@
 	}
 	[self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:animationStyle];
 	
-	// Start editing the tag's name.
-//	EditableTableViewCell *cell = (EditableTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-//	[cell.textField becomeFirstResponder];
+	// Start editing the option inserted, if animated
+    if ( animated ) {
+        PollFieldCell *cell = (PollFieldCell*)[self.tableView cellForRowAtIndexPath:indexPath];
+        [cell.textField becomeFirstResponder];
+    }
 }
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {

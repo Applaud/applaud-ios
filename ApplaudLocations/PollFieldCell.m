@@ -20,6 +20,7 @@
         self.textField = [[UITextField alloc] init];
         self.textField.borderStyle = UITextBorderStyleNone;
         self.textField.backgroundColor = [UIColor clearColor];
+        self.textField.returnKeyType = UIReturnKeyDone;
         [self.contentView addSubview:self.textField];
     }
     return self;
