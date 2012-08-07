@@ -373,6 +373,9 @@
                           withParams:params
                                  url:POLL_CREATE_URL
                             callback:^(NSHTTPURLResponse *response, NSData *data) {
+                                // Deselect submit/cancel
+                                [[(PollSubmitCancelCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2]] submitCancel] setSelectedSegmentIndex:UISegmentedControlNoSegment];
+                                
                                 // Handle bad request (means something about the poll was bad)
                                 if ( 400 == response.statusCode ) {
                                     NSString *errorMessage = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
@@ -381,9 +384,11 @@
                                                                delegate:nil
                                                       cancelButtonTitle:@"OK"
                                                       otherButtonTitles:nil] show];
-                                    
-                                    // Deselect submit/cancel
-                                    [[(PollSubmitCancelCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2]] submitCancel] setSelectedSegmentIndex:UISegmentedControlNoSegment];
+                                }
+                                // All went well
+                                else if ( 200 == response.statusCode ) {
+                                    // Go back
+                                    [self.navigationController popViewControllerAnimated:YES];
                                 }
                             }];
 }
