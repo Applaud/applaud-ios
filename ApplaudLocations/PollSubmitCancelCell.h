@@ -22,6 +22,5 @@
 @property (weak) id<SubmitCancelDelegate> delegate;
 
 - (IBAction)segmentSelected:(id)sender;
-- (IBAction)segmentDeselected:(id)sender;
 
 @end

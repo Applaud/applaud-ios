@@ -93,7 +93,7 @@
         if ( nil == cell ) {
             cell = [[PollFieldCell alloc] initWithStyle:UITableViewCellStyleDefault
                                         reuseIdentifier:TitleCellIdentifier];
-            cell.placeholder = @"Poll Title";
+            cell.placeholder = @"Poll Question";
             cell.textField.delegate = self;
             cell.textField.tag = -1;    // -1 == the title textfield
         }
@@ -113,7 +113,6 @@
     }
     
     static NSString *InsertCellIdentifier = @"InsertOptionCell";
-    static NSString *DeletePollIdentifier = @"DeletePollCell";
     static NSString *CellIdentifier = @"OptionCell";
 
     // "Add Option"
@@ -126,17 +125,6 @@
         }
         insertCell.selectionStyle = UITableViewCellSelectionStyleNone;
         return insertCell;
-    }
-    // "Delete Poll"
-    else if ( indexPath.row == self.options.count + 1 ) {
-        UITableViewCell *deleteCell = [self.tableView dequeueReusableCellWithIdentifier:DeletePollIdentifier];
-        if ( nil == deleteCell ) {
-            deleteCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                                reuseIdentifier:DeletePollIdentifier];
-            deleteCell.textLabel.text = @"Delete Poll";
-        }
-        deleteCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        return deleteCell;
     }
 
     // An option
@@ -156,7 +144,7 @@
 - (NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     switch ( section ) {
         case 0:
-            return @"Title";
+            return @"Poll Question";
             break;
         case 1:
             return @"Options";
@@ -175,7 +163,7 @@
     else if ( 1 == section ) {
         NSUInteger count = self.options.count;
         if (self.editing) {
-            return count+2;
+            return count+1;
         }
         return count;
     }
@@ -234,10 +222,9 @@
  
     NSArray *addButtonIndexPaths = [NSArray arrayWithObjects:
                                     [NSIndexPath indexPathForRow:self.options.count inSection:1],
-                                    [NSIndexPath indexPathForRow:self.options.count+1 inSection:1],
                                     nil];
     
-	// Add or remove the "Add row"/"Delete poll" buttons as appropriate.
+	// Add or remove the "Add row" button as appropriate.
     UITableViewRowAnimation animationStyle = UITableViewRowAnimationNone;
 	if (editing) {
 		if (animated) {
