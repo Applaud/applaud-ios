@@ -19,4 +19,6 @@
 @property (nonatomic, weak) AppDelegate *appDelegate;
 @property (nonatomic, strong) NSMutableArray *polls;
 
+- (void)getPolls;
+
 @end

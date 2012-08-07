@@ -9,6 +9,7 @@
 #import "NewPollViewController.h"
 #import "PollFieldCell.h"
 #import "ConnectionManager.h"
+#import "PollsViewController.h"
 
 @interface NewPollViewController ()
 
@@ -54,6 +55,13 @@
     // Start with two options
     [self insertOptionAnimated:NO];
     [self insertOptionAnimated:NO];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    // Refresh list of polls in PollsViewController
+    [self.pollsViewController getPolls];
 }
 
 - (void)viewDidUnload

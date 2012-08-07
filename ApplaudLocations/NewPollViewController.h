@@ -9,10 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
 
+@class PollsViewController;
+
 @interface NewPollViewController : UITableViewController <UITextFieldDelegate>
 
 @property (nonatomic, strong) NSMutableArray *options;
 @property (nonatomic, strong) NSString *pollTitle;
 @property (nonatomic, weak) AppDelegate *appDelegate;
+@property (nonatomic, weak) PollsViewController *pollsViewController;
 
 @end
