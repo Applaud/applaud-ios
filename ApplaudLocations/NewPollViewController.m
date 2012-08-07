@@ -35,6 +35,13 @@
     // Add "Done"/"Edit" button
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
+    // Clear table background
+    UIView *tableBackground = [[UIView alloc] initWithFrame:self.view.frame];
+    tableBackground.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+    self.tableView.backgroundView = tableBackground;
+    self.view.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+    self.tableView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+    
     // Set our title
     self.title = @"Create a Poll";
 }
@@ -72,7 +79,7 @@
         if ( nil == cell ) {
             cell = [[PollFieldCell alloc] initWithStyle:UITableViewCellStyleDefault
                                         reuseIdentifier:TitleCellIdentifier];
-            cell.placeholder = @"Title";
+            cell.placeholder = @"Poll Title";
             cell.textField.delegate = self;
             cell.textField.tag = -1;    // -1 == the title textfield
         }
@@ -118,6 +125,18 @@
         cell.textField.tag = self.options.count -1;    // tag is index of option
     }
     return cell;
+}
+
+- (NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    switch ( section ) {
+        case 0:
+            return @"Title";
+            break;
+        case 1:
+            return @"Options";
+            break;
+    }
+    return @"";
 }
 
 - (int)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
