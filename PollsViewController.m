@@ -189,6 +189,7 @@
 
 - (void)showNewPoll {
     NewPollViewController *npvc = [[NewPollViewController alloc] init];
+    npvc.appDelegate = self.appDelegate;
     [self.navigationController pushViewController:npvc
                                          animated:YES];
 }

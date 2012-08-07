@@ -16,6 +16,7 @@
 #define CHECKIN_URL @"/mobile/checkin/"
 #define POLLS_URL @"/mobile/get_polls/"
 #define POLL_SUBMIT_URL @"/mobile/submit_poll/"
+#define POLL_CREATE_URL @"/mobile/create_poll/"
 #define NEWSFEED_URL @"/mobile/newsfeed/"
 #define SURVEY_URL @"/mobile/get_survey/"
 #define RESPONSE_URL @"/mobile/survey_respond/"

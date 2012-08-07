@@ -7,6 +7,8 @@
 //
 
 #import "NewPollViewController.h"
+#import "PollFieldCell.h"
+#import "ConnectionManager.h"
 
 @interface NewPollViewController ()
 
@@ -21,6 +23,7 @@
         self.tableView = [[UITableView alloc] initWithFrame:self.view.frame
                                                       style:UITableViewStyleGrouped];
         self.options = [[NSMutableArray alloc] init];
+        self.title = @"";
     }
     return self;
 }
@@ -28,6 +31,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    // Add "Done"/"Edit" button
+    self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -59,11 +65,13 @@
     static NSString *TitleCellIdentifier = @"TitleCell";
     // Title section
     if ( indexPath.section == 0 ) {
-        UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:TitleCellIdentifier];
+        PollFieldCell *cell = [self.tableView dequeueReusableCellWithIdentifier:TitleCellIdentifier];
         if ( nil == cell ) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                          reuseIdentifier:TitleCellIdentifier];
-            cell.textLabel.text = @"Title";
+            cell = [[PollFieldCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                        reuseIdentifier:TitleCellIdentifier];
+            cell.placeholder = @"Title";
+            cell.textField.delegate = self;
+            cell.textField.tag = -1;    // -1 == the title textfield
         }
         return cell;
     }
@@ -80,6 +88,7 @@
                                                 reuseIdentifier:InsertCellIdentifier];
             insertCell.textLabel.text = @"Add Option";
         }
+        insertCell.selectionStyle = UITableViewCellSelectionStyleNone;
         return insertCell;
     }
     // "Delete Poll"
@@ -90,15 +99,20 @@
                                                 reuseIdentifier:DeletePollIdentifier];
             deleteCell.textLabel.text = @"Delete Poll";
         }
+        deleteCell.selectionStyle = UITableViewCellSelectionStyleNone;
         return deleteCell;
     }
 
     // An option
     // for now, return a dumb cell
-    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    PollFieldCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if ( nil == cell ) {
-        cell = [[UITableViewCell alloc] init];
-        cell.textLabel.text = @"An option";
+        cell = [[PollFieldCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                     reuseIdentifier:CellIdentifier];
+        cell.placeholder = @"Option";
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.textField.delegate = self;
+        cell.textField.tag = self.options.count -1;    // tag is index of option
     }
     return cell;
 }
@@ -169,6 +183,11 @@
     }
     
     [self.tableView endUpdates];
+    
+    // Submit the poll when done editing
+    if (! editing) {
+        [self submitPoll];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -209,6 +228,38 @@
 		return nil;
 	}
 	return indexPath;
+}
+
+#pragma mark -
+#pragma mark UITextFieldDelegate Methods
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    if ( textField.tag == -1 ) {
+        self.title = textField.text;
+    } else {
+        [self.options replaceObjectAtIndex:textField.tag withObject:textField.text];
+    }
+    
+    NSLog(@"Textfield tag was %d",textField.tag);
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
+}
+
+#pragma mark -
+#pragma mark Other Methods
+
+- (void)submitPoll {
+    
+    NSDictionary *params = @{ @"title" : self.title,
+    @"options" : self.options,
+    @"business_id" : @(self.appDelegate.currentBusiness.business_id)};
+    
+    [ConnectionManager serverRequest:@"POST"
+                          withParams:params
+                                 url:POLL_CREATE_URL];
 }
 
 @end

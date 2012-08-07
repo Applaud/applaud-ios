@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AppDelegate.h"
 
-@interface NewPollViewController : UITableViewController
+@interface NewPollViewController : UITableViewController <UITextFieldDelegate>
 
 @property (nonatomic, strong) NSMutableArray *options;
+@property (nonatomic, strong) NSString *title;
+@property (nonatomic, weak) AppDelegate *appDelegate;
 
 @end
