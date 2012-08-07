@@ -32,6 +32,7 @@
 		1B60ED8515C878D700D63365 /* cancelrating.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B60ED8315C878D700D63365 /* cancelrating.png */; };
 		1B60ED8615C878D700D63365 /* cancelrating@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B60ED8415C878D700D63365 /* cancelrating@2x.png */; };
 		1B60ED8C15C8870800D63365 /* shareyourthoughts@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B60ED8B15C8870800D63365 /* shareyourthoughts@2x.png */; };
+		1B67EE7D15D1B64400F94CA0 /* PollSubmitCancelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B67EE7C15D1B64400F94CA0 /* PollSubmitCancelCell.m */; };
 		1B688DB915C3811900FCDCEE /* dialog.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B688DB315C3811900FCDCEE /* dialog.png */; };
 		1B688DBA15C3811900FCDCEE /* dialog@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B688DB415C3811900FCDCEE /* dialog@2x.png */; };
 		1B688DBB15C3811900FCDCEE /* employees.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B688DB515C3811900FCDCEE /* employees.png */; };
@@ -145,6 +146,8 @@
 		1B60ED8315C878D700D63365 /* cancelrating.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cancelrating.png; path = assets/cancelrating.png; sourceTree = "<group>"; };
 		1B60ED8415C878D700D63365 /* cancelrating@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "cancelrating@2x.png"; path = "assets/cancelrating@2x.png"; sourceTree = "<group>"; };
 		1B60ED8B15C8870800D63365 /* shareyourthoughts@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "shareyourthoughts@2x.png"; path = "assets/shareyourthoughts@2x.png"; sourceTree = "<group>"; };
+		1B67EE7B15D1B64400F94CA0 /* PollSubmitCancelCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PollSubmitCancelCell.h; sourceTree = "<group>"; };
+		1B67EE7C15D1B64400F94CA0 /* PollSubmitCancelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PollSubmitCancelCell.m; sourceTree = "<group>"; };
 		1B688DB315C3811900FCDCEE /* dialog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dialog.png; path = assets/dialog.png; sourceTree = "<group>"; };
 		1B688DB415C3811900FCDCEE /* dialog@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "dialog@2x.png"; path = "assets/dialog@2x.png"; sourceTree = "<group>"; };
 		1B688DB515C3811900FCDCEE /* employees.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = employees.png; path = assets/employees.png; sourceTree = "<group>"; };
@@ -314,6 +317,8 @@
 				1B3769DF15D05505001214B7 /* PollsViewController.xib */,
 				1B0FA55415D0D9B80031259F /* PollFieldCell.h */,
 				1B0FA55515D0D9B80031259F /* PollFieldCell.m */,
+				1B67EE7B15D1B64400F94CA0 /* PollSubmitCancelCell.h */,
+				1B67EE7C15D1B64400F94CA0 /* PollSubmitCancelCell.m */,
 				1B3769E315D057C4001214B7 /* Poll.h */,
 				1B3769E415D057C4001214B7 /* Poll.m */,
 			);
@@ -602,6 +607,7 @@
 				1B3769E515D057C4001214B7 /* Poll.m in Sources */,
 				1BC0D1C315D082A40027F9BF /* NewPollViewController.m in Sources */,
 				1B0FA55615D0D9B80031259F /* PollFieldCell.m in Sources */,
+				1B67EE7D15D1B64400F94CA0 /* PollSubmitCancelCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

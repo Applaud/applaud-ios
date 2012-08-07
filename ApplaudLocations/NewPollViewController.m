@@ -45,6 +45,12 @@
     
     // Set our title
     self.title = @"Create a Poll";
+    
+    // Add submit/cancel button
+    UISegmentedControl *submitCancel = [[UISegmentedControl alloc] initWithItems:
+                                        [NSArray arrayWithObjects:@"Submit", @"Cancel", nil]];
+
+    [self.view addSubview:submitCancel];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -90,6 +96,18 @@
             cell.placeholder = @"Poll Title";
             cell.textField.delegate = self;
             cell.textField.tag = -1;    // -1 == the title textfield
+        }
+        return cell;
+    }
+    
+    static NSString *SubmitCancelCellIdentifier = @"SubmitCancelCell";
+    // "Submit","Cancel"
+    if ( indexPath.section == 2 ) {
+        PollSubmitCancelCell *cell = (PollSubmitCancelCell*)[self.tableView dequeueReusableCellWithIdentifier:SubmitCancelCellIdentifier];
+        if ( nil == cell ) {
+            cell = [[PollSubmitCancelCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                               reuseIdentifier:SubmitCancelCellIdentifier];
+            cell.delegate = self;
         }
         return cell;
     }
@@ -162,16 +180,35 @@
         return count;
     }
     
+    // "Submit"/"Cancel"
+    else if ( 2 == section ) {
+        return 1;
+    }
+    
     return 0;
 }
 
 - (int)numberOfSectionsInTableView:(UITableView *)tableView {
-    // One for the title, one for options/management
-    return 2;
+    // One for the title, one for options/management, one for submit/cancel
+    return 3;
 }
 
 #pragma mark -
 #pragma mark Cell Editing
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Do not edit submit/cancel
+    if ( indexPath.section == 2 )
+        return NO;
+    return YES;
+}
+
+- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Do not indent title cell
+    if ( indexPath.section == 0 )
+        return NO;
+    return YES;
+}
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
     // No editing icon on "Title"
@@ -187,36 +224,11 @@
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
-    
-    // Do some validation when user is done editing
-    if ( ! editing ) {
-        // Clean out empty strings from options
-        NSMutableArray *newOptions = [[NSMutableArray alloc] init];
-        for ( NSString *option in self.options ) {
-            if (! [option isEqualToString:@""] ) {
-                [newOptions addObject:option];
-            }
-        }
-        if ( [self.pollTitle isEqualToString:@""] ) {
-            [[[UIAlertView alloc] initWithTitle:@"Invalid Poll"
-                                        message:@"You must give your Poll a title."
-                                       delegate:nil cancelButtonTitle:@"OK"
-                              otherButtonTitles:nil] show];
-            return;
-        }
-        else if ( newOptions.count < 2 ) {
-            [[[UIAlertView alloc] initWithTitle:@"Invalid Poll"
-                                        message:@"Your Poll must have at least two non-blank options."
-                                       delegate:nil cancelButtonTitle:@"OK"
-                              otherButtonTitles:nil] show];
-            return;
-        }
-    }
 
     [super setEditing:editing animated:animated];
   
 	// Don't show the Back button while editing.
-	[self.navigationItem setHidesBackButton:editing animated:YES];
+    [self.navigationItem setHidesBackButton:editing animated:YES];
     
 	[self.tableView beginUpdates];
  
@@ -238,11 +250,6 @@
     }
     
     [self.tableView endUpdates];
-    
-    // Submit the poll when done editing
-    if (! editing) {
-        [self submitPoll];
-    }
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -304,6 +311,48 @@
 }
 
 #pragma mark -
+#pragma mark SubmitCancelDelegate
+
+- (void)submitButtonPressed {
+    // Do some validation
+    // Clean out empty strings from options
+    NSMutableArray *newOptions = [[NSMutableArray alloc] init];
+    for ( NSString *option in self.options ) {
+        if (! [option isEqualToString:@""] ) {
+            [newOptions addObject:option];
+        }
+    }
+    if ( [self.pollTitle isEqualToString:@""] ) {
+        [[[UIAlertView alloc] initWithTitle:@"Invalid Poll"
+                                    message:@"You must give your Poll a title."
+                                   delegate:self cancelButtonTitle:@"OK"
+                          otherButtonTitles:nil] show];
+        return;
+    }
+    else if ( newOptions.count < 2 ) {
+        [[[UIAlertView alloc] initWithTitle:@"Invalid Poll"
+                                    message:@"Your Poll must have at least two non-blank options."
+                                   delegate:self cancelButtonTitle:@"OK"
+                          otherButtonTitles:nil] show];
+        return;
+    }
+    
+    [self submitPoll];
+}
+
+- (void)cancelButtonPressed {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark -
+#pragma mark UIAlertViewDelegate Methods
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    // Deselect submit/cancel
+    [[(PollSubmitCancelCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2]] submitCancel] setSelectedSegmentIndex:UISegmentedControlNoSegment];
+}
+
+#pragma mark -
 #pragma mark Other Methods
 
 - (void)submitPoll {
@@ -332,6 +381,9 @@
                                                                delegate:nil
                                                       cancelButtonTitle:@"OK"
                                                       otherButtonTitles:nil] show];
+                                    
+                                    // Deselect submit/cancel
+                                    [[(PollSubmitCancelCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2]] submitCancel] setSelectedSegmentIndex:UISegmentedControlNoSegment];
                                 }
                             }];
 }
