@@ -188,8 +188,33 @@
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     
+    // Do some validation when user is done editing
+    if ( ! editing ) {
+        // Clean out empty strings from options
+        NSMutableArray *newOptions = [[NSMutableArray alloc] init];
+        for ( NSString *option in self.options ) {
+            if (! [option isEqualToString:@""] ) {
+                [newOptions addObject:option];
+            }
+        }
+        if ( [self.pollTitle isEqualToString:@""] ) {
+            [[[UIAlertView alloc] initWithTitle:@"Invalid Poll"
+                                        message:@"You must give your Poll a title."
+                                       delegate:nil cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil] show];
+            return;
+        }
+        else if ( newOptions.count < 2 ) {
+            [[[UIAlertView alloc] initWithTitle:@"Invalid Poll"
+                                        message:@"Your Poll must have at least two non-blank options."
+                                       delegate:nil cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil] show];
+            return;
+        }
+    }
+
     [super setEditing:editing animated:animated];
-	
+  
 	// Don't show the Back button while editing.
 	[self.navigationItem setHidesBackButton:editing animated:YES];
     
@@ -235,9 +260,7 @@
 }
 
 - (void)insertOptionAnimated:(BOOL)animated {
-	//TODO: Add option to "options" array
-    // for now, insert NSNull into the array
-    [self.options addObject:@"I am an option"];
+    [self.options addObject:@""];
     
     // Create a new cell, with optional animation
 	NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.options.count-1 inSection:1];
@@ -283,13 +306,32 @@
 
 - (void)submitPoll {
     
+    // Clean out empty strings from options
+    NSMutableArray *newOptions = [[NSMutableArray alloc] init];
+    for ( NSString *option in self.options ) {
+        if (! [option isEqualToString:@""] ) {
+            [newOptions addObject:option];
+        }
+    }
+    
     NSDictionary *params = @{ @"title" : self.pollTitle,
-    @"options" : self.options,
+    @"options" : newOptions,
     @"business_id" : @(self.appDelegate.currentBusiness.business_id)};
     
     [ConnectionManager serverRequest:@"POST"
                           withParams:params
-                                 url:POLL_CREATE_URL];
+                                 url:POLL_CREATE_URL
+                            callback:^(NSHTTPURLResponse *response, NSData *data) {
+                                // Handle bad request (means something about the poll was bad)
+                                if ( 400 == response.statusCode ) {
+                                    NSString *errorMessage = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                                    [[[UIAlertView alloc] initWithTitle:@"Invalid Poll"
+                                                                message:errorMessage
+                                                               delegate:nil
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles:nil] show];
+                                }
+                            }];
 }
 
 @end
