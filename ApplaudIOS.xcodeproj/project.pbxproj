@@ -58,6 +58,7 @@
 		1BA358F41582F05E00EB8F32 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BA358F31582F05E00EB8F32 /* main.m */; };
 		1BA358F81582F05E00EB8F32 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BA358F71582F05E00EB8F32 /* AppDelegate.m */; };
 		1BB4AC9F15BF3E68003E8B29 /* EmployeeBioCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BB4AC9E15BF3E68003E8B29 /* EmployeeBioCell.m */; };
+		1BC0D1C315D082A40027F9BF /* NewPollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC0D1C115D082A40027F9BF /* NewPollViewController.m */; };
 		1BD494EF15BDF786006A01A9 /* blankPerson.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1BD494EE15BDF786006A01A9 /* blankPerson.jpg */; };
 		1BD494F215BF1E05006A01A9 /* NFTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BD494F115BF1E05006A01A9 /* NFTableViewCell.m */; };
 		1BFF2E7E158D9CDC00753F94 /* EmployeeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BFF2E7C158D9CDB00753F94 /* EmployeeListViewController.m */; };
@@ -175,6 +176,8 @@
 		1BB4AC9C15BF3B58003E8B29 /* EmployeeDisplayConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmployeeDisplayConstants.h; sourceTree = "<group>"; };
 		1BB4AC9D15BF3E68003E8B29 /* EmployeeBioCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmployeeBioCell.h; sourceTree = "<group>"; };
 		1BB4AC9E15BF3E68003E8B29 /* EmployeeBioCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmployeeBioCell.m; sourceTree = "<group>"; };
+		1BC0D1C015D082A40027F9BF /* NewPollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewPollViewController.h; sourceTree = "<group>"; };
+		1BC0D1C115D082A40027F9BF /* NewPollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewPollViewController.m; sourceTree = "<group>"; };
 		1BD494EE15BDF786006A01A9 /* blankPerson.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = blankPerson.jpg; sourceTree = "<group>"; };
 		1BD494F015BF1E05006A01A9 /* NFTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NFTableViewCell.h; sourceTree = "<group>"; };
 		1BD494F115BF1E05006A01A9 /* NFTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NFTableViewCell.m; sourceTree = "<group>"; };
@@ -301,6 +304,8 @@
 		1B3769E215D0550C001214B7 /* Polls */ = {
 			isa = PBXGroup;
 			children = (
+				1BC0D1C015D082A40027F9BF /* NewPollViewController.h */,
+				1BC0D1C115D082A40027F9BF /* NewPollViewController.m */,
 				1B3769DD15D05505001214B7 /* PollsViewController.h */,
 				1B3769DE15D05505001214B7 /* PollsViewController.m */,
 				1B3769DF15D05505001214B7 /* PollsViewController.xib */,
@@ -590,6 +595,7 @@
 				6F66787615C9EFCE00A7AA1D /* NFItemTableViewCell.m in Sources */,
 				1B3769E015D05505001214B7 /* PollsViewController.m in Sources */,
 				1B3769E515D057C4001214B7 /* Poll.m in Sources */,
+				1BC0D1C315D082A40027F9BF /* NewPollViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

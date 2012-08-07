@@ -9,10 +9,7 @@
 #import "PollsViewController.h"
 #import "ConnectionManager.h"
 #import "Poll.h"
-
-@interface PollsViewController ()
-
-@end
+#import "NewPollViewController.h"
 
 @implementation PollsViewController
 
@@ -24,6 +21,8 @@
                                                  selector:@selector(notificationReceived:)
                                                      name:@"BUSINESS_SET"
                                                    object:nil];
+        totalsMap = [[NSMutableDictionary alloc] init];
+        percentageMap = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
@@ -49,7 +48,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+
+    // Set our title
+    self.title = @"Polls";
+    
+    // New poll button
+    UIBarButtonItem *newPollItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+                                                                                 target:self
+                                                                                 action:@selector(showNewPoll)];
+    self.navigationItem.rightBarButtonItem = newPollItem;
 }
 
 - (void)viewDidUnload
@@ -82,8 +89,23 @@
                                                                   responses:[pollData objectForKey:@"responses"]
                                                                     poll_id:[[pollData objectForKey:@"id"] intValue]];
                                 
-                                // debugging:
-                                NSLog(@"Poll results: %@", newPoll.responses);
+                                // Calculate response percentages
+                                int responseTotal = 0;
+                                for ( NSDictionary *rd in newPoll.responses ) {
+                                    responseTotal += [rd[@"count"] intValue];
+                                }
+                                [totalsMap setObject:@(responseTotal) forKey:newPoll.title];
+                                NSMutableArray *responsePercentages = [[NSMutableArray alloc] init];
+                                for ( NSDictionary *rd in newPoll.responses ) {
+                                    [responsePercentages addObject:@(100.0 *
+                                    (responseTotal? [rd[@"count"] doubleValue] / responseTotal : responseTotal))];
+                                }
+                                [percentageMap setObject:responsePercentages forKey:newPoll.title];
+                                
+                                // Show response percentages
+                                NSLog(@"%@ -- total=%d",responsePercentages,responseTotal);
+                                
+                                [self.tableView reloadData];
                             }];
 }
 
@@ -104,15 +126,21 @@
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"PollCell";
+    NSString *optionTitle = [[(Poll*)[self.polls objectAtIndex:indexPath.section] options] objectAtIndex:indexPath.row];
+    NSString *pollTitle = [[self.polls objectAtIndex:indexPath.section] title];
     
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     if ( nil == cell ){
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle
                                       reuseIdentifier:CellIdentifier];
     }
     
-    cell.textLabel.text = [[(Poll*)[self.polls objectAtIndex:indexPath.section] options] objectAtIndex:indexPath.row];
+    cell.textLabel.text = optionTitle;
+    // Check for responses (will work only if user has answered already)
+    if ( [totalsMap objectForKey:pollTitle] )
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%2.2f%%",[[[percentageMap objectForKey:pollTitle]
+                                                                            objectAtIndex:indexPath.row] floatValue]];
     
     return cell;
 }
@@ -157,6 +185,12 @@
     }
     
     return polls;
+}
+
+- (void)showNewPoll {
+    NewPollViewController *npvc = [[NewPollViewController alloc] init];
+    [self.navigationController pushViewController:npvc
+                                         animated:YES];
 }
 
 @end

@@ -9,7 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
 
-@interface PollsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface PollsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
+    NSMutableDictionary *percentageMap;
+    NSMutableDictionary *totalsMap;
+}
 
 @property (strong, nonatomic) UINavigationController *navigationController;
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
