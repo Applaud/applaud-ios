@@ -60,6 +60,10 @@
                                                                                  target:self
                                                                                  action:@selector(showNewPoll)];
     self.navigationItem.rightBarButtonItem = newPollItem;
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:BACK_BUTTON_TITLE
+                                                                             style:UIBarButtonItemStylePlain
+                                                                            target:self.appDelegate
+                                                                            action:@selector(backButtonPressed)];
 }
 
 - (void)viewDidUnload
