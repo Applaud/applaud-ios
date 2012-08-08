@@ -13,6 +13,7 @@
 -(id)initWithTitle:(NSString*)title
            options:(NSMutableArray*)options
          responses:(NSMutableArray*)responses
+      date_created:(NSDate*)date_created
        user_rating:(int)user_rating
       show_results:(BOOL)show_results
            poll_id:(int)poll_id {
@@ -21,6 +22,7 @@
         _title = title;
         _options = options;
         self.responses = responses;
+        _date_created = date_created;
         _user_rating = user_rating;
         _show_results = show_results;
         _poll_id = poll_id;

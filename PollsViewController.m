@@ -23,8 +23,6 @@
                                                  selector:@selector(notificationReceived:)
                                                      name:@"BUSINESS_SET"
                                                    object:nil];
-        totalsMap = [[NSMutableDictionary alloc] init];
-        percentageMap = [[NSMutableDictionary alloc] init];
         cellMap = [[NSMutableDictionary alloc] init];
     }
     return self;
@@ -128,9 +126,12 @@
                                                                                          options:NSJSONReadingAllowFragments
                                                                                            error:&e];
 
+                                NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                                formatter.dateFormat = @"MM/dd/yyyy";
                                 Poll *newPoll = [[Poll alloc] initWithTitle:pollData[@"title"]
                                                                     options:pollData[@"options"]
                                                                   responses:pollData[@"responses"]
+                                                               date_created:[formatter dateFromString:pollData[@"date_created"]]
                                                                 user_rating:[pollData[@"user_rating"] intValue]
                                                                show_results:[pollData[@"show_results"] boolValue]
                                                                     poll_id:[pollData[@"id"] intValue]];
@@ -192,12 +193,16 @@
     UISegmentedControl *sortControl = (UISegmentedControl*)sender;
     switch ( sortControl.selectedSegmentIndex ) {
         case 0: // Newest
+            self.polls = pollsSortedNewest;
             break;
         case 1: // Popular
+            self.polls = pollsSortedPopular;
             break;
         case 2: // Liked
+            self.polls = pollsSortedLiked;
             break;
     }
+    [self.tableView reloadData];
 }
 
 #pragma mark -
@@ -218,6 +223,35 @@
     // Grabbing the JSON data from the server's response
     self.polls = [self pollsFromJSON:data];
     
+    // Pre-sorting the polls
+    pollsSortedLiked = [[NSMutableArray alloc] initWithArray:self.polls];
+    pollsSortedPopular = [[NSMutableArray alloc] initWithArray:self.polls];
+    pollsSortedNewest = [[NSMutableArray alloc] initWithArray:self.polls];
+    [pollsSortedLiked sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        Poll *a = (Poll*)obj1;
+        Poll *b = (Poll*)obj2;
+        if ( a.user_rating > b.user_rating )
+            return NSOrderedDescending;
+        else if ( a.user_rating < b.user_rating )
+            return NSOrderedAscending;
+        return NSOrderedSame;
+    }];
+    [pollsSortedNewest sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        Poll *a = (Poll*)obj1;
+        Poll *b = (Poll*)obj2;
+        // We want new --> old ==> ascending
+        return [b.date_created compare:a.date_created];
+    }];
+    [pollsSortedPopular sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        Poll *a = (Poll*)obj1;
+        Poll *b = (Poll*)obj2;
+        if ( a.total_votes > b.total_votes )
+            return NSOrderedDescending;
+        else if ( a.total_votes < b.total_votes )
+            return NSOrderedAscending;
+        return NSOrderedSame;
+    }];
+    
     [self.tableView reloadData];
 }
     
@@ -229,10 +263,13 @@
     
     NSMutableArray *polls = [[NSMutableArray alloc] init];
     
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"MM/dd/yyyy";
     for ( NSDictionary *pollDict in pollsData ) {
         Poll *poll = [[Poll alloc] initWithTitle:pollDict[@"title"]
                                          options:pollDict[@"options"]
                                        responses:pollDict[@"responses"]
+                                    date_created:[formatter dateFromString:pollDict[@"date_created"]]
                                      user_rating:[pollDict[@"user_rating"] intValue]
                                     show_results:[pollDict[@"show_results"] boolValue]
                                          poll_id:[pollDict[@"id"] intValue]];

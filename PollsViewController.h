@@ -10,9 +10,11 @@
 #import "AppDelegate.h"
 
 @interface PollsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
-    NSMutableDictionary *percentageMap;
-    NSMutableDictionary *totalsMap;
     NSMutableDictionary *cellMap;
+    
+    NSMutableArray *pollsSortedNewest;
+    NSMutableArray *pollsSortedLiked;
+    NSMutableArray *pollsSortedPopular;
 }
 
 @property (strong, nonatomic) UINavigationController *navigationController;
