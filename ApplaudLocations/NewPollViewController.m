@@ -39,10 +39,7 @@
     
     // Clear table background
     UIView *tableBackground = [[UIView alloc] initWithFrame:self.view.frame];
-    tableBackground.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
     self.tableView.backgroundView = tableBackground;
-    self.view.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
-    self.tableView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
     
     // Set our title
     self.title = @"Create a Poll";

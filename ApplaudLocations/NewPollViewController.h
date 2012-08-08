@@ -18,8 +18,7 @@
 
 @property (nonatomic, strong) NSMutableArray *options;
 @property (nonatomic, strong) NSString *pollTitle;
-@property (nonatomic, weak) AppDelegate *appDelegate;
+@property (nonatomic, strong) AppDelegate *appDelegate;
 @property (nonatomic, weak) PollsViewController *pollsViewController;
-//@property (nonatomic, weak) UINavigationController *navigationController;
 
 @end

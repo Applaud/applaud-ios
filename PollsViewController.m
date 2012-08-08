@@ -222,8 +222,11 @@
     NewPollViewController *npvc = [[NewPollViewController alloc] init];
     npvc.appDelegate = self.appDelegate;
     npvc.pollsViewController = self;
+    npvc.tableView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
     [self.navigationController pushViewController:npvc
                                          animated:YES];
 }
+
+
 
 @end
