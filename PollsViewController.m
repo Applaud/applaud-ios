@@ -127,7 +127,7 @@
                                                                                            error:&e];
 
                                 NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-                                formatter.dateFormat = @"MM/dd/yyyy";
+                                formatter.dateFormat = @"MM/dd/yyyy H:m:s";
                                 Poll *newPoll = [[Poll alloc] initWithTitle:pollData[@"title"]
                                                                     options:pollData[@"options"]
                                                                   responses:pollData[@"responses"]
@@ -142,6 +142,9 @@
                                     [self showResultAtOptionIndex:i forPoll:newPoll];
                                 }
      
+                                // Re-sort the polls
+                                [self sortPolls];
+                                
                                 // Deselect this row
                                 [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
                                 [self.tableView reloadData];
@@ -205,24 +208,7 @@
     [self.tableView reloadData];
 }
 
-#pragma mark -
-#pragma mark Other Methods
-
-- (void)getPolls {
-    NSDictionary *dict = @{@"business_id": @(self.appDelegate.currentBusiness.business_id)};
-    
-    [ConnectionManager serverRequest:@"POST"
-                          withParams:dict
-                                 url:POLLS_URL
-                            callback: ^(NSHTTPURLResponse *r, NSData *d) {
-                                [self handlePollsData:d];
-                            }];
-}
-
-- (void)handlePollsData:(NSData*)data {
-    // Grabbing the JSON data from the server's response
-    self.polls = [self pollsFromJSON:data];
-    
+- (void)sortPolls {
     // Pre-sorting the polls
     pollsSortedLiked = [[NSMutableArray alloc] initWithArray:self.polls];
     pollsSortedPopular = [[NSMutableArray alloc] initWithArray:self.polls];
@@ -230,9 +216,9 @@
     [pollsSortedLiked sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
         Poll *a = (Poll*)obj1;
         Poll *b = (Poll*)obj2;
-        if ( a.user_rating > b.user_rating )
+        if ( a.user_rating < b.user_rating )
             return NSOrderedDescending;
-        else if ( a.user_rating < b.user_rating )
+        else if ( a.user_rating > b.user_rating )
             return NSOrderedAscending;
         return NSOrderedSame;
     }];
@@ -245,12 +231,34 @@
     [pollsSortedPopular sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
         Poll *a = (Poll*)obj1;
         Poll *b = (Poll*)obj2;
-        if ( a.total_votes > b.total_votes )
+        if ( a.total_votes < b.total_votes )
             return NSOrderedDescending;
-        else if ( a.total_votes < b.total_votes )
+        else if ( a.total_votes > b.total_votes )
             return NSOrderedAscending;
         return NSOrderedSame;
     }];
+}
+
+#pragma mark -
+#pragma mark Other Methods
+
+- (void)getPolls {
+    NSDictionary *dict = @{@"business_id": @(self.appDelegate.currentBusiness.business_id)};
+    
+    [ConnectionManager serverRequest:@"POST"
+                          withParams:dict
+                                 url:POLLS_URL
+                            callback: ^(NSHTTPURLResponse *r, NSData *d) {
+                                NSLog(@"Poll data: %@",[[NSString alloc] initWithData:d encoding:NSUTF8StringEncoding]);
+                                [self handlePollsData:d];
+                            }];
+}
+
+- (void)handlePollsData:(NSData*)data {
+    // Grabbing the JSON data from the server's response
+    self.polls = [self pollsFromJSON:data];
+    
+    [self sortPolls];
     
     [self.tableView reloadData];
 }
@@ -264,7 +272,7 @@
     NSMutableArray *polls = [[NSMutableArray alloc] init];
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    formatter.dateFormat = @"MM/dd/yyyy";
+    formatter.dateFormat = @"MM/dd/yyyy H:m:s";
     for ( NSDictionary *pollDict in pollsData ) {
         Poll *poll = [[Poll alloc] initWithTitle:pollDict[@"title"]
                                          options:pollDict[@"options"]
