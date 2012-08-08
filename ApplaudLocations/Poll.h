@@ -15,11 +15,13 @@
 @property (nonatomic, strong) NSMutableArray *responses;
 @property (nonatomic) int poll_id;
 @property (nonatomic) BOOL show_results;
+@property (nonatomic) int user_rating;
 @property (nonatomic, readonly) int total_votes;
 
 -(id)initWithTitle:(NSString*)title
            options:(NSMutableArray*)options
          responses:(NSMutableArray*)responses
+       user_rating:(int)user_rating
       show_results:(BOOL)show_results
            poll_id:(int)poll_id;
 

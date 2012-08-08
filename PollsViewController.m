@@ -64,6 +64,27 @@
                                                                              style:UIBarButtonItemStylePlain
                                                                             target:self.appDelegate
                                                                             action:@selector(backButtonPressed)];
+    
+    // The toolbar, for sorting polls
+    UISegmentedControl *sortControls = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"Newest", @"Popular", @"Liked", nil]];
+    UIBarButtonItem	*flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    sortControls.segmentedControlStyle = UISegmentedControlStyleBar;
+    sortControls.tintColor = [UIColor grayColor];
+    [sortControls addTarget:self action:@selector(sortMethodSelected:) forControlEvents:UIControlEventValueChanged];
+    UIBarButtonItem *testItem = [[UIBarButtonItem alloc] initWithCustomView:sortControls];
+    self.navigationController.toolbarHidden = NO;
+    self.navigationController.toolbar.tintColor = [UIColor blackColor];
+    [self setToolbarItems:[NSArray arrayWithObjects:flex,testItem,flex,nil]];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self.navigationController setToolbarHidden:NO animated:YES];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [self.navigationController setToolbarHidden:YES animated:YES];
 }
 
 - (void)viewDidUnload
@@ -107,11 +128,12 @@
                                                                                          options:NSJSONReadingAllowFragments
                                                                                            error:&e];
 
-                                Poll *newPoll = [[Poll alloc] initWithTitle:[pollData objectForKey:@"title"]
-                                                                    options:[pollData objectForKey:@"options"]
-                                                                  responses:[pollData objectForKey:@"responses"]
-                                                               show_results:[[pollData objectForKey:@"show_results"] boolValue]
-                                                                    poll_id:[[pollData objectForKey:@"id"] intValue]];
+                                Poll *newPoll = [[Poll alloc] initWithTitle:pollData[@"title"]
+                                                                    options:pollData[@"options"]
+                                                                  responses:pollData[@"responses"]
+                                                                user_rating:[pollData[@"user_rating"] intValue]
+                                                               show_results:[pollData[@"show_results"] boolValue]
+                                                                    poll_id:[pollData[@"id"] intValue]];
                                 // Update the poll
                                 self.polls[indexPath.section] = newPoll;
                                 
@@ -164,6 +186,21 @@
 }
 
 #pragma mark -
+#pragma mark Sorting Polls
+
+- (void)sortMethodSelected:(id)sender {
+    UISegmentedControl *sortControl = (UISegmentedControl*)sender;
+    switch ( sortControl.selectedSegmentIndex ) {
+        case 0: // Newest
+            break;
+        case 1: // Popular
+            break;
+        case 2: // Liked
+            break;
+    }
+}
+
+#pragma mark -
 #pragma mark Other Methods
 
 - (void)getPolls {
@@ -193,12 +230,12 @@
     NSMutableArray *polls = [[NSMutableArray alloc] init];
     
     for ( NSDictionary *pollDict in pollsData ) {
-        Poll *poll = [[Poll alloc] initWithTitle:[pollDict objectForKey:@"title"]
-                                         options:[pollDict objectForKey:@"options"]
-                                       responses:[pollDict objectForKey:@"responses"]
-                                    show_results:[[pollDict objectForKey:@"show_results"] boolValue]
-                                         poll_id:[[pollDict objectForKey:@"id"] intValue]];
-        
+        Poll *poll = [[Poll alloc] initWithTitle:pollDict[@"title"]
+                                         options:pollDict[@"options"]
+                                       responses:pollDict[@"responses"]
+                                     user_rating:[pollDict[@"user_rating"] intValue]
+                                    show_results:[pollDict[@"show_results"] boolValue]
+                                         poll_id:[pollDict[@"id"] intValue]];
         [polls addObject:poll];
     }
     
