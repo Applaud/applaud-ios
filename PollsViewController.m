@@ -106,22 +106,11 @@
                                 Poll *newPoll = [[Poll alloc] initWithTitle:[pollData objectForKey:@"title"]
                                                                     options:[pollData objectForKey:@"options"]
                                                                   responses:[pollData objectForKey:@"responses"]
+                                                               show_results:[[pollData objectForKey:@"show_results"] boolValue]
                                                                     poll_id:[[pollData objectForKey:@"id"] intValue]];
                                 
-                                // Calculate response percentages
-                                int responseTotal = 0;
-                                for ( NSDictionary *rd in newPoll.responses ) {
-                                    responseTotal += [rd[@"count"] intValue];
-                                }
-                                for ( NSDictionary *rd in newPoll.responses ) {
-                                    double percent = 100.0 * (responseTotal? [rd[@"count"] doubleValue] / responseTotal : responseTotal);
-                                    PollOptionCell *cell = [cellMap objectForKey:[NSString stringWithFormat:@"%@%@",
-                                                                                  newPoll.title,
-                                                                                  rd[@"title"]]];
-                                    cell.percentageLabel.text = [NSString stringWithFormat:@"%2.2f%%",percent];
-                                    NSLog(@"Retrieving cell for the key %@%@",newPoll.title,rd[@"title"]);
-                                    [cell showResult];
-                                    [cell layoutSubviews];
+                                for ( int i=0; i<newPoll.responses.count; i++) {
+                                    [self showResultAtOptionIndex:i forPoll:newPoll];
                                 }
                             }];
 }
@@ -142,8 +131,9 @@
 }
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *optionTitle = [[(Poll*)[self.polls objectAtIndex:indexPath.section] options] objectAtIndex:indexPath.row];
-    NSString *pollTitle = [[self.polls objectAtIndex:indexPath.section] title];
+    Poll *poll = self.polls[indexPath.section];
+    NSString *optionTitle = poll.options[indexPath.row];
+    NSString *pollTitle = poll.title;
     NSString *cellIdentifier = [NSString stringWithFormat:@"%@%@",pollTitle,optionTitle];
     
     PollOptionCell *cell = (PollOptionCell*)[self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
@@ -154,7 +144,10 @@
         [cellMap setObject:cell forKey:[NSString stringWithFormat:@"%@%@",
                                         pollTitle,
                                         optionTitle]];
-        NSLog(@"Set a cell for the key %@%@",pollTitle,optionTitle);
+        if ( poll.show_results ) {
+            [self showResultAtOptionIndex:indexPath.row forPoll:poll];
+        }
+
     }
     
     cell.textLabel.text = optionTitle;
@@ -196,6 +189,7 @@
         Poll *poll = [[Poll alloc] initWithTitle:[pollDict objectForKey:@"title"]
                                          options:[pollDict objectForKey:@"options"]
                                        responses:[pollDict objectForKey:@"responses"]
+                                    show_results:[[pollDict objectForKey:@"show_results"] boolValue]
                                          poll_id:[[pollDict objectForKey:@"id"] intValue]];
         NSLog(@"Poll created: %@",poll.description);
         
@@ -205,11 +199,22 @@
     return polls;
 }
 
+- (void)showResultAtOptionIndex:(int)index forPoll:(Poll*)poll {
+    double optionVoteCount = [poll.responses[index][@"count"] doubleValue];
+    NSString *optionTitle = poll.responses[index][@"title"];
+    double percent = 100.0 * (poll.total_votes? optionVoteCount / poll.total_votes : poll.total_votes);
+    PollOptionCell *cell = [cellMap objectForKey:[NSString stringWithFormat:@"%@%@",
+                                                  poll.title,
+                                                  optionTitle]];
+    // Display percentage in the cell
+    cell.percentageLabel.text = [NSString stringWithFormat:@"%2.2f%%",percent];
+    [cell showResult];
+}
+
 - (void)showNewPoll {
     NewPollViewController *npvc = [[NewPollViewController alloc] init];
     npvc.appDelegate = self.appDelegate;
     npvc.pollsViewController = self;
-//    npvc.navigationController = self.navigationController;
     [self.navigationController pushViewController:npvc
                                          animated:YES];
 }

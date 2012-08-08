@@ -13,15 +13,25 @@
 -(id)initWithTitle:(NSString*)title
            options:(NSMutableArray*)options
          responses:(NSMutableArray*)responses
+      show_results:(BOOL)show_results
            poll_id:(int)poll_id {
     self = [super init];
     if ( self ) {
         _title = title;
         _options = options;
-        _responses = responses;
+        self.responses = responses;
+        _show_results = show_results;
         _poll_id = poll_id;
     }
     return self;
+}
+
+- (void)setResponses:(NSMutableArray *)responses {
+    _total_votes = 0;
+    for ( NSDictionary *dict in responses ) {
+        _total_votes += [dict[@"count"] intValue];
+    }
+    _responses = responses;
 }
 
 -(NSString*)description {
