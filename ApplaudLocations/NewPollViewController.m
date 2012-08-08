@@ -89,7 +89,7 @@
 }
 
 #pragma mark -
-#pragma mark UITableViewDataSource
+#pragma mark UITableViewDataSource / Delegate
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *TitleCellIdentifier = @"TitleCell";
@@ -278,7 +278,7 @@
 }
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	// Disable selection of the "Add Option"/"Delete Poll" buttons.
+	// Disable selection of the "Add Option" button.
 	if (indexPath.row >= self.options.count) {
 		return nil;
 	}
@@ -317,7 +317,7 @@
     }
     if ( [self.pollTitle isEqualToString:@""] ) {
         [[[UIAlertView alloc] initWithTitle:@"Invalid Poll"
-                                    message:@"You must give your Poll a title."
+                                    message:@"Your Poll must ask a question."
                                    delegate:self cancelButtonTitle:@"OK"
                           otherButtonTitles:nil] show];
         return;

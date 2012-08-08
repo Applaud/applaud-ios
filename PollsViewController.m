@@ -11,6 +11,11 @@
 #import "Poll.h"
 #import "NewPollViewController.h"
 
+#define OPTION_TEXT_SIZE 17.0f
+#define DEFAULT_CELL_HEIGHT 40.0f
+#define CELL_MARGIN 10.0f
+#define CELL_PADDING 10.0f
+
 @implementation PollsViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -69,6 +74,20 @@
 
 #pragma mark -
 #pragma mark UITableViewDelegate Methods
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Options section
+    if ( indexPath.section == 1 ) {
+        CGSize constraintSize = CGSizeMake(self.view.frame.size.width - 2*CELL_MARGIN - 2*CELL_PADDING,
+                                           400);
+        NSString *optionString = [[(Poll*)[self.polls objectAtIndex:indexPath.section] options] objectAtIndex:indexPath.row];
+        CGSize optionSize = [optionString sizeWithFont:[UIFont boldSystemFontOfSize:OPTION_TEXT_SIZE]
+                                     constrainedToSize:constraintSize
+                                         lineBreakMode:UILineBreakModeWordWrap];
+        return optionSize.height + 2*CELL_PADDING;
+    }
+    return DEFAULT_CELL_HEIGHT;
+}
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // This submits a response
@@ -134,6 +153,9 @@
     if ( nil == cell ){
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle
                                       reuseIdentifier:CellIdentifier];
+        cell.textLabel.numberOfLines = 0;
+        cell.textLabel.lineBreakMode = UILineBreakModeWordWrap;
+        cell.textLabel.font = [UIFont boldSystemFontOfSize:OPTION_TEXT_SIZE];
     }
     
     cell.textLabel.text = optionTitle;
