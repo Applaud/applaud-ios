@@ -116,7 +116,10 @@
                                 for ( int i=0; i<newPoll.responses.count; i++) {
                                     [self showResultAtOptionIndex:i forPoll:newPoll];
                                 }
-                            }];
+     
+                                // Deselect this row
+                                [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+     }];
 }
 
 #pragma mark -
