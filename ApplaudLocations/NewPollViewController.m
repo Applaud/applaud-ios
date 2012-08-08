@@ -55,15 +55,22 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
     [self setEditing:YES animated:YES];
     
-    // Start with two options
-    [self insertOptionAnimated:NO];
-    [self insertOptionAnimated:NO];
+    static BOOL first_time = YES;
+    
+    if ( first_time ) {
+        // Start with two options
+        [self insertOptionAnimated:NO];
+        [self insertOptionAnimated:NO];
+        first_time = NO;
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
+    if ( self.editing )
+        [self setEditing:NO animated:YES];
+    
     [super viewWillDisappear:animated];
     
     // Refresh list of polls in PollsViewController

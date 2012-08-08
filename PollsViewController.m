@@ -156,6 +156,7 @@
                                  url:POLLS_URL
                             callback: ^(NSHTTPURLResponse *r, NSData *d) {
                                 [self handlePollsData:d];
+                                NSLog(@"Poll data: %@",[[NSString alloc] initWithData:d encoding:NSUTF8StringEncoding]);
                             }];
 }
 
