@@ -99,6 +99,7 @@
             cell.placeholder = @"Poll Question";
             cell.textField.delegate = self;
             cell.textField.tag = -1;    // -1 == the title textfield
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
         return cell;
     }
