@@ -12,6 +12,8 @@
 		1B10A0ED15C20AE000A65FAE /* cancelup.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B10A0EB15C20AE000A65FAE /* cancelup.png */; };
 		1B12763215B89B9600980AA2 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B12763015B89B9600980AA2 /* MasterViewController.m */; };
 		1B12763315B89B9600980AA2 /* MasterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B12763115B89B9600980AA2 /* MasterViewController.xib */; };
+		1B18F75915D23AFF004317F9 /* polls.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B18F75715D23AFF004317F9 /* polls.png */; };
+		1B18F75A15D23AFF004317F9 /* polls@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B18F75815D23AFF004317F9 /* polls@2x.png */; };
 		1B301C621588580E0038A5BE /* NFViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B301C601588580E0038A5BE /* NFViewController.m */; };
 		1B301C631588580E0038A5BE /* NFViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B301C611588580E0038A5BE /* NFViewController.xib */; };
 		1B301C67158858430038A5BE /* EmployeeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B301C65158858430038A5BE /* EmployeeViewController.m */; };
@@ -120,6 +122,8 @@
 		1B12762F15B89B9600980AA2 /* MasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
 		1B12763015B89B9600980AA2 /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
 		1B12763115B89B9600980AA2 /* MasterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MasterViewController.xib; sourceTree = "<group>"; };
+		1B18F75715D23AFF004317F9 /* polls.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = polls.png; path = ../../graphics/polls.png; sourceTree = "<group>"; };
+		1B18F75815D23AFF004317F9 /* polls@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "polls@2x.png"; path = "../../graphics/polls@2x.png"; sourceTree = "<group>"; };
 		1B301C5F1588580E0038A5BE /* NFViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NFViewController.h; sourceTree = "<group>"; };
 		1B301C601588580E0038A5BE /* NFViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NFViewController.m; sourceTree = "<group>"; };
 		1B301C611588580E0038A5BE /* NFViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NFViewController.xib; sourceTree = "<group>"; };
@@ -388,8 +392,8 @@
 		1BA358ED1582F05E00EB8F32 /* ApplaudLocations */ = {
 			isa = PBXGroup;
 			children = (
-				1B3769E215D0550C001214B7 /* Polls */,
 				1BD494ED15BDF6D3006A01A9 /* Assets */,
+				1B3769E215D0550C001214B7 /* Polls */,
 				1B514017158FA3C7008CB057 /* DBModels */,
 				1B301C69158858490038A5BE /* Questions */,
 				1B301C5E158857D20038A5BE /* Employee */,
@@ -425,6 +429,8 @@
 		1BD494ED15BDF6D3006A01A9 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				1B18F75715D23AFF004317F9 /* polls.png */,
+				1B18F75815D23AFF004317F9 /* polls@2x.png */,
 				1B6D228315CA7292009A533B /* favicon@2x.png */,
 				1B6D228115CA7289009A533B /* favicon.png */,
 				1B6D226E15CA429C009A533B /* logo.png */,
@@ -574,6 +580,8 @@
 				1B6D228215CA7289009A533B /* favicon.png in Resources */,
 				1B6D228415CA7292009A533B /* favicon@2x.png in Resources */,
 				1B3769E115D05505001214B7 /* PollsViewController.xib in Resources */,
+				1B18F75915D23AFF004317F9 /* polls.png in Resources */,
+				1B18F75A15D23AFF004317F9 /* polls@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

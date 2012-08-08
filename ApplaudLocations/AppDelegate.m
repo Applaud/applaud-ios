@@ -203,11 +203,9 @@
                                                                image:[UIImage imageNamed:@"employees"]
                                                                  tag:100];
     elvc.tabBarItem = employeeItem;
-//    UITabBarItem *pollsItem = [[UITabBarItem alloc] initWithTitle:@"Polls"
-//                                                               image:[UIImage imageNamed:@"employees"]
-//                                                                 tag:100];
-    UITabBarItem *pollsItem = [[UITabBarItem alloc] init];
-    pollsItem.title = @"Polls";
+    UITabBarItem *pollsItem = [[UITabBarItem alloc] initWithTitle:@"Polls"
+                                                               image:[UIImage imageNamed:@"polls"]
+                                                                 tag:100];
     pvc.tabBarItem = pollsItem;
     UITabBarItem *questionItem = [[UITabBarItem alloc] initWithTitle:@"Feedback"
                                                                image:[UIImage imageNamed:@"dialog"]
