@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B07268C15D32590005EB452 /* downrate.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B07268A15D32590005EB452 /* downrate.png */; };
+		1B07268D15D32590005EB452 /* uprate.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B07268B15D32590005EB452 /* uprate.png */; };
 		1B0FA55615D0D9B80031259F /* PollFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B0FA55515D0D9B80031259F /* PollFieldCell.m */; };
 		1B10A0EC15C20AE000A65FAE /* canceldown.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B10A0EA15C20AE000A65FAE /* canceldown.png */; };
 		1B10A0ED15C20AE000A65FAE /* cancelup.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B10A0EB15C20AE000A65FAE /* cancelup.png */; };
@@ -114,6 +116,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1B07268A15D32590005EB452 /* downrate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = downrate.png; path = assets/downrate.png; sourceTree = "<group>"; };
+		1B07268B15D32590005EB452 /* uprate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = uprate.png; path = assets/uprate.png; sourceTree = "<group>"; };
 		1B0FA55415D0D9B80031259F /* PollFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PollFieldCell.h; sourceTree = "<group>"; };
 		1B0FA55515D0D9B80031259F /* PollFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PollFieldCell.m; sourceTree = "<group>"; };
 		1B10A0EA15C20AE000A65FAE /* canceldown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = canceldown.png; sourceTree = "<group>"; };
@@ -429,6 +433,8 @@
 		1BD494ED15BDF6D3006A01A9 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				1B07268A15D32590005EB452 /* downrate.png */,
+				1B07268B15D32590005EB452 /* uprate.png */,
 				1B18F75715D23AFF004317F9 /* polls.png */,
 				1B18F75815D23AFF004317F9 /* polls@2x.png */,
 				1B6D228315CA7292009A533B /* favicon@2x.png */,
@@ -582,6 +588,8 @@
 				1B3769E115D05505001214B7 /* PollsViewController.xib in Resources */,
 				1B18F75915D23AFF004317F9 /* polls.png in Resources */,
 				1B18F75A15D23AFF004317F9 /* polls@2x.png in Resources */,
+				1B07268C15D32590005EB452 /* downrate.png in Resources */,
+				1B07268D15D32590005EB452 /* uprate.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

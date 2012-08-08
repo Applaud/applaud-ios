@@ -158,6 +158,56 @@
     return [[self.polls objectAtIndex:section] title];
 }
 
+- (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    Poll *poll = self.polls[section];
+    
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CELL_WIDTH, 0)];
+    headerView.backgroundColor = [UIColor clearColor];
+    
+    CGSize constraintSize, labelSize;
+    constraintSize = CGSizeMake(self.view.frame.size.width - 2*CELL_MARGIN - CELL_PADDING - POLL_RATING_PADDING, 400);
+    // Cannot uprate or downrate poll when results are showing
+    if ( poll.show_results ) {
+        constraintSize = CGSizeMake(constraintSize.width - POLL_RATING_WIDTH, constraintSize.height);
+        UISegmentedControl *upDown = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:
+                                                                                [UIImage imageNamed:@"downrate"],
+                                                                                [UIImage imageNamed:@"uprate"],
+                                                                                nil]];
+        // Tag the rating widget with the section number (poll index number)
+        upDown.tag = section;
+        upDown.frame = CGRectMake(constraintSize.width + POLL_RATING_PADDING, CELL_PADDING, POLL_RATING_WIDTH, 32);
+        [upDown addTarget:self action:@selector(ratePoll:) forControlEvents:UIControlEventValueChanged];
+        [headerView addSubview:upDown];
+    }
+    
+    labelSize = [poll.title sizeWithFont:[UIFont boldSystemFontOfSize:POLL_QUESTION_TEXT_SIZE]
+                       constrainedToSize:constraintSize
+                           lineBreakMode:UILineBreakModeWordWrap];
+    UILabel *headerTitle = [[UILabel alloc] initWithFrame:CGRectMake(CELL_PADDING, CELL_PADDING, constraintSize.width, labelSize.height)];
+    headerTitle.text = poll.title;
+    headerTitle.lineBreakMode = UILineBreakModeWordWrap;
+    headerTitle.numberOfLines = 0;
+    headerTitle.backgroundColor = [UIColor clearColor];
+    headerTitle.font = [UIFont boldSystemFontOfSize:POLL_QUESTION_TEXT_SIZE];
+    [headerView addSubview:headerTitle];
+
+    return headerView;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    Poll *poll = self.polls[section];
+    
+    CGSize constraintSize, labelSize;
+    constraintSize = CGSizeMake(self.view.frame.size.width - 2*CELL_MARGIN - CELL_PADDING - POLL_RATING_PADDING, 400);
+    if ( poll.show_results ) {
+        constraintSize = CGSizeMake(constraintSize.width - POLL_RATING_WIDTH, constraintSize.height);
+    }
+    labelSize = [poll.title sizeWithFont:[UIFont boldSystemFontOfSize:POLL_QUESTION_TEXT_SIZE]
+                       constrainedToSize:constraintSize
+                           lineBreakMode:UILineBreakModeWordWrap];
+    return labelSize.height + 30;
+}
+
 -(int)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [[(Poll*)[self.polls objectAtIndex:section] options] count];
 }
@@ -192,7 +242,7 @@
 #pragma mark -
 #pragma mark Sorting Polls
 
-- (void)sortMethodSelected:(id)sender {
+- (IBAction)sortMethodSelected:(id)sender {
     UISegmentedControl *sortControl = (UISegmentedControl*)sender;
     switch ( sortControl.selectedSegmentIndex ) {
         case 0: // Newest
@@ -308,6 +358,21 @@
                                          animated:YES];
 }
 
-
+- (IBAction)ratePoll:(id)sender {
+    UISegmentedControl *upDown = (UISegmentedControl*)sender;
+    Poll *poll = self.polls[upDown.tag];
+    
+    // Upvote
+    if ( upDown.selectedSegmentIndex ) {
+        poll.user_rating++;
+    }
+    // Downvote
+    else {
+        poll.user_rating--;
+    }
+    
+    [self sortPolls];
+    [self.tableView reloadData];
+}
 
 @end
