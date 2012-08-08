@@ -7,13 +7,25 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SDWebImage/UIImageView+WebCache.h"
+#import "ConnectionManager.h"
+#import "BusinessPhoto.h"
+#import "PhotoCommentViewController.h"
+#import "AppDelegate.h"
+
+#define BUTTON_MARGIN 5.0f
+#define BUTTON_HEIGHT 30.0f
+#define BUTTON_WIDTH 50.0f
 
 @interface PhotoZoomViewController : UIViewController <UIScrollViewDelegate>
 
-//@property (nonatomic, strong) UInavi
 @property (nonatomic, strong) UIScrollView *scrollView;
+@property (nonatomic, strong) UILabel *votes;
 @property (nonatomic, strong) UIImageView *imageView;
-@property (nonatomic, strong) UIImage *image;
+@property (nonatomic, strong) UIButton *upButton;
+@property (nonatomic, strong) UIButton *downButton;
+@property (nonatomic, strong) BusinessPhoto *photo;
+@property (nonatomic, weak) AppDelegate *appDelegate;
 
--(id)initWithImage:(UIImage *)image;
+-(id)initWithPhoto:(BusinessPhoto *)photo;
 @end

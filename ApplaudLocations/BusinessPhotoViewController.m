@@ -43,6 +43,7 @@
         [self getPhotos];
         self.navigationController.navigationBar.tintColor = self.appDelegate.currentBusiness.primaryColor;
         self.navigationItem.title = @"Photos";
+        self.view.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
     }
 }
 
@@ -135,7 +136,8 @@
                                                           downvotes:[photoDict[@"downvotes"] intValue]
                                                            business:[photoDict[@"business"] intValue]
                                                         uploaded_by:photoDict[@"uploaded_by"]
-                                                             active:[photoDict[@"active"] boolValue]];
+                                                             active:[photoDict[@"active"] boolValue]
+                                                           photo_id:[photoDict[@"id"] intValue]];
         [self.businessPhotos addObject:photo];
     }
     [self addPhotos];
@@ -143,8 +145,12 @@
 
 -(void)addPhotos {
     CGFloat currentHeight = PHOTO_MARGIN;
+    int currentColumn = 0; // Which column this photo is in (0 to PHOTOS_PER_LINE)
+    int tagnum = 0; // which index each button corresponds to in the array
     for(BusinessPhoto *photo in self.businessPhotos) {
-        UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(PHOTO_PADDING,
+        NSLog(@"foo %f", PHOTO_PADDING + currentColumn*PHOTO_SIZE + currentColumn*PHOTO_MARGIN);
+        CGFloat x = PHOTO_PADDING + currentColumn*PHOTO_SIZE + currentColumn*PHOTO_MARGIN;
+        UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(x,
                                                                        currentHeight,
                                                                        self.view.frame.size.width,
                                                                        2*PHOTO_PADDING + PHOTO_SIZE)];
@@ -152,29 +158,37 @@
                                                                            PHOTO_PADDING,
                                                                            PHOTO_SIZE,
                                                                            PHOTO_SIZE)];
+        imageButton.tag = tagnum++;
         imageButton.imageView.frame = CGRectMake(0, 0,
                                                  PHOTO_SIZE - 2*PHOTO_PADDING,
                                                  PHOTO_SIZE - 2*PHOTO_PADDING);
         [imageButton setImageWithURL:photo.imageURL
                     placeholderImage:[UIImage imageNamed:@"blankPerson.jpg"]
                              success:^(UIImage *image) {
-                                 
+                                 NSLog(@"WOO");
                              }
-                             failure:nil];
+                             failure:^(NSError *error) {
+                                 NSLog(@"SHIT MAN");
+                             }];
         [imageButton addTarget:self
                         action:@selector(imageButtonPressed:)
               forControlEvents:UIControlEventTouchUpInside];
         [contentView addSubview:imageButton];
         [self.view addSubview:contentView];
-        currentHeight += contentView.frame.size.height + PHOTO_MARGIN;
-        self.scrollView.contentSize = CGSizeMake(self.view.frame.size.width,
-                                                 currentHeight);
+        currentColumn = ++currentColumn % PHOTOS_PER_LINE;
+        if(!currentColumn) {
+            currentHeight += contentView.frame.size.height + PHOTO_MARGIN;
+            self.scrollView.contentSize = CGSizeMake(self.view.frame.size.width,
+                                                     currentHeight);
+        }
     }
 }
 
 -(void)imageButtonPressed:(id)sender {
     UIButton *button = (UIButton *)sender;
-    PhotoZoomViewController *pzvc = [[PhotoZoomViewController alloc] initWithImage:button.imageView.image];
+    PhotoZoomViewController *pzvc = [[PhotoZoomViewController alloc]
+                                     initWithPhoto:self.businessPhotos[button.tag]];
+    pzvc.appDelegate = self.appDelegate;
     [self.navigationController pushViewController:pzvc animated:YES];
 }
 

@@ -184,11 +184,11 @@
     nfvc.appDelegate = self;
     
     // BusinessPhotoViewController
-/*    BusinessPhotoViewController *bpvc = [[BusinessPhotoViewController alloc] init];
+    BusinessPhotoViewController *bpvc = [[BusinessPhotoViewController alloc] init];
     UINavigationController *photoNav = [[UINavigationController alloc] initWithRootViewController:bpvc];
     bpvc.navigationController = photoNav;
     bpvc.title = @"Photos";
-    bpvc.appDelegate = self;*/
+    bpvc.appDelegate = self;
 
     // Set up the tab bar
     UITabBarItem *employeeItem = [[UITabBarItem alloc] initWithTitle:@"Applaud"
@@ -203,11 +203,11 @@
                                                            image:[UIImage imageNamed:@"newsfeed"]
                                                              tag:102];
     nfvc.tabBarItem = newsItem;
-    /* UITabBarItem *photoItem = [[UITabBarItem alloc] initWithTitle:@"Photos"
+    UITabBarItem *photoItem = [[UITabBarItem alloc] initWithTitle:@"Photos"
                                                             image:nil
-                                                              tag:103];*/
-    // bpvc.tabBarItem = photoItem;
-	self.tabNavigator.viewControllers = @[newsNav, questionNav, employeeNav]; //, photoNav];
+                                                              tag:103];
+    bpvc.tabBarItem = photoItem;
+	self.tabNavigator.viewControllers = @[newsNav, questionNav, employeeNav, photoNav];
 }
 
 -(void)backButtonPressed {

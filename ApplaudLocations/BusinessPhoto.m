@@ -13,7 +13,7 @@
 -(id)initWithImage:(NSURL *)imageURL tags:(NSArray *)tags
            upvotes:(int)upvotes downvotes:(int)downvotes
           business:(int)business uploaded_by:(NSDictionary *)uploaded_by
-            active:(BOOL)active {
+            active:(BOOL)active photo_id:(int)photo_id {
     if(self = [super init]) {
         _imageURL = imageURL;
         _tags = tags;
@@ -22,6 +22,7 @@
         _business = business;
         _uploaded_by = uploaded_by;
         _active = active;
+        _photo_id = photo_id;
     }
     return self;
 }
