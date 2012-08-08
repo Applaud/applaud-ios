@@ -15,5 +15,6 @@
 #define CELL_MARGIN 10.0f
 #define CELL_PADDING 10.0f
 #define CELL_WIDTH 320.0f
+#define GRAPH_CORNER_RADIUS 3.0f
 
 #endif

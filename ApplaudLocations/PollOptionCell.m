@@ -6,6 +6,7 @@
 //  Copyright (c) 2012 Applaud, Inc. All rights reserved.
 //
 
+#import <QuartzCore/QuartzCore.h>
 #import "PollOptionCell.h"
 #import "PollOptionDisplayConstants.h"
 
@@ -15,20 +16,27 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.percentageLabel = [[UILabel alloc] init];
+        self.contentView.backgroundColor = [UIColor clearColor];
+
+        _percentageLabel = [[UILabel alloc] init];
         self.percentageLabel.backgroundColor = [UIColor clearColor];
+        self.percentageLabel.font = [UIFont systemFontOfSize:RESULT_TEXT_SIZE];
+        [self.percentageLabel setHidden:YES];
+        
         self.accessoryView = [[UIView alloc] init];
         self.accessoryView.backgroundColor = [UIColor clearColor];
-        self.contentView.backgroundColor = [UIColor clearColor];
+        [self.accessoryView addSubview:self.percentageLabel];
         
-        //TODO: initialize and configure the barGraphView.
+        _barGraphView = [[UIView alloc] initWithFrame:CGRectZero];
+        self.barGraphView.backgroundColor = [UIColor clearColor];
+//        self.barGraphView.layer.cornerRadius = GRAPH_CORNER_RADIUS;
+//        self.barGraphView.layer.masksToBounds = YES;
+        [self.contentView addSubview:self.barGraphView];
+        [self.contentView sendSubviewToBack:self.barGraphView];
         
         self.textLabel.numberOfLines = 0;
         self.textLabel.lineBreakMode = UILineBreakModeWordWrap;
         self.textLabel.font = [UIFont boldSystemFontOfSize:OPTION_TEXT_SIZE];
-        self.percentageLabel.font = [UIFont systemFontOfSize:RESULT_TEXT_SIZE];
-        [self.percentageLabel setHidden:YES];
-        [self.accessoryView addSubview:self.percentageLabel];
     }
     return self;
 }
@@ -49,7 +57,16 @@
                                           0,
                                           ACCESSORY_SIZE,
                                           ACCESSORY_SIZE);
-    self.percentageLabel.frame = CGRectMake(0, 0, ACCESSORY_SIZE, ACCESSORY_SIZE);
+    
+    [self.percentageLabel sizeToFit];
+    self.percentageLabel.frame = CGRectMake(0,
+                                            ACCESSORY_SIZE/2.0f - self.percentageLabel.frame.size.height/2.0f,
+                                            ACCESSORY_SIZE,
+                                            self.percentageLabel.frame.size.height);
+    self.barGraphView.frame = CGRectMake(0,
+                                         self.frame.size.height/4.0f,
+                                         MAX(5.0f, self.value * (CELL_WIDTH - 2*CELL_MARGIN)),
+                                         self.frame.size.height/2.0f);
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
@@ -57,6 +74,16 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+- (void)setValue:(double)value {
+    // Set percentage label
+    self.percentageLabel.text = [NSString stringWithFormat:@"%2.2f%%",100.0f * value];
+    
+    // Set bar graph
+    self.barGraphView.backgroundColor = [UIColor colorWithHue:value/3.0f saturation:0.6f brightness:0.8f alpha:0.5f];
+    
+    _value = value;
 }
 
 - (void)showResult {

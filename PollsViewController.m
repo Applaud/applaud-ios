@@ -206,12 +206,12 @@
 - (void)showResultAtOptionIndex:(int)index forPoll:(Poll*)poll {
     double optionVoteCount = [poll.responses[index][@"count"] doubleValue];
     NSString *optionTitle = poll.responses[index][@"title"];
-    double percent = 100.0 * (poll.total_votes? optionVoteCount / poll.total_votes : poll.total_votes);
+    double value = poll.total_votes? optionVoteCount / poll.total_votes : poll.total_votes;
     PollOptionCell *cell = [cellMap objectForKey:[NSString stringWithFormat:@"%@%@",
                                                   poll.title,
                                                   optionTitle]];
     // Display percentage in the cell
-    cell.percentageLabel.text = [NSString stringWithFormat:@"%2.2f%%",percent];
+    cell.value = value;
     [cell showResult];
 }
 

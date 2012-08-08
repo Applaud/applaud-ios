@@ -10,8 +10,9 @@
 
 @interface PollOptionCell : UITableViewCell
 
-@property (strong, nonatomic) UILabel *percentageLabel;
-@property (strong, nonatomic) UIView *barGraphView;
+@property (nonatomic) double value;
+@property (strong, nonatomic, readonly) UILabel *percentageLabel;
+@property (strong, nonatomic, readonly) UIView *barGraphView;
 
 - (void)showResult;
 
