@@ -21,6 +21,7 @@
         [self.submitCancel addTarget:self
                               action:@selector(segmentSelected:)
                     forControlEvents:UIControlEventValueChanged];
+        self.backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
         [self.contentView addSubview:self.submitCancel];
     }
     return self;
