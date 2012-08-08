@@ -106,12 +106,14 @@
                                 NSDictionary *pollData = [NSJSONSerialization JSONObjectWithData:dat
                                                                                          options:NSJSONReadingAllowFragments
                                                                                            error:&e];
-                                
+
                                 Poll *newPoll = [[Poll alloc] initWithTitle:[pollData objectForKey:@"title"]
                                                                     options:[pollData objectForKey:@"options"]
                                                                   responses:[pollData objectForKey:@"responses"]
                                                                show_results:[[pollData objectForKey:@"show_results"] boolValue]
                                                                     poll_id:[[pollData objectForKey:@"id"] intValue]];
+                                // Update the poll
+                                self.polls[indexPath.section] = newPoll;
                                 
                                 for ( int i=0; i<newPoll.responses.count; i++) {
                                     [self showResultAtOptionIndex:i forPoll:newPoll];
@@ -119,6 +121,7 @@
      
                                 // Deselect this row
                                 [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+                                [self.tableView reloadData];
      }];
 }
 
@@ -148,9 +151,7 @@
     if ( nil == cell ){
         cell = [[PollOptionCell alloc] initWithStyle:UITableViewCellStyleSubtitle
                                       reuseIdentifier:cellIdentifier];
-        [cellMap setObject:cell forKey:[NSString stringWithFormat:@"%@%@",
-                                        pollTitle,
-                                        optionTitle]];
+        [cellMap setObject:cell forKey:cellIdentifier];
         if ( poll.show_results ) {
             [self showResultAtOptionIndex:indexPath.row forPoll:poll];
         }
@@ -173,7 +174,6 @@
                                  url:POLLS_URL
                             callback: ^(NSHTTPURLResponse *r, NSData *d) {
                                 [self handlePollsData:d];
-                                NSLog(@"Poll data: %@",[[NSString alloc] initWithData:d encoding:NSUTF8StringEncoding]);
                             }];
 }
 
@@ -198,7 +198,6 @@
                                        responses:[pollDict objectForKey:@"responses"]
                                     show_results:[[pollDict objectForKey:@"show_results"] boolValue]
                                          poll_id:[[pollDict objectForKey:@"id"] intValue]];
-        NSLog(@"Poll created: %@",poll.description);
         
         [polls addObject:poll];
     }

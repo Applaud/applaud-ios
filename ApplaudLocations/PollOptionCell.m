@@ -29,8 +29,6 @@
         
         _barGraphView = [[UIView alloc] initWithFrame:CGRectZero];
         self.barGraphView.backgroundColor = [UIColor clearColor];
-//        self.barGraphView.layer.cornerRadius = GRAPH_CORNER_RADIUS;
-//        self.barGraphView.layer.masksToBounds = YES;
         [self.contentView addSubview:self.barGraphView];
         [self.contentView sendSubviewToBack:self.barGraphView];
         
@@ -72,18 +70,27 @@
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
+    self.barGraphView.backgroundColor = [UIColor colorWithHue:self.value/3.0f saturation:0.6f brightness:0.8f alpha:0.5f];
+}
 
-    // Configure the view for the selected state
+- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated {
+    [super setHighlighted:highlighted animated:animated];
+    self.barGraphView.backgroundColor = [UIColor colorWithHue:self.value/3.0f saturation:0.6f brightness:0.8f alpha:0.5f];
+}
+
+- (void)setHighlighted:(BOOL)highlighted {
+    [self setHighlighted:highlighted animated:NO];
 }
 
 - (void)setValue:(double)value {
+    _value = value;
+    
     // Set percentage label
-    self.percentageLabel.text = [NSString stringWithFormat:@"%2.2f%%",100.0f * value];
+    self.percentageLabel.text = [NSString stringWithFormat:@"%2.2f%%",100.0f * self.value];
     
     // Set bar graph
-    self.barGraphView.backgroundColor = [UIColor colorWithHue:value/3.0f saturation:0.6f brightness:0.8f alpha:0.5f];
-    
-    _value = value;
+    self.barGraphView.backgroundColor = [UIColor colorWithHue:self.value/3.0f saturation:0.6f brightness:0.8f alpha:0.5f];
+    [self layoutSubviews];
 }
 
 - (void)showResult {
