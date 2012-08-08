@@ -25,6 +25,7 @@
                                                       style:UITableViewStyleGrouped];
         self.options = [[NSMutableArray alloc] init];
         self.pollTitle = @"";
+        first_time = YES;
     }
     return self;
 }
@@ -56,8 +57,6 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self setEditing:YES animated:YES];
-    
-    static BOOL first_time = YES;
     
     if ( first_time ) {
         // Start with two options

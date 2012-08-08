@@ -12,7 +12,9 @@
 
 @class PollsViewController;
 
-@interface NewPollViewController : UITableViewController <UITextFieldDelegate, SubmitCancelDelegate, UIAlertViewDelegate>
+@interface NewPollViewController : UITableViewController <UITextFieldDelegate, SubmitCancelDelegate, UIAlertViewDelegate> {
+    BOOL first_time;
+}
 
 @property (nonatomic, strong) NSMutableArray *options;
 @property (nonatomic, strong) NSString *pollTitle;
