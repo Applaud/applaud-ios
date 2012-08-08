@@ -12,6 +12,7 @@
 @interface PollsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
     NSMutableDictionary *percentageMap;
     NSMutableDictionary *totalsMap;
+    NSMutableDictionary *cellMap;
 }
 
 @property (strong, nonatomic) UINavigationController *navigationController;

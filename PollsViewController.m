@@ -10,11 +10,8 @@
 #import "ConnectionManager.h"
 #import "Poll.h"
 #import "NewPollViewController.h"
-
-#define OPTION_TEXT_SIZE 17.0f
-#define DEFAULT_CELL_HEIGHT 40.0f
-#define CELL_MARGIN 10.0f
-#define CELL_PADDING 10.0f
+#import "PollOptionCell.h"
+#import "PollOptionDisplayConstants.h"
 
 @implementation PollsViewController
 
@@ -28,6 +25,7 @@
                                                    object:nil];
         totalsMap = [[NSMutableDictionary alloc] init];
         percentageMap = [[NSMutableDictionary alloc] init];
+        cellMap = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
@@ -75,18 +73,20 @@
 #pragma mark -
 #pragma mark UITableViewDelegate Methods
 
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    cell.textLabel.backgroundColor = [UIColor clearColor];
+    cell.contentView.backgroundColor = [UIColor clearColor];
+    cell.backgroundColor = [UIColor whiteColor];
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Options section
-    if ( indexPath.section == 1 ) {
-        CGSize constraintSize = CGSizeMake(self.view.frame.size.width - 2*CELL_MARGIN - 2*CELL_PADDING,
-                                           400);
-        NSString *optionString = [[(Poll*)[self.polls objectAtIndex:indexPath.section] options] objectAtIndex:indexPath.row];
-        CGSize optionSize = [optionString sizeWithFont:[UIFont boldSystemFontOfSize:OPTION_TEXT_SIZE]
-                                     constrainedToSize:constraintSize
-                                         lineBreakMode:UILineBreakModeWordWrap];
-        return optionSize.height + 2*CELL_PADDING;
-    }
-    return DEFAULT_CELL_HEIGHT;
+    CGSize constraintSize = CGSizeMake(self.view.frame.size.width - 2*CELL_MARGIN - 2*CELL_PADDING - ACCESSORY_SIZE,
+                                       400);
+    NSString *optionString = [[(Poll*)[self.polls objectAtIndex:indexPath.section] options] objectAtIndex:indexPath.row];
+    CGSize optionSize = [optionString sizeWithFont:[UIFont boldSystemFontOfSize:OPTION_TEXT_SIZE]
+                                 constrainedToSize:constraintSize
+                                     lineBreakMode:UILineBreakModeWordWrap];
+    return optionSize.height + 2*CELL_PADDING;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -113,18 +113,16 @@
                                 for ( NSDictionary *rd in newPoll.responses ) {
                                     responseTotal += [rd[@"count"] intValue];
                                 }
-                                [totalsMap setObject:@(responseTotal) forKey:newPoll.title];
-                                NSMutableArray *responsePercentages = [[NSMutableArray alloc] init];
                                 for ( NSDictionary *rd in newPoll.responses ) {
-                                    [responsePercentages addObject:@(100.0 *
-                                    (responseTotal? [rd[@"count"] doubleValue] / responseTotal : responseTotal))];
+                                    double percent = 100.0 * (responseTotal? [rd[@"count"] doubleValue] / responseTotal : responseTotal);
+                                    PollOptionCell *cell = [cellMap objectForKey:[NSString stringWithFormat:@"%@%@",
+                                                                                  newPoll.title,
+                                                                                  rd[@"title"]]];
+                                    cell.percentageLabel.text = [NSString stringWithFormat:@"%2.2f%%",percent];
+                                    NSLog(@"Retrieving cell for the key %@%@",newPoll.title,rd[@"title"]);
+                                    [cell showResult];
+                                    [cell layoutSubviews];
                                 }
-                                [percentageMap setObject:responsePercentages forKey:newPoll.title];
-                                
-                                // Show response percentages
-                                NSLog(@"%@ -- total=%d",responsePercentages,responseTotal);
-                                
-                                [self.tableView reloadData];
                             }];
 }
 
@@ -144,25 +142,22 @@
 }
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *CellIdentifier = @"PollCell";
     NSString *optionTitle = [[(Poll*)[self.polls objectAtIndex:indexPath.section] options] objectAtIndex:indexPath.row];
     NSString *pollTitle = [[self.polls objectAtIndex:indexPath.section] title];
+    NSString *cellIdentifier = [NSString stringWithFormat:@"%@%@",pollTitle,optionTitle];
     
-    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    PollOptionCell *cell = (PollOptionCell*)[self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
     if ( nil == cell ){
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle
-                                      reuseIdentifier:CellIdentifier];
-        cell.textLabel.numberOfLines = 0;
-        cell.textLabel.lineBreakMode = UILineBreakModeWordWrap;
-        cell.textLabel.font = [UIFont boldSystemFontOfSize:OPTION_TEXT_SIZE];
+        cell = [[PollOptionCell alloc] initWithStyle:UITableViewCellStyleSubtitle
+                                      reuseIdentifier:cellIdentifier];
+        [cellMap setObject:cell forKey:[NSString stringWithFormat:@"%@%@",
+                                        pollTitle,
+                                        optionTitle]];
+        NSLog(@"Set a cell for the key %@%@",pollTitle,optionTitle);
     }
     
     cell.textLabel.text = optionTitle;
-    // Check for responses (will work only if user has answered already)
-    if ( [totalsMap objectForKey:pollTitle] )
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%2.2f%%",[[[percentageMap objectForKey:pollTitle]
-                                                                            objectAtIndex:indexPath.row] floatValue]];
     
     return cell;
 }
