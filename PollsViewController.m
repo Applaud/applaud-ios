@@ -181,6 +181,7 @@
         // Tag the rating widget with the section number (poll index number)
         upDown.tag = section;
         upDown.frame = CGRectMake(constraintSize.width + POLL_RATING_PADDING, CELL_PADDING, POLL_RATING_WIDTH, 32);
+        // Keep user's rating visible until we download polls again (looks neater this way)
         if ( poll.my_user_rating == -1) {   // User downvoted
             upDown.selectedSegmentIndex = 0;
         } else if ( poll.my_user_rating == 1 ) {    // User upvoted
