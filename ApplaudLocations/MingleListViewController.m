@@ -249,6 +249,7 @@
     newThreadView.navigationController.navigationBar.tintColor = self.appDelegate.currentBusiness.primaryColor;
     newThreadView.tableView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
     newThreadView.view.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+    newThreadView.parent = self;
     
     [self.navigationController pushViewController:newThreadView animated:YES];
 }

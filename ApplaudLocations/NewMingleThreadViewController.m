@@ -9,6 +9,7 @@
 #import "NewMingleThreadViewController.h"
 #import "MingleListViewController.h"
 #import "NewMingleThreadCell.h"
+#import "ConnectionManager.h"
 
 @interface NewMingleThreadViewController ()
 
@@ -34,6 +35,13 @@
     [self setEditing:YES animated:YES];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if ( self.editing )
+        [[(NewMingleThreadCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]] textField] becomeFirstResponder];
+
+}
+
 - (void)viewDidUnload
 {
     [super viewDidUnload];
@@ -47,7 +55,18 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
+    NewMingleThreadCell *cell = (NewMingleThreadCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    NSString *title = cell.textField.text;
+    
     // Save thread
+    NSDictionary *params = @{ @"business_id" : @(self.parent.appDelegate.currentBusiness.business_id),
+    @"title" : title};
+    [ConnectionManager serverRequest:@"POST"
+                          withParams:params
+                                 url:THREAD_CREATE_URL
+                            callback:^(NSHTTPURLResponse *response, NSData *data) {
+                                [self.parent getThreads];
+                            }];
 }
 
 #pragma mark - Table view data source
@@ -149,6 +168,7 @@
 #pragma mark - TextFieldDelegate
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
     return YES;
 }
 

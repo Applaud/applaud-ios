@@ -19,6 +19,7 @@
 #define POLL_CREATE_URL @"/mobile/create_poll/"
 #define POLL_RATE_URL @"/mobile/rate_poll/"
 #define THREADS_URL @"/mobile/get_threads/"
+#define THREAD_CREATE_URL @"/mobile/create_thread/"
 #define NEWSFEED_URL @"/mobile/newsfeed/"
 #define SURVEY_URL @"/mobile/get_survey/"
 #define RESPONSE_URL @"/mobile/survey_respond/"

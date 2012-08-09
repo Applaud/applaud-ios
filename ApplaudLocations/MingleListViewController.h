@@ -24,4 +24,6 @@
 @property (nonatomic, strong, readwrite) UINavigationController *navigationController;
 @property (nonatomic, strong) NSMutableArray *threads;
 
+- (void)getThreads;
+
 @end
