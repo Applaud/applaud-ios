@@ -120,8 +120,8 @@
     if ( nil == cell ) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                       reuseIdentifier:CellIdentifier];
-        cell.textLabel.text = [self.threads[indexPath.row] title];
     }
+    cell.textLabel.text = [self.threads[indexPath.row] title];
     
     return cell;
 }

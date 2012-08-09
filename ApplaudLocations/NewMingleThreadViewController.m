@@ -30,6 +30,9 @@
 {
     [super viewDidLoad];
 
+    // Set our title
+    self.title = @"New Thread";
+    
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     [self setEditing:YES animated:YES];
@@ -53,28 +56,24 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
+    if ( self.editing )
+        [self setEditing:NO animated:YES];
+    
     [super viewWillDisappear:animated];
-    
-    NewMingleThreadCell *cell = (NewMingleThreadCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-    NSString *title = cell.textField.text;
-    
-    // Save thread
-    NSDictionary *params = @{ @"business_id" : @(self.parent.appDelegate.currentBusiness.business_id),
-    @"title" : title};
-    [ConnectionManager serverRequest:@"POST"
-                          withParams:params
-                                 url:THREAD_CREATE_URL
-                            callback:^(NSHTTPURLResponse *response, NSData *data) {
-                                [self.parent getThreads];
-                            }];
 }
 
 #pragma mark - Table view data source
 
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
+    [super setEditing:editing animated:animated];
+    
+    [self.navigationItem setHidesBackButton:editing animated:YES];
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    // Thread title section
-    return 1;
+    // Thread title section, submit/cancel
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -86,6 +85,18 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
+    static NSString *SubmitCancelID = @"SubmitCancelCell";
+    
+    if ( indexPath.section == 1 ) {
+        SubmitCancelCell *submitCancel = [tableView dequeueReusableCellWithIdentifier:SubmitCancelID];
+        if ( nil == submitCancel ) {
+            submitCancel = [[SubmitCancelCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                                   reuseIdentifier:SubmitCancelID];
+            submitCancel.delegate = self;
+        }
+        return submitCancel;
+    }
+    
     NewMingleThreadCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     if ( nil == cell ){
@@ -170,6 +181,48 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return YES;
+}
+
+#pragma mark - SubmitCancelDelegate
+
+-(void)cancelButtonPressed {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(void)submitButtonPressed {
+    NewMingleThreadCell *cell = (NewMingleThreadCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    NSString *title = cell.textField.text;
+    
+    if ( [title length] == 0 ) {
+        [[[UIAlertView alloc] initWithTitle:@"Invalid Thread"
+                                    message:@"Threads must have a title."
+                                   delegate:nil
+                          cancelButtonTitle:@"OK"
+                          otherButtonTitles:nil] show];
+    }
+    else {
+        [self submitThread];
+    }
+}
+
+#pragma mark - Submit Thread
+
+-(void)submitThread {
+    NewMingleThreadCell *cell = (NewMingleThreadCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    NSString *title = cell.textField.text;
+    
+    if ( [title length] > 0 ) {
+        // Save thread
+        NSDictionary *params = @{ @"business_id" : @(self.parent.appDelegate.currentBusiness.business_id),
+        @"title" : title};
+        [ConnectionManager serverRequest:@"POST"
+                              withParams:params
+                                     url:THREAD_CREATE_URL
+                                callback:^(NSHTTPURLResponse *response, NSData *data) {
+                                    [self.parent getThreads];
+                                    [self.navigationController popViewControllerAnimated:YES];
+                                }];
+    }
 }
 
 @end

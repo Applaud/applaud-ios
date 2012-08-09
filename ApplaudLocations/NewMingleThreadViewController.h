@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SubmitCancelCell.h"
 
 @class MingleListViewController;
 
-@interface NewMingleThreadViewController : UITableViewController <UITextFieldDelegate>
+@interface NewMingleThreadViewController : UITableViewController <UITextFieldDelegate, SubmitCancelDelegate>
 
 @property (weak, nonatomic) MingleListViewController *parent;
 
