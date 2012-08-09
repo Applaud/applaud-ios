@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B07268C15D32590005EB452 /* downrate.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B07268A15D32590005EB452 /* downrate.png */; };
+		1B07268D15D32590005EB452 /* uprate.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B07268B15D32590005EB452 /* uprate.png */; };
+		1B0FA55615D0D9B80031259F /* PollFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B0FA55515D0D9B80031259F /* PollFieldCell.m */; };
 		1B10A0EC15C20AE000A65FAE /* canceldown.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B10A0EA15C20AE000A65FAE /* canceldown.png */; };
 		1B10A0ED15C20AE000A65FAE /* cancelup.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B10A0EB15C20AE000A65FAE /* cancelup.png */; };
 		1B12763215B89B9600980AA2 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B12763015B89B9600980AA2 /* MasterViewController.m */; };
@@ -17,6 +20,9 @@
 		1B301C68158858430038A5BE /* EmployeeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B301C66158858430038A5BE /* EmployeeViewController.xib */; };
 		1B301C6D158858560038A5BE /* QuestionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B301C6B158858560038A5BE /* QuestionsViewController.m */; };
 		1B301C6E158858560038A5BE /* QuestionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B301C6C158858560038A5BE /* QuestionsViewController.xib */; };
+		1B3769E015D05505001214B7 /* PollsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3769DE15D05505001214B7 /* PollsViewController.m */; };
+		1B3769E115D05505001214B7 /* PollsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B3769DF15D05505001214B7 /* PollsViewController.xib */; };
+		1B3769E515D057C4001214B7 /* Poll.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3769E415D057C4001214B7 /* Poll.m */; };
 		1B51400F158F93F4008CB057 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B51400E158F93F4008CB057 /* CoreData.framework */; };
 		1B514013158F9441008CB057 /* ApplaudProgramState.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1B514011158F9441008CB057 /* ApplaudProgramState.xcdatamodeld */; };
 		1B514016158FA233008CB057 /* ApplaudProgramSettingsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B514015158FA233008CB057 /* ApplaudProgramSettingsModel.m */; };
@@ -28,6 +34,7 @@
 		1B60ED8515C878D700D63365 /* cancelrating.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B60ED8315C878D700D63365 /* cancelrating.png */; };
 		1B60ED8615C878D700D63365 /* cancelrating@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B60ED8415C878D700D63365 /* cancelrating@2x.png */; };
 		1B60ED8C15C8870800D63365 /* shareyourthoughts@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B60ED8B15C8870800D63365 /* shareyourthoughts@2x.png */; };
+		1B67EE7D15D1B64400F94CA0 /* PollSubmitCancelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B67EE7C15D1B64400F94CA0 /* PollSubmitCancelCell.m */; };
 		1B688DB915C3811900FCDCEE /* dialog.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B688DB315C3811900FCDCEE /* dialog.png */; };
 		1B688DBA15C3811900FCDCEE /* dialog@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B688DB415C3811900FCDCEE /* dialog@2x.png */; };
 		1B688DBB15C3811900FCDCEE /* employees.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B688DB515C3811900FCDCEE /* employees.png */; };
@@ -55,6 +62,8 @@
 		1BA358F41582F05E00EB8F32 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BA358F31582F05E00EB8F32 /* main.m */; };
 		1BA358F81582F05E00EB8F32 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BA358F71582F05E00EB8F32 /* AppDelegate.m */; };
 		1BB4AC9F15BF3E68003E8B29 /* EmployeeBioCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BB4AC9E15BF3E68003E8B29 /* EmployeeBioCell.m */; };
+		1BC0D1C315D082A40027F9BF /* NewPollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC0D1C115D082A40027F9BF /* NewPollViewController.m */; };
+		1BD05DAA15D1FC900033DDFC /* PollOptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BD05DA915D1FC900033DDFC /* PollOptionCell.m */; };
 		1BD494EF15BDF786006A01A9 /* blankPerson.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1BD494EE15BDF786006A01A9 /* blankPerson.jpg */; };
 		1BD494F215BF1E05006A01A9 /* NFTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BD494F115BF1E05006A01A9 /* NFTableViewCell.m */; };
 		1BFF2E7E158D9CDC00753F94 /* EmployeeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BFF2E7C158D9CDB00753F94 /* EmployeeListViewController.m */; };
@@ -71,6 +80,8 @@
 		6F66787615C9EFCE00A7AA1D /* NFItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F66787515C9EFCE00A7AA1D /* NFItemTableViewCell.m */; };
 		6F6F702715C85F0E007C8DF7 /* EmployeeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F6F702615C85F0E007C8DF7 /* EmployeeCell.m */; };
 		6F70A93215D1C6F000718348 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F70A93115D1C6F000718348 /* Comment.m */; };
+		6F8C34F015D42D0E00EC82E9 /* polls.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F8C34EE15D42D0E00EC82E9 /* polls.png */; };
+		6F8C34F115D42D0E00EC82E9 /* polls@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F8C34EF15D42D0E00EC82E9 /* polls@2x.png */; };
 		6F8C8A2B158C03DB00BB4BA0 /* Employee.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F8C8A2A158C03DB00BB4BA0 /* Employee.m */; };
 		6F9E60D915C06E37006BD49A /* BusinessPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F9E60D815C06E37006BD49A /* BusinessPhoto.m */; };
 		6FA4461015D23A73007DBDBF /* PhotoCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FA4460F15D23A73007DBDBF /* PhotoCommentCell.m */; };
@@ -109,6 +120,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1B07268A15D32590005EB452 /* downrate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = downrate.png; path = assets/downrate.png; sourceTree = "<group>"; };
+		1B07268B15D32590005EB452 /* uprate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = uprate.png; path = assets/uprate.png; sourceTree = "<group>"; };
+		1B0FA55415D0D9B80031259F /* PollFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PollFieldCell.h; sourceTree = "<group>"; };
+		1B0FA55515D0D9B80031259F /* PollFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PollFieldCell.m; sourceTree = "<group>"; };
 		1B10A0EA15C20AE000A65FAE /* canceldown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = canceldown.png; sourceTree = "<group>"; };
 		1B10A0EB15C20AE000A65FAE /* cancelup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cancelup.png; sourceTree = "<group>"; };
 		1B10A0EE15C2F94F00A65FAE /* SurveyDisplayConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SurveyDisplayConstants.h; sourceTree = "<group>"; };
@@ -124,6 +139,11 @@
 		1B301C6A158858560038A5BE /* QuestionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionsViewController.h; sourceTree = "<group>"; };
 		1B301C6B158858560038A5BE /* QuestionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionsViewController.m; sourceTree = "<group>"; };
 		1B301C6C158858560038A5BE /* QuestionsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QuestionsViewController.xib; sourceTree = "<group>"; };
+		1B3769DD15D05505001214B7 /* PollsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PollsViewController.h; path = ../PollsViewController.h; sourceTree = "<group>"; };
+		1B3769DE15D05505001214B7 /* PollsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PollsViewController.m; path = ../PollsViewController.m; sourceTree = "<group>"; };
+		1B3769DF15D05505001214B7 /* PollsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PollsViewController.xib; path = ../PollsViewController.xib; sourceTree = "<group>"; };
+		1B3769E315D057C4001214B7 /* Poll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Poll.h; sourceTree = "<group>"; };
+		1B3769E415D057C4001214B7 /* Poll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Poll.m; sourceTree = "<group>"; };
 		1B51400E158F93F4008CB057 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		1B514012158F9441008CB057 /* ApplaudProgramState.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ApplaudProgramState.xcdatamodel; sourceTree = "<group>"; };
 		1B514014158FA233008CB057 /* ApplaudProgramSettingsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplaudProgramSettingsModel.h; sourceTree = "<group>"; };
@@ -137,6 +157,8 @@
 		1B60ED8315C878D700D63365 /* cancelrating.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cancelrating.png; path = assets/cancelrating.png; sourceTree = "<group>"; };
 		1B60ED8415C878D700D63365 /* cancelrating@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "cancelrating@2x.png"; path = "assets/cancelrating@2x.png"; sourceTree = "<group>"; };
 		1B60ED8B15C8870800D63365 /* shareyourthoughts@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "shareyourthoughts@2x.png"; path = "assets/shareyourthoughts@2x.png"; sourceTree = "<group>"; };
+		1B67EE7B15D1B64400F94CA0 /* PollSubmitCancelCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PollSubmitCancelCell.h; sourceTree = "<group>"; };
+		1B67EE7C15D1B64400F94CA0 /* PollSubmitCancelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PollSubmitCancelCell.m; sourceTree = "<group>"; };
 		1B688DB315C3811900FCDCEE /* dialog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dialog.png; path = assets/dialog.png; sourceTree = "<group>"; };
 		1B688DB415C3811900FCDCEE /* dialog@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "dialog@2x.png"; path = "assets/dialog@2x.png"; sourceTree = "<group>"; };
 		1B688DB515C3811900FCDCEE /* employees.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = employees.png; path = assets/employees.png; sourceTree = "<group>"; };
@@ -171,6 +193,11 @@
 		1BB4AC9C15BF3B58003E8B29 /* EmployeeDisplayConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmployeeDisplayConstants.h; sourceTree = "<group>"; };
 		1BB4AC9D15BF3E68003E8B29 /* EmployeeBioCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmployeeBioCell.h; sourceTree = "<group>"; };
 		1BB4AC9E15BF3E68003E8B29 /* EmployeeBioCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmployeeBioCell.m; sourceTree = "<group>"; };
+		1BC0D1C015D082A40027F9BF /* NewPollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewPollViewController.h; sourceTree = "<group>"; };
+		1BC0D1C115D082A40027F9BF /* NewPollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewPollViewController.m; sourceTree = "<group>"; };
+		1BD05DA815D1FC900033DDFC /* PollOptionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PollOptionCell.h; sourceTree = "<group>"; };
+		1BD05DA915D1FC900033DDFC /* PollOptionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PollOptionCell.m; sourceTree = "<group>"; };
+		1BD05DAB15D218B60033DDFC /* PollOptionDisplayConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PollOptionDisplayConstants.h; sourceTree = "<group>"; };
 		1BD494EE15BDF786006A01A9 /* blankPerson.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = blankPerson.jpg; sourceTree = "<group>"; };
 		1BD494F015BF1E05006A01A9 /* NFTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NFTableViewCell.h; sourceTree = "<group>"; };
 		1BD494F115BF1E05006A01A9 /* NFTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NFTableViewCell.m; sourceTree = "<group>"; };
@@ -203,6 +230,8 @@
 		6F70A93115D1C6F000718348 /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comment.m; sourceTree = "<group>"; };
 		6F809438158EF7E800961971 /* ApplaudIOS-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "ApplaudIOS-Info.plist"; sourceTree = "<group>"; };
 		6F809439158EF7E800961971 /* ApplaudIOS-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ApplaudIOS-Prefix.pch"; sourceTree = "<group>"; };
+		6F8C34EE15D42D0E00EC82E9 /* polls.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = polls.png; path = assets/polls.png; sourceTree = "<group>"; };
+		6F8C34EF15D42D0E00EC82E9 /* polls@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "polls@2x.png"; path = "assets/polls@2x.png"; sourceTree = "<group>"; };
 		6F8C8A29158C03DB00BB4BA0 /* Employee.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Employee.h; sourceTree = "<group>"; };
 		6F8C8A2A158C03DB00BB4BA0 /* Employee.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Employee.m; sourceTree = "<group>"; };
 		6F9E60D715C06E37006BD49A /* BusinessPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessPhoto.h; sourceTree = "<group>"; };
@@ -302,6 +331,27 @@
 			name = Questions;
 			sourceTree = "<group>";
 		};
+		1B3769E215D0550C001214B7 /* Polls */ = {
+			isa = PBXGroup;
+			children = (
+				1B3769DD15D05505001214B7 /* PollsViewController.h */,
+				1B3769DE15D05505001214B7 /* PollsViewController.m */,
+				1BD05DA815D1FC900033DDFC /* PollOptionCell.h */,
+				1BD05DA915D1FC900033DDFC /* PollOptionCell.m */,
+				1BD05DAB15D218B60033DDFC /* PollOptionDisplayConstants.h */,
+				1BC0D1C015D082A40027F9BF /* NewPollViewController.h */,
+				1BC0D1C115D082A40027F9BF /* NewPollViewController.m */,
+				1B3769DF15D05505001214B7 /* PollsViewController.xib */,
+				1B0FA55415D0D9B80031259F /* PollFieldCell.h */,
+				1B0FA55515D0D9B80031259F /* PollFieldCell.m */,
+				1B67EE7B15D1B64400F94CA0 /* PollSubmitCancelCell.h */,
+				1B67EE7C15D1B64400F94CA0 /* PollSubmitCancelCell.m */,
+				1B3769E315D057C4001214B7 /* Poll.h */,
+				1B3769E415D057C4001214B7 /* Poll.m */,
+			);
+			name = Polls;
+			sourceTree = "<group>";
+		};
 		1B514017158FA3C7008CB057 /* DBModels */ = {
 			isa = PBXGroup;
 			children = (
@@ -359,6 +409,7 @@
 			isa = PBXGroup;
 			children = (
 				1BD494ED15BDF6D3006A01A9 /* Assets */,
+				1B3769E215D0550C001214B7 /* Polls */,
 				1B514017158FA3C7008CB057 /* DBModels */,
 				1B301C69158858490038A5BE /* Questions */,
 				1B301C5E158857D20038A5BE /* Employee */,
@@ -394,6 +445,10 @@
 		1BD494ED15BDF6D3006A01A9 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				6F8C34EE15D42D0E00EC82E9 /* polls.png */,
+				6F8C34EF15D42D0E00EC82E9 /* polls@2x.png */,
+				1B07268A15D32590005EB452 /* downrate.png */,
+				1B07268B15D32590005EB452 /* uprate.png */,
 				1B6D228315CA7292009A533B /* favicon@2x.png */,
 				1B6D228115CA7289009A533B /* favicon.png */,
 				1B6D226E15CA429C009A533B /* logo.png */,
@@ -550,6 +605,11 @@
 				1B6D227115CA429C009A533B /* logo@2x.png in Resources */,
 				1B6D228215CA7289009A533B /* favicon.png in Resources */,
 				1B6D228415CA7292009A533B /* favicon@2x.png in Resources */,
+				1B3769E115D05505001214B7 /* PollsViewController.xib in Resources */,
+				1B07268C15D32590005EB452 /* downrate.png in Resources */,
+				1B07268D15D32590005EB452 /* uprate.png in Resources */,
+				6F8C34F015D42D0E00EC82E9 /* polls.png in Resources */,
+				6F8C34F115D42D0E00EC82E9 /* polls@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -590,6 +650,12 @@
 				6F16232815D1BAC90055AE58 /* PhotoCommentViewController.m in Sources */,
 				6F70A93215D1C6F000718348 /* Comment.m in Sources */,
 				6FA4461015D23A73007DBDBF /* PhotoCommentCell.m in Sources */,
+				1B3769E015D05505001214B7 /* PollsViewController.m in Sources */,
+				1B3769E515D057C4001214B7 /* Poll.m in Sources */,
+				1BC0D1C315D082A40027F9BF /* NewPollViewController.m in Sources */,
+				1B0FA55615D0D9B80031259F /* PollFieldCell.m in Sources */,
+				1B67EE7D15D1B64400F94CA0 /* PollSubmitCancelCell.m in Sources */,
+				1BD05DAA15D1FC900033DDFC /* PollOptionCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

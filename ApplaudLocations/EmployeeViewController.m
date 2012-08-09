@@ -390,9 +390,9 @@
     // Build dictionary for ratings
     NSMutableDictionary *ratings = [[NSMutableDictionary alloc] init];
     for ( UIView *view in widgetList ) {
-        if ( ![self sliderHasValue:(UISlider*)view] )
-            continue;
         if([view isKindOfClass:[UISlider class]]){
+            if ( ![self sliderHasValue:(UISlider*)view] )
+                continue;
             UISlider *slider = (UISlider *)view;
             ratings[[@(slider.tag) description]] = @(slider.value*5.0);
         }

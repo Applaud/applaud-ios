@@ -26,6 +26,18 @@ static int outbound_connections;
                                        queue:[NSOperationQueue mainQueue]
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *err) {
                                NSHTTPURLResponse *r = (NSHTTPURLResponse *)response;
+
+                               // Decrement # of connections
+                               outbound_connections--;
+                               // No more connections --> stop showing network activity indicator
+                               if ( outbound_connections == 0 ) {
+                                   [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+                                   
+                                   if (! err) {
+                                       // Let interested bodies know that all network comm. is finished.
+                                       [[NSNotificationCenter defaultCenter] postNotificationName:@"DOWNLOAD_FINISHED" object:nil];
+                                   }
+                               }
                                
                                if(err) {
                                    error_code = ERROR_NO_CONNECTION;
@@ -44,19 +56,6 @@ static int outbound_connections;
                                        callback(r, data);
                                    }
                                }
-                               
-                               // Decrement # of connections
-                               outbound_connections--;
-                               // No more connections --> stop showing network activity indicator
-                               if ( outbound_connections == 0 ) {
-                                   [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-                                   
-                                   if (! err) {
-                                       // Let interested bodies know that all network comm. is finished.
-                                       [[NSNotificationCenter defaultCenter] postNotificationName:@"DOWNLOAD_FINISHED" object:nil];
-                                   }
-                               }
-                               
                            }];
 
 }
@@ -201,18 +200,8 @@ static int outbound_connections;
                                     [[ConnectionManager staticInstance] setSessionCookie:cookieString];
                                     NSLog(@"%@", cookieString);
                                 }
-//                                else if([r.allHeaderFields objectForKey:@"Set-Cookie"] == nil) {
-//                                    if(!error_code)
-//                                        error_code = ERROR_NO_CONNECTION;
-//                                    [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGIN_FAILURE" object:nil];
-//                                }
                                 // Login did not succeed (could not connect to server, bad username/password combo)
                                 else {
-//                                    if (! error_code )
-//                                        error_code = ERROR_BAD_LOGIN;
-//                                    
-//                                    NSLog(@"Status code was %d.", r.statusCode);
-//                                    
                                     [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGIN_FAILURE" object:nil];
                                 }
                                 
