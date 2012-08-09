@@ -15,6 +15,7 @@
 #import "ConnectionManager.h"
 #import "BusinessPhotoViewController.h"
 #import "PollsViewController.h"
+#import "MingleListViewController.h"
 
 @implementation AppDelegate
 
@@ -177,6 +178,13 @@
     pvc.navigationController = pollsNav;
     pvc.appDelegate = self;
     
+    // Threads (mingle) view controller
+    MingleListViewController *mlvc = [[MingleListViewController alloc] init];
+    mlvc.title = @"Mingle";
+    UINavigationController *mingleNav = [[UINavigationController alloc] initWithRootViewController:mlvc];
+    mlvc.navigationController = mingleNav;
+    mlvc.appDelegate = self;
+    
     // QuestionsViewController next
     QuestionsViewController *qvc = [[QuestionsViewController alloc] init];
     [qvc setTitle:@"Dialog"];
@@ -207,6 +215,12 @@
                                                                image:[UIImage imageNamed:@"polls"]
                                                                  tag:100];
     pvc.tabBarItem = pollsItem;
+//    UITabBarItem *threadsItem = [[UITabBarItem alloc] init];
+//    threadsItem.title = @"Mingle";
+    UITabBarItem *threadsItem = [[UITabBarItem alloc] initWithTitle:@"Mingle"
+                                                              image:[UIImage imageNamed:@"dialog"]
+                                                                tag:100];
+    mlvc.tabBarItem = threadsItem;
     UITabBarItem *questionItem = [[UITabBarItem alloc] initWithTitle:@"Feedback"
                                                                image:[UIImage imageNamed:@"dialog"]
                                                                  tag:101];
@@ -219,7 +233,7 @@
                                                             image:nil
                                                               tag:103];*/
     // bpvc.tabBarItem = photoItem;
-	self.tabNavigator.viewControllers = @[newsNav, pollsNav, questionNav, employeeNav]; //, photoNav];
+	self.tabNavigator.viewControllers = @[newsNav, pollsNav, mingleNav, employeeNav]; //, photoNav];
 }
 
 -(void)backButtonPressed {

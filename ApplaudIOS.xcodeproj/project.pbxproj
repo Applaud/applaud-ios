@@ -12,6 +12,13 @@
 		1B0FA55615D0D9B80031259F /* PollFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B0FA55515D0D9B80031259F /* PollFieldCell.m */; };
 		1B10A0EC15C20AE000A65FAE /* canceldown.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B10A0EA15C20AE000A65FAE /* canceldown.png */; };
 		1B10A0ED15C20AE000A65FAE /* cancelup.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B10A0EB15C20AE000A65FAE /* cancelup.png */; };
+		1B1109E315D439C700B2B07E /* MingleListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B1109E115D439C700B2B07E /* MingleListViewController.m */; };
+		1B1109E415D439C700B2B07E /* MingleListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B1109E215D439C700B2B07E /* MingleListViewController.xib */; };
+		1B1109E715D43AF000B2B07E /* Thread.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B1109E615D43AF000B2B07E /* Thread.m */; };
+		1B1109EA15D43B5E00B2B07E /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B1109E915D43B5E00B2B07E /* User.m */; };
+		1B1109EE15D44DC800B2B07E /* MinglePostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B1109EC15D44DC800B2B07E /* MinglePostViewController.m */; };
+		1B1109EF15D44DC800B2B07E /* MinglePostViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B1109ED15D44DC800B2B07E /* MinglePostViewController.xib */; };
+		1B1109F215D44E8200B2B07E /* ThreadPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B1109F115D44E8200B2B07E /* ThreadPost.m */; };
 		1B12763215B89B9600980AA2 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B12763015B89B9600980AA2 /* MasterViewController.m */; };
 		1B12763315B89B9600980AA2 /* MasterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B12763115B89B9600980AA2 /* MasterViewController.xib */; };
 		1B18F75915D23AFF004317F9 /* polls.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B18F75715D23AFF004317F9 /* polls.png */; };
@@ -123,6 +130,18 @@
 		1B10A0EA15C20AE000A65FAE /* canceldown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = canceldown.png; sourceTree = "<group>"; };
 		1B10A0EB15C20AE000A65FAE /* cancelup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cancelup.png; sourceTree = "<group>"; };
 		1B10A0EE15C2F94F00A65FAE /* SurveyDisplayConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SurveyDisplayConstants.h; sourceTree = "<group>"; };
+		1B1109E015D439C700B2B07E /* MingleListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MingleListViewController.h; sourceTree = "<group>"; };
+		1B1109E115D439C700B2B07E /* MingleListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MingleListViewController.m; sourceTree = "<group>"; };
+		1B1109E215D439C700B2B07E /* MingleListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MingleListViewController.xib; sourceTree = "<group>"; };
+		1B1109E515D43AF000B2B07E /* Thread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Thread.h; sourceTree = "<group>"; };
+		1B1109E615D43AF000B2B07E /* Thread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Thread.m; sourceTree = "<group>"; };
+		1B1109E815D43B5E00B2B07E /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		1B1109E915D43B5E00B2B07E /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		1B1109EB15D44DC800B2B07E /* MinglePostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MinglePostViewController.h; sourceTree = "<group>"; };
+		1B1109EC15D44DC800B2B07E /* MinglePostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MinglePostViewController.m; sourceTree = "<group>"; };
+		1B1109ED15D44DC800B2B07E /* MinglePostViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MinglePostViewController.xib; sourceTree = "<group>"; };
+		1B1109F015D44E8200B2B07E /* ThreadPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThreadPost.h; sourceTree = "<group>"; };
+		1B1109F115D44E8200B2B07E /* ThreadPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThreadPost.m; sourceTree = "<group>"; };
 		1B12762F15B89B9600980AA2 /* MasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
 		1B12763015B89B9600980AA2 /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
 		1B12763115B89B9600980AA2 /* MasterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MasterViewController.xib; sourceTree = "<group>"; };
@@ -253,6 +272,18 @@
 		1B1109B315D42BA700B2B07E /* Mingle */ = {
 			isa = PBXGroup;
 			children = (
+				1B1109E015D439C700B2B07E /* MingleListViewController.h */,
+				1B1109E115D439C700B2B07E /* MingleListViewController.m */,
+				1B1109E215D439C700B2B07E /* MingleListViewController.xib */,
+				1B1109EB15D44DC800B2B07E /* MinglePostViewController.h */,
+				1B1109EC15D44DC800B2B07E /* MinglePostViewController.m */,
+				1B1109ED15D44DC800B2B07E /* MinglePostViewController.xib */,
+				1B1109E515D43AF000B2B07E /* Thread.h */,
+				1B1109E615D43AF000B2B07E /* Thread.m */,
+				1B1109F015D44E8200B2B07E /* ThreadPost.h */,
+				1B1109F115D44E8200B2B07E /* ThreadPost.m */,
+				1B1109E815D43B5E00B2B07E /* User.h */,
+				1B1109E915D43B5E00B2B07E /* User.m */,
 			);
 			name = Mingle;
 			sourceTree = "<group>";
@@ -598,6 +629,8 @@
 				1B18F75A15D23AFF004317F9 /* polls@2x.png in Resources */,
 				1B07268C15D32590005EB452 /* downrate.png in Resources */,
 				1B07268D15D32590005EB452 /* uprate.png in Resources */,
+				1B1109E415D439C700B2B07E /* MingleListViewController.xib in Resources */,
+				1B1109EF15D44DC800B2B07E /* MinglePostViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -640,6 +673,11 @@
 				1B0FA55615D0D9B80031259F /* PollFieldCell.m in Sources */,
 				1B67EE7D15D1B64400F94CA0 /* PollSubmitCancelCell.m in Sources */,
 				1BD05DAA15D1FC900033DDFC /* PollOptionCell.m in Sources */,
+				1B1109E315D439C700B2B07E /* MingleListViewController.m in Sources */,
+				1B1109E715D43AF000B2B07E /* Thread.m in Sources */,
+				1B1109EA15D43B5E00B2B07E /* User.m in Sources */,
+				1B1109EE15D44DC800B2B07E /* MinglePostViewController.m in Sources */,
+				1B1109F215D44E8200B2B07E /* ThreadPost.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
