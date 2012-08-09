@@ -386,24 +386,33 @@
     else {
         poll.user_rating--;
     }
-
-    // Show selection momentarily
-    timer = [NSTimer scheduledTimerWithTimeInterval:0.15f
-                                             target:self
-                                           selector:@selector(sortAndReloadPolls)
-                                           userInfo:nil
-                                            repeats:NO];
-}
-
-- (NSDictionary*)dictionaryFromPoll:(Poll*)poll {
-    NSDictionary *dict = @{ @"title" : poll.title,
-    @"options" : poll.options,
-    @"responses" : poll.responses,
-    @"user_rating" : @(poll.user_rating),
-    @"id" : @(poll.poll_id),
-    @"business_id" : @(self.appDelegate.currentBusiness.business_id) };
     
-    return dict;
+    [ConnectionManager serverRequest:@"POST"
+                          withParams:  @{@"id" : @(poll.poll_id),
+                                @"user_rating" : @(poll.user_rating)}
+                                 url:POLL_RATE_URL
+                            callback:^(NSHTTPURLResponse *response, NSData *data) {
+                                [self sortPolls];
+                                [self refreshPolls];
+                            }];
+
+//    // Show selection momentarily
+//    timer = [NSTimer scheduledTimerWithTimeInterval:0.15f
+//                                             target:self
+//                                           selector:@selector(sortAndReloadPolls)
+//                                           userInfo:nil
+//                                            repeats:NO];
 }
+//
+//- (NSDictionary*)dictionaryFromPoll:(Poll*)poll {
+//    NSDictionary *dict = @{ @"title" : poll.title,
+//    @"options" : poll.options,
+//    @"responses" : poll.responses,
+//    @"user_rating" : @(poll.user_rating),
+//    @"id" : @(poll.poll_id),
+//    @"business_id" : @(self.appDelegate.currentBusiness.business_id) };
+//    
+//    return dict;
+//}
 
 @end
