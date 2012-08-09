@@ -171,7 +171,7 @@
     CGSize constraintSize, labelSize;
     constraintSize = CGSizeMake(self.view.frame.size.width - 2*CELL_MARGIN - CELL_PADDING - POLL_RATING_PADDING, 400);
     // Cannot uprate or downrate poll when results are showing
-    if ( poll.show_results ) {
+    if ( !poll.show_results ) {
         constraintSize = CGSizeMake(constraintSize.width - POLL_RATING_WIDTH, constraintSize.height);
         UISegmentedControl *upDown = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:
                                                                                 [UIImage imageNamed:@"downrate"],
@@ -203,7 +203,7 @@
     
     CGSize constraintSize, labelSize;
     constraintSize = CGSizeMake(self.view.frame.size.width - 2*CELL_MARGIN - CELL_PADDING - POLL_RATING_PADDING, 400);
-    if ( poll.show_results ) {
+    if ( !poll.show_results ) {
         constraintSize = CGSizeMake(constraintSize.width - POLL_RATING_WIDTH, constraintSize.height);
     }
     labelSize = [poll.title sizeWithFont:[UIFont boldSystemFontOfSize:POLL_QUESTION_TEXT_SIZE]
@@ -395,24 +395,6 @@
                                 [self sortPolls];
                                 [self refreshPolls];
                             }];
-
-//    // Show selection momentarily
-//    timer = [NSTimer scheduledTimerWithTimeInterval:0.15f
-//                                             target:self
-//                                           selector:@selector(sortAndReloadPolls)
-//                                           userInfo:nil
-//                                            repeats:NO];
 }
-//
-//- (NSDictionary*)dictionaryFromPoll:(Poll*)poll {
-//    NSDictionary *dict = @{ @"title" : poll.title,
-//    @"options" : poll.options,
-//    @"responses" : poll.responses,
-//    @"user_rating" : @(poll.user_rating),
-//    @"id" : @(poll.poll_id),
-//    @"business_id" : @(self.appDelegate.currentBusiness.business_id) };
-//    
-//    return dict;
-//}
 
 @end
