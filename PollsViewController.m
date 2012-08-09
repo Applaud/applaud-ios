@@ -184,8 +184,10 @@
         // Keep user's rating visible until we download polls again (looks neater this way)
         if ( poll.my_user_rating == -1) {   // User downvoted
             upDown.selectedSegmentIndex = 0;
+            upDown.userInteractionEnabled = NO;
         } else if ( poll.my_user_rating == 1 ) {    // User upvoted
             upDown.selectedSegmentIndex = 1;
+            upDown.userInteractionEnabled = NO;
         }
         [upDown addTarget:self action:@selector(ratePoll:) forControlEvents:UIControlEventValueChanged];
         [headerView addSubview:upDown];
