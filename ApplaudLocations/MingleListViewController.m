@@ -10,6 +10,7 @@
 #import "ConnectionManager.h"
 #import "ThreadPost.h"
 #import "MinglePostViewController.h"
+#import "NewMingleThreadViewController.h"
 
 @interface MingleListViewController ()
 
@@ -32,11 +33,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:BACK_BUTTON_TITLE
                                                                              style:UIBarButtonItemStylePlain
                                                                             target:self.appDelegate
                                                                             action:@selector(backButtonPressed)];
+    
+    // New thread button
+    UIBarButtonItem *addThreadItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+                                                                                   target:self
+                                                                                   action:@selector(showNewThread)];
+    self.navigationItem.rightBarButtonItem = addThreadItem;
     
     // The toolbar, for sorting Threads
     UISegmentedControl *sortControls = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"Newest", @"Popular", @"Liked", nil]];
@@ -101,15 +108,15 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
+    // Number of threads
     return self.threads.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"MingleCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if ( nil == cell ) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                       reuseIdentifier:CellIdentifier];
@@ -119,50 +126,11 @@
     return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    MinglePostViewController *postView = [[MinglePostViewController alloc] init];
+    MinglePostViewController *postView = [[MinglePostViewController alloc] initWithStyle:UITableViewStyleGrouped];
     
     // Make a new array with the same items. Convert NSArray --> NSMutableArray
     postView.threadPosts = [NSMutableArray arrayWithArray:[self.threads[indexPath.row] threadPosts]];
@@ -270,6 +238,19 @@
     
     [self sortThreads];
     [self refreshThreads];
+}
+
+#pragma mark - New Thread
+
+- (void)showNewThread {
+    NewMingleThreadViewController *newThreadView = [[NewMingleThreadViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    
+    newThreadView.view.opaque = YES;
+    newThreadView.navigationController.navigationBar.tintColor = self.appDelegate.currentBusiness.primaryColor;
+    newThreadView.tableView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+    newThreadView.view.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+    
+    [self.navigationController pushViewController:newThreadView animated:YES];
 }
 
 @end

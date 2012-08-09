@@ -19,6 +19,9 @@
 		1B1109EE15D44DC800B2B07E /* MinglePostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B1109EC15D44DC800B2B07E /* MinglePostViewController.m */; };
 		1B1109EF15D44DC800B2B07E /* MinglePostViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B1109ED15D44DC800B2B07E /* MinglePostViewController.xib */; };
 		1B1109F215D44E8200B2B07E /* ThreadPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B1109F115D44E8200B2B07E /* ThreadPost.m */; };
+		1B1109FE15D45AF800B2B07E /* NewMingleThreadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B1109FC15D45AF800B2B07E /* NewMingleThreadViewController.m */; };
+		1B1109FF15D45AF800B2B07E /* NewMingleThreadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B1109FD15D45AF800B2B07E /* NewMingleThreadViewController.xib */; };
+		1B110A0215D45BC100B2B07E /* NewMingleThreadCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B110A0115D45BC100B2B07E /* NewMingleThreadCell.m */; };
 		1B12763215B89B9600980AA2 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B12763015B89B9600980AA2 /* MasterViewController.m */; };
 		1B12763315B89B9600980AA2 /* MasterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B12763115B89B9600980AA2 /* MasterViewController.xib */; };
 		1B18F75915D23AFF004317F9 /* polls.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B18F75715D23AFF004317F9 /* polls.png */; };
@@ -142,6 +145,11 @@
 		1B1109ED15D44DC800B2B07E /* MinglePostViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MinglePostViewController.xib; sourceTree = "<group>"; };
 		1B1109F015D44E8200B2B07E /* ThreadPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThreadPost.h; sourceTree = "<group>"; };
 		1B1109F115D44E8200B2B07E /* ThreadPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThreadPost.m; sourceTree = "<group>"; };
+		1B1109FB15D45AF700B2B07E /* NewMingleThreadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewMingleThreadViewController.h; sourceTree = "<group>"; };
+		1B1109FC15D45AF800B2B07E /* NewMingleThreadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewMingleThreadViewController.m; sourceTree = "<group>"; };
+		1B1109FD15D45AF800B2B07E /* NewMingleThreadViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewMingleThreadViewController.xib; sourceTree = "<group>"; };
+		1B110A0015D45BC100B2B07E /* NewMingleThreadCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewMingleThreadCell.h; sourceTree = "<group>"; };
+		1B110A0115D45BC100B2B07E /* NewMingleThreadCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewMingleThreadCell.m; sourceTree = "<group>"; };
 		1B12762F15B89B9600980AA2 /* MasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
 		1B12763015B89B9600980AA2 /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
 		1B12763115B89B9600980AA2 /* MasterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MasterViewController.xib; sourceTree = "<group>"; };
@@ -274,6 +282,11 @@
 			children = (
 				1B1109E015D439C700B2B07E /* MingleListViewController.h */,
 				1B1109E115D439C700B2B07E /* MingleListViewController.m */,
+				1B1109FB15D45AF700B2B07E /* NewMingleThreadViewController.h */,
+				1B1109FC15D45AF800B2B07E /* NewMingleThreadViewController.m */,
+				1B1109FD15D45AF800B2B07E /* NewMingleThreadViewController.xib */,
+				1B110A0015D45BC100B2B07E /* NewMingleThreadCell.h */,
+				1B110A0115D45BC100B2B07E /* NewMingleThreadCell.m */,
 				1B1109E215D439C700B2B07E /* MingleListViewController.xib */,
 				1B1109EB15D44DC800B2B07E /* MinglePostViewController.h */,
 				1B1109EC15D44DC800B2B07E /* MinglePostViewController.m */,
@@ -631,6 +644,7 @@
 				1B07268D15D32590005EB452 /* uprate.png in Resources */,
 				1B1109E415D439C700B2B07E /* MingleListViewController.xib in Resources */,
 				1B1109EF15D44DC800B2B07E /* MinglePostViewController.xib in Resources */,
+				1B1109FF15D45AF800B2B07E /* NewMingleThreadViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -678,6 +692,8 @@
 				1B1109EA15D43B5E00B2B07E /* User.m in Sources */,
 				1B1109EE15D44DC800B2B07E /* MinglePostViewController.m in Sources */,
 				1B1109F215D44E8200B2B07E /* ThreadPost.m in Sources */,
+				1B1109FE15D45AF800B2B07E /* NewMingleThreadViewController.m in Sources */,
+				1B110A0215D45BC100B2B07E /* NewMingleThreadCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

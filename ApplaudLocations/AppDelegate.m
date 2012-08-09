@@ -179,7 +179,7 @@
     pvc.appDelegate = self;
     
     // Threads (mingle) view controller
-    MingleListViewController *mlvc = [[MingleListViewController alloc] init];
+    MingleListViewController *mlvc = [[MingleListViewController alloc] initWithStyle:UITableViewStyleGrouped];
     mlvc.title = @"Mingle";
     UINavigationController *mingleNav = [[UINavigationController alloc] initWithRootViewController:mlvc];
     mlvc.navigationController = mingleNav;
