@@ -18,6 +18,7 @@
 @property (nonatomic) BOOL show_results;
 @property (nonatomic) int user_rating;
 @property (nonatomic, readonly) int total_votes;
+@property (nonatomic) int my_user_rating;
 
 -(id)initWithTitle:(NSString*)title
            options:(NSMutableArray*)options

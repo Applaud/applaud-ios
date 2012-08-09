@@ -180,6 +180,11 @@
         // Tag the rating widget with the section number (poll index number)
         upDown.tag = section;
         upDown.frame = CGRectMake(constraintSize.width + POLL_RATING_PADDING, CELL_PADDING, POLL_RATING_WIDTH, 32);
+        if ( poll.my_user_rating == -1) {   // User downvoted
+            upDown.selectedSegmentIndex = 0;
+        } else if ( poll.my_user_rating == 1 ) {    // User upvoted
+            upDown.selectedSegmentIndex = 1;
+        }
         [upDown addTarget:self action:@selector(ratePoll:) forControlEvents:UIControlEventValueChanged];
         [headerView addSubview:upDown];
     }
@@ -377,15 +382,19 @@
 - (IBAction)ratePoll:(id)sender {
     UISegmentedControl *upDown = (UISegmentedControl*)sender;
     Poll *poll = self.polls[upDown.tag];
+
+    // Let users change their rating of the poll, but not duplicate
+    BOOL changeRating = (poll.my_user_rating != 0);
     
     // Upvote
     if ( upDown.selectedSegmentIndex ) {
-        poll.user_rating++;
+        poll.my_user_rating = 1;
     }
     // Downvote
     else {
-        poll.user_rating--;
+        poll.my_user_rating = -1;
     }
+    poll.user_rating += changeRating? poll.my_user_rating * 2 : poll.my_user_rating;
     
     [ConnectionManager serverRequest:@"POST"
                           withParams:  @{@"id" : @(poll.poll_id),
