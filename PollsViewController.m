@@ -69,10 +69,14 @@
     sortControls.segmentedControlStyle = UISegmentedControlStyleBar;
     sortControls.tintColor = [UIColor grayColor];
     [sortControls addTarget:self action:@selector(sortMethodSelected:) forControlEvents:UIControlEventValueChanged];
-    UIBarButtonItem *testItem = [[UIBarButtonItem alloc] initWithCustomView:sortControls];
+    UIBarButtonItem *sortItem = [[UIBarButtonItem alloc] initWithCustomView:sortControls];
     self.navigationController.toolbarHidden = NO;
     self.navigationController.toolbar.tintColor = [UIColor blackColor];
-    [self setToolbarItems:[NSArray arrayWithObjects:flex,testItem,flex,nil]];
+    [self setToolbarItems:[NSArray arrayWithObjects:flex,sortItem,flex,nil]];
+    
+    // Sort method is "newest"
+    sortMethod = SORT_NEWEST;
+    [sortControls setSelectedSegmentIndex:SORT_NEWEST];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -242,19 +246,31 @@
 #pragma mark -
 #pragma mark Sorting Polls
 
-- (IBAction)sortMethodSelected:(id)sender {
-    UISegmentedControl *sortControl = (UISegmentedControl*)sender;
-    switch ( sortControl.selectedSegmentIndex ) {
-        case 0: // Newest
-            self.polls = pollsSortedNewest;
-            break;
-        case 1: // Popular
-            self.polls = pollsSortedPopular;
-            break;
-        case 2: // Liked
+- (void)refreshPolls {
+    switch (sortMethod) {
+        case SORT_LIKED:
             self.polls = pollsSortedLiked;
             break;
+        case SORT_POPULAR:
+            self.polls = pollsSortedPopular;
+            break;
+        case SORT_NEWEST:
+            self.polls = pollsSortedNewest;
+            break;
     }
+    [self.tableView reloadData];
+}
+
+- (void)sortAndReloadPolls {
+    [timer invalidate];
+    [self sortPolls];
+    [self refreshPolls];
+}
+
+- (IBAction)sortMethodSelected:(id)sender {
+    UISegmentedControl *sortControl = (UISegmentedControl*)sender;
+    sortMethod = sortControl.selectedSegmentIndex;
+    [self refreshPolls];
     [self.tableView reloadData];
 }
 
@@ -370,9 +386,24 @@
     else {
         poll.user_rating--;
     }
+
+    // Show selection momentarily
+    timer = [NSTimer scheduledTimerWithTimeInterval:0.15f
+                                             target:self
+                                           selector:@selector(sortAndReloadPolls)
+                                           userInfo:nil
+                                            repeats:NO];
+}
+
+- (NSDictionary*)dictionaryFromPoll:(Poll*)poll {
+    NSDictionary *dict = @{ @"title" : poll.title,
+    @"options" : poll.options,
+    @"responses" : poll.responses,
+    @"user_rating" : @(poll.user_rating),
+    @"id" : @(poll.poll_id),
+    @"business_id" : @(self.appDelegate.currentBusiness.business_id) };
     
-    [self sortPolls];
-    [self.tableView reloadData];
+    return dict;
 }
 
 @end
