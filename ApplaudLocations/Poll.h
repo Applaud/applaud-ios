@@ -19,6 +19,7 @@
 @property (nonatomic) int user_rating;
 @property (nonatomic, readonly) int total_votes;
 @property (nonatomic) int my_user_rating;
+@property (nonatomic) BOOL can_rate;
 
 -(id)initWithTitle:(NSString*)title
            options:(NSMutableArray*)options
@@ -26,6 +27,7 @@
       date_created:(NSDate*)date_created
        user_rating:(int)user_rating
       show_results:(BOOL)show_results
+          can_rate:(BOOL)can_rate
            poll_id:(int)poll_id;
 
 @end

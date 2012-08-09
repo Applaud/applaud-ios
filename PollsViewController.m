@@ -138,6 +138,7 @@
                                                                date_created:[formatter dateFromString:pollData[@"date_created"]]
                                                                 user_rating:[pollData[@"user_rating"] intValue]
                                                                show_results:[pollData[@"show_results"] boolValue]
+                                                                   can_rate:[pollData[@"can_rate"] boolValue]
                                                                     poll_id:[pollData[@"id"] intValue]];
                                 // Update the poll
                                 self.polls[indexPath.section] = newPoll;
@@ -171,7 +172,7 @@
     CGSize constraintSize, labelSize;
     constraintSize = CGSizeMake(self.view.frame.size.width - 2*CELL_MARGIN - CELL_PADDING - POLL_RATING_PADDING, 400);
     // Cannot uprate or downrate poll when results are showing
-    if ( !poll.show_results ) {
+    if ( !poll.show_results && poll.can_rate ) {
         constraintSize = CGSizeMake(constraintSize.width - POLL_RATING_WIDTH, constraintSize.height);
         UISegmentedControl *upDown = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:
                                                                                 [UIImage imageNamed:@"downrate"],
@@ -208,7 +209,7 @@
     
     CGSize constraintSize, labelSize;
     constraintSize = CGSizeMake(self.view.frame.size.width - 2*CELL_MARGIN - CELL_PADDING - POLL_RATING_PADDING, 400);
-    if ( !poll.show_results ) {
+    if ( !poll.show_results && poll.can_rate ) {
         constraintSize = CGSizeMake(constraintSize.width - POLL_RATING_WIDTH, constraintSize.height);
     }
     labelSize = [poll.title sizeWithFont:[UIFont boldSystemFontOfSize:POLL_QUESTION_TEXT_SIZE]
@@ -330,8 +331,7 @@
     self.polls = [self pollsFromJSON:data];
     
     [self sortPolls];
-    
-    [self.tableView reloadData];
+    [self refreshPolls];
 }
     
 - (NSMutableArray*)pollsFromJSON:(NSData*)JSONData {
@@ -351,6 +351,7 @@
                                     date_created:[formatter dateFromString:pollDict[@"date_created"]]
                                      user_rating:[pollDict[@"user_rating"] intValue]
                                     show_results:[pollDict[@"show_results"] boolValue]
+                                        can_rate:[pollDict[@"can_rate"] boolValue]
                                          poll_id:[pollDict[@"id"] intValue]];
         [polls addObject:poll];
     }
