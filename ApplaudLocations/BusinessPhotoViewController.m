@@ -103,7 +103,13 @@
                       cancelButtonTitle:@"OK"
                       otherButtonTitles:nil] show];
     [self.imagePicker dismissViewControllerAnimated:YES completion:nil];
-    [self postPhotoData:image];
+    UIImage *normalizedImage = [self normalizedImage:image];
+    CGSize resize = CGSizeMake(320, 480);
+    UIGraphicsBeginImageContext(resize);
+    [normalizedImage drawInRect:CGRectMake(0,0,resize.width,resize.height)];
+    UIImage *smallImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    [self postPhotoData:smallImage];
 }
 // Called when the user presses the cancel button.
 // We'll do nothing for now.
@@ -220,7 +226,7 @@
  
     // Now make the request.
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    request.timeoutInterval = 10;
+    request.timeoutInterval = 20;
     request.HTTPMethod = @"POST";
     NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", BOUNDARY];
     [request setValue:contentType forHTTPHeaderField:@"Content-Type"];
@@ -231,9 +237,22 @@
         [request addValue:csrf forHTTPHeaderField:@"X-CSRFToken"];
         [NSURLConnection sendAsynchronousRequest:request
                                            queue:[NSOperationQueue mainQueue]
-                               completionHandler:^(NSURLResponse *r, NSData *d, NSError *e) {}];
+                               completionHandler:^(NSURLResponse *r, NSData *d, NSError *e) {
+                                   [self getPhotos];
+                               }];
     }];
 }
+
+- (UIImage *)normalizedImage:(UIImage *)image {
+    if (image.imageOrientation == UIImageOrientationUp) return image;
+    
+    UIGraphicsBeginImageContextWithOptions(image.size, NO, image.scale);
+    [image drawInRect:(CGRect){0, 0, image.size}];
+    UIImage *normalizedImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return normalizedImage;
+}
+
 
 // Called when the user presses the camera button. Pretty straightforward.
 - (void)cameraButtonPressed {
