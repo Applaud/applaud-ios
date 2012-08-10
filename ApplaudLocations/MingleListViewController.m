@@ -152,6 +152,11 @@
 {
     MinglePostViewController *postView = [[MinglePostViewController alloc] initWithStyle:UITableViewStyleGrouped];
     
+    postView.view.opaque = YES;
+    postView.navigationController.navigationBar.tintColor = self.appDelegate.currentBusiness.primaryColor;
+    postView.tableView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+    postView.view.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+    
     // Make a new array with the same items. Convert NSArray --> NSMutableArray
     postView.threadPosts = [NSMutableArray arrayWithArray:[self.threads[indexPath.row] threadPosts]];
     
