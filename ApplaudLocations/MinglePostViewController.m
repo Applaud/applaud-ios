@@ -275,8 +275,6 @@
 # pragma mark - Toolbar Action
 
 - (void)submitPost {
-//    NewMingleThreadCell *cell = (NewMingleThreadCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-//    NSString *title = cell.textField.text;
     NSString *title = self.textField.text;
     if ( [title length] > 0 ) {
         // Save thread
@@ -286,10 +284,33 @@
                               withParams:params
                                      url:THREAD_SUBMIT_POST_URL
                                 callback:^(NSHTTPURLResponse *response, NSData *data) {
-                                    [self.navigationController popViewControllerAnimated:YES];
-                                    [self.parent getThreads];
+                                    // Parse the response into ThreadPosts
+                                    NSError *e = nil;
+                                    NSArray *postsData = [NSJSONSerialization JSONObjectWithData:data
+                                                                                         options:NSJSONReadingAllowFragments
+                                                                                           error:&e];
+                                    
+                                    NSDateFormatter *formatter = [NSDateFormatter new];
+                                    formatter.dateFormat = @"MM/dd/yyyy H:m:s";
+                                    self.threadPosts = [NSMutableArray new];
+                                    for ( NSDictionary *postDict in postsData ) {
+                                        User *user = [[User alloc] initWithName:[NSString stringWithFormat:@"%@ %@",
+                                                                                 postDict[@"user"][@"first_name"],
+                                                                                 postDict[@"user"][@"last_name"]]
+                                                                       username:postDict[@"user"][@"username"]];
+                                        ThreadPost *post = [[ThreadPost alloc] initWithBody:postDict[@"body"]
+                                                                               date_created:[formatter dateFromString:postDict[@"date_created"]]
+                                                                                    upvotes:[postDict[@"upvotes"] intValue]
+                                                                                  downvotes:[postDict[@"downvotes"] intValue]
+                                                                              threadpost_id:[postDict[@"id"] intValue]];
+                                        post.user = user;
+                                        [self.threadPosts addObject:post];
+                                    }
+                                    
+                                    [self.textField setText:@""];
+                                    
+                                    [self.tableView reloadData];
                                 }];
-    
     }
 
 }
