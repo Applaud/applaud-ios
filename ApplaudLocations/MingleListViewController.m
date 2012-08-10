@@ -84,6 +84,11 @@
 //    [self.navigationController setToolbarHidden:YES animated:YES];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self getThreads];
+}
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
@@ -91,10 +96,6 @@
 
 -(void)notificationReceived:(NSNotification *)notification {
     if([notification.name isEqualToString:@"BUSINESS_SET"]) {
-        
-        // get thread list
-        [self getThreads];
-        
         // Set color
         self.view.opaque = YES;
         self.navigationController.navigationBar.tintColor = self.appDelegate.currentBusiness.primaryColor;

@@ -13,6 +13,7 @@
 #import "MinglePostCell.h"
 #import "ConnectionManager.h"
 #import "MingleListViewController.h"
+#import "MingleThreadCell.h"
 
 @interface MinglePostViewController ()
 
@@ -33,12 +34,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
     
-    self.textField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0,
-                                                                           self.view.frame.size.width - 80, 20.0f)];
+    self.title = self.thread.title;
+    
+    self.textField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width - 80, 20.0f)];
+    self.textField.returnKeyType = UIReturnKeyDone;
     self.textField.backgroundColor = [UIColor whiteColor];
     self.textField.delegate = self;
     UIBarButtonItem *submitButton = [[UIBarButtonItem alloc] initWithTitle:@"Post" style:UIBarButtonItemStyleDone target:self action:@selector(submitPost)];
@@ -96,18 +96,35 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    // Return the number of sections.
-    return 1;
+    // section 0: title/thread info. section 1: posts
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if ( 0 == section )
+        return 1;
+    
     // Return the number of rows in the section.
     return MAX(1,self.threadPosts.count);
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if ( indexPath.section == 0 ) {
+        static NSString *ThreadTitleID = @"MinglePostsHeader";
+        MingleThreadCell *cell = [tableView dequeueReusableCellWithIdentifier:ThreadTitleID];
+        if ( nil == cell ) {
+            cell = [[MingleThreadCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                           reuseIdentifier:ThreadTitleID
+                                                    thread:self.thread];
+            cell.textLabel.text = self.thread.title;
+        } else {
+            [cell setThread:self.thread];
+        }
+        return cell;
+    }
+    
     // No posts in this thread yet
     if ( self.threadPosts.count < 1 ) {
         static NSString *CellIdentifier = @"MinglePostCell";
@@ -134,44 +151,6 @@
     return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 #pragma mark - Table view delegate
 
@@ -193,6 +172,13 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ( indexPath.section == 0 ) {
+        CGSize titleConstraint = CGSizeMake(CELL_WIDTH - 2*CELL_MARGIN - 2*CELL_PADDING - MINGLE_RATING_WIDTH - MINGLE_RATING_PADDING, 400);
+        CGSize titleSize = [self.thread.title sizeWithFont:[UIFont boldSystemFontOfSize:TITLE_SIZE]
+                                         constrainedToSize:titleConstraint
+                                             lineBreakMode:UILineBreakModeWordWrap];
+        return titleSize.height + 70.0f;
+    }
     if ( self.threadPosts.count < 1 ) {
         return 40.0f;
     }
@@ -286,9 +272,10 @@
                                 callback:^(NSHTTPURLResponse *response, NSData *data) {
                                     // Parse the response into ThreadPosts
                                     NSError *e = nil;
-                                    NSArray *postsData = [NSJSONSerialization JSONObjectWithData:data
-                                                                                         options:NSJSONReadingAllowFragments
-                                                                                           error:&e];
+                                    NSDictionary *threadData = [NSJSONSerialization JSONObjectWithData:data
+                                                                                               options:NSJSONReadingAllowFragments
+                                                                                                 error:&e];
+                                    NSArray *postsData = threadData[@"posts"];
                                     
                                     NSDateFormatter *formatter = [NSDateFormatter new];
                                     formatter.dateFormat = @"MM/dd/yyyy H:m:s";
@@ -306,6 +293,21 @@
                                         post.user = user;
                                         [self.threadPosts addObject:post];
                                     }
+                                    
+                                    // Parse the rest of the thread
+                                    User *user = [[User alloc] initWithName:[NSString stringWithFormat:@"%@ %@",
+                                                                             threadData[@"user_creator"][@"first_name"],
+                                                                             threadData[@"user_creator"][@"last_name"]]
+                                                                   username:threadData[@"user_creator"][@"username"]];
+                                    
+                                    Thread *thread = [[Thread alloc] initWithTitle:threadData[@"title"]
+                                                                      date_created:[formatter dateFromString:threadData[@"date_created"]]
+                                                                           upvotes:[threadData[@"upvotes"] intValue]
+                                                                         downvotes:[threadData[@"downvotes"] intValue]
+                                                                             posts:self.threadPosts
+                                                                         thread_id:[threadData[@"id"] intValue]];
+                                    thread.user_creator = user;
+                                    self.thread = thread;
                                     
                                     [self.textField setText:@""];
                                     
