@@ -19,28 +19,20 @@
     if (self) {
         self.post = post;
         
-        self.textLabel.text = self.post.body;
         self.textLabel.font = [UIFont systemFontOfSize:BODY_TEXT_SIZE];
         self.textLabel.numberOfLines = 0;
         self.textLabel.lineBreakMode = UILineBreakModeWordWrap;
         self.textLabel.backgroundColor = [UIColor clearColor];
         self.dateLabel = [UILabel new];
-        self.dateLabel.text = [ApatapaDateFormatter stringFromDate:self.post.date_created];
         self.dateLabel.font = [UIFont systemFontOfSize:DATE_SIZE];
         self.dateLabel.backgroundColor = [UIColor clearColor];
         self.usernameLabel = [UILabel new];
-        self.usernameLabel.text = self.post.user.username;
         self.usernameLabel.font = [UIFont boldSystemFontOfSize:USER_SIZE];
         self.usernameLabel.backgroundColor = [UIColor clearColor];
         self.profilePicture = [[UIImageView alloc] initWithImage:self.post.user.profilePicture];
         self.ratingWidget = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObject:[UIImage imageNamed:@"uprate"]]];
-        if ( self.post.my_rating )
-            self.ratingWidget.selectedSegmentIndex = 0;
-        else
-            [self.ratingWidget addTarget:self action:@selector(ratePost:) forControlEvents:UIControlEventValueChanged];
         
         self.upvotesLabel = [UILabel new];
-        self.upvotesLabel.text = [NSString stringWithFormat:@"+%d",self.post.upvotes];
         self.upvotesLabel.font = [UIFont systemFontOfSize:RATING_TEXT_SIZE];
         self.upvotesLabel.textColor = [UIColor colorWithRed:0.0 green:0.7 blue:0.0 alpha:1.0];
         
@@ -49,8 +41,26 @@
         [self.contentView addSubview:self.usernameLabel];
         [self.contentView addSubview:self.profilePicture];
         [self.contentView addSubview:self.ratingWidget];
+        
+        [self initContent];
     }
     return self;
+}
+
+- (void)initContent {
+    self.textLabel.text = self.post.body;
+    self.dateLabel.text = [ApatapaDateFormatter stringFromDate:self.post.date_created];
+    self.usernameLabel.text = self.post.user.username;
+    self.upvotesLabel.text = [NSString stringWithFormat:@"+%d",self.post.upvotes];
+    if ( self.post.my_rating )
+        self.ratingWidget.selectedSegmentIndex = 0;
+    else
+        [self.ratingWidget addTarget:self action:@selector(ratePost:) forControlEvents:UIControlEventValueChanged];
+}
+
+- (void)setPost:(ThreadPost *)post {
+    _post = post;
+    [self initContent];
 }
 
 - (void)layoutSubviews {

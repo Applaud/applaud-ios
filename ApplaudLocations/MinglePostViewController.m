@@ -152,6 +152,8 @@
                                           threadPost:self.threadPosts[indexPath.row]];
         cell.mpvc = self;
         [cellMap setObject:cell forKey:cellKey];
+    } else {
+        [cell setPost:self.threadPosts[indexPath.row]];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
