@@ -10,6 +10,7 @@
 #import "MingleDisplayConstants.h"
 #import "ConnectionManager.h"
 #import "MingleListViewController.h"
+#import "ApatapaDateFormatter.h"
 
 @implementation MingleThreadCell
 
@@ -59,12 +60,9 @@
 }
 
 - (void)initContent {
-    NSDateFormatter *formatter = [NSDateFormatter new];
-    formatter.dateFormat = @"MM/dd/yyyy";
-    
     self.textLabel.text = self.thread.title;
     self.userLabel.text = self.thread.user_creator.username;
-    self.dateLabel.text = [formatter stringFromDate:self.thread.date_created];
+    self.dateLabel.text = [ApatapaDateFormatter stringFromDate:self.thread.date_created];
     NSString *comment = self.thread.threadPosts.count == 1? @"post" : @"posts";
     self.postsLabel.text = [NSString stringWithFormat:@"%d %@",self.thread.threadPosts.count, comment];
     

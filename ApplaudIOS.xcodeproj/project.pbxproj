@@ -25,6 +25,7 @@
 		1B110A0615D4825000B2B07E /* MingleThreadCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B110A0515D4824F00B2B07E /* MingleThreadCell.m */; };
 		1B12763215B89B9600980AA2 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B12763015B89B9600980AA2 /* MasterViewController.m */; };
 		1B12763315B89B9600980AA2 /* MasterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B12763115B89B9600980AA2 /* MasterViewController.xib */; };
+		1B16E17415D5C87300F15D8E /* ApatapaDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B16E17315D5C87300F15D8E /* ApatapaDateFormatter.m */; };
 		1B18F75915D23AFF004317F9 /* polls.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B18F75715D23AFF004317F9 /* polls.png */; };
 		1B18F75A15D23AFF004317F9 /* polls@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B18F75815D23AFF004317F9 /* polls@2x.png */; };
 		1B301C621588580E0038A5BE /* NFViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B301C601588580E0038A5BE /* NFViewController.m */; };
@@ -158,6 +159,8 @@
 		1B12762F15B89B9600980AA2 /* MasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
 		1B12763015B89B9600980AA2 /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
 		1B12763115B89B9600980AA2 /* MasterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MasterViewController.xib; sourceTree = "<group>"; };
+		1B16E17215D5C87300F15D8E /* ApatapaDateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApatapaDateFormatter.h; sourceTree = "<group>"; };
+		1B16E17315D5C87300F15D8E /* ApatapaDateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApatapaDateFormatter.m; sourceTree = "<group>"; };
 		1B18F75715D23AFF004317F9 /* polls.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = polls.png; path = ../../graphics/polls.png; sourceTree = "<group>"; };
 		1B18F75815D23AFF004317F9 /* polls@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "polls@2x.png"; path = "../../graphics/polls@2x.png"; sourceTree = "<group>"; };
 		1B301C5F1588580E0038A5BE /* NFViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NFViewController.h; sourceTree = "<group>"; };
@@ -470,6 +473,8 @@
 				6F3EA47A15BE03AD006E66A8 /* Business Photos */,
 				1BA358F61582F05E00EB8F32 /* AppDelegate.h */,
 				1BA358F71582F05E00EB8F32 /* AppDelegate.m */,
+				1B16E17215D5C87300F15D8E /* ApatapaDateFormatter.h */,
+				1B16E17315D5C87300F15D8E /* ApatapaDateFormatter.m */,
 				1B5D030715C4564300976D33 /* ErrorViewController.h */,
 				1B5D030815C4564300976D33 /* ErrorViewController.m */,
 				6F2A39151587B2AB0024FB52 /* Business.h */,
@@ -708,6 +713,7 @@
 				1B110A0215D45BC100B2B07E /* NewMingleThreadCell.m in Sources */,
 				1B110A0615D4825000B2B07E /* MingleThreadCell.m in Sources */,
 				1B94B15515D4B09400E80232 /* MinglePostCell.m in Sources */,
+				1B16E17415D5C87300F15D8E /* ApatapaDateFormatter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

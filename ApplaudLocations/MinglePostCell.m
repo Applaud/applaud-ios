@@ -9,6 +9,7 @@
 #import "MinglePostCell.h"
 #import "MingleDisplayConstants.h"
 #import "MinglePostViewController.h"
+#import "ApatapaDateFormatter.h"
 
 @implementation MinglePostCell
 
@@ -18,16 +19,13 @@
     if (self) {
         self.post = post;
         
-        NSDateFormatter *formatter = [NSDateFormatter new];
-        formatter.dateFormat = @"MM/dd/yyyy";
-        
         self.textLabel.text = self.post.body;
         self.textLabel.font = [UIFont systemFontOfSize:BODY_TEXT_SIZE];
         self.textLabel.numberOfLines = 0;
         self.textLabel.lineBreakMode = UILineBreakModeWordWrap;
         self.textLabel.backgroundColor = [UIColor clearColor];
         self.dateLabel = [UILabel new];
-        self.dateLabel.text = [formatter stringFromDate:self.post.date_created];
+        self.dateLabel.text = [ApatapaDateFormatter stringFromDate:self.post.date_created];
         self.dateLabel.font = [UIFont systemFontOfSize:DATE_SIZE];
         self.dateLabel.backgroundColor = [UIColor clearColor];
         self.usernameLabel = [UILabel new];
