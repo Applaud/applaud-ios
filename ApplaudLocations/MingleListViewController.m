@@ -297,8 +297,7 @@
                           withParams:params
                                  url:THREAD_RATE_URL
                             callback:^(NSHTTPURLResponse *r, NSData *d) {
-                                [self sortThreads];
-                                [self refreshThreads];
+                                [self handleThreadsData:d];
                             }];
 }
 

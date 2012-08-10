@@ -35,13 +35,6 @@
                              [NSArray arrayWithObjects:
                               [UIImage imageNamed:@"downrate"],
                               [UIImage imageNamed:@"uprate"], nil]];
-        if ( self.thread.my_rating == -1 ) {
-            self.ratingWidget.selectedSegmentIndex = 0;
-        } else if ( self.thread.my_rating == 1 ) {
-            self.ratingWidget.selectedSegmentIndex = 1;
-        } else {
-            [self.ratingWidget addTarget:self action:@selector(rateThread:) forControlEvents:UIControlEventValueChanged];
-        }
         
         [self.contentView addSubview:self.userLabel];
         [self.contentView addSubview:self.dateLabel];
@@ -62,6 +55,16 @@
     self.dateLabel.text = [formatter stringFromDate:self.thread.date_created];
     NSString *comment = self.thread.threadPosts.count == 1? @"post" : @"posts";
     self.postsLabel.text = [NSString stringWithFormat:@"%d %@",self.thread.threadPosts.count, comment];
+    
+    if ( self.thread.my_rating == -1 ) {
+        self.ratingWidget.selectedSegmentIndex = 0;
+        self.ratingWidget.userInteractionEnabled = NO;
+    } else if ( self.thread.my_rating == 1 ) {
+        self.ratingWidget.selectedSegmentIndex = 1;
+        self.ratingWidget.userInteractionEnabled = NO;
+    } else {
+        [self.ratingWidget addTarget:self action:@selector(rateThread:) forControlEvents:UIControlEventValueChanged];
+    }
 }
 
 - (void)setThread:(Thread *)thread {
