@@ -41,7 +41,13 @@
         else
             [self.ratingWidget addTarget:self action:@selector(ratePost:) forControlEvents:UIControlEventValueChanged];
         
+        self.upvotesLabel = [UILabel new];
+        self.upvotesLabel.text = [NSString stringWithFormat:@"+%d",self.post.upvotes];
+        self.upvotesLabel.font = [UIFont systemFontOfSize:RATING_TEXT_SIZE];
+        self.upvotesLabel.textColor = [UIColor colorWithRed:0.0 green:0.7 blue:0.0 alpha:1.0];
+        
         [self.contentView addSubview:self.dateLabel];
+        [self.contentView addSubview:self.upvotesLabel];
         [self.contentView addSubview:self.usernameLabel];
         [self.contentView addSubview:self.profilePicture];
         [self.contentView addSubview:self.ratingWidget];
@@ -57,6 +63,11 @@
                                          CELL_PADDING,
                                          MINGLE_RATING_WIDTH/2,
                                          32.0f);
+    [self.upvotesLabel sizeToFit];
+    self.upvotesLabel.frame = CGRectMake(self.ratingWidget.frame.origin.x + self.ratingWidget.frame.size.width/2 - self.upvotesLabel.frame.size.width/2,
+                                         self.ratingWidget.frame.origin.y + self.ratingWidget.frame.size.height + CELL_ELEMENT_PADDING,
+                                         self.upvotesLabel.frame.size.width,
+                                         self.upvotesLabel.frame.size.height);
     self.usernameLabel.frame = CGRectMake(CELL_PADDING + IMAGE_SIZE + CELL_ELEMENT_PADDING,
                                           CELL_PADDING,
                                           CELL_WIDTH - 2*CELL_MARGIN - 2*CELL_PADDING - IMAGE_SIZE - CELL_ELEMENT_PADDING - MINGLE_RATING_PADDING,
