@@ -9,14 +9,15 @@
 #ifndef ApplaudIOS_MingleDisplayConstants_h
 #define ApplaudIOS_MingleDisplayConstants_h
 
+#define IMAGE_SIZE 50.0f
 #define SCROLL_TIME 0.17f           // # of seconds to scroll the view when keyboard appears
-#define NAVBAR_SIZE 49.0f           // size of the navigation bar (for use in resizing view for keyboard appearance)
 #define TABBAR_HEIGHT 49.0f
 #define MINGLE_RATING_WIDTH 60.0f
 #define MINGLE_RATING_PADDING 10.0f
 #define TITLE_SIZE 17.0f
 #define DATE_SIZE 12.0f
 #define USER_SIZE 12.0f
+#define BODY_TEXT_SIZE 12.0f
 #define DATE_AND_USER_HEIGHT 14.0f
 #define POSTS_SIZE 10.0f
 #define ACCESSORY_SIZE 50.0f

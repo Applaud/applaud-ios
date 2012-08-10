@@ -11,6 +11,7 @@
 
 @interface MinglePostViewController : UITableViewController <UITextFieldDelegate> {
     BOOL keyboardIsShown;
+    NSMutableDictionary *cellMap;
 }
 
 @property (nonatomic, strong) NSMutableArray *threadPosts;

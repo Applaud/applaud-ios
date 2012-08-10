@@ -6,9 +6,11 @@
 //  Copyright (c) 2012 Applaud, Inc. All rights reserved.
 //
 
+#import <QuartzCore/QuartzCore.h>
 #import "MinglePostViewController.h"
 #import "ThreadPost.h"
 #import "MingleDisplayConstants.h"
+#import "MinglePostCell.h"
 
 @interface MinglePostViewController ()
 
@@ -20,7 +22,7 @@
 {
     self = [super initWithStyle:style];
     if (self) {
-        // Custom initialization
+        cellMap = [NSMutableDictionary new];
     }
     return self;
 }
@@ -101,22 +103,27 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"MinglePostCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
-    if ( nil == cell ) {
-        // No posts in this thread yet
-        if ( self.threadPosts.count < 1 ) {
+    // No posts in this thread yet
+    if ( self.threadPosts.count < 1 ) {
+        static NSString *CellIdentifier = @"MinglePostCell";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+
+        if ( nil == cell ) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                           reuseIdentifier:CellIdentifier];
             cell.textLabel.text = @"No posts here yet!";
         }
+        return cell;
+    }
+    
+    NSString *cellKey = [NSString stringWithFormat:@"%d",[self.threadPosts[indexPath.row] threadpost_id]];
+    MinglePostCell *cell = [cellMap objectForKey:cellKey];
+    if ( nil == cell ) {
         // Build a cell for each posting
-        else {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                          reuseIdentifier:CellIdentifier];
-            cell.textLabel.text = [(ThreadPost*)self.threadPosts[indexPath.row] body];
-        }
+        cell = [[MinglePostCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                     reuseIdentifier:cellKey
+                                          threadPost:self.threadPosts[indexPath.row]];
+        [cellMap setObject:cell forKey:cellKey];
     }
     
     return cell;
@@ -162,6 +169,38 @@
 */
 
 #pragma mark - Table view delegate
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Set shape and color
+    cell.backgroundColor = [UIColor whiteColor];
+    cell.contentView.backgroundColor = [UIColor whiteColor];
+    cell.contentView.layer.cornerRadius = 7.0f;
+    
+    // Some nice visual FX
+    cell.contentView.layer.shadowRadius = 5.0f;
+    cell.contentView.layer.shadowOpacity = 0.1f;
+    cell.contentView.layer.shadowOffset = CGSizeMake(0, 0);
+    cell.contentView.layer.shadowPath = [[UIBezierPath bezierPathWithRoundedRect:CGRectMake(0,
+                                                                                            0,
+                                                                                            cell.frame.size.width,
+                                                                                            cell.frame.size.height)
+                                                                    cornerRadius:7.0f] CGPath];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ( self.threadPosts.count < 1 ) {
+        return 40.0f;
+    }
+    
+    ThreadPost *post = self.threadPosts[indexPath.row];
+    CGSize bodyContraint = CGSizeMake(CELL_WIDTH - 2*CELL_MARGIN - 2*CELL_PADDING - IMAGE_SIZE - CELL_ELEMENT_PADDING - MINGLE_RATING_PADDING, 400);
+    CGSize bodySize = [post.body sizeWithFont:[UIFont systemFontOfSize:BODY_TEXT_SIZE]
+                            constrainedToSize:bodyContraint
+                                lineBreakMode:UILineBreakModeWordWrap];
+    
+    return bodySize.height + 70.0f;
+    
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
