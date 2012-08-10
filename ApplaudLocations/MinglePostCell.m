@@ -8,6 +8,7 @@
 
 #import "MinglePostCell.h"
 #import "MingleDisplayConstants.h"
+#import "MinglePostViewController.h"
 
 @implementation MinglePostCell
 
@@ -79,7 +80,7 @@
 }
 
 - (IBAction)ratePost:(id)sender {
-    // rate the post
+    [self.mpvc giveRating:1 toThreadPostWithId:self.post.threadpost_id];
 }
 
 @end

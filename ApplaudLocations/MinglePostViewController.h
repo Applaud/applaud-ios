@@ -24,4 +24,6 @@
 @property (nonatomic, strong) Thread *thread;
 @property (nonatomic, weak) MingleListViewController *parent;
 
+- (void)giveRating:(int)rating toThreadPostWithId:(int)threadpost_id;
+
 @end

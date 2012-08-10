@@ -22,6 +22,7 @@
 #define THREAD_CREATE_URL @"/mobile/create_thread/"
 #define THREAD_RATE_URL @"/mobile/rate_thread/"
 #define THREAD_SUBMIT_POST_URL @"/mobile/submit_post/"
+#define THREAD_RATE_POST_URL @"/mobile/rate_post/"
 #define NEWSFEED_URL @"/mobile/newsfeed/"
 #define SURVEY_URL @"/mobile/get_survey/"
 #define RESPONSE_URL @"/mobile/survey_respond/"

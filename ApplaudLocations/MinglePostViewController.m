@@ -145,6 +145,7 @@
         cell = [[MinglePostCell alloc] initWithStyle:UITableViewCellStyleDefault
                                      reuseIdentifier:cellKey
                                           threadPost:self.threadPosts[indexPath.row]];
+        cell.mpvc = self;
         [cellMap setObject:cell forKey:cellKey];
     }
     
@@ -258,7 +259,7 @@
     keyboardIsShown = NO;
 }
 
-# pragma mark - Toolbar Action
+#pragma mark - Managing Thread Posts
 
 - (void)submitPost {
     NSString *title = self.textField.text;
@@ -270,51 +271,69 @@
                               withParams:params
                                      url:THREAD_SUBMIT_POST_URL
                                 callback:^(NSHTTPURLResponse *response, NSData *data) {
-                                    // Parse the response into ThreadPosts
-                                    NSError *e = nil;
-                                    NSDictionary *threadData = [NSJSONSerialization JSONObjectWithData:data
-                                                                                               options:NSJSONReadingAllowFragments
-                                                                                                 error:&e];
-                                    NSArray *postsData = threadData[@"posts"];
-                                    
-                                    NSDateFormatter *formatter = [NSDateFormatter new];
-                                    formatter.dateFormat = @"MM/dd/yyyy H:m:s";
-                                    self.threadPosts = [NSMutableArray new];
-                                    for ( NSDictionary *postDict in postsData ) {
-                                        User *user = [[User alloc] initWithName:[NSString stringWithFormat:@"%@ %@",
-                                                                                 postDict[@"user"][@"first_name"],
-                                                                                 postDict[@"user"][@"last_name"]]
-                                                                       username:postDict[@"user"][@"username"]];
-                                        ThreadPost *post = [[ThreadPost alloc] initWithBody:postDict[@"body"]
-                                                                               date_created:[formatter dateFromString:postDict[@"date_created"]]
-                                                                                    upvotes:[postDict[@"upvotes"] intValue]
-                                                                                  downvotes:[postDict[@"downvotes"] intValue]
-                                                                              threadpost_id:[postDict[@"id"] intValue]];
-                                        post.user = user;
-                                        [self.threadPosts addObject:post];
-                                    }
-                                    
-                                    // Parse the rest of the thread
-                                    User *user = [[User alloc] initWithName:[NSString stringWithFormat:@"%@ %@",
-                                                                             threadData[@"user_creator"][@"first_name"],
-                                                                             threadData[@"user_creator"][@"last_name"]]
-                                                                   username:threadData[@"user_creator"][@"username"]];
-                                    
-                                    Thread *thread = [[Thread alloc] initWithTitle:threadData[@"title"]
-                                                                      date_created:[formatter dateFromString:threadData[@"date_created"]]
-                                                                           upvotes:[threadData[@"upvotes"] intValue]
-                                                                         downvotes:[threadData[@"downvotes"] intValue]
-                                                                             posts:self.threadPosts
-                                                                         thread_id:[threadData[@"id"] intValue]];
-                                    thread.user_creator = user;
-                                    self.thread = thread;
-                                    
-                                    [self.textField setText:@""];
-                                    
-                                    [self.tableView reloadData];
+                                    [self loadThreadFromData:data];
                                 }];
     }
+    
+}
 
+- (void)loadThreadFromData:(NSData*)data {
+    // Parse the response into ThreadPosts
+    NSError *e = nil;
+    NSDictionary *threadData = [NSJSONSerialization JSONObjectWithData:data
+                                                               options:NSJSONReadingAllowFragments
+                                                                 error:&e];
+    NSArray *postsData = threadData[@"posts"];
+    
+    NSDateFormatter *formatter = [NSDateFormatter new];
+    formatter.dateFormat = @"MM/dd/yyyy H:m:s";
+    self.threadPosts = [NSMutableArray new];
+    for ( NSDictionary *postDict in postsData ) {
+        User *user = [[User alloc] initWithName:[NSString stringWithFormat:@"%@ %@",
+                                                 postDict[@"user"][@"first_name"],
+                                                 postDict[@"user"][@"last_name"]]
+                                       username:postDict[@"user"][@"username"]];
+        ThreadPost *post = [[ThreadPost alloc] initWithBody:postDict[@"body"]
+                                               date_created:[formatter dateFromString:postDict[@"date_created"]]
+                                                    upvotes:[postDict[@"upvotes"] intValue]
+                                                  downvotes:[postDict[@"downvotes"] intValue]
+                                              threadpost_id:[postDict[@"id"] intValue]];
+        post.user = user;
+        [self.threadPosts addObject:post];
+    }
+    
+    // Parse the rest of the thread
+    User *user = [[User alloc] initWithName:[NSString stringWithFormat:@"%@ %@",
+                                             threadData[@"user_creator"][@"first_name"],
+                                             threadData[@"user_creator"][@"last_name"]]
+                                   username:threadData[@"user_creator"][@"username"]];
+    
+    Thread *thread = [[Thread alloc] initWithTitle:threadData[@"title"]
+                                      date_created:[formatter dateFromString:threadData[@"date_created"]]
+                                           upvotes:[threadData[@"upvotes"] intValue]
+                                         downvotes:[threadData[@"downvotes"] intValue]
+                                             posts:self.threadPosts
+                                         thread_id:[threadData[@"id"] intValue]];
+    thread.user_creator = user;
+    self.thread = thread;
+    
+    [self.textField setText:@""];
+    
+    [self.tableView reloadData];
+}
+
+- (void)giveRating:(int)rating toThreadPostWithId:(int)threadpost_id {
+    // rate the thread
+    NSDictionary *params = @{ @"user_rating" : @(rating),
+    @"id" : @(threadpost_id) };
+    
+    [ConnectionManager serverRequest:@"POST"
+                          withParams:params
+                                 url:THREAD_RATE_POST_URL
+                            callback:^(NSHTTPURLResponse *r, NSData *d) {
+                                
+                                [self loadThreadFromData:d];
+     }];
 }
 
 @end

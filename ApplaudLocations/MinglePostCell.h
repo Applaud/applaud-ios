@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "ThreadPost.h"
 
+@class MinglePostViewController;
+
 @interface MinglePostCell : UITableViewCell
 
 @property (nonatomic, strong) ThreadPost *post;
@@ -16,6 +18,7 @@
 @property (nonatomic, strong) UILabel *dateLabel;
 @property (nonatomic, strong) UILabel *usernameLabel;
 @property (nonatomic, strong) UISegmentedControl *ratingWidget;
+@property (nonatomic, weak) MinglePostViewController *mpvc;
 //N.B. Body is in the textLabel property
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier threadPost:(ThreadPost*)post;
