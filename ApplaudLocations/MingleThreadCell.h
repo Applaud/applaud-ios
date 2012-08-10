@@ -17,6 +17,9 @@
 @property (nonatomic, strong) UILabel *dateLabel;
 @property (nonatomic, strong) UILabel *userLabel;
 @property (nonatomic, strong) UILabel *postsLabel;
+@property (nonatomic, strong) UILabel *upvotesLabel;
+@property (nonatomic, strong) UILabel *downvotesLabel;
+@property (nonatomic, strong) UILabel *updownLabel;
 @property (nonatomic, strong) UISegmentedControl *ratingWidget;
 @property (nonatomic, weak) MingleListViewController *mlvc;
 

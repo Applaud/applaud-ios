@@ -18,6 +18,7 @@
 #define DATE_SIZE 12.0f
 #define USER_SIZE 12.0f
 #define BODY_TEXT_SIZE 12.0f
+#define RATING_TEXT_SIZE 10.0f
 #define DATE_AND_USER_HEIGHT 14.0f
 #define POSTS_SIZE 10.0f
 #define ACCESSORY_SIZE 50.0f
