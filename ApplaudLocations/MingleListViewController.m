@@ -6,11 +6,15 @@
 //  Copyright (c) 2012 Applaud, Inc. All rights reserved.
 //
 
+#import <QuartzCore/QuartzCore.h>
 #import "MingleListViewController.h"
 #import "ConnectionManager.h"
 #import "ThreadPost.h"
 #import "MinglePostViewController.h"
 #import "NewMingleThreadViewController.h"
+#import "MingleThreadCell.h"
+#import "User.h"
+#import "MingleDisplayConstants.h"
 
 @interface MingleListViewController ()
 
@@ -54,7 +58,8 @@
     UIBarButtonItem *sortItem = [[UIBarButtonItem alloc] initWithCustomView:sortControls];
     self.navigationController.toolbarHidden = NO;
     self.navigationController.toolbar.tintColor = [UIColor blackColor];
-    [self setToolbarItems:[NSArray arrayWithObjects:flex,sortItem,flex,nil]];
+    self.toolbarWidgets = [[NSMutableArray alloc] initWithObjects:flex, sortItem, flex, nil];
+    [self setToolbarItems: self.toolbarWidgets];
     
     // Sort method is "newest"
     sortMethod = SORT_NEWEST;
@@ -76,7 +81,7 @@
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-    [self.navigationController setToolbarHidden:YES animated:YES];
+//    [self.navigationController setToolbarHidden:YES animated:YES];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -114,19 +119,34 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"MingleCell";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    MingleThreadCell *cell = [tableView dequeueReusableCellWithIdentifier:[self.threads[indexPath.row] title]];
     if ( nil == cell ) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                      reuseIdentifier:CellIdentifier];
+        cell = [[MingleThreadCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                      reuseIdentifier:[self.threads[indexPath.row] title]
+                                                thread:self.threads[indexPath.row]];
     }
-    cell.textLabel.text = [self.threads[indexPath.row] title];
     
     return cell;
 }
 
 #pragma mark - Table view delegate
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Set shape and color
+    cell.backgroundColor = [UIColor whiteColor];
+    cell.contentView.backgroundColor = [UIColor whiteColor];
+    cell.contentView.layer.cornerRadius = 7.0f;
+    
+    // Some nice visual FX
+    cell.contentView.layer.shadowRadius = 5.0f;
+    cell.contentView.layer.shadowOpacity = 0.1f;
+    cell.contentView.layer.shadowOffset = CGSizeMake(0, 0);
+    cell.contentView.layer.shadowPath = [[UIBezierPath bezierPathWithRoundedRect:CGRectMake(0,
+                                                                                            0,
+                                                                                            cell.frame.size.width,
+                                                                                            cell.frame.size.height)
+                                                                    cornerRadius:7.0f] CGPath];
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -136,6 +156,15 @@
     postView.threadPosts = [NSMutableArray arrayWithArray:[self.threads[indexPath.row] threadPosts]];
     
     [self.navigationController pushViewController:postView animated:YES];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    CGSize titleConstraint = CGSizeMake(CELL_WIDTH - 2*CELL_MARGIN - 2*CELL_PADDING - MINGLE_RATING_WIDTH - MINGLE_RATING_PADDING, 400);
+    CGSize titleSize = [[self.threads[indexPath.row] title] sizeWithFont:[UIFont boldSystemFontOfSize:TITLE_SIZE]
+                                                       constrainedToSize:titleConstraint
+                                                           lineBreakMode:UILineBreakModeWordWrap];
+    
+    return titleSize.height + 70.0f;
 }
 
 # pragma mark - Managing Threads
@@ -227,12 +256,20 @@
                                                   threadpost_id:[dict[@"id"] intValue]];
             [threadPosts addObject:post];
         }
+        
+        User *user = [[User alloc] initWithName:[NSString stringWithFormat:@"%@ %@",
+                                                 threadData[@"user_creator"][@"first_name"],
+                                                 threadData[@"user_creator"][@"last_name"]]
+                                       username:threadData[@"user_creator"][@"username"]];
+        
         Thread *thread = [[Thread alloc] initWithTitle:threadData[@"title"]
                                           date_created:[formatter dateFromString:threadData[@"date_created"]]
                                                upvotes:[threadData[@"upvotes"] intValue]
                                              downvotes:[threadData[@"downvotes"] intValue]
                                                  posts:threadPosts
                                              thread_id:[threadData[@"id"] intValue]];
+        thread.user_creator = user;
+        
         [self.threads addObject:thread];
     }
     

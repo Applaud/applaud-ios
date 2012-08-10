@@ -9,9 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
 
-@interface MinglePostViewController : UITableViewController
+@interface MinglePostViewController : UITableViewController <UITextFieldDelegate> {
+    BOOL keyboardIsShown;
+}
 
 @property (nonatomic, strong) NSMutableArray *threadPosts;
 @property (nonatomic, weak) AppDelegate *appDelegate;
+@property (nonatomic, strong) NSMutableArray *toolbarWidgets;
+@property (nonatomic, strong) UITextField *textField;
 
 @end

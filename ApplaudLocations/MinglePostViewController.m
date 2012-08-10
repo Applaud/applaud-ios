@@ -8,6 +8,7 @@
 
 #import "MinglePostViewController.h"
 #import "ThreadPost.h"
+#import "MingleDisplayConstants.h"
 
 @interface MinglePostViewController ()
 
@@ -30,13 +31,50 @@
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    self.textField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0,
+                                                                           self.view.frame.size.width - 80, 20.0f)];
+    self.textField.backgroundColor = [UIColor whiteColor];
+    self.textField.delegate = self;
+    UIBarButtonItem *submitButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(submitPost)];
+    submitButton.tintColor = [UIColor grayColor];
+    UIBarButtonItem *textItem = [[UIBarButtonItem alloc] initWithCustomView:self.textField];
+    
+    self.toolbarWidgets = [[NSMutableArray alloc] initWithObjects:textItem, submitButton, nil];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    // Set our toolbar items
+    [self setToolbarItems:self.toolbarWidgets animated:YES];
+    
+    // Listen for keyboard to show
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillDisappear:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [self.textField resignFirstResponder];
+    [super viewWillDisappear:animated];
 }
 
 - (void)viewDidUnload
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIKeyboardWillShowNotification
+                                                  object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIKeyboardWillHideNotification
+                                                  object:nil];
+    
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -125,6 +163,59 @@
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
+}
+
+#pragma mark - UITextFieldDelegate Methods
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
+}
+
+#pragma mark - Keyboard Motion
+
+- (void)keyboardWillShow:(NSNotification*)n {
+    if (keyboardIsShown) {
+        return;
+    }
+    
+    NSDictionary* userInfo = [n userInfo];
+    
+    // get the size of the keyboard
+    CGSize keyboardSize = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    
+    // Move the toolbar
+    CGRect viewFrame = self.navigationController.view.frame;
+    viewFrame.size.height -= keyboardSize.height - TABBAR_HEIGHT;
+    
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    
+    [UIView setAnimationDuration:SCROLL_TIME];
+    [self.navigationController.view setFrame:viewFrame];
+    [UIView commitAnimations];
+    
+    keyboardIsShown = YES;
+}
+
+- (void)keyboardWillDisappear:(NSNotification*)n {
+    NSDictionary* userInfo = [n userInfo];
+    
+    // get the size of the keyboard
+    CGSize keyboardSize = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+
+    // Move the toolbar
+    CGRect viewFrame = self.navigationController.view.frame;
+    viewFrame.size.height += keyboardSize.height - TABBAR_HEIGHT;
+    
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    
+    [UIView setAnimationDuration:SCROLL_TIME];
+    [self.navigationController.view setFrame:viewFrame];
+    [UIView commitAnimations];
+    
+    keyboardIsShown = NO;
 }
 
 @end

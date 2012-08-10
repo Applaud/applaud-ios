@@ -23,6 +23,7 @@
 @property (nonatomic, weak) AppDelegate *appDelegate;
 @property (nonatomic, strong, readwrite) UINavigationController *navigationController;
 @property (nonatomic, strong) NSMutableArray *threads;
+@property (nonatomic, strong) NSMutableArray *toolbarWidgets;
 
 - (void)getThreads;
 
