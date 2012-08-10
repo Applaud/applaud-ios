@@ -8,6 +8,8 @@
 
 #import "MingleThreadCell.h"
 #import "MingleDisplayConstants.h"
+#import "ConnectionManager.h"
+#import "MingleListViewController.h"
 
 @implementation MingleThreadCell
 
@@ -41,7 +43,7 @@
                              [NSArray arrayWithObjects:
                               [UIImage imageNamed:@"downrate"],
                               [UIImage imageNamed:@"uprate"], nil]];
-        [self.ratingWidget addTarget:self action:@selector(rateThread) forControlEvents:UIControlEventValueChanged];
+        [self.ratingWidget addTarget:self action:@selector(rateThread:) forControlEvents:UIControlEventValueChanged];
         
         [self.contentView addSubview:self.userLabel];
         [self.contentView addSubview:self.dateLabel];
@@ -93,8 +95,11 @@
 - (IBAction)rateThread:(id)sender {
     UISegmentedControl *ratingWidget = (UISegmentedControl*)sender;
     
-    // rate the thread
+    [self.mlvc giveRating:ratingWidget.selectedSegmentIndex
+           toThreadWithId:self.thread.thread_id];
     
+    // Disable rating now
+    ratingWidget.userInteractionEnabled = NO;
 }
 
 @end

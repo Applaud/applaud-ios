@@ -26,5 +26,6 @@
 @property (nonatomic, strong) NSMutableArray *toolbarWidgets;
 
 - (void)getThreads;
+- (void)giveRating:(int)rating toThreadWithId:(int)thread_id;
 
 @end

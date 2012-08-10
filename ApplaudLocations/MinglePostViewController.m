@@ -11,6 +11,8 @@
 #import "ThreadPost.h"
 #import "MingleDisplayConstants.h"
 #import "MinglePostCell.h"
+#import "ConnectionManager.h"
+#import "MingleListViewController.h"
 
 @interface MinglePostViewController ()
 
@@ -18,10 +20,11 @@
 
 @implementation MinglePostViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
+- (id)initWithStyle:(UITableViewStyle)style thread:(Thread *)thread
 {
     self = [super initWithStyle:style];
     if (self) {
+        _thread = thread;
         cellMap = [NSMutableDictionary new];
     }
     return self;
@@ -38,8 +41,10 @@
                                                                            self.view.frame.size.width - 80, 20.0f)];
     self.textField.backgroundColor = [UIColor whiteColor];
     self.textField.delegate = self;
-    UIBarButtonItem *submitButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(submitPost)];
+    UIBarButtonItem *submitButton = [[UIBarButtonItem alloc] initWithTitle:@"Post" style:UIBarButtonItemStyleDone target:self action:@selector(submitPost)];
+    //UIBarButtonItem *submitButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(submitPost)];
     submitButton.tintColor = [UIColor grayColor];
+    submitButton.title = @"Post";
     UIBarButtonItem *textItem = [[UIBarButtonItem alloc] initWithCustomView:self.textField];
     
     self.toolbarWidgets = [[NSMutableArray alloc] initWithObjects:textItem, submitButton, nil];
@@ -264,6 +269,28 @@
     [UIView commitAnimations];
     
     keyboardIsShown = NO;
+}
+
+# pragma mark - Toolbar Action
+
+- (void)submitPost {
+//    NewMingleThreadCell *cell = (NewMingleThreadCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+//    NSString *title = cell.textField.text;
+    NSString *title = self.textField.text;
+    if ( [title length] > 0 ) {
+        // Save thread
+        NSDictionary *params = @{@"title" : title,
+        @"thread_id":@(self.thread.thread_id)};
+        [ConnectionManager serverRequest:@"POST"
+                              withParams:params
+                                     url:THREAD_SUBMIT_POST_URL
+                                callback:^(NSHTTPURLResponse *response, NSData *data) {
+                                    [self.navigationController popViewControllerAnimated:YES];
+                                    [self.parent getThreads];
+                                }];
+    
+    }
+
 }
 
 @end

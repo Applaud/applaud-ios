@@ -124,6 +124,7 @@
         cell = [[MingleThreadCell alloc] initWithStyle:UITableViewCellStyleDefault
                                       reuseIdentifier:[self.threads[indexPath.row] title]
                                                 thread:self.threads[indexPath.row]];
+        cell.mlvc = self;
     }
     
     return cell;
@@ -150,8 +151,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    MinglePostViewController *postView = [[MinglePostViewController alloc] initWithStyle:UITableViewStyleGrouped];
-    
+    MinglePostViewController *postView = [[MinglePostViewController alloc] initWithStyle:UITableViewStyleGrouped thread:self.threads [indexPath.row]];
+    postView.parent = self;
     postView.view.opaque = YES;
     postView.navigationController.navigationBar.tintColor = self.appDelegate.currentBusiness.primaryColor;
     postView.tableView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
@@ -285,6 +286,20 @@
     
     [self sortThreads];
     [self refreshThreads];
+}
+
+- (void)giveRating:(int)rating toThreadWithId:(int)thread_id {
+    // rate the thread
+    NSDictionary *params = @{ @"user_rating" : @(rating),
+    @"id" : @(thread_id) };
+    
+    [ConnectionManager serverRequest:@"POST"
+                          withParams:params
+                                 url:THREAD_RATE_URL
+                            callback:^(NSHTTPURLResponse *r, NSData *d) {
+                                [self sortThreads];
+                                [self refreshThreads];
+                            }];
 }
 
 #pragma mark - New Thread
