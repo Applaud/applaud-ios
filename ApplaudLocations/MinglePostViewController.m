@@ -42,8 +42,8 @@
     self.textField.returnKeyType = UIReturnKeyDone;
     self.textField.backgroundColor = [UIColor whiteColor];
     self.textField.delegate = self;
+    self.textField.placeholder = @"New post";
     UIBarButtonItem *submitButton = [[UIBarButtonItem alloc] initWithTitle:@"Post" style:UIBarButtonItemStyleDone target:self action:@selector(submitPost)];
-    //UIBarButtonItem *submitButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(submitPost)];
     submitButton.tintColor = [UIColor grayColor];
     submitButton.title = @"Post";
     UIBarButtonItem *textItem = [[UIBarButtonItem alloc] initWithCustomView:self.textField];
@@ -123,6 +123,8 @@
         } else {
             [cell setThread:self.thread];
         }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
         return cell;
     }
     
@@ -136,6 +138,8 @@
                                           reuseIdentifier:CellIdentifier];
             cell.textLabel.text = @"No posts here yet!";
         }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
         return cell;
     }
     
@@ -149,6 +153,7 @@
         cell.mpvc = self;
         [cellMap setObject:cell forKey:cellKey];
     }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return cell;
 }
@@ -276,6 +281,7 @@
                                 }];
     }
     
+    [self.textField resignFirstResponder];
 }
 
 - (void)loadThreadFromData:(NSData*)data {

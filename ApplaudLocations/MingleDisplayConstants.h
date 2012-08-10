@@ -10,7 +10,7 @@
 #define ApplaudIOS_MingleDisplayConstants_h
 
 #define IMAGE_SIZE 50.0f
-#define SCROLL_TIME 0.17f           // # of seconds to scroll the view when keyboard appears
+#define SCROLL_TIME 0.2f           // # of seconds to scroll the view when keyboard appears
 #define TABBAR_HEIGHT 49.0f
 #define MINGLE_RATING_WIDTH 60.0f
 #define MINGLE_RATING_PADDING 10.0f

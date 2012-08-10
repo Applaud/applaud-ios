@@ -56,7 +56,6 @@
     sortControls.tintColor = [UIColor grayColor];
     [sortControls addTarget:self action:@selector(sortMethodSelected:) forControlEvents:UIControlEventValueChanged];
     UIBarButtonItem *sortItem = [[UIBarButtonItem alloc] initWithCustomView:sortControls];
-    self.navigationController.toolbarHidden = NO;
     self.navigationController.toolbar.tintColor = [UIColor blackColor];
     self.toolbarWidgets = [[NSMutableArray alloc] initWithObjects:flex, sortItem, flex, nil];
     [self setToolbarItems: self.toolbarWidgets];

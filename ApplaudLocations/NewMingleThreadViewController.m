@@ -40,6 +40,7 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    [self.navigationController setToolbarHidden:YES animated:YES];
     if ( self.editing )
         [[(NewMingleThreadCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]] textField] becomeFirstResponder];
 
