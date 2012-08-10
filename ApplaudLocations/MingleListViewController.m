@@ -126,6 +126,8 @@
                                                 thread:self.threads[indexPath.row]];
         cell.mlvc = self;
     }
+    else if ( cell.thread != self.threads[indexPath.row] )
+        [cell setThread:self.threads[indexPath.row]];
     
     return cell;
 }

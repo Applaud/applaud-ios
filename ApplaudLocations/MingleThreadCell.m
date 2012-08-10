@@ -19,23 +19,15 @@
     if (self) {
         self.thread = thread;
         
-        NSDateFormatter *formatter = [NSDateFormatter new];
-        formatter.dateFormat = @"MM/dd/yyyy";
-        
         // Set up cell properties
-        self.textLabel.text = self.thread.title;
         self.textLabel.numberOfLines = 0;
         self.textLabel.lineBreakMode = UILineBreakModeWordWrap;
         self.textLabel.font = [UIFont boldSystemFontOfSize:TITLE_SIZE];
         self.userLabel = [[UILabel alloc] init];
-        self.userLabel.text = self.thread.user_creator.name;
         self.userLabel.font = [UIFont systemFontOfSize:USER_SIZE];
         self.dateLabel = [UILabel new];
-        self.dateLabel.text = [formatter stringFromDate:self.thread.date_created];
         self.dateLabel.font = [UIFont systemFontOfSize:DATE_SIZE];
         self.postsLabel = [UILabel new];
-        NSString *comment = self.thread.threadPosts.count == 1? @"post" : @"posts";
-        self.postsLabel.text = [NSString stringWithFormat:@"%d %@",self.thread.threadPosts.count, comment];
         self.postsLabel.font = [UIFont systemFontOfSize:POSTS_SIZE];
         
         // Rating widget
@@ -49,8 +41,26 @@
         [self.contentView addSubview:self.dateLabel];
         [self.contentView addSubview:self.postsLabel];
         [self.contentView addSubview:self.ratingWidget];
+        
+        [self initContent];
     }
     return self;
+}
+
+- (void)initContent {
+    NSDateFormatter *formatter = [NSDateFormatter new];
+    formatter.dateFormat = @"MM/dd/yyyy";
+    
+    self.textLabel.text = self.thread.title;
+    self.userLabel.text = self.thread.user_creator.name;
+    self.dateLabel.text = [formatter stringFromDate:self.thread.date_created];
+    NSString *comment = self.thread.threadPosts.count == 1? @"post" : @"posts";
+    self.postsLabel.text = [NSString stringWithFormat:@"%d %@",self.thread.threadPosts.count, comment];
+}
+
+- (void)setThread:(Thread *)thread {
+    _thread = thread;
+    [self initContent];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

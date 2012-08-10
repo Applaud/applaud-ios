@@ -222,6 +222,7 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
+    [self submitPost];
     return YES;
 }
 
