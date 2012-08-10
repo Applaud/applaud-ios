@@ -36,7 +36,10 @@
         self.usernameLabel.backgroundColor = [UIColor clearColor];
         self.profilePicture = [[UIImageView alloc] initWithImage:self.post.user.profilePicture];
         self.ratingWidget = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObject:[UIImage imageNamed:@"uprate"]]];
-        [self.ratingWidget addTarget:self action:@selector(ratePost:) forControlEvents:UIControlEventValueChanged];
+        if ( self.post.my_rating )
+            self.ratingWidget.selectedSegmentIndex = 0;
+        else
+            [self.ratingWidget addTarget:self action:@selector(ratePost:) forControlEvents:UIControlEventValueChanged];
         
         [self.contentView addSubview:self.dateLabel];
         [self.contentView addSubview:self.usernameLabel];

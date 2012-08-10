@@ -14,7 +14,7 @@
        date_created:(NSDate*)date_created
             upvotes:(int)upvotes
           downvotes:(int)downvotes
-              posts:(NSArray*)posts
+              posts:(NSMutableArray*)posts
           thread_id:(int)myid {
     self = [super init];
     if ( self ) {

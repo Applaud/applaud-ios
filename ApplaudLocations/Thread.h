@@ -14,10 +14,11 @@
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSDate *date_created;
 @property (nonatomic, strong) User *user_creator;
-@property (nonatomic, strong) NSArray *threadPosts;
+@property (nonatomic, strong) NSMutableArray *threadPosts;
 @property (nonatomic) int upvotes;
 @property (nonatomic) int downvotes;
 @property (nonatomic) int thread_id;
+@property (nonatomic) int my_rating;
 
 - (id)initWithTitle:(NSString*)title
 date_created:(NSDate*)date_create

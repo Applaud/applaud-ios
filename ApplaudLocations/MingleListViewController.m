@@ -81,7 +81,6 @@
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-//    [self.navigationController setToolbarHidden:YES animated:YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -160,9 +159,6 @@
     postView.navigationController.navigationBar.tintColor = self.appDelegate.currentBusiness.primaryColor;
     postView.tableView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
     postView.view.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
-    
-    // Make a new array with the same items. Convert NSArray --> NSMutableArray
-    postView.threadPosts = [NSMutableArray arrayWithArray:[self.threads[indexPath.row] threadPosts]];
     
     [self.navigationController pushViewController:postView animated:YES];
 }
@@ -268,6 +264,7 @@
                                                       downvotes:[dict[@"downvotes"] intValue]
                                                   threadpost_id:[dict[@"id"] intValue]];
             post.user = postUser;
+            post.my_rating = [dict[@"my_vote"] intValue];
             [threadPosts addObject:post];
         }
         
@@ -283,6 +280,7 @@
                                                  posts:threadPosts
                                              thread_id:[threadData[@"id"] intValue]];
         thread.user_creator = user;
+        thread.my_rating = [threadData[@"my_vote"] intValue];
         
         [self.threads addObject:thread];
     }

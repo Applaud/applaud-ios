@@ -35,7 +35,13 @@
                              [NSArray arrayWithObjects:
                               [UIImage imageNamed:@"downrate"],
                               [UIImage imageNamed:@"uprate"], nil]];
-        [self.ratingWidget addTarget:self action:@selector(rateThread:) forControlEvents:UIControlEventValueChanged];
+        if ( self.thread.my_rating == -1 ) {
+            self.ratingWidget.selectedSegmentIndex = 0;
+        } else if ( self.thread.my_rating == 1 ) {
+            self.ratingWidget.selectedSegmentIndex = 1;
+        } else {
+            [self.ratingWidget addTarget:self action:@selector(rateThread:) forControlEvents:UIControlEventValueChanged];
+        }
         
         [self.contentView addSubview:self.userLabel];
         [self.contentView addSubview:self.dateLabel];

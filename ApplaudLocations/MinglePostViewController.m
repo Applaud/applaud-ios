@@ -26,6 +26,7 @@
     self = [super initWithStyle:style];
     if (self) {
         _thread = thread;
+        self.threadPosts = self.thread.threadPosts;
         cellMap = [NSMutableDictionary new];
     }
     return self;
@@ -299,6 +300,7 @@
                                                   downvotes:[postDict[@"downvotes"] intValue]
                                               threadpost_id:[postDict[@"id"] intValue]];
         post.user = user;
+        post.my_rating = [postDict[@"my_vote"] intValue];
         [self.threadPosts addObject:post];
     }
     
@@ -315,6 +317,7 @@
                                              posts:self.threadPosts
                                          thread_id:[threadData[@"id"] intValue]];
     thread.user_creator = user;
+    thread.my_rating = [threadData[@"my_vote"] intValue];
     self.thread = thread;
     
     [self.textField setText:@""];

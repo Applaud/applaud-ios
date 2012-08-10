@@ -17,6 +17,7 @@
 @property (nonatomic) int upvotes;
 @property (nonatomic) int downvotes;
 @property (nonatomic) int threadpost_id;
+@property (nonatomic) int my_rating;
 
 - (id)initWithBody:(NSString*)body
       date_created:(NSDate*)date
