@@ -14,7 +14,7 @@
 @implementation ApatapaDateFormatter
 
 + (NSString*)stringFromDate:(NSDate*)date {
-    int seconds = (int)[date timeIntervalSinceNow];
+    int seconds = -(int)[date timeIntervalSinceNow];
     
     int minutes, hours, days, weeks, months, years;
     NSString *unit = nil;
