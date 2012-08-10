@@ -18,21 +18,20 @@
 {
     self = [super init];
     if (self) {
+        self.navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+        self.navigationItem.title = @"Comments";
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Done"
+                                                                                 style:UIBarButtonItemStylePlain
+                                                                                target:self
+                                                                                action:@selector(backButtonPressed)];
+        [self.navBar pushNavigationItem:self.navigationItem animated:NO];
         self.scrollView = [[UIScrollView alloc]
                            initWithFrame:CGRectMake(0,
-                                                    0,
+                                                    20,
                                                     self.view.frame.size.width,
                                                     self.view.frame.size.height)];
         self.scrollView.contentSize = self.scrollView.frame.size;
-        self.view = self.scrollView;
-        UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 5,
-                                                                          50,
-                                                                          20)];
-        [backButton setTitle:@"Back" forState:UIControlStateNormal];
-        [backButton addTarget:self action:@selector(backButtonPressed)
-             forControlEvents:UIControlEventTouchUpInside];
-        [backButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [self.view addSubview:backButton];
+        // self.view = self.scrollView;
         _businessPhoto = businessPhoto;
         self.comments = [[NSMutableArray alloc] init];
         self.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
@@ -51,18 +50,15 @@
                                                                           400,
                                                                           self.view.frame.size.width - 60,
                                                                           30)];
+        self.commentField.returnKeyType = UIReturnKeyGo;
         self.commentField.layer.cornerRadius = 3.0f;
         self.commentField.layer.borderColor = [[[UIColor grayColor] colorWithAlphaComponent:0.5] CGColor];
         self.commentField.layer.borderWidth = 2.0;
         self.commentField.delegate = self;
-        self.numChars = [[UILabel alloc] initWithFrame:CGRectMake(self.view.frame.size.width - 45,
-                                                                  self.commentField.frame.origin.y,
-                                                                  40,
-                                                                  self.commentField.frame.size.height)];
-        self.numChars.text = @"1000";
-        [self.view addSubview:self.tableView];
-        [self.view addSubview:self.commentField];
-        [self.view addSubview:self.numChars];
+        [self.scrollView addSubview:self.tableView];
+        [self.scrollView addSubview:self.commentField];
+        [self.view addSubview:self.scrollView];
+        [self.view addSubview:self.navBar];
         [self getComments];
     }
     return self;
@@ -73,7 +69,7 @@
     UIColor *color = _appDelegate.currentBusiness.secondaryColor;
     self.view.backgroundColor = color;
     self.tableView.backgroundColor = color;
-    self.numChars.backgroundColor = color;
+    self.navBar.tintColor =_appDelegate.currentBusiness.primaryColor;
 }
 
 - (void)viewDidLoad
@@ -178,9 +174,6 @@
  */
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     if(textField.text.length < 1000 || range.length == 1) {
-        self.numChars.text = [NSString stringWithFormat:@"%d",
-                              1000 - textField.text.length -
-                              (range.length == 0 ? 1 : -1)];
         return YES;
     }
     return NO;
@@ -190,31 +183,36 @@
 #pragma Table view delegate and data source methods
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
+    return self.comments.count;
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return self.comments.count;
+    return 1;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellIdentifier;
     PhotoCommentCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if(cell == nil) {
-        cell = [[PhotoCommentCell alloc] initWithComment:self.comments[indexPath.section]
+        cell = [[PhotoCommentCell alloc] initWithComment:self.comments[indexPath.row]
                                                    style:UITableViewCellStyleDefault
                                          reuseIdentifier:cellIdentifier];
     }
-    cell.comment = self.comments[indexPath.section];
+    cell.comment = self.comments[indexPath.row];
     return cell;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    CGSize textSize = [[self.comments[indexPath.section] text] sizeWithFont:[UIFont systemFontOfSize:COMMENT_SIZE]
-                                                           constrainedToSize:CGSizeMake(280 - 2*CELL_PADDING,
+    CGSize textSize = [[self.comments[indexPath.row] text] sizeWithFont:[UIFont systemFontOfSize:COMMENT_SIZE]
+                                                           constrainedToSize:CGSizeMake(300 - 2*CELL_PADDING,
                                                                                         1000)
                                                                lineBreakMode:UILineBreakModeWordWrap];
-    return textSize.height + 2*CELL_PADDING + ELEMENT_MARGIN + NAME_HEIGHT;
+    CGSize nameSize = [[NSString stringWithFormat:@"%@ %@", [self.comments[indexPath.row] firstName],
+                        [self.comments[indexPath.row] lastName]]
+                       sizeWithFont:[UIFont systemFontOfSize:NAME_SIZE]
+                       constrainedToSize:CGSizeMake(300 - 2*CELL_PADDING, 1000)
+                       lineBreakMode:UILineBreakModeWordWrap];
+    return textSize.height + 2*CELL_PADDING + ELEMENT_MARGIN + nameSize.height;
 
 }
 

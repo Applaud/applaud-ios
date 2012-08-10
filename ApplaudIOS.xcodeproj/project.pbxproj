@@ -86,6 +86,8 @@
 		6F9E60D915C06E37006BD49A /* BusinessPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F9E60D815C06E37006BD49A /* BusinessPhoto.m */; };
 		6FA4461015D23A73007DBDBF /* PhotoCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FA4460F15D23A73007DBDBF /* PhotoCommentCell.m */; };
 		6FAB07A01587BF0700C9F1DF /* BusinessAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FAB079F1587BF0700C9F1DF /* BusinessAnnotation.m */; };
+		6FAE729415D57F06004BC304 /* comments.png in Resources */ = {isa = PBXBuildFile; fileRef = 6FAE729315D57F06004BC304 /* comments.png */; };
+		6FAE729615D5A87E004BC304 /* white_comments.png in Resources */ = {isa = PBXBuildFile; fileRef = 6FAE729515D5A87E004BC304 /* white_comments.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -240,6 +242,8 @@
 		6FA4460F15D23A73007DBDBF /* PhotoCommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoCommentCell.m; sourceTree = "<group>"; };
 		6FAB079E1587BF0700C9F1DF /* BusinessAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessAnnotation.h; sourceTree = "<group>"; };
 		6FAB079F1587BF0700C9F1DF /* BusinessAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessAnnotation.m; sourceTree = "<group>"; };
+		6FAE729315D57F06004BC304 /* comments.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = comments.png; path = ../../../../../Downloads/glyphicons_free/glyphicons/png/comments.png; sourceTree = "<group>"; };
+		6FAE729515D5A87E004BC304 /* white_comments.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = white_comments.png; path = assets/white_comments.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -408,6 +412,8 @@
 		1BA358ED1582F05E00EB8F32 /* ApplaudLocations */ = {
 			isa = PBXGroup;
 			children = (
+				6FAE729315D57F06004BC304 /* comments.png */,
+				6FAE729515D5A87E004BC304 /* white_comments.png */,
 				1BD494ED15BDF6D3006A01A9 /* Assets */,
 				1B3769E215D0550C001214B7 /* Polls */,
 				1B514017158FA3C7008CB057 /* DBModels */,
@@ -479,13 +485,13 @@
 			isa = PBXGroup;
 			children = (
 				6F9E60D715C06E37006BD49A /* BusinessPhoto.h */,
+				6F9E60D815C06E37006BD49A /* BusinessPhoto.m */,
 				6F70A93015D1C6F000718348 /* Comment.h */,
 				6F70A93115D1C6F000718348 /* Comment.m */,
 				6F16232615D1BAC90055AE58 /* PhotoCommentViewController.h */,
 				6F16232715D1BAC90055AE58 /* PhotoCommentViewController.m */,
 				6FA4460E15D23A73007DBDBF /* PhotoCommentCell.h */,
 				6FA4460F15D23A73007DBDBF /* PhotoCommentCell.m */,
-				6F9E60D815C06E37006BD49A /* BusinessPhoto.m */,
 				6F240AAA15CB529F00908238 /* PhotoZoomViewController.h */,
 				6F240AAB15CB529F00908238 /* PhotoZoomViewController.m */,
 				6F3EA47415BE039D006E66A8 /* BusinessPhotoViewController.h */,
@@ -610,6 +616,8 @@
 				1B07268D15D32590005EB452 /* uprate.png in Resources */,
 				6F8C34F015D42D0E00EC82E9 /* polls.png in Resources */,
 				6F8C34F115D42D0E00EC82E9 /* polls@2x.png in Resources */,
+				6FAE729415D57F06004BC304 /* comments.png in Resources */,
+				6FAE729615D5A87E004BC304 /* white_comments.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

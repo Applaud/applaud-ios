@@ -12,9 +12,9 @@
 #import "SDWebImage/UIButton+WebCache.h"
 #import "PhotoZoomViewController.h"
 
-#define PHOTO_MARGIN 10.0f
-#define PHOTO_PADDING 5.0f
-#define PHOTO_SIZE 70.0f
+//#define PHOTO_MARGIN 10.0f
+//#define PHOTO_PADDING 5.0f
+#define PHOTO_SIZE 80.0f
 // 2*PHOTO_PADDING + PHOTOS_PER_LINE*PHOTO_SIZE + (PHOTOS_PER_LINE-1)*PHOTO_MARGIN = self.frame.size.width = 320
 // 10 + PHOTOS_PER_LINE*PHOTO_SIZE + (PHOTOS_PER_LINE-1)*10 = 320
 // PHOTOS_PER_LINE*PHOTO_SIZE + 10*(PHOTOS_PER_LINE-1) = 310

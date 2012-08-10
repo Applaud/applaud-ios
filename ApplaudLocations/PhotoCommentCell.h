@@ -12,7 +12,7 @@
 #define CELL_PADDING 10.0f
 #define ELEMENT_MARGIN 5.0f
 #define COMMENT_SIZE 14.0f
-#define NAME_HEIGHT 15.0f
+#define NAME_SIZE 12.0f
 
 @interface PhotoCommentCell : UITableViewCell
 @property (strong, nonatomic) Comment *comment;

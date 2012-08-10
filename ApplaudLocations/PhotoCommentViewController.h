@@ -17,12 +17,12 @@
 @interface PhotoCommentViewController : UIViewController <UITableViewDataSource,
                                                           UITableViewDelegate,
                                                           UITextFieldDelegate>
+@property (strong, nonatomic) UINavigationBar *navBar;
 @property (strong, nonatomic) NSMutableArray *comments;
 @property (strong, nonatomic) BusinessPhoto *businessPhoto;
 @property (strong, nonatomic) UITextField *commentField;
 @property (strong, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) UIScrollView *scrollView;
-@property (strong, nonatomic) UILabel *numChars;
 @property (weak, nonatomic) AppDelegate *appDelegate;
 
 -(id)initWithPhoto:(BusinessPhoto *)businessPhoto;

@@ -22,6 +22,7 @@
                                                                      2*CELL_PADDING,
                                                                      1000)
                                             lineBreakMode:UILineBreakModeWordWrap];
+        NSLog(@"Text Size %f %f comment %@", textSize.width, textSize.height, comment.text);
         self.commentTextView = [[UITextView alloc]
                                 initWithFrame:CGRectMake(CELL_PADDING,
                                                          CELL_PADDING,
@@ -30,14 +31,20 @@
         self.commentTextView.text = self.comment.text;
         self.commentTextView.editable = NO;
         self.commentTextView.scrollEnabled = NO;
+        self.commentTextView.font = [UIFont systemFontOfSize:COMMENT_SIZE];
         [self.contentView addSubview:self.commentTextView];
+        CGSize nameSize = [[NSString stringWithFormat:@"%@ %@", self.comment.firstName, self.comment.lastName]
+                           sizeWithFont:[UIFont systemFontOfSize:NAME_SIZE]
+                           constrainedToSize:CGSizeMake(300 - 2*CELL_PADDING, 1000)
+                           lineBreakMode:UILineBreakModeWordWrap];
         self.nameLabel = [[UILabel alloc]
                           initWithFrame:CGRectMake(CELL_PADDING,
                                                    CELL_PADDING +
                                                    self.commentTextView.frame.size.height +
                                                    ELEMENT_MARGIN,
                                                    self.contentView.frame.size.width - 2*CELL_PADDING,
-                                                   NAME_HEIGHT)];
+                                                   nameSize.height)];
+        self.nameLabel.font = [UIFont systemFontOfSize:NAME_SIZE];
         self.nameLabel.text = [NSString stringWithFormat:@"%@ %@",
                                self.comment.firstName, self.comment.lastName];
         [self.contentView addSubview:self.nameLabel];
@@ -50,13 +57,17 @@
 -(void)setComment:(Comment *)comment {
     _comment = comment;
     CGSize textSize = [self.comment.text sizeWithFont:[UIFont systemFontOfSize:COMMENT_SIZE]
-                                    constrainedToSize:CGSizeMake(self.contentView.frame.size.width -
-                                                                 2*CELL_PADDING,
+                                    constrainedToSize:CGSizeMake(300 - 2*CELL_PADDING,
                                                                  1000)
                                         lineBreakMode:UILineBreakModeWordWrap];
+    NSLog(@"Text Size %f %f comment %@", textSize.width, textSize.height, comment.text);
+    CGSize nameSize = [[NSString stringWithFormat:@"%@ %@", self.comment.firstName, self.comment.lastName]
+                       sizeWithFont:[UIFont systemFontOfSize:NAME_SIZE]
+                       constrainedToSize:CGSizeMake(300 - 2*CELL_PADDING, 1000)
+                       lineBreakMode:UILineBreakModeWordWrap];
     self.commentTextView.frame = CGRectMake(CELL_PADDING,
                                             CELL_PADDING,
-                                            textSize.width,
+                                            300 - 2*CELL_PADDING,
                                             textSize.height);
     self.commentTextView.text = self.comment.text;
     self.nameLabel.frame = CGRectMake(CELL_PADDING,
@@ -64,7 +75,7 @@
                                       self.commentTextView.frame.size.height +
                                       ELEMENT_MARGIN,
                                       self.contentView.frame.size.width - 2*CELL_PADDING,
-                                      NAME_HEIGHT);
+                                      nameSize.height);
     self.nameLabel.text = [NSString stringWithFormat:@"%@ %@", self.comment.firstName,
                            self.comment.lastName];
 }

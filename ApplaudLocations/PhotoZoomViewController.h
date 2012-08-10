@@ -20,12 +20,11 @@
 @interface PhotoZoomViewController : UIViewController <UIScrollViewDelegate>
 
 @property (nonatomic, strong) UIScrollView *scrollView;
-@property (nonatomic, strong) UILabel *votes;
 @property (nonatomic, strong) UIImageView *imageView;
-@property (nonatomic, strong) UIButton *upButton;
-@property (nonatomic, strong) UIButton *downButton;
 @property (nonatomic, strong) BusinessPhoto *photo;
 @property (nonatomic, weak) AppDelegate *appDelegate;
+@property (nonatomic, strong) UINavigationController *navigationController;
+@property (nonatomic, strong) UINavigationBar *navBar;
 
 -(id)initWithPhoto:(BusinessPhoto *)photo;
 @end

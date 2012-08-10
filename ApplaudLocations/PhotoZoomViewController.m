@@ -17,65 +17,82 @@
 - (id)initWithPhoto:(BusinessPhoto *)photo;
 {
     if (self = [super init]) {
+//        [[UIApplication sharedApplication] setStatusBarHidden:YES];
+        self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+        _navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+        _navBar.barStyle = UIBarStyleBlackTranslucent;
         _photo = photo;
+        self.hidesBottomBarWhenPushed = YES;
         self.view.backgroundColor = [UIColor blackColor];
         // Subtract some height from the screen's size for the navbar
         // and tabbar
-        CGRect mainFrame = [[UIScreen mainScreen] applicationFrame];
-        _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(mainFrame.origin.x,
-                                                                     mainFrame.origin.y + BUTTON_HEIGHT,
-                                                                     mainFrame.size.width,
-                                                                     mainFrame.size.height - 64 - 44)];
+        self.wantsFullScreenLayout = YES;
+        _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0,
+                                                                     0,
+                                                                     320,
+                                                                     480)];
+        self.scrollView.backgroundColor = [UIColor blackColor];
         _scrollView.backgroundColor = [UIColor blackColor];
-        _scrollView.contentSize = CGSizeMake(320, 436 - 44 - 64);
+        _scrollView.contentSize = CGSizeMake(320, 460);
         _scrollView.delegate = self;
         [self.view addSubview:_scrollView];
         _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0,
-                                                                   self.view.frame.size.width,
-                                                                   self.view.frame.size.height)];
+                                                                   320, 480)];
+        self.imageView.backgroundColor = [UIColor blackColor];
         [_imageView setImageWithURL:self.photo.imageURL
-                   placeholderImage:[UIImage imageNamed:@"default.jpg"]
+                   placeholderImage:nil
                             success:^(UIImage *image) {
-                                self.imageView.frame = CGRectMake((self.view.frame.size.width-image.size.width)/2,
-                                                                  (self.view.frame.size.height-image.size.height)/2,
+                                self.imageView.frame = CGRectMake(0,
+                                                                  (480.0 - image.size.height)/2,
                                                                   image.size.width,
                                                                   image.size.height);
                             }
                             failure:nil];
         [_scrollView addSubview:_imageView];
-        self.upButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        self.upButton.frame = CGRectMake(self.view.frame.size.width/2 - BUTTON_WIDTH,
-                                    BUTTON_MARGIN,
-                                    BUTTON_WIDTH,
-                                    BUTTON_HEIGHT);
-        [self.upButton setTitle:@"Up" forState:UIControlStateNormal];
-        [self.upButton addTarget:self action:@selector(upButtonPressed)
-           forControlEvents:UIControlEventTouchUpInside];
-        self.downButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        self.downButton.frame = CGRectMake(self.view.frame.size.width/2,
-                                      BUTTON_MARGIN,
-                                      BUTTON_WIDTH,
-                                      BUTTON_HEIGHT);
-        [self.downButton setTitle:@"Down" forState:UIControlStateNormal];
-        [self.downButton addTarget:self action:@selector(downButtonPressed)
-             forControlEvents:UIControlEventTouchUpInside];
-        [self checkCanVoteOnPhoto:self.photo.photo_id];
-        self.votes = [[UILabel alloc] initWithFrame:CGRectMake(BUTTON_MARGIN,
-                                                               BUTTON_MARGIN,
-                                                               BUTTON_HEIGHT,
-                                                               BUTTON_HEIGHT)];
-        self.votes.text = [NSString stringWithFormat:@"%d", self.photo.upvotes -
-                           self.photo.downvotes];
-        self.votes.textColor = [UIColor whiteColor];
-        self.votes.backgroundColor = [UIColor blackColor];
-        [self.view addSubview:self.votes];
-        self.scrollView.maximumZoomScale = 1.5;
         [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc]
-                                                    initWithBarButtonSystemItem:UIBarButtonSystemItemReply
+                                                    initWithImage:[UIImage imageNamed:@"white_comments.png"]
+                                                    style:UIBarButtonItemStylePlain
                                                     target:self
                                                     action:@selector(commentButtonPressed)]];
+        [self.navigationItem setLeftBarButtonItem:[[UIBarButtonItem alloc]
+                                                   initWithTitle:@"Back"
+                                                   style:UIBarButtonItemStylePlain
+                                                   target:self
+                                                   action:@selector(backButtonPressed)]];
+        [self.navBar pushNavigationItem:self.navigationItem animated:NO];
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                              action:@selector(tapped)];
+        [self.scrollView addGestureRecognizer:tap];
+        [self.view addSubview:self.navBar];
     }
     return self;
+}
+
+/*-(void)setNavigationController:(UINavigationController *)navigationController {
+    _navigationController = navigationController;
+    _navigationController.navigationBarHidden = YES;
+}*/
+
+-(void)tapped {
+    NSLog(@"SIZE %f %f", self.imageView.image.size.width, self.imageView.image.size.height);
+    [UIView animateWithDuration:0.4 animations:^(void) {
+        if(self.navBar.alpha == 0.0) {
+            self.navBar.alpha = 1.0;
+        }
+        else {
+            self.navBar.alpha = 0.0;
+        }
+    }];
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    [[UIApplication sharedApplication] setStatusBarHidden:YES];
+}
+
+-(void)viewWillDisappear:(BOOL)animated {
+    self.hidesBottomBarWhenPushed = NO;
+    self.navigationController.navigationBarHidden = NO;
+    [[UIApplication sharedApplication] setStatusBarHidden:NO];
 }
 
 - (void)viewDidLoad
@@ -95,62 +112,9 @@
 }
 
 #pragma mark -
-#pragma Button events
+#pragma mark UIScrollView delegate methods
 
--(void)upButtonPressed {
-    [self sendPhotoVote:@"up"];
-}
-
--(void)downButtonPressed {
-    [self sendPhotoVote:@"down"];
-}
-
-/*
- * vote is either @"up" or @"down"
- */
--(void)sendPhotoVote:(NSString *)vote {
-    NSDictionary *params = @{@"photo_id": @(self.photo.photo_id),
-                             @"vote": vote};
-    [ConnectionManager serverRequest:@"POST" withParams:params
-                                 url:PHOTO_VOTE_URL
-                            callback:^(NSHTTPURLResponse *r, NSData *d) {
-                                NSString *response = [[NSString alloc]
-                                                      initWithData:d
-                                                      encoding:NSUTF8StringEncoding];
-                                if([response isEqualToString:@""]) {
-                                    if([vote isEqualToString:@"up"]) {
-                                        self.votes.text = [NSString stringWithFormat:@"%d",
-                                                           [self.votes.text intValue] + 1];
-                                    }
-                                    else {
-                                        self.votes.text = [NSString stringWithFormat:@"%d",
-                                                           [self.votes.text intValue] - 1];
-                                    }
-                                    [self.upButton removeFromSuperview];
-                                    [self.downButton removeFromSuperview];
-                                }
-                            }];
-}
-
--(void)checkCanVoteOnPhoto:(int)photo {
-    NSDictionary *params = @{@"photo": @(photo)};
-    [ConnectionManager serverRequest:@"GET" withParams:params
-                                 url:CHECK_VOTE_URL
-                            callback:^(NSHTTPURLResponse *r, NSData *d) {
-                                NSString *response = [[NSString alloc]
-                                                      initWithData:d
-                                                      encoding:NSUTF8StringEncoding];
-                                if([response isEqualToString:@""]) {
-                                    [self.view addSubview:self.upButton];
-                                    [self.view addSubview:self.downButton];
-                                }
-                            }];
-}
-
-#pragma mark -
-#pragma UIScrollView delegate methods
-
--(void)scrollViewDidZoom:(UIScrollView *)scrollView {
+/*-(void)scrollViewDidZoom:(UIScrollView *)scrollView {
     CGRect newFrame = CGRectMake((self.view.frame.size.width -
                                   scrollView.zoomScale*self.imageView.image.size.width)/2,
                                  (self.view.frame.size.height -
@@ -158,20 +122,26 @@
                                  self.imageView.image.size.width*scrollView.zoomScale,
                                  self.imageView.image.size.height*scrollView.zoomScale);
     self.imageView.frame = newFrame;
-}
+}*/
 
--(UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
+/*-(UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
     return self.imageView;
-}
+}*/
 
 #pragma mark -
-#pragma Other methods
+#pragma mark Other methods
 
 -(void)commentButtonPressed {
     PhotoCommentViewController *pcvc = [[PhotoCommentViewController alloc]
                                         initWithPhoto:self.photo];
     pcvc.appDelegate = self.appDelegate;
     [self presentViewController:pcvc animated:YES completion:nil];
+}
+
+-(void)backButtonPressed {
+//    [self.navigationController popViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES
+                             completion:nil];
 }
 
 @end
