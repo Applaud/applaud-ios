@@ -120,6 +120,7 @@
                                            reuseIdentifier:ThreadTitleID
                                                     thread:self.thread];
             cell.textLabel.text = self.thread.title;
+            cell.mlvc = self.parent;
         } else {
             [cell setThread:self.thread];
         }
