@@ -235,9 +235,9 @@
     [threadsSortedPopular sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
         Thread *a = (Thread*)obj1;
         Thread *b = (Thread*)obj2;
-        if ( a.upvotes + a.downvotes < b.upvotes + b.downvotes )
+        if ( a.threadPosts.count < b.threadPosts.count )
             return NSOrderedDescending;
-        else if ( a.upvotes + a.downvotes > b.upvotes + b.downvotes )
+        else if ( a.threadPosts.count > b.threadPosts.count )
             return NSOrderedAscending;
         return NSOrderedSame;
     }];

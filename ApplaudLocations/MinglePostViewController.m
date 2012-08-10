@@ -280,7 +280,7 @@
     NSString *title = self.textField.text;
     if ( [title length] > 0 ) {
         // Save thread
-        NSDictionary *params = @{@"title" : title,
+        NSDictionary *params = @{@"body" : title,
         @"thread_id":@(self.thread.thread_id)};
         [ConnectionManager serverRequest:@"POST"
                               withParams:params
