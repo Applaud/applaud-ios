@@ -109,7 +109,7 @@
 		8A7B2D3415D044BD0053DCCF /* LoginRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A7B2D3315D044BD0053DCCF /* LoginRegisterViewController.m */; };
 		8A7B2D3715D051830053DCCF /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A7B2D3615D051830053DCCF /* SignInViewController.m */; };
 		8A7B2D3A15D083D80053DCCF /* RegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A7B2D3915D083D80053DCCF /* RegistrationViewController.m */; };
-		8A7B2D3D15D0C9C30053DCCF /* transparent logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A7B2D3C15D0C9C30053DCCF /* transparent logo.png */; };
+		8AA1443815D7176500A61148 /* transparent logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AA1443715D7176500A61148 /* transparent logo.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -304,7 +304,7 @@
 		8A7B2D3815D083D80053DCCF /* RegistrationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrationViewController.h; sourceTree = "<group>"; };
 		8A7B2D3915D083D80053DCCF /* RegistrationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationViewController.m; sourceTree = "<group>"; };
 		8A7B2D3B15D084DC0053DCCF /* LoginRegistrationConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginRegistrationConstants.h; sourceTree = "<group>"; };
-		8A7B2D3C15D0C9C30053DCCF /* transparent logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "transparent logo.png"; path = "../../APATAPA-other/Design:Mockups/transparent logo.png"; sourceTree = "<group>"; };
+		8AA1443715D7176500A61148 /* transparent logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "transparent logo.png"; path = "assets/transparent logo.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -560,7 +560,7 @@
 				1B6D228115CA7289009A533B /* favicon.png */,
 				1B6D226E15CA429C009A533B /* logo.png */,
 				1B6D226F15CA429C009A533B /* logo@2x.png */,
-				8A7B2D3C15D0C9C30053DCCF /* transparent logo.png */,
+				8AA1443715D7176500A61148 /* transparent logo.png */,
 				1B6D226815CA1BDE009A533B /* home.png */,
 				1B60ED8B15C8870800D63365 /* shareyourthoughts@2x.png */,
 				1B688DBF15C3A94700FCDCEE /* shareyourthoughts.png */,
@@ -727,7 +727,6 @@
 				1B6D227115CA429C009A533B /* logo@2x.png in Resources */,
 				1B6D228215CA7289009A533B /* favicon.png in Resources */,
 				1B6D228415CA7292009A533B /* favicon@2x.png in Resources */,
-				8A7B2D3D15D0C9C30053DCCF /* transparent logo.png in Resources */,
 				1B3769E115D05505001214B7 /* PollsViewController.xib in Resources */,
 				1B07268C15D32590005EB452 /* downrate.png in Resources */,
 				1B07268D15D32590005EB452 /* uprate.png in Resources */,
@@ -741,6 +740,7 @@
 				1BC0046415D6043100EB0958 /* photos@2x.png in Resources */,
 				1BC0046715D6089F00EB0958 /* applaud.png in Resources */,
 				1BC0046815D6089F00EB0958 /* applaud@2x.png in Resources */,
+				8AA1443815D7176500A61148 /* transparent logo.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
