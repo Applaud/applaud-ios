@@ -1,16 +1,16 @@
 //
-//  PollSubmitCancelCell.m
+//  SubmitCancelCell.m
 //  ApplaudIOS
 //
 //  Created by Luke Lovett on 8/7/12.
 //  Copyright (c) 2012 Applaud, Inc. All rights reserved.
 //
 
-#import "PollSubmitCancelCell.h"
+#import "SubmitCancelCell.h"
 
 #define CELL_PADDING 10.0f
 
-@implementation PollSubmitCancelCell
+@implementation SubmitCancelCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {

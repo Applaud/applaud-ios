@@ -1,5 +1,5 @@
 //
-//  PollSubmitCancelCell.h
+//  SubmitCancelCell.h
 //  ApplaudIOS
 //
 //  Created by Luke Lovett on 8/7/12.
@@ -16,7 +16,7 @@
 
 @end
 
-@interface PollSubmitCancelCell : UITableViewCell
+@interface SubmitCancelCell : UITableViewCell
 
 @property (nonatomic, strong) UISegmentedControl *submitCancel;
 @property (weak) id<SubmitCancelDelegate> delegate;

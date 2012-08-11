@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
-#import "PollSubmitCancelCell.h"
+#import "SubmitCancelCell.h"
 
 @class PollsViewController;
 

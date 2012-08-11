@@ -9,12 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
 
-enum SORT_METHODS {
-    SORT_NEWEST = 0,
-    SORT_POPULAR = 1,
-    SORT_LIKED = 2
-};
-
 @interface PollsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
     NSMutableDictionary *cellMap;
     

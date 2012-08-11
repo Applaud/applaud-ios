@@ -36,6 +36,12 @@ int error_code;
 #define ERROR_SERVER_ERROR -3   // Server had a 500
 #define ERROR_NO_LOCATION -4    // Could not use the LocationManager to update the user's location
 
+// Sorting types
+enum SORT_METHODS {
+    SORT_NEWEST = 0,
+    SORT_POPULAR = 1,
+    SORT_LIKED = 2
+};
 
 #define BACK_BUTTON_TITLE @"Locations"
 #define BUSINESS_RADIUS_ENTRY 10000

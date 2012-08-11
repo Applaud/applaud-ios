@@ -29,6 +29,7 @@
         
         _barGraphView = [[UIView alloc] initWithFrame:CGRectZero];
         self.barGraphView.backgroundColor = [UIColor clearColor];
+        [self.barGraphView setHidden:YES];
         [self.contentView addSubview:self.barGraphView];
         [self.contentView sendSubviewToBack:self.barGraphView];
         
@@ -95,6 +96,7 @@
 
 - (void)showResult {
     [self.percentageLabel setHidden:NO];
+    [self.barGraphView setHidden:NO];
 }
 
 @end

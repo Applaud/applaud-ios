@@ -43,12 +43,6 @@
     
     // Set our title
     self.title = @"Create a Poll";
-    
-    // Add submit/cancel button
-    UISegmentedControl *submitCancel = [[UISegmentedControl alloc] initWithItems:
-                                        [NSArray arrayWithObjects:@"Submit", @"Cancel", nil]];
-
-    [self.view addSubview:submitCancel];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -107,9 +101,9 @@
     static NSString *SubmitCancelCellIdentifier = @"SubmitCancelCell";
     // "Submit","Cancel"
     if ( indexPath.section == 2 ) {
-        PollSubmitCancelCell *cell = (PollSubmitCancelCell*)[self.tableView dequeueReusableCellWithIdentifier:SubmitCancelCellIdentifier];
+        SubmitCancelCell *cell = (SubmitCancelCell*)[self.tableView dequeueReusableCellWithIdentifier:SubmitCancelCellIdentifier];
         if ( nil == cell ) {
-            cell = [[PollSubmitCancelCell alloc] initWithStyle:UITableViewCellStyleDefault
+            cell = [[SubmitCancelCell alloc] initWithStyle:UITableViewCellStyleDefault
                                                reuseIdentifier:SubmitCancelCellIdentifier];
             cell.delegate = self;
         }
@@ -340,7 +334,7 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     // Deselect submit/cancel
-    [[(PollSubmitCancelCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2]] submitCancel] setSelectedSegmentIndex:UISegmentedControlNoSegment];
+    [[(SubmitCancelCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2]] submitCancel] setSelectedSegmentIndex:UISegmentedControlNoSegment];
 }
 
 #pragma mark -
@@ -365,7 +359,7 @@
                                  url:POLL_CREATE_URL
                             callback:^(NSHTTPURLResponse *response, NSData *data) {
                                 // Deselect submit/cancel
-                                [[(PollSubmitCancelCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2]] submitCancel] setSelectedSegmentIndex:UISegmentedControlNoSegment];
+                                [[(SubmitCancelCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2]] submitCancel] setSelectedSegmentIndex:UISegmentedControlNoSegment];
                                 
                                 // Handle bad request (means something about the poll was bad)
                                 if ( 400 == response.statusCode ) {
