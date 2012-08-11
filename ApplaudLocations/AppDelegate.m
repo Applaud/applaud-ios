@@ -208,7 +208,7 @@
 
     // Set up the tab bar
     UITabBarItem *employeeItem = [[UITabBarItem alloc] initWithTitle:@"Applaud"
-                                                               image:[UIImage imageNamed:@"employees"]
+                                                               image:[UIImage imageNamed:@"applaud"]
                                                                  tag:100];
     elvc.tabBarItem = employeeItem;
     UITabBarItem *pollsItem = [[UITabBarItem alloc] initWithTitle:@"Polls"
@@ -218,7 +218,7 @@
 //    UITabBarItem *threadsItem = [[UITabBarItem alloc] init];
 //    threadsItem.title = @"Mingle";
     UITabBarItem *threadsItem = [[UITabBarItem alloc] initWithTitle:@"Mingle"
-                                                              image:[UIImage imageNamed:@"dialog"]
+                                                              image:[UIImage imageNamed:@"photos"]
                                                                 tag:100];
     mlvc.tabBarItem = threadsItem;
     UITabBarItem *questionItem = [[UITabBarItem alloc] initWithTitle:@"Feedback"

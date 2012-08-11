@@ -75,6 +75,12 @@
 		1BA358F41582F05E00EB8F32 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BA358F31582F05E00EB8F32 /* main.m */; };
 		1BA358F81582F05E00EB8F32 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BA358F71582F05E00EB8F32 /* AppDelegate.m */; };
 		1BB4AC9F15BF3E68003E8B29 /* EmployeeBioCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BB4AC9E15BF3E68003E8B29 /* EmployeeBioCell.m */; };
+		1BC0043115D5F79400EB0958 /* WhisperCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC0043015D5F79400EB0958 /* WhisperCell.m */; };
+		1BC0043415D5F92E00EB0958 /* UIPlaceHolderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC0043315D5F92E00EB0958 /* UIPlaceHolderTextView.m */; };
+		1BC0046315D6043100EB0958 /* photos.png in Resources */ = {isa = PBXBuildFile; fileRef = 1BC0046115D6043100EB0958 /* photos.png */; };
+		1BC0046415D6043100EB0958 /* photos@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1BC0046215D6043100EB0958 /* photos@2x.png */; };
+		1BC0046715D6089F00EB0958 /* applaud.png in Resources */ = {isa = PBXBuildFile; fileRef = 1BC0046515D6089F00EB0958 /* applaud.png */; };
+		1BC0046815D6089F00EB0958 /* applaud@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1BC0046615D6089F00EB0958 /* applaud@2x.png */; };
 		1BC0D1C315D082A40027F9BF /* NewPollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC0D1C115D082A40027F9BF /* NewPollViewController.m */; };
 		1BD05DAA15D1FC900033DDFC /* PollOptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BD05DA915D1FC900033DDFC /* PollOptionCell.m */; };
 		1BD494EF15BDF786006A01A9 /* blankPerson.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1BD494EE15BDF786006A01A9 /* blankPerson.jpg */; };
@@ -231,6 +237,14 @@
 		1BB4AC9C15BF3B58003E8B29 /* EmployeeDisplayConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmployeeDisplayConstants.h; sourceTree = "<group>"; };
 		1BB4AC9D15BF3E68003E8B29 /* EmployeeBioCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmployeeBioCell.h; sourceTree = "<group>"; };
 		1BB4AC9E15BF3E68003E8B29 /* EmployeeBioCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmployeeBioCell.m; sourceTree = "<group>"; };
+		1BC0042F15D5F79400EB0958 /* WhisperCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WhisperCell.h; sourceTree = "<group>"; };
+		1BC0043015D5F79400EB0958 /* WhisperCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WhisperCell.m; sourceTree = "<group>"; };
+		1BC0043215D5F92E00EB0958 /* UIPlaceHolderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPlaceHolderTextView.h; sourceTree = "<group>"; };
+		1BC0043315D5F92E00EB0958 /* UIPlaceHolderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPlaceHolderTextView.m; sourceTree = "<group>"; };
+		1BC0046115D6043100EB0958 /* photos.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = photos.png; sourceTree = "<group>"; };
+		1BC0046215D6043100EB0958 /* photos@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photos@2x.png"; sourceTree = "<group>"; };
+		1BC0046515D6089F00EB0958 /* applaud.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = applaud.png; sourceTree = "<group>"; };
+		1BC0046615D6089F00EB0958 /* applaud@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "applaud@2x.png"; sourceTree = "<group>"; };
 		1BC0D1C015D082A40027F9BF /* NewPollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewPollViewController.h; sourceTree = "<group>"; };
 		1BC0D1C115D082A40027F9BF /* NewPollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewPollViewController.m; sourceTree = "<group>"; };
 		1BD05DA815D1FC900033DDFC /* PollOptionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PollOptionCell.h; sourceTree = "<group>"; };
@@ -362,7 +376,7 @@
 			name = Newsfeed;
 			sourceTree = "<group>";
 		};
-		1B301C5E158857D20038A5BE /* Employee */ = {
+		1B301C5E158857D20038A5BE /* Applaud */ = {
 			isa = PBXGroup;
 			children = (
 				1BB4AC9C15BF3B58003E8B29 /* EmployeeDisplayConstants.h */,
@@ -378,8 +392,12 @@
 				1BFF2E7B158D9CDB00753F94 /* EmployeeListViewController.h */,
 				1BFF2E7C158D9CDB00753F94 /* EmployeeListViewController.m */,
 				1BFF2E7D158D9CDC00753F94 /* EmployeeListViewController.xib */,
+				1BC0042F15D5F79400EB0958 /* WhisperCell.h */,
+				1BC0043015D5F79400EB0958 /* WhisperCell.m */,
+				1BC0043215D5F92E00EB0958 /* UIPlaceHolderTextView.h */,
+				1BC0043315D5F92E00EB0958 /* UIPlaceHolderTextView.m */,
 			);
-			name = Employee;
+			name = Applaud;
 			sourceTree = "<group>";
 		};
 		1B301C69158858490038A5BE /* Questions */ = {
@@ -482,7 +500,7 @@
 				1B1109B315D42BA700B2B07E /* Mingle */,
 				1B514017158FA3C7008CB057 /* DBModels */,
 				1B301C69158858490038A5BE /* Questions */,
-				1B301C5E158857D20038A5BE /* Employee */,
+				1B301C5E158857D20038A5BE /* Applaud */,
 				1B301C5B158856470038A5BE /* Newsfeed */,
 				1B301C5515884C970038A5BE /* SelectLocations */,
 				6F3EA47A15BE03AD006E66A8 /* Business Photos */,
@@ -517,6 +535,10 @@
 		1BD494ED15BDF6D3006A01A9 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				1BC0046515D6089F00EB0958 /* applaud.png */,
+				1BC0046615D6089F00EB0958 /* applaud@2x.png */,
+				1BC0046115D6043100EB0958 /* photos.png */,
+				1BC0046215D6043100EB0958 /* photos@2x.png */,
 				6F8C34EE15D42D0E00EC82E9 /* polls.png */,
 				6F8C34EF15D42D0E00EC82E9 /* polls@2x.png */,
 				1B07268A15D32590005EB452 /* downrate.png */,
@@ -686,6 +708,10 @@
 				1B1109E415D439C700B2B07E /* MingleListViewController.xib in Resources */,
 				1B1109EF15D44DC800B2B07E /* MinglePostViewController.xib in Resources */,
 				1B1109FF15D45AF800B2B07E /* NewMingleThreadViewController.xib in Resources */,
+				1BC0046315D6043100EB0958 /* photos.png in Resources */,
+				1BC0046415D6043100EB0958 /* photos@2x.png in Resources */,
+				1BC0046715D6089F00EB0958 /* applaud.png in Resources */,
+				1BC0046815D6089F00EB0958 /* applaud@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -742,6 +768,8 @@
 				1B110A0615D4825000B2B07E /* MingleThreadCell.m in Sources */,
 				1B94B15515D4B09400E80232 /* MinglePostCell.m in Sources */,
 				1B16E17415D5C87300F15D8E /* ApatapaDateFormatter.m in Sources */,
+				1BC0043115D5F79400EB0958 /* WhisperCell.m in Sources */,
+				1BC0043415D5F92E00EB0958 /* UIPlaceHolderTextView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

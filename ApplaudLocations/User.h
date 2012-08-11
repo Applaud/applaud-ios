@@ -12,7 +12,7 @@
 
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *username;
-@property (nonatomic, strong) UIImage *profilePicture;
+@property (nonatomic, strong) NSURL *profilePictureURL;
 
 - (id)initWithName:(NSString*)name username:(NSString*)username;
 

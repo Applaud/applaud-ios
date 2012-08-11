@@ -281,6 +281,12 @@
                                      url:THREAD_SUBMIT_POST_URL
                                 callback:^(NSHTTPURLResponse *response, NSData *data) {
                                     [self loadThreadFromData:data];
+                                    
+                                    // Jump to the new post
+                                    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.threadPosts.count-1
+                                                                                              inSection:1]
+                                                          atScrollPosition:UITableViewScrollPositionBottom
+                                                                  animated:YES];
                                 }];
     }
     
@@ -303,6 +309,9 @@
                                                  postDict[@"user"][@"first_name"],
                                                  postDict[@"user"][@"last_name"]]
                                        username:postDict[@"user"][@"username"]];
+        NSLog(@"Received prof pic: %@",postDict[@"user"][@"profile_picture"]);
+        user.profilePictureURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",SERVER_URL,postDict[@"user"][@"profile_picture"]]];
+        
         ThreadPost *post = [[ThreadPost alloc] initWithBody:postDict[@"body"]
                                                date_created:[formatter dateFromString:postDict[@"date_created"]]
                                                     upvotes:[postDict[@"upvotes"] intValue]

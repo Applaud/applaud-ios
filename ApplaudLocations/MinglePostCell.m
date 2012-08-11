@@ -10,6 +10,7 @@
 #import "MingleDisplayConstants.h"
 #import "MinglePostViewController.h"
 #import "ApatapaDateFormatter.h"
+#import "SDWebImage/UIImageView+WebCache.h"
 
 @implementation MinglePostCell
 
@@ -29,25 +30,38 @@
         self.usernameLabel = [UILabel new];
         self.usernameLabel.font = [UIFont boldSystemFontOfSize:USER_SIZE];
         self.usernameLabel.backgroundColor = [UIColor clearColor];
-        self.profilePicture = [[UIImageView alloc] initWithImage:self.post.user.profilePicture];
         self.ratingWidget = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObject:[UIImage imageNamed:@"uprate"]]];
         
         self.upvotesLabel = [UILabel new];
         self.upvotesLabel.font = [UIFont systemFontOfSize:RATING_TEXT_SIZE];
         self.upvotesLabel.textColor = [UIColor colorWithRed:0.0 green:0.7 blue:0.0 alpha:1.0];
         
+        self.profilePicture = [UIImageView new];
+        
+        [self initContent];
+        
         [self.contentView addSubview:self.dateLabel];
         [self.contentView addSubview:self.upvotesLabel];
         [self.contentView addSubview:self.usernameLabel];
         [self.contentView addSubview:self.profilePicture];
         [self.contentView addSubview:self.ratingWidget];
-        
-        [self initContent];
     }
     return self;
 }
 
 - (void)initContent {
+    
+    __weak MinglePostCell *weakSelf = self;
+    [self.profilePicture setImageWithURL:self.post.user.profilePictureURL
+                        placeholderImage:nil
+                                 success:^(UIImage *image) {
+                                     [weakSelf setNeedsDisplay];
+                                     [weakSelf setNeedsLayout];
+                                 }
+                                 failure:^(NSError *error) {
+                                     NSLog(@"Something went wrong: %@",error);
+                                 }];
+    
     self.textLabel.text = self.post.body;
     self.dateLabel.text = [ApatapaDateFormatter stringFromDate:self.post.date_created];
     self.usernameLabel.text = self.post.user.username;

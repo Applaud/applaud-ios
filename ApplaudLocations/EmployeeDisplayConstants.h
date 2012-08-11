@@ -9,6 +9,7 @@
 #ifndef ApplaudIOS_EmployeeDisplayConstants_h
 #define ApplaudIOS_EmployeeDisplayConstants_h
 
+#define SCROLL_TIME 0.2f
 #define RATING_FIELD_HEIGHT 40
 #define RATING_FIELDS_BEGIN 300
 #define RATING_FIELD_SPACING 20
