@@ -173,28 +173,24 @@
     
     // Polls view controller
     PollsViewController *pvc = [[PollsViewController alloc] init];
-    [pvc setTitle:@"Polls"];
     UINavigationController *pollsNav = [[UINavigationController alloc] initWithRootViewController:pvc];
     pvc.navigationController = pollsNav;
     pvc.appDelegate = self;
     
     // Threads (mingle) view controller
     MingleListViewController *mlvc = [[MingleListViewController alloc] initWithStyle:UITableViewStyleGrouped];
-    mlvc.title = @"Mingle";
     UINavigationController *mingleNav = [[UINavigationController alloc] initWithRootViewController:mlvc];
     mlvc.navigationController = mingleNav;
     mlvc.appDelegate = self;
     
     // QuestionsViewController next
     QuestionsViewController *qvc = [[QuestionsViewController alloc] init];
-    [qvc setTitle:@"Dialog"];
     UINavigationController *questionNav = [[UINavigationController alloc] initWithRootViewController:qvc];
     qvc.navigationController = questionNav;
     qvc.appDelegate = self;
     
     // And then NFViewController
     NFViewController *nfvc = [[NFViewController alloc] init];
-    [nfvc setTitle:@"News Feed"];
     UINavigationController *newsNav = [[UINavigationController alloc] initWithRootViewController:nfvc];
     nfvc.navigationController = newsNav;
     nfvc.appDelegate = self;

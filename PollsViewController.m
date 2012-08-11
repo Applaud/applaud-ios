@@ -64,7 +64,10 @@
                                                                             action:@selector(backButtonPressed)];
     
     // The toolbar, for sorting polls
-    UISegmentedControl *sortControls = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"Newest", @"Popular", @"Liked", nil]];
+    UISegmentedControl *sortControls = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:
+                                                                                  SORT_STRING_NEWEST,
+                                                                                  SORT_STRING_POPULAR,
+                                                                                  SORT_STRING_LIKED, nil]];
     UIBarButtonItem	*flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     sortControls.segmentedControlStyle = UISegmentedControlStyleBar;
     sortControls.tintColor = [UIColor grayColor];

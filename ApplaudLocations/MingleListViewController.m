@@ -50,7 +50,10 @@
     self.navigationItem.rightBarButtonItem = addThreadItem;
     
     // The toolbar, for sorting Threads
-    UISegmentedControl *sortControls = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"Newest", @"Popular", @"Liked", nil]];
+    UISegmentedControl *sortControls = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:
+                                                                                  SORT_STRING_NEWEST,
+                                                                                  SORT_STRING_POPULAR,
+                                                                                  SORT_STRING_LIKED, nil]];
     UIBarButtonItem	*flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     sortControls.segmentedControlStyle = UISegmentedControlStyleBar;
     sortControls.tintColor = [UIColor grayColor];
@@ -63,6 +66,8 @@
     // Sort method is "newest"
     sortMethod = SORT_NEWEST;
     [sortControls setSelectedSegmentIndex:SORT_NEWEST];
+    
+    self.title = @"Mingle";
 }
 
 - (void)viewDidUnload

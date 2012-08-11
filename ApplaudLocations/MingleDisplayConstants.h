@@ -12,6 +12,7 @@
 #define IMAGE_SIZE 50.0f
 #define SCROLL_TIME 0.2f           // # of seconds to scroll the view when keyboard appears
 #define TABBAR_HEIGHT 49.0f
+#define NAVBAR_SIZE 49.0f           // size of the navigation bar (for use in resizing view for keyboard appearance)
 #define MINGLE_RATING_WIDTH 60.0f
 #define MINGLE_RATING_PADDING 10.0f
 #define TITLE_SIZE 17.0f

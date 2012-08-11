@@ -245,6 +245,11 @@
     [self.navigationController.view setFrame:viewFrame];
     [UIView commitAnimations];
     
+    // Scroll to last visible row
+    NSArray *vips = [self.tableView indexPathsForVisibleRows];
+    [self.tableView scrollToRowAtIndexPath:vips[vips.count-1]
+                          atScrollPosition:UITableViewScrollPositionNone animated:YES];
+    
     keyboardIsShown = YES;
 }
 
