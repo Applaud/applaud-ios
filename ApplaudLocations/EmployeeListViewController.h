@@ -12,7 +12,9 @@
 
 @class AppDelegate;
 
-@interface EmployeeListViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface EmployeeListViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UITextViewDelegate> {
+    BOOL keyboardIsShown;
+}
 
 @property (weak, nonatomic) AppDelegate *appDelegate;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
