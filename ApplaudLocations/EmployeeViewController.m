@@ -398,7 +398,8 @@
         }
         else if([view isKindOfClass:[UITextField class]]) {
             UITextField *field = (UITextField *)view;
-            ratings[[@(field.tag) description]] = field.text;
+            if(field.text)
+                ratings[[@(field.tag) description]] = field.text;
         }
     }
     
