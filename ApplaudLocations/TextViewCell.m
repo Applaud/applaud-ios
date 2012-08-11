@@ -6,11 +6,11 @@
 //  Copyright (c) 2012 Applaud, Inc. All rights reserved.
 //
 
-#import "WhisperCell.h"
+#import "TextViewCell.h"
 
 #define CELL_PADDING 10.0f
 
-@implementation WhisperCell
+@implementation TextViewCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -20,6 +20,7 @@
         self.textView = [[UIPlaceHolderTextView alloc] init];
         self.textView.backgroundColor = [UIColor clearColor];
         self.textView.returnKeyType = UIReturnKeyDone;
+        self.textView.font = [UIFont systemFontOfSize:16.0f];
         [self.contentView addSubview:self.textView];
     }
     return self;
@@ -33,7 +34,7 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    self.textView.frame = CGRectMake(0, CELL_PADDING,
+    self.textView.frame = CGRectMake(0, 0,
                                      self.contentView.frame.size.width,
                                      self.contentView.frame.size.height - 2*CELL_PADDING);
 }

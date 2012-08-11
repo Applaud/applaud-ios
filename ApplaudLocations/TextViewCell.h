@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "UIPlaceHolderTextView.h"
 
-@interface WhisperCell : UITableViewCell
+@interface TextViewCell : UITableViewCell
 
 @property (nonatomic, strong) IBOutlet UIPlaceHolderTextView *textView;
 @property (nonatomic, strong) NSString *placeholder;

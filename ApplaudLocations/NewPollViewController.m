@@ -10,6 +10,7 @@
 #import "PollFieldCell.h"
 #import "ConnectionManager.h"
 #import "PollsViewController.h"
+#import "TextViewCell.h"
 
 @interface NewPollViewController ()
 
@@ -82,17 +83,24 @@
 #pragma mark -
 #pragma mark UITableViewDataSource / Delegate
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ( indexPath.section == 1 )
+        return 42.0f;
+    return 60.0f;
+}
+
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *TitleCellIdentifier = @"TitleCell";
     // Title section
     if ( indexPath.section == 0 ) {
-        PollFieldCell *cell = [self.tableView dequeueReusableCellWithIdentifier:TitleCellIdentifier];
+        TextViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:TitleCellIdentifier];
         if ( nil == cell ) {
-            cell = [[PollFieldCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                        reuseIdentifier:TitleCellIdentifier];
+            cell = [[TextViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                       reuseIdentifier:TitleCellIdentifier];
+            cell.placeholder = [NSString stringWithFormat:@"Communicate directly with %@.",self.appDelegate.currentBusiness.name];
+            cell.textView.delegate = self;
             cell.placeholder = @"Poll Question";
-            cell.textField.delegate = self;
-            cell.textField.tag = -1;    // -1 == the title textfield
+            cell.textView.tag = -1;    // -1 == the title textfield
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
         return cell;
@@ -278,7 +286,7 @@
 }
 
 #pragma mark -
-#pragma mark UITextFieldDelegate Methods
+#pragma mark UITextField/ViewDelegate Methods
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     if ( textField.tag == -1 ) {
@@ -292,6 +300,14 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
+    return YES;
+}
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    self.pollTitle = textView.text;
+    if ( [text isEqualToString:@"\n"] ) {
+        [textView resignFirstResponder];
+    }
     return YES;
 }
 
