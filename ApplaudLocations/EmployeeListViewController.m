@@ -228,6 +228,25 @@
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
     if ( [text isEqualToString:@"\n"] ) {
         [textView resignFirstResponder];
+        
+        // Submit general feedback
+        NSDictionary *params = @{ @"answer" : textView.text,
+        @"business_id" : @(self.appDelegate.currentBusiness.business_id) };
+        [ConnectionManager serverRequest:@"POST"
+                              withParams:params
+                                     url:FEEDBACK_URL
+                                callback:^(NSHTTPURLResponse *response, NSData *data) {
+                                    // Clear the textView
+                                    [textView setText:@""];
+                                    
+                                    // Thank the user
+                                    [[[UIAlertView alloc] initWithTitle:@"Thank you"
+                                                                message:@"Your feedback is appreciated"
+                                                               delegate:nil
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles:nil] show];
+                                }];
+        
         return NO;
     }
     return YES;
