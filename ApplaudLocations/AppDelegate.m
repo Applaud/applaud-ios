@@ -115,9 +115,9 @@
         LRVC.window = self.window;
         LRVC.appDelegate = self;
         
-        UINavigationController *LRNavBar = [[UINavigationController alloc] initWithRootViewController:LRVC];
-        
-        self.window.rootViewController = LRNavBar;
+        //UINavigationController *navBar = [[UINavigationController alloc] initWithRootViewController:LRVC];
+
+        self.window.rootViewController = LRVC;//navBar;
     }
        
     return YES;

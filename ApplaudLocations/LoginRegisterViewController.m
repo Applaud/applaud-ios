@@ -16,31 +16,54 @@
     
     if(self){
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginSucceeded:) name:@"LOGIN_SUCCESS" object:nil];
-        self.navigationItem.title = @"Foobar";
+
         // Background image
         self.backgroundImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Default"]];
         self.backgroundImage.contentMode = UIViewContentModeBottom;
-        self.backgroundImage.frame = CGRectMake(0, -44, self.view.frame.size.width, self.view.frame.size.height);
+        self.backgroundImage.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
         
         // Logo image
-        self.logo = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"transparent logo"]];
-        self.logo.frame = CGRectMake(10, 50, 300, 300);
+        //self.logo = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"transparent logo"]];
+        //self.logo.frame = CGRectMake(10, 50, 300, 300);
         
+        
+        // Sign-In button setup and styling
         self.signIn = [UIButton buttonWithType:UIButtonTypeCustom];
-        self.signIn.backgroundColor = [UIColor whiteColor];
-        self.signIn.frame = CGRectMake(10,336,TEXTFIELD_WIDTH,TEXTFIELD_HEIGHT);
-        self.signIn.layer.cornerRadius = 0;
-        CAGradientLayer *gradientLayer = [CAGradientLayer layer];
-        gradientLayer.frame = self.signIn.layer.bounds;
-        gradientLayer.colors = @[(id)[UIColor blackColor].CGColor, (id)[UIColor colorWithRed:.2 green:.2 blue:.2 alpha:1.0].CGColor];
-        gradientLayer.locations = @[@0.0f, @1.0f];
-        [self.signIn.layer addSublayer:gradientLayer];
-        
+        self.signIn.backgroundColor = [UIColor grayColor];
+        self.signIn.frame = CGRectMake(10,390,TEXTFIELD_WIDTH,TEXTFIELD_HEIGHT);
+        [self.signIn setTitle:@"Sign In" forState:UIControlStateNormal | UIControlStateSelected | UIControlStateHighlighted | UIControlStateDisabled];
+        self.signIn.layer.cornerRadius = 1;
+        self.signIn.layer.borderColor = [UIColor colorWithRed:.2 green:.2 blue:.2 alpha:1.0].CGColor;
+        self.signIn.layer.borderWidth = 1.0;
+
+        self.signInLayer = [CAGradientLayer layer];
+        self.signInLayer.frame = self.signIn.layer.bounds;
+        self.signInLayer.colors = @[(id)[UIColor colorWithRed:.6 green:.6 blue:.6 alpha:1.0].CGColor, (id)[UIColor colorWithRed:.3 green:.3 blue:.3 alpha:1.0].CGColor];
+        self.signInLayer.locations = @[@0.0f, @1.0f];
+
+        [self.signIn.layer addSublayer:self.signInLayer];
         [self.signIn addTarget:self action:@selector(signInButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+        [self.signIn addTarget:self action:@selector(signInButtonDown) forControlEvents:UIControlEventTouchDown];
+        [self.signIn addTarget:self action:@selector(signInButtonUp) forControlEvents:UIControlEventTouchUpOutside];
         
-        self.createAccount = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        self.createAccount.frame = CGRectMake(10,376,TEXTFIELD_WIDTH, TEXTFIELD_HEIGHT);
+        
+        // Create Account button setup and styling
+        self.createAccount = [UIButton buttonWithType:UIButtonTypeCustom];
+        self.createAccount.frame = CGRectMake(10,422,TEXTFIELD_WIDTH, TEXTFIELD_HEIGHT);
+        [self.createAccount setTitle:@"Create an Account" forState:UIControlStateNormal];
+        self.createAccount.layer.cornerRadius = 1;
+        self.createAccount.layer.borderColor = [UIColor colorWithRed:.2 green:.2 blue:.2 alpha:1.0].CGColor;
+        self.createAccount.layer.borderWidth = 1.0;
+        
+        self.createAccountLayer = [CAGradientLayer layer];
+        self.createAccountLayer.frame = self.createAccount.layer.bounds;
+        self.createAccountLayer.colors = @[(id)[UIColor colorWithRed:.6 green:.6 blue:.6 alpha:1.0].CGColor, (id)[UIColor colorWithRed:.3 green:.3 blue:.3 alpha:1.0].CGColor];
+        self.createAccountLayer.locations = @[@0.0f, @1.0f];
+        
+        [self.createAccount.layer addSublayer:self.createAccountLayer];
         [self.createAccount addTarget:self action:@selector(createAccountButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+        [self.createAccount addTarget:self action:@selector(createAccountButtonDown) forControlEvents:UIControlEventTouchDown ];
+        
 
         [self.view addSubview:self.backgroundImage];
         //[self.view addSubview:self.logo];
@@ -49,6 +72,20 @@
     }
     
     return self;
+}
+
+- (void) signInButtonDown {
+    [self.signInLayer removeFromSuperlayer];
+    self.signIn.backgroundColor = [UIColor colorWithRed:.3 green:.3 blue:.3 alpha:1.0];
+}
+
+-(void) signInButtonUp {
+    
+    [self.signIn.layer addSublayer:self.signInLayer];
+}
+
+-(void) createAccountButtonDown {
+    self.createAccount.backgroundColor = [UIColor colorWithRed:.3 green:.3 blue:.3 alpha:1.0];
 }
 
 - (void) signInButtonPressed

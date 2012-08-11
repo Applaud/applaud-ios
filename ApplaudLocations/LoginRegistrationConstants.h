@@ -9,7 +9,7 @@
 #ifndef ApplaudIOS_LoginRegistrationConstants_h
 #define ApplaudIOS_LoginRegistrationConstants_h
 
-#define TEXTFIELD_HEIGHT 25
+#define TEXTFIELD_HEIGHT 30
 #define TEXTFIELD_WIDTH 300
 
 #endif
