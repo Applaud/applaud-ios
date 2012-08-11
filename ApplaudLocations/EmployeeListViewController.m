@@ -187,7 +187,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if(self.employeeArray.count == 0) {
+    if(self.employeeArray.count == 0 || indexPath.section == 1) {
         // Don't do anything.
         return;
     }
