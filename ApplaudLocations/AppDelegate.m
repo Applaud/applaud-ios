@@ -234,7 +234,6 @@
                                                               tag:104];
     bpvc.tabBarItem = photoItem;
 	self.tabNavigator.viewControllers = @[newsNav, pollsNav, mingleNav, employeeNav, photoNav];
->>>>>>> c2de117bbf7727fe4353aeaed932755766c969cb
 }
 
 -(void)backButtonPressed {
