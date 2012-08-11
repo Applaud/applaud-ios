@@ -14,7 +14,9 @@
 @implementation ApatapaDateFormatter
 
 + (NSString*)stringFromDate:(NSDate*)date {
-    int seconds = -(int)[date timeIntervalSinceNow];
+    // We assume that date is currently in UTC
+    
+    int seconds = -(int)([[NSTimeZone systemTimeZone] secondsFromGMT] + [date timeIntervalSinceNow]);
     
     int minutes, hours, days, weeks, months, years;
     NSString *unit = nil;
