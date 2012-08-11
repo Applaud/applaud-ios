@@ -256,7 +256,8 @@
 -(void)imageButtonPressed:(id)sender {
     UIButton *button = (UIButton *)sender;
     PhotoZoomViewController *pzvc = [[PhotoZoomViewController alloc]
-                                     initWithPhoto:self.businessPhotos[button.tag]];
+                                     initWithPhotos:self.businessPhotos
+                                     index:button.tag];
     pzvc.appDelegate = self.appDelegate;
     pzvc.navigationController = self.navigationController;
 //    [self.navigationController pushViewController:pzvc animated:YES];

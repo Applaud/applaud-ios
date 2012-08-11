@@ -14,41 +14,24 @@
 
 @implementation PhotoZoomViewController
 
-- (id)initWithPhoto:(BusinessPhoto *)photo;
+- (id)initWithPhotos:(NSMutableArray *)photos index:(int)index;
 {
     if (self = [super init]) {
-//        [[UIApplication sharedApplication] setStatusBarHidden:YES];
+        _photos = photos;
         self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
         _navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
         _navBar.barStyle = UIBarStyleBlackTranslucent;
-        _photo = photo;
         self.hidesBottomBarWhenPushed = YES;
         self.view.backgroundColor = [UIColor blackColor];
-        // Subtract some height from the screen's size for the navbar
-        // and tabbar
         self.wantsFullScreenLayout = YES;
-        _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0,
-                                                                     0,
-                                                                     320,
-                                                                     480)];
+        _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
+        self.scrollView.scrollEnabled = NO;
         self.scrollView.backgroundColor = [UIColor blackColor];
         _scrollView.backgroundColor = [UIColor blackColor];
-        _scrollView.contentSize = CGSizeMake(320, 460);
+        CGFloat scrollWidth = self.photos.count*320 + (self.photos.count-1)*PHOTO_BORDER;
+        _scrollView.contentSize = CGSizeMake(scrollWidth, 480);
         _scrollView.delegate = self;
         [self.view addSubview:_scrollView];
-        _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0,
-                                                                   320, 480)];
-        self.imageView.backgroundColor = [UIColor blackColor];
-        [_imageView setImageWithURL:self.photo.imageURL
-                   placeholderImage:nil
-                            success:^(UIImage *image) {
-                                self.imageView.frame = CGRectMake(0,
-                                                                  (480.0 - image.size.height)/2,
-                                                                  image.size.width,
-                                                                  image.size.height);
-                            }
-                            failure:nil];
-        [_scrollView addSubview:_imageView];
         [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc]
                                                     initWithImage:[UIImage imageNamed:@"white_comments.png"]
                                                     style:UIBarButtonItemStylePlain
@@ -62,19 +45,76 @@
         [self.navBar pushNavigationItem:self.navigationItem animated:NO];
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                               action:@selector(tapped)];
+        UISwipeGestureRecognizer *rightSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self
+                                                                                    action:@selector(swiped:)];
+        rightSwipe.direction = UISwipeGestureRecognizerDirectionRight;
+        UISwipeGestureRecognizer *leftSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self
+                                                                                        action:@selector(swiped:)];
+        leftSwipe.direction = UISwipeGestureRecognizerDirectionLeft;
         [self.scrollView addGestureRecognizer:tap];
+        [self.scrollView addGestureRecognizer:rightSwipe];
+        [self.scrollView addGestureRecognizer:leftSwipe];
         [self.view addSubview:self.navBar];
+        [self addBusinessPhotos];
+        [self setIndex:index animated:NO];
     }
     return self;
 }
 
-/*-(void)setNavigationController:(UINavigationController *)navigationController {
-    _navigationController = navigationController;
-    _navigationController.navigationBarHidden = YES;
-}*/
+-(void)setIndex:(int)index animated:(BOOL)animated {
+    if(index < 0) {
+        _index = 0;
+        return;
+    }
+    if(index >= self.photos.count) {
+        _index = self.photos.count-1;
+        return;
+    }
+    _index = index;
+    CGPoint newOffset = CGPointMake((320+PHOTO_BORDER)*index, 0);
+    [self.scrollView setContentOffset:newOffset animated:animated];
+}
+
+-(void)addBusinessPhotos {
+    int i;
+    for(i = 0; i < self.photos.count; i++) {
+        [self addPhoto:self.photos[i] index:i];
+    }
+}
+
+-(void)addPhoto:(BusinessPhoto *)photo index:(int)index {
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake((320+PHOTO_BORDER)*index,
+                                                                           0,
+                                                                           320,
+                                                                           480)];
+    imageView.backgroundColor = [UIColor blackColor];
+    [imageView setImageWithURL:photo.imageURL
+              placeholderImage:nil
+                       success:^(UIImage *image) {
+                           CGRect oldFrame = imageView.frame;
+                           imageView.frame = CGRectMake(oldFrame.origin.x,
+                                                        (480-image.size.height)/2,
+                                                        320,
+                                                        image.size.height);
+                       }
+                       failure:nil];
+    [self.scrollView addSubview:imageView];
+    self.scrollView.contentSize = CGSizeMake(self.scrollView.contentSize.width + PHOTO_BORDER + 320,
+                                             480);
+}
+
+-(void)swiped:(UISwipeGestureRecognizer *)swipe {
+    if(swipe.direction == UISwipeGestureRecognizerDirectionLeft) {
+        [self setIndex:self.index + 1 animated:YES];
+        NSLog(@"SWIPED LEFT");
+    }
+    else if(swipe.direction == UISwipeGestureRecognizerDirectionRight) {
+        [self setIndex:self.index - 1 animated:YES];
+        NSLog(@"SWIPED RIGHT");
+    }
+}
 
 -(void)tapped {
-    NSLog(@"SIZE %f %f", self.imageView.image.size.width, self.imageView.image.size.height);
     [UIView animateWithDuration:0.4 animations:^(void) {
         if(self.navBar.alpha == 0.0) {
             self.navBar.alpha = 1.0;
@@ -112,34 +152,16 @@
 }
 
 #pragma mark -
-#pragma mark UIScrollView delegate methods
-
-/*-(void)scrollViewDidZoom:(UIScrollView *)scrollView {
-    CGRect newFrame = CGRectMake((self.view.frame.size.width -
-                                  scrollView.zoomScale*self.imageView.image.size.width)/2,
-                                 (self.view.frame.size.height -
-                                  scrollView.zoomScale*self.imageView.image.size.height)/2,
-                                 self.imageView.image.size.width*scrollView.zoomScale,
-                                 self.imageView.image.size.height*scrollView.zoomScale);
-    self.imageView.frame = newFrame;
-}*/
-
-/*-(UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
-    return self.imageView;
-}*/
-
-#pragma mark -
 #pragma mark Other methods
 
 -(void)commentButtonPressed {
     PhotoCommentViewController *pcvc = [[PhotoCommentViewController alloc]
-                                        initWithPhoto:self.photo];
+                                        initWithPhoto:self.photos[self.index]];
     pcvc.appDelegate = self.appDelegate;
     [self presentViewController:pcvc animated:YES completion:nil];
 }
 
 -(void)backButtonPressed {
-//    [self.navigationController popViewControllerAnimated:YES];
     [self dismissViewControllerAnimated:YES
                              completion:nil];
 }

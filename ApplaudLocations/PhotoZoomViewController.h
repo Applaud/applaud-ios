@@ -13,18 +13,16 @@
 #import "PhotoCommentViewController.h"
 #import "AppDelegate.h"
 
-#define BUTTON_MARGIN 5.0f
-#define BUTTON_HEIGHT 30.0f
-#define BUTTON_WIDTH 50.0f
+#define PHOTO_BORDER 20.0f
 
 @interface PhotoZoomViewController : UIViewController <UIScrollViewDelegate>
 
 @property (nonatomic, strong) UIScrollView *scrollView;
-@property (nonatomic, strong) UIImageView *imageView;
-@property (nonatomic, strong) BusinessPhoto *photo;
+@property (nonatomic, strong) NSMutableArray *photos;
 @property (nonatomic, weak) AppDelegate *appDelegate;
 @property (nonatomic, strong) UINavigationController *navigationController;
 @property (nonatomic, strong) UINavigationBar *navBar;
+@property (nonatomic) int index;
 
--(id)initWithPhoto:(BusinessPhoto *)photo;
+-(id)initWithPhotos:(NSMutableArray *)photo index:(int)index;
 @end
