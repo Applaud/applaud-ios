@@ -26,6 +26,10 @@
             self.imagePicker.delegate = self;
             self.imagePicker.allowsEditing = NO;
         }
+        self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 64,
+                                                                         self.view.frame.size.width,
+                                                                         self.view.frame.size.height)];
+        self.view = self.scrollView;
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                selector:@selector(notificationReceived:)
                                                    name:@"BUSINESS_SET"
@@ -39,6 +43,7 @@
         [self getPhotos];
         self.navigationController.navigationBar.tintColor = self.appDelegate.currentBusiness.primaryColor;
         self.navigationItem.title = @"Photos";
+        self.view.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
     }
 }
 
@@ -68,7 +73,7 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    return UIInterfaceOrientationIsPortrait(interfaceOrientation);
 }
 
 #pragma mark -
@@ -92,14 +97,71 @@
 -(void)imagePickerController:(UIImagePickerController *)picker
        didFinishPickingImage:(UIImage *)image
                  editingInfo:(NSDictionary *)editingInfo {
+    [self.scrollView setContentOffset:CGPointZero animated:NO];
     [[[UIAlertView alloc] initWithTitle:@"Thanks!"
                                 message:@"What a great photo."
                                delegate:nil
                       cancelButtonTitle:@"OK"
                       otherButtonTitles:nil] show];
-    [self postPhotoData:image];
     [self.imagePicker dismissViewControllerAnimated:YES completion:nil];
+    UIImage *normalizedImage = [self normalizedImage:image];
+    /*CGSize resize;
+    // .74691358
+    // 1.33884312
+    if(normalizedImage.imageOrientation == UIImageOrientationUp ||
+       normalizedImage.imageOrientation == UIImageOrientationDown) {
+        resize = CGSizeMake(320, 1.33884312*320);
+        NSLog(@"portrait mode");
+    }
+    else {
+        resize = CGSizeMake(320*1.33884312, 320);
+        NSLog(@"landscape mode");
+    }
+    NSLog(@"width %f height %f", image.size.width, image.size.height);
+    UIGraphicsBeginImageContext(resize);
+    [normalizedImage drawInRect:CGRectMake(0,0,resize.width,resize.height)];
+    UIImage *smallImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();*/
+    [self postPhotoData:[self resizeImage:normalizedImage]];
 }
+
+-(UIImage *)resizeImage:(UIImage *)image {
+    NSLog(@"ORIGINAL %f %f", image.size.width, image.size.height);
+    CGFloat height = image.size.height;
+    CGFloat width = image.size.width;
+    CGRect finalSize = CGRectZero;
+    UIImage *resizedImage;
+    if(height > width) {
+        float scale = 480.0/height;
+        NSLog(@"SCALE %f", scale);
+        float newWidth = width*scale;
+        float newHeight = 480.0;
+        UIGraphicsBeginImageContext(CGSizeMake(newWidth, newHeight));
+        [image drawInRect:CGRectMake(0, 0, newWidth, newHeight)];
+        resizedImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        finalSize = CGRectMake(0, 0, newWidth-1, newHeight-1);
+    }
+    else {
+        float scale = 320.0/width;
+        NSLog(@"SCALE %f", scale);
+        finalSize = CGRectMake(0, (height*scale-320.0)/2 -2, 319.0, 477.0);
+        float newHeight = scale*height;
+        float newWidth = 320.0;
+        UIGraphicsBeginImageContext(CGSizeMake(newWidth, newHeight));
+        [image drawInRect:CGRectMake(0, 0, newWidth, newHeight)];
+        resizedImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+    }
+    NSLog(@"SIZES %f %f %f %f", finalSize.origin.x, finalSize.origin.y,
+          finalSize.size.width, finalSize.size.height);
+    CGImageRef imageRef = CGImageCreateWithImageInRect([resizedImage CGImage], finalSize);
+    UIImage *finalImage = [UIImage imageWithCGImage:imageRef];
+    CGImageRelease(imageRef);
+    NSLog(@"FINAL SIZE %f %f", finalImage.size.width, finalImage.size.height);
+    return finalImage;
+}
+
 // Called when the user presses the cancel button.
 // We'll do nothing for now.
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
@@ -124,21 +186,84 @@
 // Do stuff with the photos from the server.
 -(void)handlePhotoData:(NSDictionary *)photoData {
     self.businessPhotos = [[NSMutableArray alloc] init];
+    NSDateFormatter *format = [[NSDateFormatter alloc] init];
+    [format setDateFormat:@"MM/dd/yyyy"];
     for(NSDictionary *photoDict in [photoData objectForKey:@"photos"]) {
-        BusinessPhoto *photo = [[BusinessPhoto alloc] initWithImage:photoDict[@"image"]
+        BusinessPhoto *photo = [[BusinessPhoto alloc] initWithImage:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", SERVER_URL, photoDict[@"image"]]]
                                                                tags:photoDict[@"tags"]
                                                             upvotes:[photoDict[@"upvotes"] intValue]
                                                           downvotes:[photoDict[@"downvotes"] intValue]
                                                            business:[photoDict[@"business"] intValue]
                                                         uploaded_by:photoDict[@"uploaded_by"]
-                                                             active:[photoDict[@"active"] boolValue]];
+                                                             active:[photoDict[@"active"] boolValue]
+                                                           photo_id:[photoDict[@"id"] intValue]
+                                                       thumbnailURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", SERVER_URL, photoDict[@"thumbnail"]]]
+                                                        dateCreated:[format dateFromString:photoDict[@"date_created"]]];
         [self.businessPhotos addObject:photo];
     }
+    [self.businessPhotos sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        BusinessPhoto *p1 = (BusinessPhoto *)obj1;
+        BusinessPhoto *p2 = (BusinessPhoto *)obj2;
+//        return [p2.dateCreated compare:p1.dateCreated];
+        if(p1.photo_id == p2.photo_id)
+            return NSOrderedSame;
+        else if(p1.photo_id < p2.photo_id)
+            return NSOrderedDescending;
+        else
+            return NSOrderedAscending;
+    }];
     [self addPhotos];
 }
 
 -(void)addPhotos {
-    
+    CGFloat currentHeight = -80.0;
+    int currentColumn = 0; // Which column this photo is in (0 to PHOTOS_PER_LINE)
+    int tagnum = 0; // which index each button corresponds to in the array
+    for(BusinessPhoto *photo in self.businessPhotos) {
+        NSLog(@"DATE %@", photo.dateCreated);
+        if(!currentColumn) {
+            currentHeight += PHOTO_SIZE;
+            self.scrollView.contentSize = CGSizeMake(self.view.frame.size.width,
+                                                     currentHeight + PHOTO_SIZE);
+        }
+        NSLog(@"CURRENT HEIGHT %f", currentHeight);
+        UIButton *imageButton = [[UIButton alloc] initWithFrame:CGRectMake(PHOTO_SIZE*currentColumn,
+                                                                           currentHeight,
+                                                                           PHOTO_SIZE,
+                                                                           PHOTO_SIZE)];
+        imageButton.tag = tagnum++;
+        imageButton.imageView.frame = CGRectMake(0, 0,
+                                                 PHOTO_SIZE,
+                                                 PHOTO_SIZE);
+//        NSArray *filenameParts = [photo.imageURL.absoluteString componentsSeparatedByString:@"."];
+//        NSString *thumbnailURL = [NSString stringWithFormat:@"%@-thumbnail-%@", filenameParts[0], filenameParts[1]];
+        NSLog(@"Image URL is: %@", photo.thumbnailURL.absoluteString);
+        [imageButton setImageWithURL:photo.thumbnailURL
+                    placeholderImage:nil
+                             success:^(UIImage *image) {
+                                 
+                             }
+                             failure:^(NSError *error) {
+                             }];
+        [imageButton addTarget:self
+                        action:@selector(imageButtonPressed:)
+              forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:imageButton];
+        currentColumn = ++currentColumn % PHOTOS_PER_LINE;
+    }
+}
+
+-(void)imageButtonPressed:(id)sender {
+    UIButton *button = (UIButton *)sender;
+    PhotoZoomViewController *pzvc = [[PhotoZoomViewController alloc]
+                                     initWithPhotos:self.businessPhotos
+                                     index:button.tag];
+    pzvc.appDelegate = self.appDelegate;
+    pzvc.navigationController = self.navigationController;
+//    [self.navigationController pushViewController:pzvc animated:YES];
+    [self presentViewController:pzvc
+                       animated:YES
+                     completion:nil];
 }
 
 // Send an image to the server.
@@ -163,13 +288,13 @@
     // Add the image.
     [body appendData:start];
     [body appendData:[@"Content-Disposition: file; name=\"image\"; filename=\"image.jpg\"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-    [body appendData:[@"Content-Type: image/jpeg\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-    [body appendData:UIImageJPEGRepresentation(photo, .1)];
+    [body appendData:[@"Content-Type: image/png\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:UIImageJPEGRepresentation(photo, 1)];
     [body appendData:[[NSString stringWithFormat:@"--%@--\r\n", BOUNDARY] dataUsingEncoding:NSUTF8StringEncoding]];
  
     // Now make the request.
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    request.timeoutInterval = 10;
+    request.timeoutInterval = 30;
     request.HTTPMethod = @"POST";
     NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", BOUNDARY];
     [request setValue:contentType forHTTPHeaderField:@"Content-Type"];
@@ -180,9 +305,22 @@
         [request addValue:csrf forHTTPHeaderField:@"X-CSRFToken"];
         [NSURLConnection sendAsynchronousRequest:request
                                            queue:[NSOperationQueue mainQueue]
-                               completionHandler:^(NSURLResponse *r, NSData *d, NSError *e) {}];
+                               completionHandler:^(NSURLResponse *r, NSData *d, NSError *e) {
+                                   [self getPhotos];
+                               }];
     }];
 }
+
+- (UIImage *)normalizedImage:(UIImage *)image {
+    if (image.imageOrientation == UIImageOrientationUp) return image;
+    
+    UIGraphicsBeginImageContextWithOptions(image.size, NO, image.scale);
+    [image drawInRect:(CGRect){0, 0, image.size}];
+    UIImage *normalizedImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return normalizedImage;
+}
+
 
 // Called when the user presses the camera button. Pretty straightforward.
 - (void)cameraButtonPressed {

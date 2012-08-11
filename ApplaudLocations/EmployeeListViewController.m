@@ -13,6 +13,7 @@
 #import "ConnectionManager.h"
 #import "SDWebImage/UIImageView+WebCache.h"
 #import "AppDelegate.h"
+#import "WhisperCell.h"
 
 #define NO_EMPLOYEES_MESSAGE @"This business hasn't added any employees yet. Check back later!"
 #define GENERIC_MESSAGE [NSString stringWithFormat:@"%@%@%@\n\n%@",@"Applaud is the employee evaluation feature of Apatapa. Applaud allows employees to gain recognition for their hard work. By telling ",self.appDelegate.currentBusiness.name,@" to use this feature, you are playing an important part in giving employees more control over their future.",@"If you are interested in helping this business improve, check out the Feedback button below!"]
@@ -23,7 +24,6 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        [self setTitle:@"Employees"];
         _employeeControllers = [[NSMutableArray alloc] init];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(notificationReceived:)
@@ -49,17 +49,37 @@
 {
     [super viewDidLoad];
     
+    self.title = @"Applaud";
+    
     // Do any additional setup after loading the view from its nib.
     self.tableView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:BACK_BUTTON_TITLE
                                                                              style:UIBarButtonItemStylePlain
                                                                             target:self
                                                                             action:@selector(backButtonPressed)];
+    
+    // register for keyboard notifications
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:self.view.window];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:self.view.window];
 }
 
 - (void)viewDidUnload
 {
     self.tableView = nil;
+    // unregister for keyboard notifications while not visible.
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIKeyboardWillShowNotification
+                                                  object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIKeyboardWillHideNotification
+                                                  object:nil];
+    
     [super viewDidUnload];
 }
 
@@ -71,60 +91,84 @@
 #pragma mark -
 #pragma mark Table view data source/delegation
 
+- (NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    if ( 0 == section ) {
+        return @"Employees";
+    }
+    return @"Share Your Thoughts";
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if(self.employeeArray.count == 0) {
-        return 1;
+    if ( 0 == section ) {
+        if(self.employeeArray.count == 0) {
+            return 1;
+        }
+        return self.employeeArray.count;
     }
-    return self.employeeArray.count;
+    
+    // "Whisper"
+    return 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *cellDefaultIdentifier = @"EmployeeCell";
-    NSString *cellIdentifier = nil;
-    NSString *employeeName = nil;
-    if ( self.employeeArray.count == 0 )
-        cellIdentifier = cellDefaultIdentifier;
-    else {
-        employeeName = [self.employeeArray[indexPath.row] description];
-        cellIdentifier = employeeName;
-    }
-    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    
-    if ( nil == cell ) {
-        cell = [[EmployeeCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
-    
-        // Configure the cell...
-        if ( self.appDelegate.currentBusiness.generic ) {
-            cell.textLabel.numberOfLines = 0;
-            cell.textLabel.text = GENERIC_MESSAGE;
-            cell.textLabel.font = [UIFont systemFontOfSize:CONTENT_SIZE];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            cell.contentView.backgroundColor = [UIColor whiteColor];
-        }
-        else if(self.employeeArray.count == 0) {
-            cell.textLabel.numberOfLines = 0;
-            cell.textLabel.text = NO_EMPLOYEES_MESSAGE;
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            cell.contentView.backgroundColor = [UIColor whiteColor];
-            cell.textLabel.font = [UIFont boldSystemFontOfSize:TITLE_SIZE];
-        }
+    if ( indexPath.section == 0 ) {
+        static NSString *cellDefaultIdentifier = @"EmployeeCell";
+        NSString *cellIdentifier = nil;
+        NSString *employeeName = nil;
+        if ( self.employeeArray.count == 0 )
+            cellIdentifier = cellDefaultIdentifier;
         else {
-            [cell.textLabel setText:[self.employeeArray[indexPath.row] description]];
-            [cell.imageView setImageWithURL:[(Employee*)self.employeeArray[indexPath.row] imageURL]
-                           placeholderImage:[UIImage imageNamed:@"blankPerson.jpg"]];
-            cell.imageView.layer.cornerRadius = 7.0f;
-            cell.imageView.layer.masksToBounds = YES;
-            tableView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
-            cell.textLabel.font = [UIFont boldSystemFontOfSize:TITLE_SIZE];
+            employeeName = [self.employeeArray[indexPath.row] description];
+            cellIdentifier = employeeName;
         }
+        UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        
+        if ( nil == cell ) {
+            cell = [[EmployeeCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
+            
+            // Configure the cell...
+            if ( self.appDelegate.currentBusiness.generic ) {
+                cell.textLabel.numberOfLines = 0;
+                cell.textLabel.text = GENERIC_MESSAGE;
+                cell.textLabel.font = [UIFont systemFontOfSize:CONTENT_SIZE];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                cell.contentView.backgroundColor = [UIColor whiteColor];
+            }
+            else if(self.employeeArray.count == 0) {
+                cell.textLabel.numberOfLines = 0;
+                cell.textLabel.text = NO_EMPLOYEES_MESSAGE;
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                cell.contentView.backgroundColor = [UIColor whiteColor];
+                cell.textLabel.font = [UIFont boldSystemFontOfSize:TITLE_SIZE];
+            }
+            else {
+                [cell.textLabel setText:[self.employeeArray[indexPath.row] description]];
+                [cell.imageView setImageWithURL:[(Employee*)self.employeeArray[indexPath.row] imageURL]
+                               placeholderImage:[UIImage imageNamed:@"blankPerson.jpg"]];
+                cell.imageView.layer.cornerRadius = 7.0f;
+                cell.imageView.layer.masksToBounds = YES;
+                tableView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+                cell.textLabel.font = [UIFont boldSystemFontOfSize:TITLE_SIZE];
+            }
+        }
+        
+        return cell;
     }
     
+    static NSString *whisperCellID = @"WhisperCell";
+    WhisperCell *cell = [self.tableView dequeueReusableCellWithIdentifier:whisperCellID];
+    if ( nil == cell ){
+        cell = [[WhisperCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                      reuseIdentifier:whisperCellID];
+        cell.placeholder = [NSString stringWithFormat:@"Communicate directly with %@.",self.appDelegate.currentBusiness.name];
+        cell.textView.delegate = self;
+    }
     return cell;
 }
 
@@ -133,7 +177,7 @@
     if ( self.appDelegate.currentBusiness.generic ) {
         NSString *genericString = GENERIC_MESSAGE;
         return 2*CELL_PADDING + [genericString sizeWithFont:[UIFont systemFontOfSize:CONTENT_SIZE]
-                                          constrainedToSize:CGSizeMake(self.view.frame.size.width - 2*CELL_MARGIN - 2*CELL_PADDING, 400)
+                                          constrainedToSize:CGSizeMake(self.view.frame.size.width - 2*EMPLOYEE_CELL_MARGIN - 2*CELL_PADDING, 400)
                                               lineBreakMode:UILineBreakModeWordWrap].height;
     }
     else if (self.employeeArray.count == 0 && indexPath.row == 0) {
@@ -178,6 +222,89 @@
                                                                                             cell.frame.size.height)
                                                                     cornerRadius:7.0f] CGPath];
 }
+
+#pragma mark - Whisper Management
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    if ( [text isEqualToString:@"\n"] ) {
+        [textView resignFirstResponder];
+        
+        // If there's nothing here, return
+        if ( [textView.text length] > 0 ) {
+            // Submit general feedback
+            NSDictionary *params = @{ @"answer" : textView.text,
+            @"business_id" : @(self.appDelegate.currentBusiness.business_id) };
+            [ConnectionManager serverRequest:@"POST"
+                                  withParams:params
+                                         url:FEEDBACK_URL
+                                    callback:^(NSHTTPURLResponse *response, NSData *data) {
+                                        // Clear the textView
+                                        [textView setText:@""];
+                                        
+                                        // Thank the user
+                                        [[[UIAlertView alloc] initWithTitle:@"Thank you"
+                                                                    message:@"Your feedback is appreciated"
+                                                                   delegate:nil
+                                                          cancelButtonTitle:@"OK"
+                                                          otherButtonTitles:nil] show];
+                                    }];
+        }
+        return NO;
+    }
+    return YES;
+}
+
+- (void)keyboardWillHide:(NSNotification *)n
+{
+    NSDictionary* userInfo = [n userInfo];
+    
+    // get the size of the keyboard
+    CGSize keyboardSize = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    
+    
+    // resize the scrollview
+    CGRect viewFrame = self.view.frame;
+    viewFrame.size.height += keyboardSize.height - NAVBAR_SIZE;
+    
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    
+    [UIView setAnimationDuration:SCROLL_TIME];
+    [self.view setFrame:viewFrame];
+    [UIView commitAnimations];
+    
+    keyboardIsShown = NO;
+}
+
+- (void)keyboardWillShow:(NSNotification *)n
+{
+    if (keyboardIsShown) {
+        return;
+    }
+    
+    NSDictionary* userInfo = [n userInfo];
+    
+    // get the size of the keyboard
+    CGSize keyboardSize = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    
+    // resize the noteView
+    CGRect viewFrame = self.view.frame;
+    viewFrame.size.height -= keyboardSize.height - NAVBAR_SIZE;
+    
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    
+    [UIView setAnimationDuration:SCROLL_TIME];
+    [self.view setFrame:viewFrame];
+    [UIView commitAnimations];
+    
+    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]
+                          atScrollPosition:UITableViewScrollPositionBottom
+                                  animated:YES];
+    
+    keyboardIsShown = YES;
+}
+
 
 #pragma mark -
 #pragma mark Other Methods

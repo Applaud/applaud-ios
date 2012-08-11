@@ -14,6 +14,15 @@
 #define EVALUATE_URL @"/mobile/evaluate/"
 #define FEEDBACK_URL @"/mobile/general_feedback/"
 #define CHECKIN_URL @"/mobile/checkin/"
+#define POLLS_URL @"/mobile/get_polls/"
+#define POLL_SUBMIT_URL @"/mobile/submit_poll/"
+#define POLL_CREATE_URL @"/mobile/create_poll/"
+#define POLL_RATE_URL @"/mobile/rate_poll/"
+#define THREADS_URL @"/mobile/get_threads/"
+#define THREAD_CREATE_URL @"/mobile/create_thread/"
+#define THREAD_RATE_URL @"/mobile/rate_thread/"
+#define THREAD_SUBMIT_POST_URL @"/mobile/submit_post/"
+#define THREAD_RATE_POST_URL @"/mobile/rate_post/"
 #define NEWSFEED_URL @"/mobile/newsfeed/"
 #define SURVEY_URL @"/mobile/get_survey/"
 #define RESPONSE_URL @"/mobile/survey_respond/"
@@ -22,6 +31,10 @@
 #define GET_PHOTO_URL @"/mobile/get_photos/"
 #define REGISTER_URL @"/mobile/register/"
 #define CHECK_EMAIL_URL @"/mobile/check_email/"
+#define PHOTO_VOTE_URL @"/mobile/vote_photo/"
+#define CHECK_VOTE_URL @"/mobile/check_vote/"
+#define PHOTO_COMMENT_URL @"/mobile/comment_photo/"
+#define GET_PHOTO_COMMENTS_URL @"/mobile/get_photo_comments/"
 
 @interface ConnectionManager : NSObject
 
