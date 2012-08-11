@@ -256,7 +256,7 @@
             NSDictionary *userDict = dict[@"user"];
             User *postUser = [[User alloc] initWithName:[NSString stringWithFormat:@"%@ %@",userDict[@"first_name"],userDict[@"last_name"]]
                                                username:userDict[@"username"]];
-            
+            postUser.profilePictureURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",SERVER_URL,userDict[@"profile_picture"]]];
             ThreadPost *post = [[ThreadPost alloc] initWithBody:dict[@"body"]
                                                    date_created:[formatter dateFromString:dict[@"date_created"]]
                                                         upvotes:[dict[@"upvotes"] intValue]

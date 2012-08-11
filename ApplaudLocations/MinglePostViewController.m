@@ -303,6 +303,9 @@
                                                  postDict[@"user"][@"first_name"],
                                                  postDict[@"user"][@"last_name"]]
                                        username:postDict[@"user"][@"username"]];
+        NSLog(@"Received prof pic: %@",postDict[@"user"][@"profile_picture"]);
+        user.profilePictureURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",SERVER_URL,postDict[@"user"][@"profile_picture"]]];
+        
         ThreadPost *post = [[ThreadPost alloc] initWithBody:postDict[@"body"]
                                                date_created:[formatter dateFromString:postDict[@"date_created"]]
                                                     upvotes:[postDict[@"upvotes"] intValue]

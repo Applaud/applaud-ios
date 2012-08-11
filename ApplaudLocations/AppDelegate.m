@@ -218,7 +218,7 @@
 //    UITabBarItem *threadsItem = [[UITabBarItem alloc] init];
 //    threadsItem.title = @"Mingle";
     UITabBarItem *threadsItem = [[UITabBarItem alloc] initWithTitle:@"Mingle"
-                                                              image:[UIImage imageNamed:@"dialog"]
+                                                              image:[UIImage imageNamed:@"photos"]
                                                                 tag:100];
     mlvc.tabBarItem = threadsItem;
     UITabBarItem *questionItem = [[UITabBarItem alloc] initWithTitle:@"Feedback"
