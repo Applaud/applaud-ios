@@ -106,11 +106,9 @@
 -(void)swiped:(UISwipeGestureRecognizer *)swipe {
     if(swipe.direction == UISwipeGestureRecognizerDirectionLeft) {
         [self setIndex:self.index + 1 animated:YES];
-        NSLog(@"SWIPED LEFT");
     }
     else if(swipe.direction == UISwipeGestureRecognizerDirectionRight) {
         [self setIndex:self.index - 1 animated:YES];
-        NSLog(@"SWIPED RIGHT");
     }
 }
 

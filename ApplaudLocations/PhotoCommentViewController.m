@@ -203,17 +203,12 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    CGSize textSize = [[self.comments[indexPath.row] text] sizeWithFont:[UIFont systemFontOfSize:COMMENT_SIZE]
-                                                           constrainedToSize:CGSizeMake(300 - 2*CELL_PADDING,
-                                                                                        1000)
-                                                               lineBreakMode:UILineBreakModeWordWrap];
-    CGSize nameSize = [[NSString stringWithFormat:@"%@ %@", [self.comments[indexPath.row] firstName],
-                        [self.comments[indexPath.row] lastName]]
-                       sizeWithFont:[UIFont systemFontOfSize:NAME_SIZE]
-                       constrainedToSize:CGSizeMake(300 - 2*CELL_PADDING, 1000)
-                       lineBreakMode:UILineBreakModeWordWrap];
-    return textSize.height + 2*CELL_PADDING + ELEMENT_MARGIN + nameSize.height;
-
+    CGSize bodyContraint = CGSizeMake(CELL_WIDTH - 2*CELL_MARGIN - 2*CELL_PADDING, 400);
+    CGSize bodySize = [[self.comments[indexPath.row] text] sizeWithFont:[UIFont systemFontOfSize:BODY_TEXT_SIZE]
+                            constrainedToSize:bodyContraint
+                                lineBreakMode:UILineBreakModeWordWrap];
+    
+    return bodySize.height + 70.0f;
 }
 
 #pragma mark -
