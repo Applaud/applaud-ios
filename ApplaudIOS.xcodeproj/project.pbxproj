@@ -348,7 +348,7 @@
 			name = Newsfeed;
 			sourceTree = "<group>";
 		};
-		1B301C5E158857D20038A5BE /* Employee */ = {
+		1B301C5E158857D20038A5BE /* Applaud */ = {
 			isa = PBXGroup;
 			children = (
 				1BB4AC9C15BF3B58003E8B29 /* EmployeeDisplayConstants.h */,
@@ -365,7 +365,7 @@
 				1BFF2E7C158D9CDB00753F94 /* EmployeeListViewController.m */,
 				1BFF2E7D158D9CDC00753F94 /* EmployeeListViewController.xib */,
 			);
-			name = Employee;
+			name = Applaud;
 			sourceTree = "<group>";
 		};
 		1B301C69158858490038A5BE /* Questions */ = {
@@ -467,7 +467,7 @@
 				1B1109B315D42BA700B2B07E /* Mingle */,
 				1B514017158FA3C7008CB057 /* DBModels */,
 				1B301C69158858490038A5BE /* Questions */,
-				1B301C5E158857D20038A5BE /* Employee */,
+				1B301C5E158857D20038A5BE /* Applaud */,
 				1B301C5B158856470038A5BE /* Newsfeed */,
 				1B301C5515884C970038A5BE /* SelectLocations */,
 				6F3EA47A15BE03AD006E66A8 /* Business Photos */,
