@@ -29,6 +29,10 @@
 #define LOGIN_URL @"/accounts/mobilelogin/"
 #define PHOTO_URL @"/mobile/post_photo/"
 #define GET_PHOTO_URL @"/mobile/get_photos/"
+#define PHOTO_VOTE_URL @"/mobile/vote_photo/"
+#define CHECK_VOTE_URL @"/mobile/check_vote/"
+#define PHOTO_COMMENT_URL @"/mobile/comment_photo/"
+#define GET_PHOTO_COMMENTS_URL @"/mobile/get_photo_comments/"
 
 @interface ConnectionManager : NSObject
 

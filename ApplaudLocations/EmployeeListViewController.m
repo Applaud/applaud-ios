@@ -177,7 +177,7 @@
     if ( self.appDelegate.currentBusiness.generic ) {
         NSString *genericString = GENERIC_MESSAGE;
         return 2*CELL_PADDING + [genericString sizeWithFont:[UIFont systemFontOfSize:CONTENT_SIZE]
-                                          constrainedToSize:CGSizeMake(self.view.frame.size.width - 2*CELL_MARGIN - 2*CELL_PADDING, 400)
+                                          constrainedToSize:CGSizeMake(self.view.frame.size.width - 2*EMPLOYEE_CELL_MARGIN - 2*CELL_PADDING, 400)
                                               lineBreakMode:UILineBreakModeWordWrap].height;
     }
     else if (self.employeeArray.count == 0 && indexPath.row == 0) {

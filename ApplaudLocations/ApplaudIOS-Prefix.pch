@@ -51,5 +51,6 @@ enum SORT_METHODS {
 #define BUSINESS_RADIUS_ENTRY 10000
 #define BUSINESS_RADIUS_EXIT 250
 //#define SERVER_URL @"https://www.apatapa.com"
-//#define SERVER_URL @"http://ec2-107-22-6-55.compute-1.amazonaws.com"
-#define SERVER_URL @"http://127.0.0.1:8000"
+#define SERVER_URL @"http://ec2-107-22-6-55.compute-1.amazonaws.com"
+//#define SERVER_URL @"http://127.0.0.1:8000"
+

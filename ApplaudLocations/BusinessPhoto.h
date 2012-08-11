@@ -11,15 +11,19 @@
 @interface BusinessPhoto : NSObject
 
 @property (strong, nonatomic) NSURL *imageURL;
+@property (strong, nonatomic) NSURL *thumbnailURL;
 @property (strong, nonatomic) NSArray *tags;
 @property (nonatomic) int upvotes;
 @property (nonatomic) int downvotes;
 @property (nonatomic) int business;
 @property (nonatomic) NSDictionary *uploaded_by;
 @property (nonatomic) BOOL active;
+@property (nonatomic) int photo_id;
+@property (strong, nonatomic) NSDate *dateCreated;
 
 -(id)initWithImage:(NSURL *)imageURL tags:(NSArray *)tags
            upvotes:(int)upvotes downvotes:(int)downvotes
           business:(int)business uploaded_by:(NSDictionary *)uploaded_by
-            active:(BOOL)active;
+            active:(BOOL)active photo_id:(int)photo_id
+      thumbnailURL:(NSURL *)thumbnailURL dateCreated:(NSDate *)dateCreated;
 @end

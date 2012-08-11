@@ -196,11 +196,11 @@
     nfvc.appDelegate = self;
     
     // BusinessPhotoViewController
-/*    BusinessPhotoViewController *bpvc = [[BusinessPhotoViewController alloc] init];
+    BusinessPhotoViewController *bpvc = [[BusinessPhotoViewController alloc] init];
     UINavigationController *photoNav = [[UINavigationController alloc] initWithRootViewController:bpvc];
     bpvc.navigationController = photoNav;
     bpvc.title = @"Photos";
-    bpvc.appDelegate = self;*/
+    bpvc.appDelegate = self;
 
     // Set up the tab bar
     UITabBarItem *employeeItem = [[UITabBarItem alloc] initWithTitle:@"Applaud"
@@ -209,7 +209,7 @@
     elvc.tabBarItem = employeeItem;
     UITabBarItem *pollsItem = [[UITabBarItem alloc] initWithTitle:@"Polls"
                                                                image:[UIImage imageNamed:@"polls"]
-                                                                 tag:100];
+                                                                 tag:101];
     pvc.tabBarItem = pollsItem;
 //    UITabBarItem *threadsItem = [[UITabBarItem alloc] init];
 //    threadsItem.title = @"Mingle";
@@ -219,17 +219,17 @@
     mlvc.tabBarItem = threadsItem;
     UITabBarItem *questionItem = [[UITabBarItem alloc] initWithTitle:@"Feedback"
                                                                image:[UIImage imageNamed:@"dialog"]
-                                                                 tag:101];
+                                                                 tag:102];
     qvc.tabBarItem = questionItem;
     UITabBarItem *newsItem = [[UITabBarItem alloc] initWithTitle:@"News"
                                                            image:[UIImage imageNamed:@"newsfeed"]
-                                                             tag:102];
+                                                             tag:103];
     nfvc.tabBarItem = newsItem;
-    /* UITabBarItem *photoItem = [[UITabBarItem alloc] initWithTitle:@"Photos"
+    UITabBarItem *photoItem = [[UITabBarItem alloc] initWithTitle:@"Photos"
                                                             image:nil
-                                                              tag:103];*/
-    // bpvc.tabBarItem = photoItem;
-	self.tabNavigator.viewControllers = @[newsNav, pollsNav, mingleNav, employeeNav]; //, photoNav];
+                                                              tag:104];
+    bpvc.tabBarItem = photoItem;
+	self.tabNavigator.viewControllers = @[newsNav, pollsNav, mingleNav, employeeNav, photoNav];
 }
 
 -(void)backButtonPressed {

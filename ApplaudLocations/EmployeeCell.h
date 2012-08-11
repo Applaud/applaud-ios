@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-#define CELL_MARGIN 5.0f
+#define EMPLOYEE_CELL_MARGIN 5.0f
 
 @interface EmployeeCell : UITableViewCell
 

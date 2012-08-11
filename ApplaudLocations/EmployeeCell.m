@@ -24,7 +24,7 @@
 
 -(void)layoutSubviews {
     [super layoutSubviews];
-    self.imageView.frame = CGRectMake(CELL_MARGIN, CELL_MARGIN,
+    self.imageView.frame = CGRectMake(EMPLOYEE_CELL_MARGIN, EMPLOYEE_CELL_MARGIN,
                                       50,50);
 }
 
