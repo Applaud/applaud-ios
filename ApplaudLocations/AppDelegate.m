@@ -208,7 +208,7 @@
 
     // Set up the tab bar
     UITabBarItem *employeeItem = [[UITabBarItem alloc] initWithTitle:@"Applaud"
-                                                               image:[UIImage imageNamed:@"employees"]
+                                                               image:[UIImage imageNamed:@"applaud"]
                                                                  tag:100];
     elvc.tabBarItem = employeeItem;
     UITabBarItem *pollsItem = [[UITabBarItem alloc] initWithTitle:@"Polls"
