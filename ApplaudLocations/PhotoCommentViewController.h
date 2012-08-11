@@ -24,6 +24,7 @@
 @property (strong, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) UIScrollView *scrollView;
 @property (weak, nonatomic) AppDelegate *appDelegate;
+@property (strong, nonatomic) UIToolbar *toolbar;
 
 -(id)initWithPhoto:(BusinessPhoto *)businessPhoto;
 @end

@@ -39,26 +39,44 @@
                           initWithFrame:CGRectMake(0,
                                                    30,
                                                    self.view.frame.size.width,
-                                                   350)
+                                                   360)
                           style:UITableViewStyleGrouped];
         self.tableView.delegate = self;
         self.tableView.dataSource = self;
         self.tableView.allowsSelection = NO;
         self.tableView.sectionHeaderHeight = 5;
         self.tableView.sectionFooterHeight = 0;
-        self.commentField = [[UITextField alloc] initWithFrame:CGRectMake(10,
-                                                                          400,
-                                                                          self.view.frame.size.width - 60,
-                                                                          30)];
+        
+        self.commentField = [[UITextField alloc] initWithFrame:CGRectMake(0,
+                                                                          0,
+                                                                          self.view.frame.size.width - 80,
+                                                                          30.0f)];
         self.commentField.returnKeyType = UIReturnKeyGo;
         self.commentField.layer.cornerRadius = 3.0f;
         self.commentField.layer.borderColor = [[[UIColor grayColor] colorWithAlphaComponent:0.5] CGColor];
         self.commentField.layer.borderWidth = 2.0;
+        self.commentField.backgroundColor = [UIColor whiteColor];
         self.commentField.delegate = self;
+        UIView *paddingView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 10, self.commentField.frame.size.height)];
+        self.commentField.leftView = paddingView;
+        self.commentField.leftViewMode = UITextFieldViewModeAlways;
+        self.commentField.rightView = paddingView;
+        self.commentField.rightViewMode = UITextFieldViewModeAlways;        
+        
+        UIBarButtonItem *textField = [[UIBarButtonItem alloc] initWithCustomView:self.commentField];
+        
+        UIBarButtonItem *commentButton = [[UIBarButtonItem alloc] initWithTitle:@"Send" style:UIBarButtonItemStyleDone target:self action:@selector(postComment)];
+        commentButton.tintColor = [UIColor colorWithRed:.6 green:.6 blue:.6 alpha:1.0];
+        
+        // Make the 'Comment' toolbar at the very bottom of the screen
+        self.toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 416, 320, 44)];
+        self.toolbar.tintColor = [UIColor grayColor];
+        [self.toolbar setItems:@[textField, commentButton]];
+        
         [self.scrollView addSubview:self.tableView];
-        [self.scrollView addSubview:self.commentField];
         [self.view addSubview:self.scrollView];
         [self.view addSubview:self.navBar];
+        [self.view addSubview:self.toolbar];
         [self getComments];
     }
     return self;
@@ -118,7 +136,8 @@
     [self.tableView reloadData];
 }
 
--(void)postComment:(NSString *)comment {
+-(void)postComment {
+    NSString *comment = self.commentField.text;
     NSDictionary *params = @{@"photo_id": @(self.businessPhoto.photo_id),
                              @"text": comment};
     [ConnectionManager serverRequest:@"POST" withParams:params
@@ -148,21 +167,34 @@
 #pragma Keyboard methods
 
 -(void)textFieldDidBeginEditing:(UITextField *)textField {
-    self.scrollView.contentSize = CGSizeMake(self.scrollView.contentSize.width,
-                                             self.scrollView.contentSize.height + 210);
-    [self.scrollView setContentOffset:CGPointMake(0, 210) animated:YES];
+    
+    // Set the content offset so that the last comment is right above the keyboard
+    [self.tableView layoutIfNeeded];
+    //float scrollViewOffset =  self.tableView.contentSize.height > self.tableView.frame.size.height ? 214: 214- self.tableView.contentSize.height;
+    float tableViewOffset = self.tableView.contentSize.height - self.tableView.frame.size.height;
+        
+    [UIView animateWithDuration:0.25f animations:^(void){
+        self.toolbar.frame = CGRectMake(0, 200, self.toolbar.frame.size.width, self.toolbar.frame.size.height);
+        if( self.tableView.contentSize.height > self.tableView.frame.size.height){
+            self.scrollView.bounds = CGRectMake(0, 214, self.scrollView.frame.size.width, self.scrollView.frame.size.height);
+        }
+        self.tableView.bounds = CGRectMake(0, tableViewOffset < 0 ? 0 : tableViewOffset, self.tableView.frame.size.width, self.tableView.frame.size.height);
+    }];
 }
 
 -(void)textFieldDidEndEditing:(UITextField *)textField {
-    self.scrollView.contentSize = CGSizeMake(self.scrollView.contentSize.width,
-                                             self.scrollView.contentSize.height - 210);
+
     [self.scrollView setContentOffset:CGPointZero animated:YES];
+    
+    [UIView animateWithDuration:0.25f animations:^(void){
+        self.toolbar.frame = CGRectMake(0, 416, self.toolbar.frame.size.width, self.toolbar.frame.size.height);
+    }];
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     if(textField.text.length) {
-        [self postComment:textField.text];
+        [self postComment];
     }
     textField.text = @"";
     return NO;
