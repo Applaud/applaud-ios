@@ -16,7 +16,7 @@
       date_created:(NSDate*)date_created
        user_rating:(int)user_rating
       show_results:(BOOL)show_results
-          can_rate:(BOOL)can_rate
+         my_rating:(int)my_rating
            poll_id:(int)poll_id {
     self = [super init];
     if ( self ) {
@@ -26,7 +26,7 @@
         _date_created = date_created;
         _user_rating = user_rating;
         _show_results = show_results;
-        _can_rate = can_rate;
+        _my_rating = my_rating;
         _poll_id = poll_id;
     }
     return self;

@@ -125,35 +125,16 @@
                           withParams:response
                                  url:POLL_SUBMIT_URL
                             callback:^(NSHTTPURLResponse *r, NSData* dat) {
-                                NSError *e = [[NSError alloc] init];
-                                NSDictionary *pollData = [NSJSONSerialization JSONObjectWithData:dat
-                                                                                         options:NSJSONReadingAllowFragments
-                                                                                           error:&e];
-
-                                NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-                                formatter.dateFormat = @"MM/dd/yyyy H:m:s";
-                                Poll *newPoll = [[Poll alloc] initWithTitle:pollData[@"title"]
-                                                                    options:pollData[@"options"]
-                                                                  responses:pollData[@"responses"]
-                                                               date_created:[formatter dateFromString:pollData[@"date_created"]]
-                                                                user_rating:[pollData[@"user_rating"] intValue]
-                                                               show_results:[pollData[@"show_results"] boolValue]
-                                                                   can_rate:[pollData[@"can_rate"] boolValue]
-                                                                    poll_id:[pollData[@"id"] intValue]];
-                                // Update the poll
-                                self.polls[indexPath.section] = newPoll;
+                                [self handlePollsData:dat];
                                 
-                                for ( int i=0; i<newPoll.responses.count; i++) {
-                                    [self showResultAtOptionIndex:i forPoll:newPoll];
+                                Poll *poll = self.polls[indexPath.section];
+                                for ( int i=0; i<poll.responses.count; i++ ) {
+                                    [self showResultAtOptionIndex:i forPoll:poll];
                                 }
-     
-                                // Re-sort the polls
-                                [self sortPolls];
                                 
                                 // Deselect this row
                                 [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-                                [self.tableView reloadData];
-     }];
+          }];
 }
 
 #pragma mark -
@@ -171,27 +152,36 @@
     
     CGSize constraintSize, labelSize;
     constraintSize = CGSizeMake(self.view.frame.size.width - 2*CELL_MARGIN - CELL_PADDING - POLL_RATING_PADDING, 400);
-    // Cannot uprate or downrate poll when results are showing
-    if ( !poll.show_results && poll.can_rate ) {
-        constraintSize = CGSizeMake(constraintSize.width - POLL_RATING_WIDTH, constraintSize.height);
-        UISegmentedControl *upDown = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:
-                                                                                [UIImage imageNamed:@"downrate"],
-                                                                                [UIImage imageNamed:@"uprate"],
-                                                                                nil]];
-        // Tag the rating widget with the section number (poll index number)
-        upDown.tag = section;
-        upDown.frame = CGRectMake(constraintSize.width + POLL_RATING_PADDING, CELL_PADDING, POLL_RATING_WIDTH, 32);
-        // Keep user's rating visible until we download polls again (looks neater this way)
-        if ( poll.my_user_rating == -1) {   // User downvoted
-            upDown.selectedSegmentIndex = 0;
-            upDown.userInteractionEnabled = NO;
-        } else if ( poll.my_user_rating == 1 ) {    // User upvoted
-            upDown.selectedSegmentIndex = 1;
-            upDown.userInteractionEnabled = NO;
-        }
+    
+    
+    
+    
+    
+    
+    constraintSize = CGSizeMake(constraintSize.width - POLL_RATING_WIDTH, constraintSize.height);
+    UISegmentedControl *upDown = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:
+                                                                            [UIImage imageNamed:@"downrate"],
+                                                                            [UIImage imageNamed:@"uprate"],
+                                                                            nil]];
+    // Tag the rating widget with the section number (poll index number)
+    upDown.tag = section;
+    upDown.frame = CGRectMake(constraintSize.width + POLL_RATING_PADDING, CELL_PADDING, POLL_RATING_WIDTH, 32);
+    // Keep user's rating visible until we download polls again (looks neater this way)
+    if ( poll.my_rating == -1) {   // User downvoted
+        upDown.selectedSegmentIndex = 0;
+        upDown.userInteractionEnabled = NO;
+    } else if ( poll.my_rating == 1 ) {    // User upvoted
+        upDown.selectedSegmentIndex = 1;
+        upDown.userInteractionEnabled = NO;
+    } else {
         [upDown addTarget:self action:@selector(ratePoll:) forControlEvents:UIControlEventValueChanged];
-        [headerView addSubview:upDown];
     }
+    [headerView addSubview:upDown];
+
+    
+    
+    
+    
     
     labelSize = [poll.title sizeWithFont:[UIFont boldSystemFontOfSize:POLL_QUESTION_TEXT_SIZE]
                        constrainedToSize:constraintSize
@@ -211,10 +201,7 @@
     Poll *poll = self.polls[section];
     
     CGSize constraintSize, labelSize;
-    constraintSize = CGSizeMake(self.view.frame.size.width - 2*CELL_MARGIN - CELL_PADDING - POLL_RATING_PADDING, 400);
-    if ( !poll.show_results && poll.can_rate ) {
-        constraintSize = CGSizeMake(constraintSize.width - POLL_RATING_WIDTH, constraintSize.height);
-    }
+    constraintSize = CGSizeMake(self.view.frame.size.width - 2*CELL_MARGIN - CELL_PADDING - POLL_RATING_PADDING - POLL_RATING_WIDTH, 400);
     labelSize = [poll.title sizeWithFont:[UIFont boldSystemFontOfSize:POLL_QUESTION_TEXT_SIZE]
                        constrainedToSize:constraintSize
                            lineBreakMode:UILineBreakModeWordWrap];
@@ -354,7 +341,7 @@
                                     date_created:[formatter dateFromString:pollDict[@"date_created"]]
                                      user_rating:[pollDict[@"user_rating"] intValue]
                                     show_results:[pollDict[@"show_results"] boolValue]
-                                        can_rate:[pollDict[@"can_rate"] boolValue]
+                                        my_rating:[pollDict[@"my_vote"] intValue]
                                          poll_id:[pollDict[@"id"] intValue]];
         [polls addObject:poll];
     }
@@ -387,26 +374,12 @@
     UISegmentedControl *upDown = (UISegmentedControl*)sender;
     Poll *poll = self.polls[upDown.tag];
 
-    // Let users change their rating of the poll, but not duplicate
-    BOOL changeRating = (poll.my_user_rating != 0);
-    
-    // Upvote
-    if ( upDown.selectedSegmentIndex ) {
-        poll.my_user_rating = 1;
-    }
-    // Downvote
-    else {
-        poll.my_user_rating = -1;
-    }
-    poll.user_rating += changeRating? poll.my_user_rating * 2 : poll.my_user_rating;
-    
     [ConnectionManager serverRequest:@"POST"
                           withParams:  @{@"id" : @(poll.poll_id),
-                                @"user_rating" : @(poll.user_rating)}
+     @"user_rating" : @(upDown.selectedSegmentIndex? 1 : -1)}
                                  url:POLL_RATE_URL
                             callback:^(NSHTTPURLResponse *response, NSData *data) {
-                                [self sortPolls];
-                                [self refreshPolls];
+                                [self handlePollsData:data];
                             }];
 }
 
