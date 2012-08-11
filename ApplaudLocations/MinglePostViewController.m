@@ -281,6 +281,12 @@
                                      url:THREAD_SUBMIT_POST_URL
                                 callback:^(NSHTTPURLResponse *response, NSData *data) {
                                     [self loadThreadFromData:data];
+                                    
+                                    // Jump to the new post
+                                    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.threadPosts.count-1
+                                                                                              inSection:1]
+                                                          atScrollPosition:UITableViewScrollPositionBottom
+                                                                  animated:YES];
                                 }];
     }
     
