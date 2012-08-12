@@ -8,17 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import "ThreadPost.h"
+#import "ApatapaRatingWidget.h"
 
 @class MinglePostViewController;
 
-@interface MinglePostCell : UITableViewCell
+@interface MinglePostCell : UITableViewCell <RatingWidgetDelegate>
 
 @property (nonatomic, strong) ThreadPost *post;
 @property (nonatomic, strong) UIImageView *profilePicture;
 @property (nonatomic, strong) UILabel *dateLabel;
 @property (nonatomic, strong) UILabel *usernameLabel;
-@property (nonatomic, strong) UISegmentedControl *ratingWidget;
-@property (nonatomic, strong) UILabel *upvotesLabel;
+@property (nonatomic, strong) ApatapaRatingWidget *ratingWidget;
 @property (nonatomic, weak) MinglePostViewController *mpvc;
 //N.B. Body is in the textLabel property
 
