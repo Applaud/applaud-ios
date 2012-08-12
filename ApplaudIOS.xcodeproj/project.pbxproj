@@ -86,6 +86,7 @@
 		1BC1D43E15D845B300B0B8C1 /* thumbsdown@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1BC1D43A15D845B300B0B8C1 /* thumbsdown@2x.png */; };
 		1BC1D43F15D845B300B0B8C1 /* thumbsup.png in Resources */ = {isa = PBXBuildFile; fileRef = 1BC1D43B15D845B300B0B8C1 /* thumbsup.png */; };
 		1BC1D44015D845B300B0B8C1 /* thumbsup@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1BC1D43C15D845B300B0B8C1 /* thumbsup@2x.png */; };
+		1BC1D44315D84BD400B0B8C1 /* ApatapaRatingWidget.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC1D44215D84BD400B0B8C1 /* ApatapaRatingWidget.m */; };
 		1BD05DAA15D1FC900033DDFC /* PollOptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BD05DA915D1FC900033DDFC /* PollOptionCell.m */; };
 		1BD494EF15BDF786006A01A9 /* blankPerson.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1BD494EE15BDF786006A01A9 /* blankPerson.jpg */; };
 		1BD494F215BF1E05006A01A9 /* NFTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BD494F115BF1E05006A01A9 /* NFTableViewCell.m */; };
@@ -255,6 +256,8 @@
 		1BC1D43A15D845B300B0B8C1 /* thumbsdown@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "thumbsdown@2x.png"; sourceTree = "<group>"; };
 		1BC1D43B15D845B300B0B8C1 /* thumbsup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thumbsup.png; sourceTree = "<group>"; };
 		1BC1D43C15D845B300B0B8C1 /* thumbsup@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "thumbsup@2x.png"; sourceTree = "<group>"; };
+		1BC1D44115D84BD400B0B8C1 /* ApatapaRatingWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApatapaRatingWidget.h; sourceTree = "<group>"; };
+		1BC1D44215D84BD400B0B8C1 /* ApatapaRatingWidget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApatapaRatingWidget.m; sourceTree = "<group>"; };
 		1BD05DA815D1FC900033DDFC /* PollOptionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PollOptionCell.h; sourceTree = "<group>"; };
 		1BD05DA915D1FC900033DDFC /* PollOptionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PollOptionCell.m; sourceTree = "<group>"; };
 		1BD05DAB15D218B60033DDFC /* PollOptionDisplayConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PollOptionDisplayConstants.h; sourceTree = "<group>"; };
@@ -336,6 +339,8 @@
 				1B94B15415D4B09400E80232 /* MinglePostCell.m */,
 				1B110A0415D4824F00B2B07E /* MingleThreadCell.h */,
 				1B110A0515D4824F00B2B07E /* MingleThreadCell.m */,
+				1BC1D44115D84BD400B0B8C1 /* ApatapaRatingWidget.h */,
+				1BC1D44215D84BD400B0B8C1 /* ApatapaRatingWidget.m */,
 				1B1109FB15D45AF700B2B07E /* NewMingleThreadViewController.h */,
 				1B1109FC15D45AF800B2B07E /* NewMingleThreadViewController.m */,
 				1B1109FD15D45AF800B2B07E /* NewMingleThreadViewController.xib */,
@@ -786,6 +791,7 @@
 				1B16E17415D5C87300F15D8E /* ApatapaDateFormatter.m in Sources */,
 				1BC0043115D5F79400EB0958 /* TextViewCell.m in Sources */,
 				1BC0043415D5F92E00EB0958 /* UIPlaceHolderTextView.m in Sources */,
+				1BC1D44315D84BD400B0B8C1 /* ApatapaRatingWidget.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
