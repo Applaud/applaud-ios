@@ -43,9 +43,15 @@
         // Rating widget
         self.ratingWidget = [[UISegmentedControl alloc] initWithItems:
                              [NSArray arrayWithObjects:
-                              [UIImage imageNamed:@"downrate"],
-                              [UIImage imageNamed:@"uprate"], nil]];
-        
+                              [UIImage imageNamed:@"thumbsdown"],
+                              [UIImage imageNamed:@"thumbsup"], nil]];
+        self.upRateView = [UIView new];
+        self.downRateView = [UIView new];
+        self.downRateRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(downRate)];
+        self.upRateRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(upRate)];
+        [self.upRateView addGestureRecognizer:self.upRateRecognizer];
+        [self.downRateView addGestureRecognizer:self.downRateRecognizer];
+
         [self.contentView addSubview:self.userLabel];
         [self.contentView addSubview:self.dateLabel];
         [self.contentView addSubview:self.postsLabel];
@@ -53,6 +59,8 @@
         [self.contentView addSubview:self.upvotesLabel];
         [self.contentView addSubview:self.updownLabel];
         [self.contentView addSubview:self.downvotesLabel];
+        [self.contentView addSubview:self.upRateView];
+        [self.contentView addSubview:self.downRateView];
         
         [self initContent];
     }
@@ -105,7 +113,15 @@
         
         // Rating widget
         self.ratingWidget.frame = CGRectMake(CELL_WIDTH - CELL_MARGIN - MINGLE_RATING_WIDTH - 2*CELL_PADDING,
-                                             CELL_PADDING, MINGLE_RATING_WIDTH, 32.0f);
+                                             CELL_PADDING, MINGLE_RATING_WIDTH, 24.0f);
+        self.downRateView.frame = CGRectMake(self.ratingWidget.frame.origin.x - 15.0f,
+                                             self.ratingWidget.frame.origin.y - 15.0f,
+                                             self.ratingWidget.frame.size.width/2 + 15.0f,
+                                             self.ratingWidget.frame.size.height + 2*15.0f);
+        self.upRateView.frame = CGRectMake(self.ratingWidget.frame.origin.x + self.ratingWidget.frame.size.width/2,
+                                           self.ratingWidget.frame.origin.y - 15.0f,
+                                           self.ratingWidget.frame.size.width/2 + 15.0f,
+                                           self.ratingWidget.frame.size.height + 2*15.0f);
         
         // Ratings labels
         self.updownLabel.frame = CGRectMake(self.ratingWidget.frame.origin.x + MINGLE_RATING_WIDTH/2,
@@ -137,6 +153,16 @@
                                            200.0f, 20.0f);
         
     }
+}
+
+- (void)downRate {
+    [self.mlvc giveRating:0 toThreadWithId:self.thread.thread_id];
+    self.ratingWidget.userInteractionEnabled = NO;
+}
+
+- (void)upRate {
+    [self.mlvc giveRating:1 toThreadWithId:self.thread.thread_id];
+    self.ratingWidget.userInteractionEnabled = NO;
 }
 
 - (IBAction)rateThread:(id)sender {
