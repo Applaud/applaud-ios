@@ -43,9 +43,21 @@
     
     self.textField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width - 80, 20.0f)];
     self.textField.returnKeyType = UIReturnKeyDone;
-    self.textField.backgroundColor = [UIColor whiteColor];
     self.textField.delegate = self;
     self.textField.placeholder = @"New post...";
+    self.textField.layer.cornerRadius = 3.0f;
+    self.textField.layer.borderColor = [[[UIColor grayColor] colorWithAlphaComponent:0.5] CGColor];
+    self.textField.layer.borderWidth = 2.0;
+    self.textField.backgroundColor = [UIColor whiteColor];
+    UIView *paddingView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 10, self.textField.frame.size.height)];
+    self.textField.leftView = paddingView;
+    self.textField.leftViewMode = UITextFieldViewModeAlways;
+    self.textField.rightView = paddingView;
+    self.textField.rightViewMode = UITextFieldViewModeAlways;
+    
+    
+    
+    
     CGRect tff = self.textField.frame;
     tff.size.height = 30;
     self.textField.frame = tff;
@@ -61,6 +73,9 @@
     self.navigationItem.leftBarButtonItem = backButton;
     
     self.toolbarWidgets = [[NSMutableArray alloc] initWithObjects:textItem, submitButton, nil];
+    
+    // Can scroll to top of posts easily
+    self.tableView.scrollsToTop = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -243,6 +258,9 @@
         return;
     }
     
+    NSArray *vips = [self.tableView indexPathsForVisibleRows];
+    keyboardVisiblePath = vips[vips.count-2];
+    
     NSDictionary* userInfo = [n userInfo];
     
     // get the size of the keyboard
@@ -250,7 +268,7 @@
     
     // Move the toolbar
     CGRect viewFrame = self.navigationController.view.frame;
-    viewFrame.size.height -= keyboardSize.height;// - NAVBAR_SIZE;
+    viewFrame.size.height -= keyboardSize.height;
     
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationBeginsFromCurrentState:YES];
@@ -258,11 +276,10 @@
     [UIView setAnimationDuration:SCROLL_TIME];
     [self.navigationController.view setFrame:viewFrame];
     [UIView commitAnimations];
-    
+        
     // Scroll to last visible row
-    NSArray *vips = [self.tableView indexPathsForVisibleRows];
-    [self.tableView scrollToRowAtIndexPath:vips[vips.count-1]
-                          atScrollPosition:UITableViewScrollPositionNone animated:YES];
+    [self.tableView scrollToRowAtIndexPath:keyboardVisiblePath
+                          atScrollPosition:UITableViewScrollPositionTop animated:YES];
     
     keyboardIsShown = YES;
 }
@@ -275,7 +292,7 @@
 
     // Move the toolbar
     CGRect viewFrame = self.navigationController.view.frame;
-    viewFrame.size.height += keyboardSize.height;// - NAVBAR_SIZE;
+    viewFrame.size.height += keyboardSize.height;
     
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationBeginsFromCurrentState:YES];
@@ -283,6 +300,10 @@
     [UIView setAnimationDuration:SCROLL_TIME];
     [self.navigationController.view setFrame:viewFrame];
     [UIView commitAnimations];
+    
+    CGRect scrollRect = [self.tableView cellForRowAtIndexPath:keyboardVisiblePath].bounds;
+    scrollRect.origin.y += self.navigationController.toolbar.frame.size.height + 10;
+    [self.tableView scrollRectToVisible:scrollRect animated:YES];
     
     keyboardIsShown = NO;
 }

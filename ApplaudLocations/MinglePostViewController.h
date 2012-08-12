@@ -14,6 +14,7 @@
 @interface MinglePostViewController : UITableViewController <UITextFieldDelegate> {
     BOOL keyboardIsShown;
     NSMutableDictionary *cellMap;
+    NSIndexPath *keyboardVisiblePath;
 }
 - (id) initWithStyle:(UITableViewStyle)style thread:(Thread *) thread;
 
