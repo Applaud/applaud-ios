@@ -16,7 +16,9 @@
 @interface LoginRegisterViewController : UIViewController
 
 @property (nonatomic, strong) UIButton *signIn;
+@property (nonatomic, strong) CAGradientLayer *signInLayer;
 @property (nonatomic, strong) UIButton *createAccount;
+@property (nonatomic, strong) CAGradientLayer *createAccountLayer;
 @property (nonatomic, weak) AppDelegate *appDelegate;
 @property (nonatomic, strong) UIWindow *window;
 @property (nonatomic, strong) UIImageView *backgroundImage;

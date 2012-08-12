@@ -17,7 +17,9 @@
 #import "PollsViewController.h"
 #import "MingleListViewController.h"
 #import "LoginRegisterViewController.h"
-
+#import "LoginRegisterViewController.h"
+#import "PollsViewController.h"
+#import "MingleListViewController.h"
 
 @implementation AppDelegate
 
@@ -116,9 +118,9 @@
         LRVC.window = self.window;
         LRVC.appDelegate = self;
         
-        UINavigationController *LRNavBar = [[UINavigationController alloc] initWithRootViewController:LRVC];
-        
-        self.window.rootViewController = LRNavBar;
+        //UINavigationController *navBar = [[UINavigationController alloc] initWithRootViewController:LRVC];
+
+        self.window.rootViewController = LRVC;//navBar;
     }
        
     return YES;
