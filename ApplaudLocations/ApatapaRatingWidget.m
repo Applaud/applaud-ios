@@ -26,6 +26,7 @@
         // Rating widget
         self.voteButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, RATING_WIDGET_WIDTH, RATING_WIDGET_HEIGHT)];
         [self.voteButton setImage:[UIImage imageNamed:@"thumbsup"] forState:UIControlStateNormal];
+        [self.voteButton setImage:[UIImage imageNamed:@"thumbsup_disabled"] forState:UIControlStateDisabled];
         self.voteButton.adjustsImageWhenHighlighted = NO;
         self.upRateRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(upRate)];
         [self addGestureRecognizer:self.upRateRecognizer];
@@ -59,6 +60,7 @@
 
 - (void)setEnabled:(BOOL)userInteractionEnabled {
     self.voteButton.userInteractionEnabled = userInteractionEnabled;
+    self.voteButton.enabled = NO;
 }
 
 @end
