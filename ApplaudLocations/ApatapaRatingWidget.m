@@ -86,6 +86,10 @@
     [self.delegate downRate];
 }
 
+- (void)setUserInteractionEnabled:(BOOL)userInteractionEnabled {
+    self.ratingWidget.userInteractionEnabled = userInteractionEnabled;
+}
+
 - (IBAction)voteSelected:(id)sender {
     UISegmentedControl *sc = (UISegmentedControl*)sender;
     if ( 0 == sc.selectedSegmentIndex ) {

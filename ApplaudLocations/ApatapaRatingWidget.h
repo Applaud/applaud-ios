@@ -27,5 +27,6 @@
 @property (nonatomic, strong) UIView *downRateView;
 @property (nonatomic, strong) UIView *upRateView;
 @property (nonatomic, weak) id<RatingWidgetDelegate> delegate;
+@property (nonatomic) BOOL userInteractionEnabled;
 
 @end
