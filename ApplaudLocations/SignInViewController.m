@@ -20,14 +20,22 @@
 {
     self = [super init];
     if (self) {
+        self.view.backgroundColor = [UIColor whiteColor];
         self.navigationItem.title = @"Sign In";
-        
+        self.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
         // Registering for login success/ failure
-
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginFailed:) name:@"LOGIN_FAILED" object:nil];
-        
+        // Navbar
+        self.navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+        self.navBar.tintColor = [UIColor grayColor];
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back"
+                                                                                 style:UIBarButtonItemStylePlain
+                                                                                target:self
+                                                                                action:@selector(backButtonPressed)];
+        [self.navBar pushNavigationItem:self.navigationItem animated:NO];
+        [self.view addSubview:self.navBar];
         // Username textfield
-        self.username = [[UITextField alloc] initWithFrame:CGRectMake(10, 10, TEXTFIELD_WIDTH, TEXTFIELD_HEIGHT)];
+        self.username = [[UITextField alloc] initWithFrame:CGRectMake(10, 54, TEXTFIELD_WIDTH, TEXTFIELD_HEIGHT)];
         self.username.layer.cornerRadius = 3;
         self.username.layer.borderColor = [[[UIColor grayColor] colorWithAlphaComponent:0.5] CGColor];
         self.username.layer.borderWidth = 2.0;
@@ -36,7 +44,7 @@
         self.username.autocorrectionType = UITextAutocorrectionTypeNo;
         
         // Password textfield
-        self.password = [[UITextField alloc] initWithFrame:CGRectMake(10, 50, TEXTFIELD_WIDTH, TEXTFIELD_HEIGHT)];
+        self.password = [[UITextField alloc] initWithFrame:CGRectMake(10, 94, TEXTFIELD_WIDTH, TEXTFIELD_HEIGHT)];
         self.password.secureTextEntry = YES;
         self.password.layer.cornerRadius = 3;
         self.password.layer.borderColor = [[[UIColor grayColor] colorWithAlphaComponent:0.5] CGColor];
@@ -46,7 +54,7 @@
         
         // "Sign In" button
         UIButton *signInButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        signInButton.frame = CGRectMake(10, 90, 300, 30);
+        signInButton.frame = CGRectMake(10, 134, 300, 30);
         [signInButton addTarget:self action:@selector(signInButtonPressed) forControlEvents:UIControlEventTouchUpInside];
         
         [self.view addSubview:self.username];
@@ -59,8 +67,10 @@
 - (void) signInButtonPressed
 {
     [ConnectionManager authenticateWithUsername:self.username.text password:self.password.text];
-    
-    
+}
+
+-(void)backButtonPressed {
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 - (void)viewDidLoad

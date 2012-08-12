@@ -15,7 +15,7 @@
 @interface SignInViewController : UIViewController<UITextFieldDelegate>
 @property (nonatomic, strong) UITextField *username;
 @property (nonatomic, strong) UITextField *password;
-
+@property (nonatomic, strong) UINavigationBar *navBar;
 @property (nonatomic, weak) AppDelegate *appDelegate;
 @property (nonatomic, weak) UIWindow *window;
 

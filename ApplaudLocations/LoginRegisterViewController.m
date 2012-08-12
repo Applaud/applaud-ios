@@ -31,7 +31,8 @@
         self.signIn = [UIButton buttonWithType:UIButtonTypeCustom];
         self.signIn.backgroundColor = [UIColor grayColor];
         self.signIn.frame = CGRectMake(10,390,TEXTFIELD_WIDTH,TEXTFIELD_HEIGHT);
-        [self.signIn setTitle:@"Sign In" forState:UIControlStateNormal | UIControlStateSelected | UIControlStateHighlighted | UIControlStateDisabled];
+        // [self.signIn setTitle:@"Sign In" forState:UIControlStateNormal];
+        [self.signIn setTitle:@"Sign In" forState:UIControlStateNormal];
         self.signIn.layer.cornerRadius = 1;
         self.signIn.layer.borderColor = [UIColor colorWithRed:.2 green:.2 blue:.2 alpha:1.0].CGColor;
         self.signIn.layer.borderWidth = 1.0;
@@ -80,8 +81,8 @@
 }
 
 -(void) signInButtonUp {
-    
     [self.signIn.layer addSublayer:self.signInLayer];
+    [self.signIn setTitle:@"foo" forState:UIControlStateNormal];
 }
 
 -(void) createAccountButtonDown {
@@ -90,12 +91,11 @@
 
 - (void) signInButtonPressed
 {
-    
+    [self.signIn.layer addSublayer:self.signInLayer];
     SignInViewController *SIVC = [[SignInViewController alloc] init];
     SIVC.window = self.window;
     SIVC.appDelegate = self.appDelegate;
-    
-    [self.navigationController pushViewController:SIVC  animated:YES];
+    [self presentViewController:SIVC animated:YES completion:nil];
 }
 
 - (void) createAccountButtonPressed
@@ -103,9 +103,7 @@
     RegistrationViewController *RVC = [[RegistrationViewController alloc] init];
     RVC.window = self.window;
     RVC.appDelegate = self.appDelegate;
-    
-    [self.navigationController pushViewController:RVC animated:YES];
-    
+    [self presentViewController:RVC animated:YES completion:nil];
 }
 
 - (void)viewDidLoad

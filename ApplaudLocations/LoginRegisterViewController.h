@@ -22,6 +22,5 @@
 @property (nonatomic, weak) AppDelegate *appDelegate;
 @property (nonatomic, strong) UIWindow *window;
 @property (nonatomic, strong) UIImageView *backgroundImage;
-@property (nonatomic, strong) UIImageView *logo;
 
 @end

@@ -17,7 +17,7 @@
 @property (strong, nonatomic) UITextField *firstName;
 @property (strong, nonatomic) UITextField *lastName;
 @property (strong, nonatomic) UITextField *password;
-
+@property (strong, nonatomic) UINavigationBar *navBar;
 @property (nonatomic, weak) AppDelegate *appDelegate;
 @property (nonatomic, weak) UIWindow *window;
 

@@ -19,9 +19,10 @@
 {
     self = [super init];
     if (self) {
+        self.view.backgroundColor = [UIColor whiteColor];
         self.navigationItem.title = @"Registration";
-        
-        self.email = [[UITextField alloc] initWithFrame:CGRectMake(10,10,TEXTFIELD_WIDTH, TEXTFIELD_HEIGHT)];
+        self.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+        self.email = [[UITextField alloc] initWithFrame:CGRectMake(10,54,TEXTFIELD_WIDTH, TEXTFIELD_HEIGHT)];
         self.email.layer.cornerRadius = 5;
         self.email.layer.borderColor = [[[UIColor grayColor] colorWithAlphaComponent:0.5] CGColor];
         self.email.layer.borderWidth = 2.0;
@@ -29,8 +30,16 @@
         self.email.delegate = self;
         self.email.autocorrectionType = UITextAutocorrectionTypeNo;
         
+        self.navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+        self.navBar.tintColor = [UIColor grayColor];
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back"
+                                                                                 style:UIBarButtonItemStylePlain
+                                                                                target:self
+                                                                                action:@selector(backButtonPressed)];
+        [self.navBar pushNavigationItem:self.navigationItem animated:NO];
+        [self.view addSubview:self.navBar];
         
-        self.firstName = [[UITextField alloc] initWithFrame:CGRectMake(10,50,TEXTFIELD_WIDTH, TEXTFIELD_HEIGHT)];
+        self.firstName = [[UITextField alloc] initWithFrame:CGRectMake(10,94,TEXTFIELD_WIDTH, TEXTFIELD_HEIGHT)];
         self.firstName.layer.cornerRadius = 5;
         self.firstName.layer.borderColor = [[[UIColor grayColor] colorWithAlphaComponent:0.5] CGColor];
         self.firstName.layer.borderWidth = 2.0;
@@ -39,7 +48,7 @@
         self.firstName.autocorrectionType = UITextAutocorrectionTypeNo;
         
         
-        self.lastName = [[UITextField alloc] initWithFrame:CGRectMake(10,90,TEXTFIELD_WIDTH, TEXTFIELD_HEIGHT)];
+        self.lastName = [[UITextField alloc] initWithFrame:CGRectMake(10,134,TEXTFIELD_WIDTH, TEXTFIELD_HEIGHT)];
         self.lastName.layer.cornerRadius = 5;
         self.lastName.layer.borderColor = [[[UIColor grayColor] colorWithAlphaComponent:0.5] CGColor];
         self.lastName.layer.borderWidth = 2.0;
@@ -70,6 +79,10 @@
         [self.view addSubview:registerButton];
     }
     return self;
+}
+
+-(void)backButtonPressed {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)viewDidLoad
