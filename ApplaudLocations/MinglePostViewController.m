@@ -58,7 +58,6 @@
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemReply
                                                                                 target:self
                                                                                 action:@selector(goBack)];
-    UIBarButtonItem
     self.navigationItem.leftBarButtonItem = backButton;
     
     self.toolbarWidgets = [[NSMutableArray alloc] initWithObjects:textItem, submitButton, nil];
