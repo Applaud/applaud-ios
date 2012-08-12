@@ -32,10 +32,12 @@
         self.postsLabel.font = [UIFont systemFontOfSize:POSTS_SIZE];
 
         self.ratingWidget = [ApatapaRatingWidget new];
+        self.ratingWidget.delegate = self;
         
         [self.contentView addSubview:self.userLabel];
         [self.contentView addSubview:self.dateLabel];
         [self.contentView addSubview:self.postsLabel];
+        [self.contentView addSubview:self.ratingWidget];
         
         [self initContent];
     }
@@ -49,16 +51,10 @@
     NSString *comment = self.thread.threadPosts.count == 1? @"post" : @"posts";
     self.postsLabel.text = [NSString stringWithFormat:@"%d %@",self.thread.threadPosts.count, comment];
     
-    self.ratingWidget.upvotesLabel = [NSString stringWithFormat:@"+%d",self.thread.upvotes];
-    self.ratingWidget.downvotesLabel.text = [NSString stringWithFormat:@"-%d",self.thread.downvotes];
+    self.ratingWidget.upvotesCount = self.thread.upvotes;
     
-    if ( self.thread.my_rating == -1 ) {
-        self.ratingWidget.ratingWidget.selectedSegmentIndex = 0;
-        self.ratingWidget.ratingWidget.userInteractionEnabled = NO;
-    } else if ( self.thread.my_rating == 1 ) {
-        self.ratingWidget.ratingWidget.selectedSegmentIndex = 1;
-        self.ratingWidget.ratingWidget.userInteractionEnabled = NO;
-    }
+    if ( self.thread.my_rating )
+        self.ratingWidget.enabled = NO;
 }
 
 - (void)setThread:(Thread *)thread {
@@ -85,7 +81,7 @@
         self.textLabel.frame = CGRectMake(CELL_PADDING, CELL_PADDING, titleConstrant.width, titleSize.height);
         
         // Rating widget
-        self.ratingWidget.frame = CGRectMake(CELL_WIDTH - 2*CELL_MARGIN - CELL_PADDING,
+        self.ratingWidget.frame = CGRectMake(CELL_WIDTH - 2*CELL_MARGIN - CELL_PADDING - MINGLE_RATING_WIDTH,
                                              CELL_PADDING,
                                              MINGLE_RATING_WIDTH,
                                              60.0f);
@@ -105,12 +101,6 @@
                                            200.0f, 20.0f);
         
     }
-}
-
-- (void)downRate {
-    [self.mlvc giveRating:0
-           toThreadWithId:self.thread.thread_id];
-    self.ratingWidget.userInteractionEnabled = NO;
 }
 
 - (void)upRate {

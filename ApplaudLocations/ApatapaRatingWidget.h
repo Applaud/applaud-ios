@@ -12,21 +12,18 @@
 
 @required
 - (void)upRate;
-- (void)downRate;
 
 @end
 
 @interface ApatapaRatingWidget : UIView
 
+@property (nonatomic) int upvotesCount;
 @property (nonatomic, strong) UILabel *upvotesLabel;
-@property (nonatomic, strong) UILabel *downvotesLabel;
-@property (nonatomic, strong) UILabel *updownLabel;
-@property (nonatomic, strong) UISegmentedControl *ratingWidget;
-@property (nonatomic, strong) UITapGestureRecognizer *downRateRecognizer;
+@property (nonatomic, strong) UIButton *voteButton;
 @property (nonatomic, strong) UITapGestureRecognizer *upRateRecognizer;
-@property (nonatomic, strong) UIView *downRateView;
-@property (nonatomic, strong) UIView *upRateView;
 @property (nonatomic, weak) id<RatingWidgetDelegate> delegate;
-@property (nonatomic) BOOL userInteractionEnabled;
+@property (nonatomic) BOOL enabled;
+
+- (id)initWithFrame:(CGRect)frame upvotesCount:(int)upvotesCount;
 
 @end
