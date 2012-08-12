@@ -504,10 +504,6 @@
 		1BA358ED1582F05E00EB8F32 /* ApplaudLocations */ = {
 			isa = PBXGroup;
 			children = (
-				6FAE729515D5A87E004BC304 /* white_comments.png */,
-				1B67EE7B15D1B64400F94CA0 /* SubmitCancelCell.h */,
-				1B67EE7C15D1B64400F94CA0 /* SubmitCancelCell.m */,
-				8A7B2D3115D0393D0053DCCF /* Login/Register */,
 				8A7B2D3115D0393D0053DCCF /* Login/Register */,
 				6FAE729515D5A87E004BC304 /* white_comments.png */,
 				1B67EE7B15D1B64400F94CA0 /* SubmitCancelCell.h */,
@@ -745,7 +741,6 @@
 				1BC0046415D6043100EB0958 /* photos@2x.png in Resources */,
 				1BC0046715D6089F00EB0958 /* applaud.png in Resources */,
 				1BC0046815D6089F00EB0958 /* applaud@2x.png in Resources */,
-				8A7B2D3D15D0C9C30053DCCF /* transparent logo.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -807,9 +802,6 @@
 				1B16E17415D5C87300F15D8E /* ApatapaDateFormatter.m in Sources */,
 				1BC0043115D5F79400EB0958 /* WhisperCell.m in Sources */,
 				1BC0043415D5F92E00EB0958 /* UIPlaceHolderTextView.m in Sources */,
-				8A7B2D3415D044BD0053DCCF /* LoginRegisterViewController.m in Sources */,
-				8A7B2D3715D051830053DCCF /* SignInViewController.m in Sources */,
-				8A7B2D3A15D083D80053DCCF /* RegistrationViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
