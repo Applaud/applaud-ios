@@ -15,8 +15,7 @@
 
 + (NSString*)stringFromDate:(NSDate*)date {
     // We assume that date is currently in UTC
-    
-    int seconds = -(int)([[NSTimeZone systemTimeZone] secondsFromGMT] + [date timeIntervalSinceNow]);
+    int seconds = -(int)([[NSTimeZone defaultTimeZone] secondsFromGMT] + [date timeIntervalSinceNow]);
     
     int minutes, hours, days, weeks, months, years;
     NSString *unit = nil;
@@ -47,8 +46,8 @@
         result = minutes;
         unit = @"minute";
     } else {
-        result = seconds;
-        unit = @"second";
+        // Very recent
+        return @"seconds ago";
     }
     
     NSString *suffix = (result == 1? @"" : @"s");
