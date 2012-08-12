@@ -119,8 +119,6 @@
     }
     
     static NSString *InsertCellIdentifier = @"InsertOptionCell";
-    static NSString *CellIdentifier = @"OptionCell";
-
     // "Add Option"
     if ( indexPath.row == self.options.count ) {
         UITableViewCell *insertCell = [self.tableView dequeueReusableCellWithIdentifier:InsertCellIdentifier];
@@ -134,15 +132,15 @@
     }
 
     // An option
-    // for now, return a dumb cell
-    PollFieldCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    NSString *cellID = [NSString stringWithFormat:@"CellOption%d",indexPath.row];
+    PollFieldCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellID];
     if ( nil == cell ) {
         cell = [[PollFieldCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                     reuseIdentifier:CellIdentifier];
+                                    reuseIdentifier:cellID];
         cell.placeholder = @"Option";
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.textField.delegate = self;
-        cell.textField.tag = self.options.count -1;    // tag is index of option
+        cell.textField.tag = indexPath.row;    // tag is index of option
     }
     return cell;
 }
@@ -289,11 +287,7 @@
 #pragma mark UITextField/ViewDelegate Methods
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-    if ( textField.tag == -1 ) {
-        self.pollTitle = textField.text;
-    } else {
-        [self.options replaceObjectAtIndex:textField.tag withObject:textField.text];
-    }
+    [self.options replaceObjectAtIndex:textField.tag withObject:textField.text];
     
     NSLog(@"Textfield tag was %d",textField.tag);
 }
