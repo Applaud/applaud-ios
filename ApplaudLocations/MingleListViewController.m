@@ -104,6 +104,7 @@
         self.navigationController.navigationBar.tintColor = self.appDelegate.currentBusiness.primaryColor;
         self.tableView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
         self.view.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+        
     }
 }
 
@@ -160,11 +161,13 @@
     MinglePostViewController *postView = [[MinglePostViewController alloc] initWithStyle:UITableViewStyleGrouped thread:self.threads [indexPath.row]];
     postView.parent = self;
     postView.view.opaque = YES;
-    postView.navigationController.navigationBar.tintColor = self.appDelegate.currentBusiness.primaryColor;
     postView.tableView.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
     postView.view.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;
+    UINavigationController *navWrap = [[UINavigationController alloc] initWithRootViewController:postView];
+    navWrap.navigationBar.tintColor = self.appDelegate.currentBusiness.primaryColor;
     
-    [self.navigationController pushViewController:postView animated:YES];
+    [self presentViewController:navWrap animated:YES completion:^{}];
+    [[tableView cellForRowAtIndexPath:indexPath] setSelected:NO animated:YES];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
