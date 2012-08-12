@@ -42,7 +42,7 @@
     self.textField.returnKeyType = UIReturnKeyDone;
     self.textField.backgroundColor = [UIColor whiteColor];
     self.textField.delegate = self;
-    self.textField.placeholder = @"New post";
+    self.textField.placeholder = @"New post...";
     UIBarButtonItem *submitButton = [[UIBarButtonItem alloc] initWithTitle:@"Post" style:UIBarButtonItemStyleDone target:self action:@selector(submitPost)];
     submitButton.tintColor = [UIColor grayColor];
     submitButton.title = @"Post";
@@ -137,7 +137,7 @@
         if ( nil == cell ) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                           reuseIdentifier:CellIdentifier];
-            cell.textLabel.text = @"No posts here yet!";
+            cell.textLabel.text = @"Be the first to post on this thread!";
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
