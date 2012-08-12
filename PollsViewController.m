@@ -122,20 +122,21 @@
     // This submits a response
     NSDictionary *response =  @{ @"value" : @(indexPath.row),
                                     @"id" : @([[self.polls objectAtIndex:indexPath.section] poll_id]) };
+    // Deselect this row
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     [ConnectionManager serverRequest:@"POST"
                           withParams:response
                                  url:POLL_SUBMIT_URL
                             callback:^(NSHTTPURLResponse *r, NSData* dat) {
                                 [self handlePollsData:dat];
+                                PollOptionCell *cell = (PollOptionCell*)[self.tableView cellForRowAtIndexPath:indexPath];
+                                Poll* poll = self.polls[indexPath.section];
+                                cell.value = [poll.responses[indexPath.row][@"count"] doubleValue] / poll.total_votes;
                                 
-                                Poll *poll = self.polls[indexPath.section];
                                 for ( int i=0; i<poll.responses.count; i++ ) {
                                     [self showResultAtOptionIndex:i forPoll:poll];
                                 }
-                                
-                                // Deselect this row
-                                [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
           }];
 }
 
