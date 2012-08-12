@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
+#import "ApatapaRatingWidget.h"
 
-@interface PollsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
+@interface PollsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, RatingWidgetDelegate> {
     NSMutableDictionary *cellMap;
     
     NSMutableArray *pollsSortedNewest;

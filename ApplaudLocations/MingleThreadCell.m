@@ -81,7 +81,7 @@
         self.textLabel.frame = CGRectMake(CELL_PADDING, CELL_PADDING, titleConstrant.width, titleSize.height);
         
         // Rating widget
-        self.ratingWidget.frame = CGRectMake(CELL_WIDTH - 2*CELL_MARGIN - CELL_PADDING - MINGLE_RATING_WIDTH,
+        self.ratingWidget.frame = CGRectMake(CELL_WIDTH - CELL_MARGIN - CELL_PADDING - MINGLE_RATING_WIDTH,
                                              CELL_PADDING,
                                              MINGLE_RATING_WIDTH,
                                              60.0f);
@@ -103,7 +103,7 @@
     }
 }
 
-- (void)upRate {
+- (void)upRateWithWidget:(ApatapaRatingWidget *)widget {
     [self.mlvc giveRating:1
            toThreadWithId:self.thread.thread_id];
     self.ratingWidget.userInteractionEnabled = NO;

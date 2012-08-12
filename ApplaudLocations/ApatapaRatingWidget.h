@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@class ApatapaRatingWidget;
+
 @protocol RatingWidgetDelegate <NSObject>
 
 @required
-- (void)upRate;
+- (void)upRateWithWidget:(ApatapaRatingWidget*)widget;
 
 @end
 

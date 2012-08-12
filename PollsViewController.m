@@ -155,36 +155,24 @@
     
     CGSize constraintSize, labelSize;
     constraintSize = CGSizeMake(self.view.frame.size.width - 2*CELL_MARGIN - CELL_PADDING - POLL_RATING_PADDING, 400);
-    
-    
-    
-    
-    
-    
-    constraintSize = CGSizeMake(constraintSize.width - POLL_RATING_WIDTH, constraintSize.height);
-    UISegmentedControl *upDown = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:
-                                                                            [UIImage imageNamed:@"downrate"],
-                                                                            [UIImage imageNamed:@"uprate"],
-                                                                            nil]];
-    // Tag the rating widget with the section number (poll index number)
-    upDown.tag = section;
-    upDown.frame = CGRectMake(constraintSize.width + POLL_RATING_PADDING, CELL_PADDING, POLL_RATING_WIDTH, 32);
-    // Keep user's rating visible until we download polls again (looks neater this way)
-    if ( poll.my_rating == -1) {   // User downvoted
-        upDown.selectedSegmentIndex = 0;
-        upDown.userInteractionEnabled = NO;
-    } else if ( poll.my_rating == 1 ) {    // User upvoted
-        upDown.selectedSegmentIndex = 1;
-        upDown.userInteractionEnabled = NO;
-    } else {
-        [upDown addTarget:self action:@selector(ratePoll:) forControlEvents:UIControlEventValueChanged];
-    }
-    [headerView addSubview:upDown];
 
     
-    
-    
-    
+    constraintSize = CGSizeMake(constraintSize.width - POLL_RATING_WIDTH, constraintSize.height);
+    ApatapaRatingWidget *ratingWidget = [[ApatapaRatingWidget alloc] initWithFrame:CGRectMake(self.view.frame.size.width - POLL_RATING_PADDING - POLL_RATING_WIDTH,
+                                                                                              CELL_PADDING,
+                                                                                              POLL_RATING_WIDTH,
+                                                                                              32)
+                                                                      upvotesCount:[self.polls[section] total_votes]];
+
+    // Tag the rating widget with the section number (poll index number)
+    ratingWidget.tag = section;
+    // Keep user's rating visible until we download polls again (looks neater this way)
+    if ( [self.polls[section] my_rating] )
+        ratingWidget.enabled = NO;
+    else
+        ratingWidget.delegate = self;
+    [headerView addSubview:ratingWidget];
+
     
     labelSize = [poll.title sizeWithFont:[UIFont boldSystemFontOfSize:POLL_QUESTION_TEXT_SIZE]
                        constrainedToSize:constraintSize
@@ -373,16 +361,16 @@
                                          animated:YES];
 }
 
-- (IBAction)ratePoll:(id)sender {
-    UISegmentedControl *upDown = (UISegmentedControl*)sender;
-    Poll *poll = self.polls[upDown.tag];
+- (void)upRateWithWidget:(ApatapaRatingWidget *)widget {
+    Poll *poll = self.polls[widget.tag];
 
     [ConnectionManager serverRequest:@"POST"
                           withParams:  @{@"id" : @(poll.poll_id),
-     @"user_rating" : @(upDown.selectedSegmentIndex? 1 : -1)}
+     @"user_rating" : @(1)}
                                  url:POLL_RATE_URL
                             callback:^(NSHTTPURLResponse *response, NSData *data) {
                                 [self handlePollsData:data];
+                                widget.upvotesCount = [self.polls[widget.tag] total_votes];
                             }];
 }
 

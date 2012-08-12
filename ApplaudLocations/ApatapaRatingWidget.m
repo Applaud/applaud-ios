@@ -21,6 +21,7 @@
         self.upvotesLabel = [UILabel new];
         self.upvotesLabel.font = [UIFont systemFontOfSize:RATING_TEXT_SIZE];
         self.upvotesLabel.textColor = [UIColor lightGrayColor];
+        self.upvotesLabel.backgroundColor = [UIColor clearColor];
         
         // Rating widget
         self.voteButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, RATING_WIDGET_WIDTH, RATING_WIDGET_HEIGHT)];
@@ -43,15 +44,15 @@
 }
 
 - (void)upRate {
-    [self.delegate upRate];
+    [self.delegate upRateWithWidget:self];
 }
 
 - (void)setUpvotesCount:(int)upvotesCount {
     _upvotesCount = upvotesCount;
     self.upvotesLabel.text = [NSString stringWithFormat:@"+%d",self.upvotesCount];
     [self.upvotesLabel sizeToFit];
-    self.upvotesLabel.frame = CGRectMake(self.voteButton.frame.origin.x + self.voteButton.frame.size.width/2 - self.upvotesLabel.frame.size.width/2,
-                                         self.voteButton.frame.origin.y + self.voteButton.frame.size.height,
+    self.upvotesLabel.frame = CGRectMake(self.voteButton.frame.origin.x + self.voteButton.frame.size.width,
+                                         self.voteButton.frame.origin.y + self.voteButton.frame.size.height/2 - self.upvotesLabel.frame.size.height/2,
                                          self.upvotesLabel.frame.size.width, self.upvotesLabel.frame.size.height);
     [self setNeedsLayout];
 }

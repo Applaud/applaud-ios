@@ -10,7 +10,7 @@
 #define ApplaudIOS_PollOptionDisplayConstants_h
 
 #define POLL_QUESTION_TEXT_SIZE 17.0f
-#define POLL_RATING_WIDTH 60.0f
+#define POLL_RATING_WIDTH 48.0f
 #define POLL_RATING_PADDING 10.0f
 #define ACCESSORY_SIZE 50.0f
 #define OPTION_TEXT_SIZE 17.0f

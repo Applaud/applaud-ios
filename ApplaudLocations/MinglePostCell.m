@@ -75,7 +75,7 @@
     [super layoutSubviews];
     
     self.profilePicture.frame = CGRectMake(CELL_PADDING, CELL_PADDING, IMAGE_SIZE, IMAGE_SIZE);
-    self.ratingWidget.frame = CGRectMake(CELL_WIDTH - 2*CELL_MARGIN - CELL_PADDING - MINGLE_RATING_WIDTH, CELL_PADDING,
+    self.ratingWidget.frame = CGRectMake(CELL_WIDTH - CELL_MARGIN - CELL_PADDING - MINGLE_RATING_WIDTH, CELL_PADDING,
                                          MINGLE_RATING_WIDTH, 24.0f);
     self.usernameLabel.frame = CGRectMake(CELL_PADDING + IMAGE_SIZE + CELL_ELEMENT_PADDING,
                                           CELL_PADDING,
@@ -102,7 +102,7 @@
     // Configure the view for the selected state
 }
 
-- (void)upRate {
+- (void)upRateWithWidget:(ApatapaRatingWidget *)widget {
     [self.mpvc giveRating:1 toThreadPostWithId:self.post.threadpost_id];
 }
 
