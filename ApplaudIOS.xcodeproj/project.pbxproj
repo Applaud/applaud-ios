@@ -128,6 +128,8 @@
 		8AD58A9D15D895D6002F1438 /* plainbackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AD58A9C15D895D6002F1438 /* plainbackground.png */; };
 		8AD58A9F15D89615002F1438 /* City.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AD58A9E15D89615002F1438 /* City.png */; };
 		8AD58AA115D8963B002F1438 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AD58AA015D8963B002F1438 /* Default.png */; };
+		8AD58AA315D8A563002F1438 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AD58AA215D8A562002F1438 /* Default.png */; };
+		8AD58AA515D8A568002F1438 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AD58AA415D8A568002F1438 /* Default@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -342,6 +344,8 @@
 		8AD58A9C15D895D6002F1438 /* plainbackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = plainbackground.png; path = assets/plainbackground.png; sourceTree = "<group>"; };
 		8AD58A9E15D89615002F1438 /* City.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = City.png; path = assets/City.png; sourceTree = "<group>"; };
 		8AD58AA015D8963B002F1438 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = assets/Default.png; sourceTree = "<group>"; };
+		8AD58AA215D8A562002F1438 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = assets/Default.png; sourceTree = "<group>"; };
+		8AD58AA415D8A568002F1438 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "assets/Default@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -598,6 +602,8 @@
 				8AD58A9C15D895D6002F1438 /* plainbackground.png */,
 				6F8C34EE15D42D0E00EC82E9 /* polls.png */,
 				8AA1443B15D7324300A61148 /* background-50.png */,
+				8AD58AA415D8A568002F1438 /* Default@2x.png */,
+				8AD58AA215D8A562002F1438 /* Default.png */,
 				8AA1443C15D7324300A61148 /* background-60.png */,
 				8AD58A9815D886E7002F1438 /* texturedbackground.png */,
 				8AA1443D15D7324300A61148 /* background-70.png */,
@@ -814,6 +820,8 @@
 				8AD58A9D15D895D6002F1438 /* plainbackground.png in Resources */,
 				8AD58A9F15D89615002F1438 /* City.png in Resources */,
 				8AD58AA115D8963B002F1438 /* Default.png in Resources */,
+				8AD58AA315D8A563002F1438 /* Default.png in Resources */,
+				8AD58AA515D8A568002F1438 /* Default@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
