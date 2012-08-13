@@ -197,7 +197,7 @@
     Employee *employee = self.employeeArray[indexPath.row];
     EmployeeViewController *evc;
     if([[self.employeeControllers objectAtIndex:indexPath.row] isKindOfClass:[NSNull class]]) {
-        evc = [[EmployeeViewController alloc] initWithEmployee:employee];
+        evc = [[EmployeeViewController alloc] initWithStyle:UITableViewStyleGrouped employee:employee];
         evc.appDelegate = self.appDelegate;
         self.employeeControllers[indexPath.row] = evc;
         evc.view.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;

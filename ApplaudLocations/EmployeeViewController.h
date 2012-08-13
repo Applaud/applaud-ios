@@ -11,7 +11,7 @@
 #import "BusinessLocationsTracker.h"
 @class AppDelegate;
 
-@interface EmployeeViewController : UIViewController <UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource> {
+@interface EmployeeViewController : UITableViewController <UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource> {
     BOOL bioCellExpanded;       // Whether the "bio" cell is currently expanded or not
     BOOL keyboardIsShown;       // Whether the keyboard is currently showing
     CGRect selectedTextRect;    // The rect of the currently active textfield
@@ -27,16 +27,16 @@
 
 @property (nonatomic, weak) AppDelegate *appDelegate;
 @property (nonatomic, strong) Employee *employee;
-@property (nonatomic, strong) IBOutlet UIScrollView *scrollView;
-@property (nonatomic, strong) IBOutlet UITableView *tableView;
-@property (strong, nonatomic) IBOutlet UILabel *nameLabel;
-@property (strong, nonatomic) IBOutlet UILabel *titleLabel;
-@property (strong, nonatomic) IBOutlet UILabel *bioContentLabel;    // Displays the bio
-@property (strong, nonatomic) IBOutlet UIView *profileView;         // Contains image, name, title, bio as subviews
+@property (nonatomic, strong) UIScrollView *scrollView;
+@property (strong, nonatomic) UILabel *nameLabel;
+@property (strong, nonatomic) UILabel *titleLabel;
+@property (strong, nonatomic) UILabel *bioContentLabel;    // Displays the bio
+@property (strong, nonatomic) UIView *profileView;         // Contains image, name, title, bio as subviews
 @property (strong, nonatomic) NSMutableDictionary *ratingDimensions;
-@property (weak, nonatomic) IBOutlet UIImageView *image;
+@property (strong, nonatomic) UIImageView *image;
+@property (strong, nonatomic) UITableView *tableView;
 
-- (id)initWithEmployee:(Employee *)e;
+- (id)initWithStyle:(UITableViewStyle)style employee:(Employee *)e;
 - (IBAction)submitButtonPressed:(UIButton *)sender;
 
 @end

@@ -29,7 +29,6 @@
 		1B301C621588580E0038A5BE /* NFViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B301C601588580E0038A5BE /* NFViewController.m */; };
 		1B301C631588580E0038A5BE /* NFViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B301C611588580E0038A5BE /* NFViewController.xib */; };
 		1B301C67158858430038A5BE /* EmployeeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B301C65158858430038A5BE /* EmployeeViewController.m */; };
-		1B301C68158858430038A5BE /* EmployeeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B301C66158858430038A5BE /* EmployeeViewController.xib */; };
 		1B301C6D158858560038A5BE /* QuestionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B301C6B158858560038A5BE /* QuestionsViewController.m */; };
 		1B301C6E158858560038A5BE /* QuestionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B301C6C158858560038A5BE /* QuestionsViewController.xib */; };
 		1B3769E015D05505001214B7 /* PollsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3769DE15D05505001214B7 /* PollsViewController.m */; };
@@ -182,7 +181,6 @@
 		1B301C611588580E0038A5BE /* NFViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NFViewController.xib; sourceTree = "<group>"; };
 		1B301C64158858430038A5BE /* EmployeeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmployeeViewController.h; sourceTree = "<group>"; };
 		1B301C65158858430038A5BE /* EmployeeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmployeeViewController.m; sourceTree = "<group>"; };
-		1B301C66158858430038A5BE /* EmployeeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmployeeViewController.xib; sourceTree = "<group>"; };
 		1B301C6A158858560038A5BE /* QuestionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionsViewController.h; sourceTree = "<group>"; };
 		1B301C6B158858560038A5BE /* QuestionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionsViewController.m; sourceTree = "<group>"; };
 		1B301C6C158858560038A5BE /* QuestionsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QuestionsViewController.xib; sourceTree = "<group>"; };
@@ -397,7 +395,6 @@
 				1BB4AC9E15BF3E68003E8B29 /* EmployeeBioCell.m */,
 				1B301C64158858430038A5BE /* EmployeeViewController.h */,
 				1B301C65158858430038A5BE /* EmployeeViewController.m */,
-				1B301C66158858430038A5BE /* EmployeeViewController.xib */,
 				6F8C8A29158C03DB00BB4BA0 /* Employee.h */,
 				6F8C8A2A158C03DB00BB4BA0 /* Employee.m */,
 				1BFF2E7B158D9CDB00753F94 /* EmployeeListViewController.h */,
@@ -689,7 +686,6 @@
 			files = (
 				1BA358F21582F05E00EB8F32 /* InfoPlist.strings in Resources */,
 				1B301C631588580E0038A5BE /* NFViewController.xib in Resources */,
-				1B301C68158858430038A5BE /* EmployeeViewController.xib in Resources */,
 				1B301C6E158858560038A5BE /* QuestionsViewController.xib in Resources */,
 				6F37B93C1589400E001DD06D /* NFItemViewController.xib in Resources */,
 				1BFF2E7F158D9CDC00753F94 /* EmployeeListViewController.xib in Resources */,
