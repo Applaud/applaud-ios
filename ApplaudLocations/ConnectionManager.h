@@ -37,6 +37,7 @@
 #define GET_PHOTO_COMMENTS_URL @"/mobile/get_photo_comments/"
 #define REGISTER_URL @"/mobile/register/"
 #define CHECK_EMAIL_URL @"/mobile/check_email/"
+#define COMMENT_VOTE_URL @"/mobile/vote_comment/"
 
 @interface ConnectionManager : NSObject
 

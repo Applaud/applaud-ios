@@ -12,7 +12,7 @@
 
 @class PollsViewController;
 
-@interface NewPollViewController : UITableViewController <UITextFieldDelegate, SubmitCancelDelegate, UIAlertViewDelegate> {
+@interface NewPollViewController : UITableViewController <UITextFieldDelegate, UITextViewDelegate, SubmitCancelDelegate, UIAlertViewDelegate> {
     BOOL first_time;
 }
 

@@ -54,7 +54,7 @@
     {
         if ( placeHolderLabel == nil )
         {
-            placeHolderLabel = [[UILabel alloc] initWithFrame:CGRectMake(8,0,self.bounds.size.width-16,0)];
+            placeHolderLabel = [[UILabel alloc] initWithFrame:CGRectMake(8,8,self.bounds.size.width-16,0)];
             placeHolderLabel.lineBreakMode = UILineBreakModeWordWrap;
             placeHolderLabel.numberOfLines = 0;
             placeHolderLabel.font = self.font;

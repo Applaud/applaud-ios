@@ -30,29 +30,14 @@
         self.dateLabel.font = [UIFont systemFontOfSize:DATE_SIZE];
         self.postsLabel = [UILabel new];
         self.postsLabel.font = [UIFont systemFontOfSize:POSTS_SIZE];
-        self.updownLabel = [UILabel new];
-        self.updownLabel.text = @"/";
-        self.updownLabel.font = [UIFont systemFontOfSize:RATING_TEXT_SIZE];
-        self.downvotesLabel = [UILabel new];
-        self.downvotesLabel.font = [UIFont systemFontOfSize:RATING_TEXT_SIZE];
-        self.downvotesLabel.textColor = [UIColor redColor];
-        self.upvotesLabel = [UILabel new];
-        self.upvotesLabel.font = [UIFont systemFontOfSize:RATING_TEXT_SIZE];
-        self.upvotesLabel.textColor = [UIColor colorWithRed:0.0 green:0.7 blue:0.0 alpha:1.0];
-        
-        // Rating widget
-        self.ratingWidget = [[UISegmentedControl alloc] initWithItems:
-                             [NSArray arrayWithObjects:
-                              [UIImage imageNamed:@"downrate"],
-                              [UIImage imageNamed:@"uprate"], nil]];
+
+        self.ratingWidget = [ApatapaRatingWidget new];
+        self.ratingWidget.delegate = self;
         
         [self.contentView addSubview:self.userLabel];
         [self.contentView addSubview:self.dateLabel];
         [self.contentView addSubview:self.postsLabel];
         [self.contentView addSubview:self.ratingWidget];
-        [self.contentView addSubview:self.upvotesLabel];
-        [self.contentView addSubview:self.updownLabel];
-        [self.contentView addSubview:self.downvotesLabel];
         
         [self initContent];
     }
@@ -66,18 +51,10 @@
     NSString *comment = self.thread.threadPosts.count == 1? @"post" : @"posts";
     self.postsLabel.text = [NSString stringWithFormat:@"%d %@",self.thread.threadPosts.count, comment];
     
-    self.upvotesLabel.text = [NSString stringWithFormat:@"+%d",self.thread.upvotes];
-    self.downvotesLabel.text = [NSString stringWithFormat:@"-%d",self.thread.downvotes];
+    self.ratingWidget.upvotesCount = self.thread.upvotes;
     
-    if ( self.thread.my_rating == -1 ) {
-        self.ratingWidget.selectedSegmentIndex = 0;
-        self.ratingWidget.userInteractionEnabled = NO;
-    } else if ( self.thread.my_rating == 1 ) {
-        self.ratingWidget.selectedSegmentIndex = 1;
-        self.ratingWidget.userInteractionEnabled = NO;
-    } else {
-        [self.ratingWidget addTarget:self action:@selector(rateThread:) forControlEvents:UIControlEventValueChanged];
-    }
+    if ( self.thread.my_rating )
+        self.ratingWidget.enabled = NO;
 }
 
 - (void)setThread:(Thread *)thread {
@@ -104,23 +81,10 @@
         self.textLabel.frame = CGRectMake(CELL_PADDING, CELL_PADDING, titleConstrant.width, titleSize.height);
         
         // Rating widget
-        self.ratingWidget.frame = CGRectMake(CELL_WIDTH - CELL_MARGIN - MINGLE_RATING_WIDTH - 2*CELL_PADDING,
-                                             CELL_PADDING, MINGLE_RATING_WIDTH, 32.0f);
-        
-        // Ratings labels
-        self.updownLabel.frame = CGRectMake(self.ratingWidget.frame.origin.x + MINGLE_RATING_WIDTH/2,
-                                            self.ratingWidget.frame.origin.y + self.ratingWidget.frame.size.height + CELL_ELEMENT_PADDING,
-                                            10.0f, 14.0f);
-        [self.updownLabel sizeToFit];
-        [self.upvotesLabel sizeToFit];
-        self.upvotesLabel.frame = CGRectMake(self.updownLabel.frame.origin.x + self.updownLabel.frame.size.width + 5.0f,
-                                             self.updownLabel.frame.origin.y,
-                                             self.upvotesLabel.frame.size.width, self.upvotesLabel.frame.size.height);
-        [self.downvotesLabel sizeToFit];
-        self.downvotesLabel.frame = CGRectMake(self.updownLabel.frame.origin.x - self.downvotesLabel.frame.size.width - 5.0f,
-                                               self.updownLabel.frame.origin.y,
-                                               self.downvotesLabel.frame.size.width,
-                                               self.downvotesLabel.frame.size.height);
+        self.ratingWidget.frame = CGRectMake(CELL_WIDTH - CELL_MARGIN - CELL_PADDING - MINGLE_RATING_WIDTH,
+                                             CELL_PADDING,
+                                             MINGLE_RATING_WIDTH,
+                                             60.0f);
                                                
         // User label
         self.userLabel.frame = CGRectMake(CELL_PADDING,
@@ -139,14 +103,10 @@
     }
 }
 
-- (IBAction)rateThread:(id)sender {
-    UISegmentedControl *ratingWidget = (UISegmentedControl*)sender;
-    
-    [self.mlvc giveRating:ratingWidget.selectedSegmentIndex
+- (void)upRateWithWidget:(ApatapaRatingWidget *)widget {
+    [self.mlvc giveRating:1
            toThreadWithId:self.thread.thread_id];
-    
-    // Disable rating now
-    ratingWidget.userInteractionEnabled = NO;
+    self.ratingWidget.userInteractionEnabled = NO;
 }
 
 @end

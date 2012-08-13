@@ -28,7 +28,7 @@
                                                      name:@"BUSINESS_SET"
                                                    object:nil];
         _newsFeeds = [[NSMutableArray alloc] init];
-        [self setTitle:@"Newsfeed"];
+        [self setTitle:@"News"];
     }
     return self;
 }

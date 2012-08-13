@@ -28,6 +28,7 @@
         _thread = thread;
         self.threadPosts = self.thread.threadPosts;
         cellMap = [NSMutableDictionary new];
+        self.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     }
     return self;
 }
@@ -38,24 +39,52 @@
     
     self.title = self.thread.title;
     
+    [self setHidesBottomBarWhenPushed:YES];
+    
     self.textField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width - 80, 20.0f)];
     self.textField.returnKeyType = UIReturnKeyDone;
-    self.textField.backgroundColor = [UIColor whiteColor];
     self.textField.delegate = self;
-    self.textField.placeholder = @"New post";
+    self.textField.placeholder = @"New post...";
+    self.textField.layer.cornerRadius = 3.0f;
+    self.textField.layer.borderColor = [[[UIColor grayColor] colorWithAlphaComponent:0.5] CGColor];
+    self.textField.layer.borderWidth = 2.0;
+    self.textField.backgroundColor = [UIColor whiteColor];
+    UIView *paddingView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 10, self.textField.frame.size.height)];
+    self.textField.leftView = paddingView;
+    self.textField.leftViewMode = UITextFieldViewModeAlways;
+    self.textField.rightView = paddingView;
+    self.textField.rightViewMode = UITextFieldViewModeAlways;
+    
+    
+    
+    
+    CGRect tff = self.textField.frame;
+    tff.size.height = 30;
+    self.textField.frame = tff;
     UIBarButtonItem *submitButton = [[UIBarButtonItem alloc] initWithTitle:@"Post" style:UIBarButtonItemStyleDone target:self action:@selector(submitPost)];
     submitButton.tintColor = [UIColor grayColor];
     submitButton.title = @"Post";
     UIBarButtonItem *textItem = [[UIBarButtonItem alloc] initWithCustomView:self.textField];
     
+    // Back button
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemReply
+                                                                                target:self
+                                                                                action:@selector(goBack)];
+    self.navigationItem.leftBarButtonItem = backButton;
+    
     self.toolbarWidgets = [[NSMutableArray alloc] initWithObjects:textItem, submitButton, nil];
+    
+    // Can scroll to top of posts easily
+    self.tableView.scrollsToTop = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
     // Set our toolbar items
+    [self.navigationController setToolbarHidden:NO animated:NO];
     [self setToolbarItems:self.toolbarWidgets animated:YES];
+    self.navigationController.toolbar.tintColor = [UIColor blackColor];
     
     // Listen for keyboard to show
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -137,7 +166,7 @@
         if ( nil == cell ) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                           reuseIdentifier:CellIdentifier];
-            cell.textLabel.text = @"No posts here yet!";
+            cell.textLabel.text = @"Be the first to post on this thread!";
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
@@ -229,6 +258,9 @@
         return;
     }
     
+    NSArray *vips = [self.tableView indexPathsForVisibleRows];
+    keyboardVisiblePath = vips[vips.count-2];
+    
     NSDictionary* userInfo = [n userInfo];
     
     // get the size of the keyboard
@@ -236,7 +268,7 @@
     
     // Move the toolbar
     CGRect viewFrame = self.navigationController.view.frame;
-    viewFrame.size.height -= keyboardSize.height - TABBAR_HEIGHT;
+    viewFrame.size.height -= keyboardSize.height;
     
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationBeginsFromCurrentState:YES];
@@ -244,6 +276,10 @@
     [UIView setAnimationDuration:SCROLL_TIME];
     [self.navigationController.view setFrame:viewFrame];
     [UIView commitAnimations];
+        
+    // Scroll to last visible row
+    [self.tableView scrollToRowAtIndexPath:keyboardVisiblePath
+                          atScrollPosition:UITableViewScrollPositionTop animated:YES];
     
     keyboardIsShown = YES;
 }
@@ -256,7 +292,7 @@
 
     // Move the toolbar
     CGRect viewFrame = self.navigationController.view.frame;
-    viewFrame.size.height += keyboardSize.height - TABBAR_HEIGHT;
+    viewFrame.size.height += keyboardSize.height;
     
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationBeginsFromCurrentState:YES];
@@ -264,6 +300,10 @@
     [UIView setAnimationDuration:SCROLL_TIME];
     [self.navigationController.view setFrame:viewFrame];
     [UIView commitAnimations];
+    
+    CGRect scrollRect = [self.tableView cellForRowAtIndexPath:keyboardVisiblePath].bounds;
+    scrollRect.origin.y += self.navigationController.toolbar.frame.size.height + 10;
+    [self.tableView scrollRectToVisible:scrollRect animated:YES];
     
     keyboardIsShown = NO;
 }
@@ -355,6 +395,12 @@
                                 
                                 [self loadThreadFromData:d];
      }];
+}
+
+#pragma mark - Go Back
+
+- (void)goBack {
+    [self dismissViewControllerAnimated:YES completion:^{}];
 }
 
 @end

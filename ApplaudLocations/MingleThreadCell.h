@@ -8,19 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import "Thread.h"
+#import "ApatapaRatingWidget.h"
 
 @class MingleListViewController;
 
-@interface MingleThreadCell : UITableViewCell
+@interface MingleThreadCell : UITableViewCell <RatingWidgetDelegate>
 
 @property (nonatomic, strong) Thread *thread;
 @property (nonatomic, strong) UILabel *dateLabel;
 @property (nonatomic, strong) UILabel *userLabel;
 @property (nonatomic, strong) UILabel *postsLabel;
-@property (nonatomic, strong) UILabel *upvotesLabel;
-@property (nonatomic, strong) UILabel *downvotesLabel;
-@property (nonatomic, strong) UILabel *updownLabel;
-@property (nonatomic, strong) UISegmentedControl *ratingWidget;
+@property (nonatomic, strong) ApatapaRatingWidget *ratingWidget;
 @property (nonatomic, weak) MingleListViewController *mlvc;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier thread:(Thread*)thread;

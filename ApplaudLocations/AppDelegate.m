@@ -179,28 +179,24 @@
     
     // Polls view controller
     PollsViewController *pvc = [[PollsViewController alloc] init];
-    [pvc setTitle:@"Polls"];
     UINavigationController *pollsNav = [[UINavigationController alloc] initWithRootViewController:pvc];
     pvc.navigationController = pollsNav;
     pvc.appDelegate = self;
     
     // Threads (mingle) view controller
     MingleListViewController *mlvc = [[MingleListViewController alloc] initWithStyle:UITableViewStyleGrouped];
-    mlvc.title = @"Mingle";
     UINavigationController *mingleNav = [[UINavigationController alloc] initWithRootViewController:mlvc];
     mlvc.navigationController = mingleNav;
     mlvc.appDelegate = self;
     
     // QuestionsViewController next
     QuestionsViewController *qvc = [[QuestionsViewController alloc] init];
-    [qvc setTitle:@"Dialog"];
     UINavigationController *questionNav = [[UINavigationController alloc] initWithRootViewController:qvc];
     qvc.navigationController = questionNav;
     qvc.appDelegate = self;
     
     // And then NFViewController
     NFViewController *nfvc = [[NFViewController alloc] init];
-    [nfvc setTitle:@"News Feed"];
     UINavigationController *newsNav = [[UINavigationController alloc] initWithRootViewController:nfvc];
     nfvc.navigationController = newsNav;
     nfvc.appDelegate = self;
@@ -224,7 +220,7 @@
 //    UITabBarItem *threadsItem = [[UITabBarItem alloc] init];
 //    threadsItem.title = @"Mingle";
     UITabBarItem *threadsItem = [[UITabBarItem alloc] initWithTitle:@"Mingle"
-                                                              image:[UIImage imageNamed:@"photos"]
+                                                              image:[UIImage imageNamed:@"dialog"]
                                                                 tag:100];
     mlvc.tabBarItem = threadsItem;
     UITabBarItem *questionItem = [[UITabBarItem alloc] initWithTitle:@"Feedback"
@@ -236,7 +232,7 @@
                                                              tag:103];
     nfvc.tabBarItem = newsItem;
     UITabBarItem *photoItem = [[UITabBarItem alloc] initWithTitle:@"Photos"
-                                                            image:nil
+                                                            image:[UIImage imageNamed:@"photos"]
                                                               tag:104];
     bpvc.tabBarItem = photoItem;
 	self.tabNavigator.viewControllers = @[newsNav, pollsNav, mingleNav, employeeNav, photoNav];

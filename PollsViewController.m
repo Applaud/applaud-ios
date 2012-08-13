@@ -64,13 +64,15 @@
                                                                             action:@selector(backButtonPressed)];
     
     // The toolbar, for sorting polls
-    UISegmentedControl *sortControls = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"Newest", @"Popular", @"Liked", nil]];
+    UISegmentedControl *sortControls = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:
+                                                                                  SORT_STRING_NEWEST,
+                                                                                  SORT_STRING_POPULAR,
+                                                                                  SORT_STRING_LIKED, nil]];
     UIBarButtonItem	*flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     sortControls.segmentedControlStyle = UISegmentedControlStyleBar;
     sortControls.tintColor = [UIColor grayColor];
     [sortControls addTarget:self action:@selector(sortMethodSelected:) forControlEvents:UIControlEventValueChanged];
     UIBarButtonItem *sortItem = [[UIBarButtonItem alloc] initWithCustomView:sortControls];
-    self.navigationController.toolbarHidden = NO;
     self.navigationController.toolbar.tintColor = [UIColor blackColor];
     [self setToolbarItems:[NSArray arrayWithObjects:flex,sortItem,flex,nil]];
     
@@ -81,7 +83,7 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self.navigationController setToolbarHidden:NO animated:YES];
+    [self.navigationController setToolbarHidden:NO animated:NO];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -120,20 +122,21 @@
     // This submits a response
     NSDictionary *response =  @{ @"value" : @(indexPath.row),
                                     @"id" : @([[self.polls objectAtIndex:indexPath.section] poll_id]) };
+    // Deselect this row
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     [ConnectionManager serverRequest:@"POST"
                           withParams:response
                                  url:POLL_SUBMIT_URL
                             callback:^(NSHTTPURLResponse *r, NSData* dat) {
                                 [self handlePollsData:dat];
+                                PollOptionCell *cell = (PollOptionCell*)[self.tableView cellForRowAtIndexPath:indexPath];
+                                Poll* poll = self.polls[indexPath.section];
+                                cell.value = [poll.responses[indexPath.row][@"count"] doubleValue] / poll.total_votes;
                                 
-                                Poll *poll = self.polls[indexPath.section];
                                 for ( int i=0; i<poll.responses.count; i++ ) {
                                     [self showResultAtOptionIndex:i forPoll:poll];
                                 }
-                                
-                                // Deselect this row
-                                [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
           }];
 }
 
@@ -152,36 +155,24 @@
     
     CGSize constraintSize, labelSize;
     constraintSize = CGSizeMake(self.view.frame.size.width - 2*CELL_MARGIN - CELL_PADDING - POLL_RATING_PADDING, 400);
-    
-    
-    
-    
-    
-    
-    constraintSize = CGSizeMake(constraintSize.width - POLL_RATING_WIDTH, constraintSize.height);
-    UISegmentedControl *upDown = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:
-                                                                            [UIImage imageNamed:@"downrate"],
-                                                                            [UIImage imageNamed:@"uprate"],
-                                                                            nil]];
-    // Tag the rating widget with the section number (poll index number)
-    upDown.tag = section;
-    upDown.frame = CGRectMake(constraintSize.width + POLL_RATING_PADDING, CELL_PADDING, POLL_RATING_WIDTH, 32);
-    // Keep user's rating visible until we download polls again (looks neater this way)
-    if ( poll.my_rating == -1) {   // User downvoted
-        upDown.selectedSegmentIndex = 0;
-        upDown.userInteractionEnabled = NO;
-    } else if ( poll.my_rating == 1 ) {    // User upvoted
-        upDown.selectedSegmentIndex = 1;
-        upDown.userInteractionEnabled = NO;
-    } else {
-        [upDown addTarget:self action:@selector(ratePoll:) forControlEvents:UIControlEventValueChanged];
-    }
-    [headerView addSubview:upDown];
 
     
-    
-    
-    
+    constraintSize = CGSizeMake(constraintSize.width - POLL_RATING_WIDTH, constraintSize.height);
+    ApatapaRatingWidget *ratingWidget = [[ApatapaRatingWidget alloc] initWithFrame:CGRectMake(self.view.frame.size.width - POLL_RATING_PADDING - POLL_RATING_WIDTH,
+                                                                                              CELL_PADDING,
+                                                                                              POLL_RATING_WIDTH,
+                                                                                              32)
+                                                                      upvotesCount:[self.polls[section] total_votes]];
+
+    // Tag the rating widget with the section number (poll index number)
+    ratingWidget.tag = section;
+    // Keep user's rating visible until we download polls again (looks neater this way)
+    if ( [self.polls[section] my_rating] )
+        ratingWidget.enabled = NO;
+    else
+        ratingWidget.delegate = self;
+    [headerView addSubview:ratingWidget];
+
     
     labelSize = [poll.title sizeWithFont:[UIFont boldSystemFontOfSize:POLL_QUESTION_TEXT_SIZE]
                        constrainedToSize:constraintSize
@@ -370,16 +361,16 @@
                                          animated:YES];
 }
 
-- (IBAction)ratePoll:(id)sender {
-    UISegmentedControl *upDown = (UISegmentedControl*)sender;
-    Poll *poll = self.polls[upDown.tag];
+- (void)upRateWithWidget:(ApatapaRatingWidget *)widget {
+    Poll *poll = self.polls[widget.tag];
 
     [ConnectionManager serverRequest:@"POST"
                           withParams:  @{@"id" : @(poll.poll_id),
-     @"user_rating" : @(upDown.selectedSegmentIndex? 1 : -1)}
+     @"user_rating" : @(1)}
                                  url:POLL_RATE_URL
                             callback:^(NSHTTPURLResponse *response, NSData *data) {
                                 [self handlePollsData:data];
+                                widget.upvotesCount = [self.polls[widget.tag] total_votes];
                             }];
 }
 

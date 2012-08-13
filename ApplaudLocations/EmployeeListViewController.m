@@ -13,7 +13,7 @@
 #import "ConnectionManager.h"
 #import "SDWebImage/UIImageView+WebCache.h"
 #import "AppDelegate.h"
-#import "WhisperCell.h"
+#import "TextViewCell.h"
 
 #define NO_EMPLOYEES_MESSAGE @"This business hasn't added any employees yet. Check back later!"
 #define GENERIC_MESSAGE [NSString stringWithFormat:@"%@%@%@\n\n%@",@"Applaud is the employee evaluation feature of Apatapa. Applaud allows employees to gain recognition for their hard work. By telling ",self.appDelegate.currentBusiness.name,@" to use this feature, you are playing an important part in giving employees more control over their future.",@"If you are interested in helping this business improve, check out the Feedback button below!"]
@@ -161,11 +161,11 @@
         return cell;
     }
     
-    static NSString *whisperCellID = @"WhisperCell";
-    WhisperCell *cell = [self.tableView dequeueReusableCellWithIdentifier:whisperCellID];
+    static NSString *TextViewCellID = @"TextViewCell";
+    TextViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:TextViewCellID];
     if ( nil == cell ){
-        cell = [[WhisperCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                      reuseIdentifier:whisperCellID];
+        cell = [[TextViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                      reuseIdentifier:TextViewCellID];
         cell.placeholder = [NSString stringWithFormat:@"Communicate directly with %@.",self.appDelegate.currentBusiness.name];
         cell.textView.delegate = self;
     }
@@ -180,6 +180,9 @@
                                           constrainedToSize:CGSizeMake(self.view.frame.size.width - 2*EMPLOYEE_CELL_MARGIN - 2*CELL_PADDING, 400)
                                               lineBreakMode:UILineBreakModeWordWrap].height;
     }
+    else if ( indexPath.section == 1 ) {
+        return 80.0f;
+    }
     else if (self.employeeArray.count == 0 && indexPath.row == 0) {
         return 100;
     }
@@ -187,14 +190,14 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if(self.employeeArray.count == 0) {
+    if(self.employeeArray.count == 0 || indexPath.section == 1) {
         // Don't do anything.
         return;
     }
     Employee *employee = self.employeeArray[indexPath.row];
     EmployeeViewController *evc;
     if([[self.employeeControllers objectAtIndex:indexPath.row] isKindOfClass:[NSNull class]]) {
-        evc = [[EmployeeViewController alloc] initWithEmployee:employee];
+        evc = [[EmployeeViewController alloc] initWithStyle:UITableViewStyleGrouped employee:employee];
         evc.appDelegate = self.appDelegate;
         self.employeeControllers[indexPath.row] = evc;
         evc.view.backgroundColor = self.appDelegate.currentBusiness.secondaryColor;

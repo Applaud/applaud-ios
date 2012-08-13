@@ -19,6 +19,18 @@
     if (self = [super init]) {
         _photos = photos;
         self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+        _toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 436, 320, 44)];
+        self.likeButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"thumbsup"]
+                                                           style:UIBarButtonItemStylePlain
+                                                          target:self
+                                                          action:@selector(upVotePressed)];
+        self.likeLabel = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithFormat:@"%d", [self.photos[index] upvotes]]
+                                                                               style:UIBarButtonItemStylePlain
+                                                                              target:nil
+                                                                              action:nil];
+        
+        [self.toolBar setItems:@[self.likeButton, self.likeLabel]];
+        _toolBar.barStyle = UIBarStyleBlackTranslucent;
         _navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
         _navBar.barStyle = UIBarStyleBlackTranslucent;
         self.hidesBottomBarWhenPushed = YES;
@@ -55,6 +67,7 @@
         [self.scrollView addGestureRecognizer:rightSwipe];
         [self.scrollView addGestureRecognizer:leftSwipe];
         [self.view addSubview:self.navBar];
+        [self.view addSubview:self.toolBar];
         [self addBusinessPhotos];
         [self setIndex:index animated:NO];
     }
@@ -70,9 +83,11 @@
         _index = self.photos.count-1;
         return;
     }
+    [self checkCanVote:[self.photos[index] photo_id]];
     _index = index;
     CGPoint newOffset = CGPointMake((320+PHOTO_BORDER)*index, 0);
     [self.scrollView setContentOffset:newOffset animated:animated];
+    self.likeLabel.title = [NSString stringWithFormat:@"%d", [self.photos[index] upvotes]];
 }
 
 -(void)addBusinessPhotos {
@@ -116,9 +131,11 @@
     [UIView animateWithDuration:0.4 animations:^(void) {
         if(self.navBar.alpha == 0.0) {
             self.navBar.alpha = 1.0;
+            self.toolBar.alpha = 1.0;
         }
         else {
             self.navBar.alpha = 0.0;
+            self.toolBar.alpha = 0.0;
         }
     }];
 }
@@ -151,6 +168,35 @@
 
 #pragma mark -
 #pragma mark Other methods
+
+-(void)checkCanVote:(int)id {
+    NSDictionary *params = @{@"id": @(id), @"type": @"models.BusinessPhoto"};
+    [ConnectionManager serverRequest:@"POST" withParams:params
+                                 url:CHECK_VOTE_URL
+                            callback:^(NSHTTPURLResponse *r, NSData *d) {
+                                NSString *data = [[NSString alloc]
+                                                  initWithData:d
+                                                  encoding:NSUTF8StringEncoding];
+                                if([data isEqualToString:@"yes"]) {
+                                    self.likeButton.enabled = YES;
+                                }
+                                else {
+                                    self.likeButton.enabled = NO;
+                                }
+                            }];
+}
+
+-(void)upVotePressed {
+    NSDictionary *params = @{@"id": @([self.photos[self.index] photo_id])};
+    [ConnectionManager serverRequest:@"POST" withParams:params
+                                 url:PHOTO_VOTE_URL
+                            callback:^(NSHTTPURLResponse *r, NSData *d) {
+                                self.likeButton.enabled = NO;
+                                int votes = [self.photos[self.index] upvotes] + 1;
+                                [self.photos[self.index] setUpvotes:votes];
+                                self.likeLabel.title = [NSString stringWithFormat:@"%d", votes];
+                            }];
+}
 
 -(void)commentButtonPressed {
     PhotoCommentViewController *pcvc = [[PhotoCommentViewController alloc]

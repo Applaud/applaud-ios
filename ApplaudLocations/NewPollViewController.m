@@ -10,6 +10,7 @@
 #import "PollFieldCell.h"
 #import "ConnectionManager.h"
 #import "PollsViewController.h"
+#import "TextViewCell.h"
 
 @interface NewPollViewController ()
 
@@ -82,17 +83,24 @@
 #pragma mark -
 #pragma mark UITableViewDataSource / Delegate
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ( indexPath.section == 1 )
+        return 42.0f;
+    return 60.0f;
+}
+
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *TitleCellIdentifier = @"TitleCell";
     // Title section
     if ( indexPath.section == 0 ) {
-        PollFieldCell *cell = [self.tableView dequeueReusableCellWithIdentifier:TitleCellIdentifier];
+        TextViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:TitleCellIdentifier];
         if ( nil == cell ) {
-            cell = [[PollFieldCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                        reuseIdentifier:TitleCellIdentifier];
+            cell = [[TextViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                       reuseIdentifier:TitleCellIdentifier];
+            cell.placeholder = [NSString stringWithFormat:@"Communicate directly with %@.",self.appDelegate.currentBusiness.name];
+            cell.textView.delegate = self;
             cell.placeholder = @"Poll Question";
-            cell.textField.delegate = self;
-            cell.textField.tag = -1;    // -1 == the title textfield
+            cell.textView.tag = -1;    // -1 == the title textfield
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
         return cell;
@@ -111,8 +119,6 @@
     }
     
     static NSString *InsertCellIdentifier = @"InsertOptionCell";
-    static NSString *CellIdentifier = @"OptionCell";
-
     // "Add Option"
     if ( indexPath.row == self.options.count ) {
         UITableViewCell *insertCell = [self.tableView dequeueReusableCellWithIdentifier:InsertCellIdentifier];
@@ -126,15 +132,15 @@
     }
 
     // An option
-    // for now, return a dumb cell
-    PollFieldCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    NSString *cellID = [NSString stringWithFormat:@"CellOption%d",indexPath.row];
+    PollFieldCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellID];
     if ( nil == cell ) {
         cell = [[PollFieldCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                     reuseIdentifier:CellIdentifier];
+                                    reuseIdentifier:cellID];
         cell.placeholder = @"Option";
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.textField.delegate = self;
-        cell.textField.tag = self.options.count -1;    // tag is index of option
+        cell.textField.tag = indexPath.row;    // tag is index of option
     }
     return cell;
 }
@@ -278,20 +284,24 @@
 }
 
 #pragma mark -
-#pragma mark UITextFieldDelegate Methods
+#pragma mark UITextField/ViewDelegate Methods
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-    if ( textField.tag == -1 ) {
-        self.pollTitle = textField.text;
-    } else {
-        [self.options replaceObjectAtIndex:textField.tag withObject:textField.text];
-    }
+    [self.options replaceObjectAtIndex:textField.tag withObject:textField.text];
     
     NSLog(@"Textfield tag was %d",textField.tag);
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
+    return YES;
+}
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    self.pollTitle = textView.text;
+    if ( [text isEqualToString:@"\n"] ) {
+        [textView resignFirstResponder];
+    }
     return YES;
 }
 

@@ -27,7 +27,10 @@
         self.accessoryView.backgroundColor = [UIColor clearColor];
         [self.accessoryView addSubview:self.percentageLabel];
         
-        _barGraphView = [[UIView alloc] initWithFrame:CGRectZero];
+        _barGraphView = [[UIView alloc] initWithFrame:CGRectMake(0,
+                                                                 self.frame.size.height/4.0f,
+                                                                 0,
+                                                                 self.frame.size.height/2.0f)];
         self.barGraphView.backgroundColor = [UIColor clearColor];
         [self.barGraphView setHidden:YES];
         [self.contentView addSubview:self.barGraphView];
@@ -62,21 +65,21 @@
                                             ACCESSORY_SIZE/2.0f - self.percentageLabel.frame.size.height/2.0f,
                                             ACCESSORY_SIZE,
                                             self.percentageLabel.frame.size.height);
-    self.barGraphView.frame = CGRectMake(0,
-                                         self.frame.size.height/4.0f,
-                                         MAX(5.0f, self.value * (CELL_WIDTH - 2*CELL_MARGIN)),
-                                         self.frame.size.height/2.0f);
+//    self.barGraphView.frame = CGRectMake(0,
+//                                         self.frame.size.height/4.0f,
+//                                         MAX(5.0f, self.value * (CELL_WIDTH - 2*CELL_MARGIN)),
+//                                         self.frame.size.height/2.0f);
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
-    self.barGraphView.backgroundColor = [UIColor colorWithHue:self.value/3.0f saturation:0.6f brightness:0.8f alpha:0.5f];
+    [self setBarGraphColor];
 }
 
 - (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated {
     [super setHighlighted:highlighted animated:animated];
-    self.barGraphView.backgroundColor = [UIColor colorWithHue:self.value/3.0f saturation:0.6f brightness:0.8f alpha:0.5f];
+    [self setBarGraphColor];
 }
 
 - (void)setHighlighted:(BOOL)highlighted {
@@ -90,13 +93,30 @@
     self.percentageLabel.text = [NSString stringWithFormat:@"%2.2f%%",100.0f * self.value];
     
     // Set bar graph
-    self.barGraphView.backgroundColor = [UIColor colorWithHue:self.value/3.0f saturation:0.6f brightness:0.8f alpha:0.5f];
+    [self setBarGraphColor];    
     [self layoutSubviews];
+}
+
+- (void)setBarGraphColor {
+    self.barGraphView.backgroundColor = [UIColor colorWithHue:self.value/3.0f saturation:0.9f brightness:0.8f alpha:0.7f];
 }
 
 - (void)showResult {
     [self.percentageLabel setHidden:NO];
+    
+    self.barGraphView.frame = CGRectMake(0,
+                                         self.frame.size.height/4.0f,
+                                         0,
+                                         self.frame.size.height/2.0f);
     [self.barGraphView setHidden:NO];
+    
+    [UIView beginAnimations:@"BarGraphAnimation" context:nil];
+    [UIView setAnimationDuration:0.5f];
+    self.barGraphView.frame = CGRectMake(0,
+                                         self.frame.size.height/4.0f,
+                                         MAX(5.0f, self.value * (CELL_WIDTH - 2*CELL_MARGIN)),
+                                         self.frame.size.height/2.0f);
+    [UIView commitAnimations];
 }
 
 @end
