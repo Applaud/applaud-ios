@@ -124,7 +124,7 @@
                                                         options:0
                                                           error:nil];
     NSDateFormatter *format = [[NSDateFormatter alloc] init];
-    format.dateFormat = @"MM/dd/yyyy";
+    format.dateFormat = @"MM/dd/yyyy H:m:s";
     for(NSDictionary *dict in comments) {
         NSDictionary *user = dict[@"user"];
         Comment *c = [[Comment alloc] initWithText:dict[@"text"]
@@ -156,7 +156,7 @@
                                                       options:0
                                                       error:nil];
                                 NSDateFormatter *format = [[NSDateFormatter alloc] init];
-                                format.dateFormat = @"MM/dd/yyyy";
+                                format.dateFormat = @"MM/dd/yyyy H:m:s";
                                 Comment *c = [[Comment alloc]
                                               initWithText:dict[@"text"]
                                               photo_id:[dict[@"businessphoto"] intValue]
@@ -169,6 +169,7 @@
                                 [self.comments addObject:c];
                                 [self.tableView reloadData];
                             }];
+    self.commentField.text = @"";
 }
 
 #pragma mark -
