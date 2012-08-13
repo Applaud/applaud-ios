@@ -36,6 +36,8 @@
         
         [self addSubview:self.upvotesLabel];
         [self addSubview:self.voteButton];
+        
+        self.enabled = YES;
     }
     return self;
 }
@@ -64,8 +66,7 @@
 - (void)setEnabled:(BOOL)userInteractionEnabled {
     _enabled = userInteractionEnabled;
     self.voteButton.userInteractionEnabled = userInteractionEnabled;
-    self.voteButton.enabled = NO;
-
+    self.voteButton.enabled = userInteractionEnabled;
 }
 
 @end

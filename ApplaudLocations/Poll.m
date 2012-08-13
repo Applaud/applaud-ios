@@ -14,7 +14,7 @@
            options:(NSMutableArray*)options
          responses:(NSMutableArray*)responses
       date_created:(NSDate*)date_created
-       user_rating:(int)user_rating
+           upvotes:(int)upvotes
       show_results:(BOOL)show_results
          my_rating:(int)my_rating
            poll_id:(int)poll_id {
@@ -24,7 +24,7 @@
         _options = options;
         self.responses = responses;
         _date_created = date_created;
-        _user_rating = user_rating;
+        _upvotes = upvotes;
         _show_results = show_results;
         _my_rating = my_rating;
         _poll_id = poll_id;
