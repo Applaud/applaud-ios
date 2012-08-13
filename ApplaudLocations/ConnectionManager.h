@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#define FORM_BOUNDARY @"2sdf2MASTERsd23TRASH982cca"
+
 #define EXAMPLE_URL @"/mobile/example3/"
 #define WHEREAMI_URL @"/mobile/whereami/"
 #define EMPLOYEES_URL @"/mobile/employees/"
@@ -67,6 +69,9 @@
 
 // Manage logins and logouts
 + (void)authenticateWithUsername:(NSString *)username password:(NSString *)password;
+
+// POST a photo, with optional (non-photo) parameters.
++ (void)postPhoto:(UIImage *)image withParams:(NSDictionary *)params callback:(void(^)(NSHTTPURLResponse *, NSData *))callback toURL:(NSString *)url;
 
 /*** CLASS MEMBERS ***/
 @property (nonatomic, copy) NSString *sessionCookie;
