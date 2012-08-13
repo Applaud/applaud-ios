@@ -84,9 +84,9 @@
         
 
         //[self.view addSubview:self.backgroundImage];
-        [self.view addSubview:self.apatapaTitle];
         //[self.view.layer insertSublayer:self.backgroundGradient atIndex:0];
         [self.view addSubview:self.backgroundImage];
+        [self.view addSubview:self.apatapaTitle];
         [self.view addSubview:self.logo];
         [self.view addSubview: self.signIn];
         [self.view addSubview: self.createAccount];
