@@ -166,6 +166,8 @@
 - (void) signInButtonPressed {
     if([self checkFields]){
         [ConnectionManager authenticateWithUsername:self.username.text password:self.password.text];
+//        self.view = [[UIView alloc] initWithFrame:CGRectMake(0,0,320,480)];
+//        self.view.backgroundColor = [UIColor blackColor];
     }
 }
 

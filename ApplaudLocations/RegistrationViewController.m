@@ -245,6 +245,8 @@
 }
 - (void) registerButtonPressed {
     if([self checkFields]){
+        [self.password resignFirstResponder];
+        
         NSString *lastName = self.lastName.text ? self.lastName.text: @"";
         NSDictionary *dict = @{@"email":self.email.text,
         @"first_name":self.firstName.text,
@@ -252,8 +254,9 @@
         @"password":self.password.text};
         
         [ConnectionManager serverRequest:@"POST" withParams:dict url:REGISTER_URL callback:^(NSHTTPURLResponse *response, NSData *data){
-            
             [ConnectionManager authenticateWithUsername:dict[@"email"] password:dict[@"password"]];
+//            self.view = [[UIView alloc] initWithFrame:CGRectMake(0,0,320,480)];
+//            self.view.backgroundColor = [UIColor blackColor];
             
         }];
     }
@@ -322,6 +325,7 @@
                                                     .width, self.scrollView.frame.size.height);
                 
             }];
+            [self checkPassword];
             [self registerButtonPressed];
         }
         return NO;

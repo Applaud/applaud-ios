@@ -90,6 +90,8 @@
     // Setup the window for display
     self.navControl = [[UINavigationController alloc] initWithRootViewController:self.masterViewController];
     self.navControl.navigationBar.tintColor = [UIColor darkGrayColor];
+    UIView *newView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"plainbackground"]];
+    [self.window addSubview:newView];
     self.window.rootViewController = self.navControl;
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
@@ -101,16 +103,11 @@
     
     // Authenticate the user
     NSString *username, *password;
-    UIAlertView *loginAlert = [[UIAlertView alloc] initWithTitle:@"Login to Applaud"
-                                                         message:@"Please enter your login information."
-                                                        delegate:self
-                                               cancelButtonTitle:@"Cancel"
-                                               otherButtonTitles:@"OK", nil];
-    loginAlert.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
-    
+ 
     // Try to retrieve username and password from internal database
     if ( (username = self.settings.username) && (password = self.settings.password) ) {
         // Perform login
+        
         [ConnectionManager authenticateWithUsername:username password:password];
     }
     else {
