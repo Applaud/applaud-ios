@@ -60,6 +60,7 @@
 		1B6D228415CA7292009A533B /* favicon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1B6D228315CA7292009A533B /* favicon@2x.png */; };
 		1B73581D15BDF08F00D87F4E /* libSDWebImageARC.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B73581715BDF03D00D87F4E /* libSDWebImageARC.a */; };
 		1B73582015BDF0A500D87F4E /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B73581F15BDF0A500D87F4E /* ImageIO.framework */; };
+		1B88333015D9751E007A982A /* UIViewController+KeyboardDismiss.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B88332F15D9751E007A982A /* UIViewController+KeyboardDismiss.m */; };
 		1B9389AA1583CB460088F468 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B9389A91583CB460088F468 /* MapKit.framework */; };
 		1B9389B01583EB110088F468 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B9389AF1583EB110088F468 /* CoreLocation.framework */; };
 		1B9389BB1584EF010088F468 /* BusinessLocationsTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B9389BA1584EF010088F468 /* BusinessLocationsTracker.m */; };
@@ -217,6 +218,8 @@
 		1B6D228315CA7292009A533B /* favicon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "favicon@2x.png"; path = "../favicon@2x.png"; sourceTree = "<group>"; };
 		1B73580B15BDF03C00D87F4E /* SDWebImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SDWebImage.xcodeproj; path = SDWebImage/SDWebImage.xcodeproj; sourceTree = "<group>"; };
 		1B73581F15BDF0A500D87F4E /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		1B88332E15D9751E007A982A /* UIViewController+KeyboardDismiss.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+KeyboardDismiss.h"; sourceTree = "<group>"; };
+		1B88332F15D9751E007A982A /* UIViewController+KeyboardDismiss.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+KeyboardDismiss.m"; sourceTree = "<group>"; };
 		1B9389A91583CB460088F468 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		1B9389AF1583EB110088F468 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		1B9389B91584EF010088F468 /* BusinessLocationsTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessLocationsTracker.h; sourceTree = "<group>"; };
@@ -491,6 +494,8 @@
 		1BA358ED1582F05E00EB8F32 /* ApplaudLocations */ = {
 			isa = PBXGroup;
 			children = (
+				1B88332E15D9751E007A982A /* UIViewController+KeyboardDismiss.h */,
+				1B88332F15D9751E007A982A /* UIViewController+KeyboardDismiss.m */,
 				6FAE729515D5A87E004BC304 /* white_comments.png */,
 				1B67EE7B15D1B64400F94CA0 /* SubmitCancelCell.h */,
 				1B67EE7C15D1B64400F94CA0 /* SubmitCancelCell.m */,
@@ -782,6 +787,7 @@
 				1BC0043115D5F79400EB0958 /* TextViewCell.m in Sources */,
 				1BC0043415D5F92E00EB0958 /* UIPlaceHolderTextView.m in Sources */,
 				1BC1D44315D84BD400B0B8C1 /* ApatapaRatingWidget.m in Sources */,
+				1B88333015D9751E007A982A /* UIViewController+KeyboardDismiss.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
