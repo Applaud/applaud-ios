@@ -64,6 +64,8 @@
     self.usernameLabel.text = self.post.user.username;
     
     self.ratingWidget.upvotesCount = self.post.upvotes;
+    if ( self.post.my_rating )
+        self.ratingWidget.enabled = NO;
 }
 
 - (void)setPost:(ThreadPost *)post {
@@ -104,6 +106,7 @@
 
 - (void)upRateWithWidget:(ApatapaRatingWidget *)widget {
     [self.mpvc giveRating:1 toThreadPostWithId:self.post.threadpost_id];
+    self.ratingWidget.enabled = NO;
 }
 
 @end

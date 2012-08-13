@@ -12,7 +12,6 @@
 #import "ConnectionManager.h"
 #import "SDWebImage/UIImageView+WebCache.h"
 #import "AppDelegate.h"
-#import "EmployeeBioCell.h"
 #import "EmployeeDisplayConstants.h"
 #import <QuartzCore/QuartzCore.h>
 
@@ -152,35 +151,12 @@
     selectedTextRect = textField.bounds;
     selectedTextRect = [textField convertRect:selectedTextRect toView:self.view];
     previousOffset = [self.tableView contentOffset];
+    
+//    UITableViewCell *cell = textField
 }
 
 #pragma mark -
 #pragma mark Keyboard Handling
-
-//- (void)keyboardWillHide:(NSNotification *)n
-//{
-//    [self.tableView setContentOffset:previousOffset animated:YES];
-//    keyboardIsShown = NO;
-//}
-//
-//- (void)keyboardWillShow:(NSNotification *)n
-//{
-//    if (keyboardIsShown) {
-//        return;
-//    }
-//    
-//    NSDictionary* userInfo = [n userInfo];
-//    
-//    // get the size of the keyboard
-//    CGSize keyboardSize = [userInfo[UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-//    
-//    CGPoint offsetPoint = selectedTextRect.origin;
-//    offsetPoint.x = 0;
-//    offsetPoint.y -= keyboardSize.height - selectedTextRect.size.height - NAVBAR_SIZE;
-//    [self.tableView setContentOffset:offsetPoint animated:YES];
-//  
-//    keyboardIsShown = YES;
-//}
 
 - (void)keyboardWillHide:(NSNotification *)n
 {
@@ -227,14 +203,10 @@
     [self.tableView setFrame:viewFrame];
     [UIView commitAnimations];
     
-    NSArray *vips = [self.tableView indexPathsForVisibleRows];
-        
-    [self.tableView scrollToRowAtIndexPath:vips[vips.count-1] atScrollPosition:UITableViewScrollPositionTop animated:YES];
-    
-//    [self.tableView scrollToRowAtIndexPath:[self.questionsTable indexPathForSelectedRow]
-//                               atScrollPosition:UITableViewScrollPositionBottom
-//                                       animated:YES];
-//    
+    CGRect scrollToRect = selectedTextRect;
+    scrollToRect.size.height += CELL_PADDING;
+    [self.tableView scrollRectToVisible:scrollToRect animated:YES];
+  
     keyboardIsShown = YES;
 }
 
@@ -261,14 +233,6 @@
     cell.backgroundColor = [UIColor whiteColor];
     cell.contentView.backgroundColor = [UIColor whiteColor];
     cell.contentView.layer.cornerRadius = 7.0f;
-}
-
-/*- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 2*CELL_PADDING + TITLE_LABEL_HEIGHT + RATING_FIELD_HEIGHT + CELL_ELEMENT_PADDING;
-}*/
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {    
-    // nothing yet
 }
 
 #pragma mark -
@@ -320,7 +284,7 @@
     }
     
     else {
-        static NSString *cellIdentifier = @"EmployeeViewCell";
+        NSString *cellIdentifier = [NSString stringWithFormat:@"EmployeeViewCell%d",[self.employee.ratingDimensions[indexPath.row][@"id"] intValue]];
         UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         
         if ( nil == cell ) {
@@ -385,6 +349,9 @@
                 [clearButton addTarget:self action:@selector(clearButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                 clearButton.tag = responseWidgetTag;
                 clearButtonTable[[@(responseWidgetTag) description]] = clearButton;
+                // Make the clear button invisible at first, to appear when the slider is moved.
+                [clearButton setUserInteractionEnabled:NO];
+                [clearButton setHidden:YES];
                 
                 [cell.contentView addSubview:clearButton];
                 [cell.contentView addSubview:slider];
@@ -422,6 +389,10 @@
     
     // Note that the slider is no longer active
     activityTable[[@(valueLabel.tag) description]] = @(NO);
+    
+    // Hide the button
+    clearButton.userInteractionEnabled = NO;
+    clearButton.hidden = YES;
 }
 
 /*
@@ -441,6 +412,15 @@
 
     // Note that the slider is active
     activityTable[[@(valueLabel.tag) description]] = @(YES);
+    
+    // Show the "cancel rating" button
+    UIButton *clearButton = nil;
+    for ( UIView *subview in slider.superview.subviews ) {
+        if ( [subview isKindOfClass:[UIButton class]] )
+            clearButton = (UIButton*)subview;
+    }
+    [clearButton setUserInteractionEnabled:YES];
+    [clearButton setHidden:NO];
 }
 
 - (void) submitButtonPressed:(UIButton *)sender {

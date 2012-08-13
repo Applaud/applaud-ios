@@ -73,7 +73,6 @@
 		1BA358F21582F05E00EB8F32 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1BA358F01582F05E00EB8F32 /* InfoPlist.strings */; };
 		1BA358F41582F05E00EB8F32 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BA358F31582F05E00EB8F32 /* main.m */; };
 		1BA358F81582F05E00EB8F32 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BA358F71582F05E00EB8F32 /* AppDelegate.m */; };
-		1BB4AC9F15BF3E68003E8B29 /* EmployeeBioCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BB4AC9E15BF3E68003E8B29 /* EmployeeBioCell.m */; };
 		1BC0043115D5F79400EB0958 /* TextViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC0043015D5F79400EB0958 /* TextViewCell.m */; };
 		1BC0043415D5F92E00EB0958 /* UIPlaceHolderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC0043315D5F92E00EB0958 /* UIPlaceHolderTextView.m */; };
 		1BC0046315D6043100EB0958 /* photos.png in Resources */ = {isa = PBXBuildFile; fileRef = 1BC0046115D6043100EB0958 /* photos.png */; };
@@ -238,8 +237,6 @@
 		1BA358F61582F05E00EB8F32 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1BA358F71582F05E00EB8F32 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		1BB4AC9C15BF3B58003E8B29 /* EmployeeDisplayConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmployeeDisplayConstants.h; sourceTree = "<group>"; };
-		1BB4AC9D15BF3E68003E8B29 /* EmployeeBioCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmployeeBioCell.h; sourceTree = "<group>"; };
-		1BB4AC9E15BF3E68003E8B29 /* EmployeeBioCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmployeeBioCell.m; sourceTree = "<group>"; };
 		1BC0042F15D5F79400EB0958 /* TextViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextViewCell.h; sourceTree = "<group>"; };
 		1BC0043015D5F79400EB0958 /* TextViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextViewCell.m; sourceTree = "<group>"; };
 		1BC0043215D5F92E00EB0958 /* UIPlaceHolderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPlaceHolderTextView.h; sourceTree = "<group>"; };
@@ -391,8 +388,6 @@
 				1BB4AC9C15BF3B58003E8B29 /* EmployeeDisplayConstants.h */,
 				6F6F702515C85F0E007C8DF7 /* EmployeeCell.h */,
 				6F6F702615C85F0E007C8DF7 /* EmployeeCell.m */,
-				1BB4AC9D15BF3E68003E8B29 /* EmployeeBioCell.h */,
-				1BB4AC9E15BF3E68003E8B29 /* EmployeeBioCell.m */,
 				1B301C64158858430038A5BE /* EmployeeViewController.h */,
 				1B301C65158858430038A5BE /* EmployeeViewController.m */,
 				6F8C8A29158C03DB00BB4BA0 /* Employee.h */,
@@ -761,7 +756,6 @@
 				1B9C3A6815BA0637000EEF1A /* SurveyAccordionCell.m in Sources */,
 				6F9E60D915C06E37006BD49A /* BusinessPhoto.m in Sources */,
 				1BD494F215BF1E05006A01A9 /* NFTableViewCell.m in Sources */,
-				1BB4AC9F15BF3E68003E8B29 /* EmployeeBioCell.m in Sources */,
 				1B5D030A15C4564300976D33 /* ErrorViewController.m in Sources */,
 				6F6F702715C85F0E007C8DF7 /* EmployeeCell.m in Sources */,
 				6F66787615C9EFCE00A7AA1D /* NFItemTableViewCell.m in Sources */,

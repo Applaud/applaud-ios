@@ -162,7 +162,7 @@
                                                                                               CELL_PADDING,
                                                                                               POLL_RATING_WIDTH,
                                                                                               32)
-                                                                      upvotesCount:[self.polls[section] total_votes]];
+                                                                      upvotesCount:[self.polls[section] upvotes]];
 
     // Tag the rating widget with the section number (poll index number)
     ratingWidget.tag = section;
@@ -269,9 +269,9 @@
     [pollsSortedLiked sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
         Poll *a = (Poll*)obj1;
         Poll *b = (Poll*)obj2;
-        if ( a.user_rating < b.user_rating )
+        if ( a.upvotes < b.upvotes )
             return NSOrderedDescending;
-        else if ( a.user_rating > b.user_rating )
+        else if ( a.upvotes > b.upvotes )
             return NSOrderedAscending;
         return NSOrderedSame;
     }];
@@ -330,7 +330,7 @@
                                          options:pollDict[@"options"]
                                        responses:pollDict[@"responses"]
                                     date_created:[formatter dateFromString:pollDict[@"date_created"]]
-                                     user_rating:[pollDict[@"user_rating"] intValue]
+                                         upvotes:[pollDict[@"upvotes"] intValue]
                                     show_results:[pollDict[@"show_results"] boolValue]
                                         my_rating:[pollDict[@"my_vote"] intValue]
                                          poll_id:[pollDict[@"id"] intValue]];
@@ -370,7 +370,7 @@
                                  url:POLL_RATE_URL
                             callback:^(NSHTTPURLResponse *response, NSData *data) {
                                 [self handlePollsData:data];
-                                widget.upvotesCount = [self.polls[widget.tag] total_votes];
+//                                widget.upvotesCount = [self.polls[widget.tag] total_votes];
                             }];
 }
 
