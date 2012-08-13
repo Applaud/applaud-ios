@@ -18,7 +18,7 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginSucceeded:) name:@"LOGIN_SUCCESS" object:nil];
 
         // Background image
-        self.backgroundImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"texturedbackground"]];
+        self.backgroundImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Default"]];
         self.backgroundImage.contentMode = UIViewContentModeBottom;
         self.backgroundImage.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
         
@@ -28,21 +28,21 @@
 //        self.backgroundGradient.locations = @[@0.0, @1.0f];
 //        
         // Logo image
-        self.logo = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"transparent logo"]];
-        self.logo.frame = CGRectMake(10, -20, 300, 300);
-        
-        // Title
-        self.apatapaTitle = [[UILabel alloc] initWithFrame: CGRectMake(40,275,300,50)];
-        self.apatapaTitle.text = @"APATAPA";
-        self.apatapaTitle.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.0];
-        self.apatapaTitle.textColor = [UIColor colorWithRed:.9 green:.9 blue:.9 alpha:1.0];
-        self.apatapaTitle.font = [UIFont boldSystemFontOfSize:50];
-        
+//        self.logo = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"transparent logo"]];
+//        self.logo.frame = CGRectMake(10, -20, 300, 300);
+//        
+//        // Title
+//        self.apatapaTitle = [[UILabel alloc] initWithFrame: CGRectMake(40,275,300,50)];
+//        self.apatapaTitle.text = @"APATAPA";
+//        self.apatapaTitle.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.0];
+//        self.apatapaTitle.textColor = [UIColor colorWithRed:.9 green:.9 blue:.9 alpha:1.0];
+//        self.apatapaTitle.font = [UIFont boldSystemFontOfSize:50];
+//        
         
         // Sign-In button setup and styling
         self.signIn = [UIButton buttonWithType:UIButtonTypeCustom];
         self.signIn.backgroundColor = [UIColor grayColor];
-        self.signIn.frame = CGRectMake(10,422,TEXTFIELD_WIDTH,TEXTFIELD_HEIGHT);
+        self.signIn.frame = CGRectMake(10,412,TEXTFIELD_WIDTH,TEXTFIELD_HEIGHT);
         self.signIn.titleLabel.font = [UIFont boldSystemFontOfSize:15.0];
         [self.signIn setTitle:@"Sign In" forState:UIControlStateNormal];
         self.signIn.layer.cornerRadius = 3;
@@ -64,7 +64,7 @@
         
         // Create Account button setup and styling
         self.createAccount = [UIButton buttonWithType:UIButtonTypeCustom];
-        self.createAccount.frame = CGRectMake(10,385,TEXTFIELD_WIDTH, TEXTFIELD_HEIGHT);
+        self.createAccount.frame = CGRectMake(10,370,TEXTFIELD_WIDTH, TEXTFIELD_HEIGHT);
         self.createAccount.titleLabel.font = [UIFont boldSystemFontOfSize:15.0];
         [self.createAccount setTitle:@"Create an Account" forState:UIControlStateNormal];
         self.createAccount.layer.cornerRadius = 3;

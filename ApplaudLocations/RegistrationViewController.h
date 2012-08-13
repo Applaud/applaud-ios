@@ -35,6 +35,7 @@
 
 @property (strong, nonatomic) UINavigationBar *navBar;
 @property (strong, nonatomic) UIScrollView *scrollView;
+@property (strong, nonatomic) UIImageView *backgroundImage;
 @property (nonatomic, strong) CAGradientLayer *backgroundGradient;
 @property (nonatomic, weak) AppDelegate *appDelegate;
 @property (nonatomic, weak) UIWindow *window;
