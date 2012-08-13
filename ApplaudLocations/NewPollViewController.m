@@ -86,7 +86,7 @@
 #pragma mark UITableViewDataSource / Delegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ( indexPath.section == 1 )
+    if ( indexPath.section > 0 )
         return 42.0f;
     return 60.0f;
 }
