@@ -45,7 +45,10 @@
 }
 
 - (void)upRate {
-    [self.delegate upRateWithWidget:self];
+    if(self.enabled) {
+        [self.delegate upRateWithWidget:self];
+        self.upvotesCount = self.upvotesCount + 1;
+    }
 }
 
 - (void)setUpvotesCount:(int)upvotesCount {
@@ -59,8 +62,10 @@
 }
 
 - (void)setEnabled:(BOOL)userInteractionEnabled {
+    _enabled = userInteractionEnabled;
     self.voteButton.userInteractionEnabled = userInteractionEnabled;
     self.voteButton.enabled = NO;
+
 }
 
 @end

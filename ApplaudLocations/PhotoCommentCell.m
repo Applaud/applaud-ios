@@ -11,18 +11,22 @@
 @implementation PhotoCommentCell
 
 - (id)initWithComment:(Comment *)comment
-             style:(UITableViewCellStyle)style
-   reuseIdentifier:(NSString *)reuseIdentifier
+                style:(UITableViewCellStyle)style
+      reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         _comment = comment;
+        self.ratingWidget = [[ApatapaRatingWidget alloc] initWithFrame:CGRectMake(CELL_WIDTH - CELL_MARGIN - CELL_PADDING - MINGLE_RATING_WIDTH, CELL_PADDING,
+                                                                                  MINGLE_RATING_WIDTH, 24.0f)
+                                                               upvotesCount:_comment.votes];
+        self.ratingWidget.delegate = self;
+        [self checkCanVote];
         CGSize textSize = [self.comment.text sizeWithFont:[UIFont systemFontOfSize:BODY_TEXT_SIZE]
                                         constrainedToSize:CGSizeMake(self.contentView.frame.size.width -
                                                                      2*CELL_PADDING,
                                                                      1000)
                                             lineBreakMode:UILineBreakModeWordWrap];
-        NSLog(@"Text Size %f %f comment %@", textSize.width, textSize.height, comment.text);
         self.commentTextView = [[UITextView alloc]
                                 initWithFrame:CGRectMake(CELL_PADDING,
                                                          CELL_PADDING,
@@ -47,10 +51,12 @@
                                                                    20.0f)];
         self.dateLabel.font = [UIFont systemFontOfSize:DATE_SIZE];
         self.dateLabel.text = [ApatapaDateFormatter stringFromDate:self.comment.date_created];
+        [self.contentView addSubview:self.ratingWidget];
         [self.contentView addSubview:self.dateLabel];
         [self.contentView addSubview:self.nameLabel];
         self.commentTextView.backgroundColor = self.contentView.backgroundColor;
         self.nameLabel.backgroundColor = [UIColor clearColor];
+        self.dateLabel.backgroundColor = [UIColor clearColor];
     }
     return self;
 }
@@ -72,13 +78,33 @@
 
     self.nameLabel.text = [NSString stringWithFormat:@"%@ %@", self.comment.firstName,
                            self.comment.lastName];
+    [self checkCanVote];
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
+-(void)checkCanVote {
+    NSDictionary *params = @{@"id": @(self.comment.comment_id), @"type": @"models.Comment"};
+    [ConnectionManager serverRequest:@"POST" withParams:params
+                                 url:CHECK_VOTE_URL
+                            callback:^(NSHTTPURLResponse *r, NSData *d) {
+                                NSString *response = [[NSString alloc]
+                                                      initWithData:d
+                                                      encoding:NSUTF8StringEncoding];
+                                if([response isEqualToString:@"YES"]) {
+                                    self.ratingWidget.enabled = YES;
+                                }
+                                else {
+                                    self.ratingWidget.enabled = NO;
+                                }
+                            }];
 }
 
+-(void)upRateWithWidget:(ApatapaRatingWidget *)widget {
+    NSDictionary *params = @{@"id": @(self.comment.comment_id)};
+    [ConnectionManager serverRequest:@"POST" withParams:params
+                                 url:COMMENT_VOTE_URL
+                            callback:^(NSHTTPURLResponse *r, NSData *d) {
+                                self.ratingWidget.enabled = NO;
+                                NSLog(@"enabled %d", self.ratingWidget.enabled);
+                            }];
+}
 @end
