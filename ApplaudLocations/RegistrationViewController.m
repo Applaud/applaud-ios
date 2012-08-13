@@ -253,8 +253,10 @@
         
         [ConnectionManager serverRequest:@"POST" withParams:dict url:REGISTER_URL callback:^(NSHTTPURLResponse *response, NSData *data){
             
-            [ConnectionManager authenticateWithUsername:dict[@"email"] password:dict[@"password"]];
-            
+            ProfilePictureViewController *ppvc = [[ProfilePictureViewController alloc]
+                                                  initWithUsername:self.email.text
+                                                  password:self.password.text];
+            [self presentViewController:ppvc animated:YES completion:nil];
         }];
     }
 }

@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "ConnectionManager.h"
 #import "LoginRegistrationConstants.h"
+#import "ProfilePictureViewController.h"
 #import <QuartzCore/QuartzCore.h>
 
 @interface RegistrationViewController : UIViewController<UITextViewDelegate>

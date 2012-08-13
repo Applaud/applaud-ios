@@ -94,9 +94,8 @@
 #pragma mark -
 #pragma UIImagePickerController delegate methods
 // Called when the user has taken the photo. We can then send it off to the server.
--(void)imagePickerController:(UIImagePickerController *)picker
-       didFinishPickingImage:(UIImage *)image
-                 editingInfo:(NSDictionary *)editingInfo {
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    UIImage *image = info[UIImagePickerControllerOriginalImage];
     [self.scrollView setContentOffset:CGPointZero animated:NO];
     [[[UIAlertView alloc] initWithTitle:@"Thanks!"
                                 message:@"What a great photo."
