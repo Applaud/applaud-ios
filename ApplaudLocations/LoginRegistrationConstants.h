@@ -12,4 +12,6 @@
 #define TEXTFIELD_HEIGHT 30
 #define TEXTFIELD_WIDTH 300
 
+#define IMAGE_SPACING 275
+
 #endif
