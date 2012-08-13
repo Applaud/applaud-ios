@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "Business.h"
 #import "ConnectionManager.h"
+#import "MasterViewController.h"
 
 @implementation BusinessLocationsTracker
 
@@ -75,6 +76,7 @@
                                                      types:dict[@"types"]];
             bus.business_id = [dict[@"business_id"] intValue];
             [businessArray addObject:bus];
+            self.appDelegate.masterViewController.backgroundImage.image = [UIImage imageNamed:@"City"];
         }
         // put some info in the notificationcenter
         [[NSNotificationCenter defaultCenter] postNotificationName:@"BUSINESS_RECEIVED" object:businessArray];
