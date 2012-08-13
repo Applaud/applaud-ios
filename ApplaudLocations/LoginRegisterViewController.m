@@ -162,6 +162,7 @@
     
     UIView *newView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"plainbackground"]];
     [self.window addSubview:newView];
+    
     self.window.rootViewController = self.appDelegate.navControl;
     
 }

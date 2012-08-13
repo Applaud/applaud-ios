@@ -255,9 +255,10 @@
         
         [ConnectionManager serverRequest:@"POST" withParams:dict url:REGISTER_URL callback:^(NSHTTPURLResponse *response, NSData *data){
             [ConnectionManager authenticateWithUsername:dict[@"email"] password:dict[@"password"]];
-//            self.view = [[UIView alloc] initWithFrame:CGRectMake(0,0,320,480)];
-//            self.view.backgroundColor = [UIColor blackColor];
-            
+            [self.email resignFirstResponder];
+            [self.firstName resignFirstResponder];
+            [self.lastName resignFirstResponder];
+            [self.password resignFirstResponder];
         }];
     }
 }
