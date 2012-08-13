@@ -16,8 +16,10 @@
 @property (nonatomic, strong) NSDate *date_created;
 @property (nonatomic) int photo_id;
 @property (nonatomic) int comment_id;
+@property (nonatomic) int votes;
 
 -(id)initWithText:(NSString *)text photo_id:(int)photo_id user_id:(int)user_id
              date:(NSDate *)date_created comment_id:(int)comment_id
-        firstName:(NSString *)firstName lastName:(NSString *)lastName;
+        firstName:(NSString *)firstName lastName:(NSString *)lastName
+            votes:(int)votes;
 @end

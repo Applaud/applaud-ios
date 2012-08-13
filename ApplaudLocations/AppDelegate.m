@@ -214,7 +214,7 @@
 //    UITabBarItem *threadsItem = [[UITabBarItem alloc] init];
 //    threadsItem.title = @"Mingle";
     UITabBarItem *threadsItem = [[UITabBarItem alloc] initWithTitle:@"Mingle"
-                                                              image:[UIImage imageNamed:@"photos"]
+                                                              image:[UIImage imageNamed:@"dialog"]
                                                                 tag:100];
     mlvc.tabBarItem = threadsItem;
     UITabBarItem *questionItem = [[UITabBarItem alloc] initWithTitle:@"Feedback"
@@ -226,7 +226,7 @@
                                                              tag:103];
     nfvc.tabBarItem = newsItem;
     UITabBarItem *photoItem = [[UITabBarItem alloc] initWithTitle:@"Photos"
-                                                            image:nil
+                                                            image:[UIImage imageNamed:@"photos"]
                                                               tag:104];
     bpvc.tabBarItem = photoItem;
 	self.tabNavigator.viewControllers = @[newsNav, pollsNav, mingleNav, employeeNav, photoNav];

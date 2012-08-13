@@ -22,7 +22,10 @@
 @property (nonatomic, weak) AppDelegate *appDelegate;
 @property (nonatomic, strong) UINavigationController *navigationController;
 @property (nonatomic, strong) UINavigationBar *navBar;
+@property (nonatomic, strong) UIToolbar *toolBar;
 @property (nonatomic) int index;
+@property (nonatomic, strong) UIBarButtonItem *likeLabel;
+@property (nonatomic, strong) UIBarButtonItem *likeButton;
 
 -(id)initWithPhotos:(NSMutableArray *)photo index:(int)index;
 @end

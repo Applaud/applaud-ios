@@ -191,8 +191,7 @@
     for(NSDictionary *photoDict in [photoData objectForKey:@"photos"]) {
         BusinessPhoto *photo = [[BusinessPhoto alloc] initWithImage:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", SERVER_URL, photoDict[@"image"]]]
                                                                tags:photoDict[@"tags"]
-                                                            upvotes:[photoDict[@"upvotes"] intValue]
-                                                          downvotes:[photoDict[@"downvotes"] intValue]
+                                                            upvotes:[photoDict[@"votes"] intValue]
                                                            business:[photoDict[@"business"] intValue]
                                                         uploaded_by:photoDict[@"uploaded_by"]
                                                              active:[photoDict[@"active"] boolValue]

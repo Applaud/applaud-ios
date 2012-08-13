@@ -33,6 +33,7 @@
 #define CHECK_VOTE_URL @"/mobile/check_vote/"
 #define PHOTO_COMMENT_URL @"/mobile/comment_photo/"
 #define GET_PHOTO_COMMENTS_URL @"/mobile/get_photo_comments/"
+#define COMMENT_VOTE_URL @"/mobile/vote_comment/"
 
 @interface ConnectionManager : NSObject
 

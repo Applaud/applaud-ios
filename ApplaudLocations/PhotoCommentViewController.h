@@ -13,6 +13,7 @@
 #import "BusinessPhoto.h"
 #import "ConnectionManager.h"
 #import "AppDelegate.h"
+#import "ApatapaRatingWidget.h"
 
 @interface PhotoCommentViewController : UIViewController <UITableViewDataSource,
                                                           UITableViewDelegate,

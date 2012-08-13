@@ -65,7 +65,10 @@
         
         UIBarButtonItem *textField = [[UIBarButtonItem alloc] initWithCustomView:self.commentField];
         
-        UIBarButtonItem *commentButton = [[UIBarButtonItem alloc] initWithTitle:@"Send" style:UIBarButtonItemStyleDone target:self action:@selector(postComment)];
+        UIBarButtonItem *commentButton = [[UIBarButtonItem alloc] initWithTitle:@"Send"
+                                                                          style:UIBarButtonItemStyleDone
+                                                                         target:self
+                                                                         action:@selector(postComment)];
         commentButton.tintColor = [UIColor colorWithRed:.6 green:.6 blue:.6 alpha:1.0];
         
         // Make the 'Comment' toolbar at the very bottom of the screen
@@ -130,7 +133,8 @@
                                               date:[format dateFromString:dict[@"date_created"]]
                                         comment_id:[dict[@"id"] intValue]
                                          firstName:user[@"first_name"]
-                                          lastName:user[@"last_name"]];
+                                          lastName:user[@"last_name"]
+                                             votes:[dict[@"votes"] intValue]];
         [self.comments addObject:c];
     }
     [self.tableView reloadData];
@@ -138,6 +142,10 @@
 
 -(void)postComment {
     NSString *comment = self.commentField.text;
+    [self.commentField resignFirstResponder];
+    if([comment isEqualToString:@""]) {
+        return;
+    }
     NSDictionary *params = @{@"photo_id": @(self.businessPhoto.photo_id),
                              @"text": comment};
     [ConnectionManager serverRequest:@"POST" withParams:params
@@ -156,9 +164,9 @@
                                               date:[format dateFromString:dict[@"date_created"]]
                                               comment_id:[dict[@"id"] intValue]
                                               firstName:dict[@"user"][@"first_name"]
-                                              lastName:dict[@"user"][@"last_name"]];
+                                              lastName:dict[@"user"][@"last_name"]
+                                              votes:[dict[@"votes"] intValue]];
                                 [self.comments addObject:c];
-                                NSLog(@"%@", self.comments);
                                 [self.tableView reloadData];
                             }];
 }
@@ -176,9 +184,15 @@
     [UIView animateWithDuration:0.25f animations:^(void){
         self.toolbar.frame = CGRectMake(0, 200, self.toolbar.frame.size.width, self.toolbar.frame.size.height);
         if( self.tableView.contentSize.height > self.tableView.frame.size.height){
-            self.scrollView.bounds = CGRectMake(0, 214, self.scrollView.frame.size.width, self.scrollView.frame.size.height);
+            self.scrollView.bounds = CGRectMake(0,
+                                                214,
+                                                self.scrollView.frame.size.width,
+                                                self.scrollView.frame.size.height);
         }
-        self.tableView.bounds = CGRectMake(0, tableViewOffset < 0 ? 0 : tableViewOffset, self.tableView.frame.size.width, self.tableView.frame.size.height);
+        self.tableView.bounds = CGRectMake(0,
+                                           tableViewOffset < 0 ? 0 : tableViewOffset,
+                                           self.tableView.frame.size.width,
+                                           self.tableView.frame.size.height);
     }];
 }
 
