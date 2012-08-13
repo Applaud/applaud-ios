@@ -130,6 +130,7 @@
 		8AD58AA115D8963B002F1438 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AD58AA015D8963B002F1438 /* Default.png */; };
 		8AD58AA315D8A563002F1438 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AD58AA215D8A562002F1438 /* Default.png */; };
 		8AD58AA515D8A568002F1438 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AD58AA415D8A568002F1438 /* Default@2x.png */; };
+		8AD58AA715D8A6A3002F1438 /* plainbackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AD58AA615D8A6A3002F1438 /* plainbackground@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -346,6 +347,7 @@
 		8AD58AA015D8963B002F1438 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = assets/Default.png; sourceTree = "<group>"; };
 		8AD58AA215D8A562002F1438 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = assets/Default.png; sourceTree = "<group>"; };
 		8AD58AA415D8A568002F1438 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "assets/Default@2x.png"; sourceTree = "<group>"; };
+		8AD58AA615D8A6A3002F1438 /* plainbackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "plainbackground@2x.png"; path = "assets/plainbackground@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -600,6 +602,7 @@
 				8AD58A9A15D895B9002F1438 /* logobackground.png */,
 				1BC0046215D6043100EB0958 /* photos@2x.png */,
 				8AD58A9C15D895D6002F1438 /* plainbackground.png */,
+				8AD58AA615D8A6A3002F1438 /* plainbackground@2x.png */,
 				6F8C34EE15D42D0E00EC82E9 /* polls.png */,
 				8AA1443B15D7324300A61148 /* background-50.png */,
 				8AD58AA415D8A568002F1438 /* Default@2x.png */,
@@ -822,6 +825,7 @@
 				8AD58AA115D8963B002F1438 /* Default.png in Resources */,
 				8AD58AA315D8A563002F1438 /* Default.png in Resources */,
 				8AD58AA515D8A568002F1438 /* Default@2x.png in Resources */,
+				8AD58AA715D8A6A3002F1438 /* plainbackground@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
