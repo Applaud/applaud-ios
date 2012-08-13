@@ -349,6 +349,9 @@
                 [clearButton addTarget:self action:@selector(clearButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                 clearButton.tag = responseWidgetTag;
                 clearButtonTable[[@(responseWidgetTag) description]] = clearButton;
+                // Make the clear button invisible at first, to appear when the slider is moved.
+                [clearButton setUserInteractionEnabled:NO];
+                [clearButton setHidden:YES];
                 
                 [cell.contentView addSubview:clearButton];
                 [cell.contentView addSubview:slider];
@@ -386,6 +389,10 @@
     
     // Note that the slider is no longer active
     activityTable[[@(valueLabel.tag) description]] = @(NO);
+    
+    // Hide the button
+    clearButton.userInteractionEnabled = NO;
+    clearButton.hidden = YES;
 }
 
 /*
@@ -405,6 +412,15 @@
 
     // Note that the slider is active
     activityTable[[@(valueLabel.tag) description]] = @(YES);
+    
+    // Show the "cancel rating" button
+    UIButton *clearButton = nil;
+    for ( UIView *subview in slider.superview.subviews ) {
+        if ( [subview isKindOfClass:[UIButton class]] )
+            clearButton = (UIButton*)subview;
+    }
+    [clearButton setUserInteractionEnabled:YES];
+    [clearButton setHidden:NO];
 }
 
 - (void) submitButtonPressed:(UIButton *)sender {
