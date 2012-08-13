@@ -105,7 +105,14 @@
                       otherButtonTitles:nil] show];
     [self.imagePicker dismissViewControllerAnimated:YES completion:nil];
     UIImage *normalizedImage = [self normalizedImage:image];
-    [self postPhotoData:[self resizeImage:normalizedImage]];
+//    [self postPhotoData:[self resizeImage:normalizedImage]];
+    [ConnectionManager postPhoto:[self resizeImage:normalizedImage]
+                      withParams:@{@"business_id": @(self.appDelegate.currentBusiness.business_id),
+                                   @"tags": @"[]"}
+                        callback:^(NSHTTPURLResponse *r, NSData *d) {
+                            [self getPhotos];
+                        }
+                           toURL:PHOTO_URL];
 }
 
 -(UIImage *)resizeImage:(UIImage *)image {
@@ -242,55 +249,9 @@
                                      index:button.tag];
     pzvc.appDelegate = self.appDelegate;
     pzvc.navigationController = self.navigationController;
-//    [self.navigationController pushViewController:pzvc animated:YES];
     [self presentViewController:pzvc
                        animated:YES
                      completion:nil];
-}
-
-// Send an image to the server.
--(void)postPhotoData:(UIImage *)photo {
-    // The body of the HTTP request.
-    NSMutableData *body = [[NSMutableData alloc] init];
-    // Boundary data strings.
-    NSData *start = [[NSString stringWithFormat:@"--%@\r\n", BOUNDARY] dataUsingEncoding:NSUTF8StringEncoding];
-    // These are a dictionary, so we can use a loop.
-    NSDictionary *params = [[NSDictionary alloc]
-                            initWithObjectsAndKeys:[NSNumber numberWithInt:self.appDelegate.currentBusiness.business_id],
-                            @"business_id",
-                            @"[]", // being lazy -- change this to JSON!
-                            @"tags",
-                            nil];
-    for (NSString *param in params) {
-        [body appendData:start];
-        [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", param] dataUsingEncoding:NSUTF8StringEncoding]];
-        [body appendData:[[NSString stringWithFormat:@"%@\r\n", [params objectForKey:param]] dataUsingEncoding:NSUTF8StringEncoding]];
-    }
-    
-    // Add the image.
-    [body appendData:start];
-    [body appendData:[@"Content-Disposition: file; name=\"image\"; filename=\"image.jpg\"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-    [body appendData:[@"Content-Type: image/png\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-    [body appendData:UIImageJPEGRepresentation(photo, 1)];
-    [body appendData:[[NSString stringWithFormat:@"--%@--\r\n", BOUNDARY] dataUsingEncoding:NSUTF8StringEncoding]];
- 
-    // Now make the request.
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    request.timeoutInterval = 30;
-    request.HTTPMethod = @"POST";
-    NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", BOUNDARY];
-    [request setValue:contentType forHTTPHeaderField:@"Content-Type"];
-    [request setValue:[NSString stringWithFormat:@"%d", [body length]] forHTTPHeaderField:@"Content-Length"];
-    request.HTTPBody = body;
-    request.URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", SERVER_URL, PHOTO_URL]];
-    [ConnectionManager getCSRFTokenFromURL:PHOTO_URL withCallback:^(NSHTTPURLResponse *response, NSString *csrf, NSError *error) {
-        [request addValue:csrf forHTTPHeaderField:@"X-CSRFToken"];
-        [NSURLConnection sendAsynchronousRequest:request
-                                           queue:[NSOperationQueue mainQueue]
-                               completionHandler:^(NSURLResponse *r, NSData *d, NSError *e) {
-                                   [self getPhotos];
-                               }];
-    }];
 }
 
 - (UIImage *)normalizedImage:(UIImage *)image {
