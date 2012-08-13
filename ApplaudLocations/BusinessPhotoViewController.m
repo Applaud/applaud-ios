@@ -105,23 +105,6 @@
                       otherButtonTitles:nil] show];
     [self.imagePicker dismissViewControllerAnimated:YES completion:nil];
     UIImage *normalizedImage = [self normalizedImage:image];
-    /*CGSize resize;
-    // .74691358
-    // 1.33884312
-    if(normalizedImage.imageOrientation == UIImageOrientationUp ||
-       normalizedImage.imageOrientation == UIImageOrientationDown) {
-        resize = CGSizeMake(320, 1.33884312*320);
-        NSLog(@"portrait mode");
-    }
-    else {
-        resize = CGSizeMake(320*1.33884312, 320);
-        NSLog(@"landscape mode");
-    }
-    NSLog(@"width %f height %f", image.size.width, image.size.height);
-    UIGraphicsBeginImageContext(resize);
-    [normalizedImage drawInRect:CGRectMake(0,0,resize.width,resize.height)];
-    UIImage *smallImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();*/
     [self postPhotoData:[self resizeImage:normalizedImage]];
 }
 
@@ -145,7 +128,7 @@
     else {
         float scale = 320.0/width;
         NSLog(@"SCALE %f", scale);
-        finalSize = CGRectMake(0, (height*scale-320.0)/2 -2, 319.0, 477.0);
+        finalSize = CGRectMake(0, (height*scale-320.0)/2, 320.0, 480.0);
         float newHeight = scale*height;
         float newWidth = 320.0;
         UIGraphicsBeginImageContext(CGSizeMake(newWidth, newHeight));
