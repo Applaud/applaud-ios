@@ -61,7 +61,7 @@
     
     self.textLabel.text = self.post.body;
     self.dateLabel.text = [ApatapaDateFormatter stringFromDate:self.post.date_created];
-    self.usernameLabel.text = self.post.user.username;
+    self.usernameLabel.text = self.post.user.name;
     
     self.ratingWidget.upvotesCount = self.post.upvotes;
     if ( self.post.my_rating )

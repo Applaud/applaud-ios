@@ -11,6 +11,7 @@
 #import "ConnectionManager.h"
 #import "PollsViewController.h"
 #import "TextViewCell.h"
+#import "UIViewController+KeyboardDismiss.h"
 
 @interface NewPollViewController ()
 
@@ -27,6 +28,7 @@
         self.options = [[NSMutableArray alloc] init];
         self.pollTitle = @"";
         first_time = YES;
+        [self initForKeyboardDismissal];
     }
     return self;
 }
@@ -84,7 +86,7 @@
 #pragma mark UITableViewDataSource / Delegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ( indexPath.section == 1 )
+    if ( indexPath.section > 0 )
         return 42.0f;
     return 60.0f;
 }

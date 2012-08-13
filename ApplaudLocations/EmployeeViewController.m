@@ -13,6 +13,7 @@
 #import "SDWebImage/UIImageView+WebCache.h"
 #import "AppDelegate.h"
 #import "EmployeeDisplayConstants.h"
+#import "UIViewController+KeyboardDismiss.h"
 #import <QuartzCore/QuartzCore.h>
 
 @implementation EmployeeViewController
@@ -27,6 +28,8 @@
         sliderLabelTable = [[NSMutableDictionary alloc] init];
         sliderTable = [[NSMutableDictionary alloc] init];
         activityTable = [[NSMutableDictionary alloc] init];
+        
+        [self initForKeyboardDismissal];
     }
     
     return self;

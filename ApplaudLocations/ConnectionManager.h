@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#define FORM_BOUNDARY @"2sdf2MASTERsd23TRASH982cca"
+
 #define EXAMPLE_URL @"/mobile/example3/"
 #define WHEREAMI_URL @"/mobile/whereami/"
 #define EMPLOYEES_URL @"/mobile/employees/"
@@ -38,6 +40,7 @@
 #define REGISTER_URL @"/mobile/register/"
 #define CHECK_EMAIL_URL @"/mobile/check_email/"
 #define COMMENT_VOTE_URL @"/mobile/vote_comment/"
+#define SET_PROFILE_PICTURE_URL @"/mobile/set_profile_picture/"
 
 @interface ConnectionManager : NSObject
 
@@ -67,6 +70,9 @@
 
 // Manage logins and logouts
 + (void)authenticateWithUsername:(NSString *)username password:(NSString *)password;
+
+// POST a photo, with optional (non-photo) parameters.
++ (void)postPhoto:(UIImage *)image withParams:(NSDictionary *)params callback:(void(^)(NSHTTPURLResponse *, NSData *))callback toURL:(NSString *)url;
 
 /*** CLASS MEMBERS ***/
 @property (nonatomic, copy) NSString *sessionCookie;

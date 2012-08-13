@@ -259,6 +259,11 @@
             [self.firstName resignFirstResponder];
             [self.lastName resignFirstResponder];
             [self.password resignFirstResponder];
+            
+            ProfilePictureViewController *ppvc = [[ProfilePictureViewController alloc]
+                                                  initWithUsername:self.email.text
+                                                  password:self.password.text];
+            [self presentViewController:ppvc animated:YES completion:nil];
         }];
     }
 }

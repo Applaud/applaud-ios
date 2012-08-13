@@ -213,6 +213,49 @@ static int outbound_connections;
                             }];
 }
 
+/*
+ * Simplifies posting a photo to the server.
+ * photo is a UIImage *.
+ * params are a dictionary which will be sent along as form fields. All
+ * keys and values should be strings.
+ * On the Django side, expect all params in request.POST and the image in
+ * request.FILES.
+ */
++ (void)postPhoto:(UIImage *)image withParams:(NSDictionary *)params
+         callback:(void(^)(NSHTTPURLResponse *, NSData *))callback
+            toURL:(NSString *)url{
+    NSMutableData *body = [[NSMutableData alloc] init];
+    NSData *start = [[NSString stringWithFormat:@"--%@\r\n", FORM_BOUNDARY]
+                     dataUsingEncoding:NSUTF8StringEncoding];
+    // Add parameters.
+    for (NSString *param in params) {
+        [body appendData:start];
+        [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", param] dataUsingEncoding:NSUTF8StringEncoding]];
+        [body appendData:[[NSString stringWithFormat:@"%@\r\n", [params objectForKey:param]] dataUsingEncoding:NSUTF8StringEncoding]];
+    }
+    // The image.
+    [body appendData:start];
+    [body appendData:[@"Content-Disposition: file; name=\"image\"; filename=\"image.jpg\"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:[@"Content-Type: image/png\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:UIImageJPEGRepresentation(image, 1)];
+    [body appendData:[[NSString stringWithFormat:@"--%@--\r\n", FORM_BOUNDARY] dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    // Make the request.
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    request.timeoutInterval = 30;
+    request.HTTPMethod = @"POST";
+    NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", FORM_BOUNDARY];
+    [request setValue:contentType forHTTPHeaderField:@"Content-Type"];
+    [request setValue:[NSString stringWithFormat:@"%d", [body length]] forHTTPHeaderField:@"Content-Length"];
+    request.HTTPBody = body;
+    request.URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", SERVER_URL, url]];
+    
+    // Get the CSRF token.
+    [ConnectionManager getCSRFTokenFromURL:url withCallback:^(NSHTTPURLResponse *r, NSString *csrf, NSError *e) {
+        [request addValue:csrf forHTTPHeaderField:@"X-CSRFToken"];
+        [ConnectionManager makeRequest:request callback:callback];
+    }];
+}
 
 /**
  * This is used to encapsulate variables that cannot be made compile-time.

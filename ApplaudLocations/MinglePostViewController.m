@@ -14,6 +14,7 @@
 #import "ConnectionManager.h"
 #import "MingleListViewController.h"
 #import "MingleThreadCell.h"
+#import "UIViewController+KeyboardDismiss.h"
 
 @interface MinglePostViewController ()
 
@@ -29,6 +30,7 @@
         self.threadPosts = self.thread.threadPosts;
         cellMap = [NSMutableDictionary new];
         self.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+        [self initForKeyboardDismissal];
     }
     return self;
 }
@@ -271,8 +273,18 @@
     [UIView setAnimationBeginsFromCurrentState:YES];
     [UIView setAnimationDuration:SCROLL_TIME];
     [self.navigationController.view setFrame:viewFrame];
-    [self.tableView setContentOffset:CGPointMake(0, self.tableView.contentOffset.y + keyboardSize.height - 22)
-                            animated:YES];
+
+    NSLog(@"Content offset of tableview: %f", self.tableView.contentOffset.y);
+   
+    // Either scroll to the last cell of the tableview, or move the contentOffset of
+    // the tableview according to keyboard size. Whichever is more convenient
+    NSIndexPath *lastCellIndex = [NSIndexPath indexPathForRow:self.threadPosts.count-1 inSection:1];
+    CGRect lastCellRect = [self.tableView rectForRowAtIndexPath:lastCellIndex];
+    if ( lastCellRect.origin.y + lastCellRect.size.height - self.tableView.contentOffset.y - keyboardSize.height + 22 < NAVBAR_SIZE )
+        [self.tableView scrollToRowAtIndexPath:lastCellIndex atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    else
+        [self.tableView setContentOffset:CGPointMake(0, self.tableView.contentOffset.y + keyboardSize.height - 22)
+                                animated:YES];
     [UIView commitAnimations];
     
     keyboardIsShown = YES;
