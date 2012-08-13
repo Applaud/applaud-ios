@@ -77,7 +77,7 @@
 }
 
 #pragma mark -
-#pragma UINavigationController delegate methods
+#pragma mark UINavigationController delegate methods
 
 -(void)navigationController:(UINavigationController *)navigationController
       didShowViewController:(UIViewController *)viewController
@@ -92,7 +92,7 @@
 }
 
 #pragma mark -
-#pragma UIImagePickerController delegate methods
+#pragma mark UIImagePickerController delegate methods
 // Called when the user has taken the photo. We can then send it off to the server.
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     UIImage *image = info[UIImagePickerControllerOriginalImage];
@@ -103,52 +103,13 @@
                       cancelButtonTitle:@"OK"
                       otherButtonTitles:nil] show];
     [self.imagePicker dismissViewControllerAnimated:YES completion:nil];
-    UIImage *normalizedImage = [self normalizedImage:image];
-//    [self postPhotoData:[self resizeImage:normalizedImage]];
-    [ConnectionManager postPhoto:[self resizeImage:normalizedImage]
+    [ConnectionManager postPhoto:[[image normalizedImage] resizedImage]
                       withParams:@{@"business_id": @(self.appDelegate.currentBusiness.business_id),
                                    @"tags": @"[]"}
                         callback:^(NSHTTPURLResponse *r, NSData *d) {
                             [self getPhotos];
                         }
                            toURL:PHOTO_URL];
-}
-
--(UIImage *)resizeImage:(UIImage *)image {
-    NSLog(@"ORIGINAL %f %f", image.size.width, image.size.height);
-    CGFloat height = image.size.height;
-    CGFloat width = image.size.width;
-    CGRect finalSize = CGRectZero;
-    UIImage *resizedImage;
-    if(height > width) {
-        float scale = 480.0/height;
-        NSLog(@"SCALE %f", scale);
-        float newWidth = width*scale;
-        float newHeight = 480.0;
-        UIGraphicsBeginImageContext(CGSizeMake(newWidth, newHeight));
-        [image drawInRect:CGRectMake(0, 0, newWidth, newHeight)];
-        resizedImage = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        finalSize = CGRectMake(0, 0, newWidth-1, newHeight-1);
-    }
-    else {
-        float scale = 320.0/width;
-        NSLog(@"SCALE %f", scale);
-        finalSize = CGRectMake(0, (height*scale-320.0)/2, 320.0, 480.0);
-        float newHeight = scale*height;
-        float newWidth = 320.0;
-        UIGraphicsBeginImageContext(CGSizeMake(newWidth, newHeight));
-        [image drawInRect:CGRectMake(0, 0, newWidth, newHeight)];
-        resizedImage = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-    }
-    NSLog(@"SIZES %f %f %f %f", finalSize.origin.x, finalSize.origin.y,
-          finalSize.size.width, finalSize.size.height);
-    CGImageRef imageRef = CGImageCreateWithImageInRect([resizedImage CGImage], finalSize);
-    UIImage *finalImage = [UIImage imageWithCGImage:imageRef];
-    CGImageRelease(imageRef);
-    NSLog(@"FINAL SIZE %f %f", finalImage.size.width, finalImage.size.height);
-    return finalImage;
 }
 
 // Called when the user presses the cancel button.
@@ -252,17 +213,6 @@
                        animated:YES
                      completion:nil];
 }
-
-- (UIImage *)normalizedImage:(UIImage *)image {
-    if (image.imageOrientation == UIImageOrientationUp) return image;
-    
-    UIGraphicsBeginImageContextWithOptions(image.size, NO, image.scale);
-    [image drawInRect:(CGRect){0, 0, image.size}];
-    UIImage *normalizedImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return normalizedImage;
-}
-
 
 // Called when the user presses the camera button. Pretty straightforward.
 - (void)cameraButtonPressed {

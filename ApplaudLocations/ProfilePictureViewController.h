@@ -8,11 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "ConnectionManager.h"
+#import "LoginRegistrationConstants.h"
+#import "UIImage+ResizeNormalize.h"
 
 @interface ProfilePictureViewController : UIViewController <UIImagePickerControllerDelegate,
                                                             UINavigationControllerDelegate>
 
 @property (strong, nonatomic) UINavigationBar *navBar;
+@property (strong, nonatomic) UILabel *text;
+@property (strong, nonatomic) UIButton *noPictureButton;
 @property (strong, nonatomic) UIImagePickerController *imagePicker;
 @property (strong, nonatomic) NSString *username;
 @property (strong, nonatomic) NSString *password;

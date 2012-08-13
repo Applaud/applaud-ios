@@ -10,6 +10,7 @@
 #import "ConnectionManager.h"
 #import "BusinessPhoto.h"
 #import "SDWebImage/UIButton+WebCache.h"
+#import "UIImage+ResizeNormalize.h"
 #import "PhotoZoomViewController.h"
 
 //#define PHOTO_MARGIN 10.0f
