@@ -64,6 +64,8 @@
     self.usernameLabel.text = self.post.user.username;
     
     self.ratingWidget.upvotesCount = self.post.upvotes;
+    if ( self.post.my_rating )
+        self.ratingWidget.enabled = NO;
 }
 
 - (void)setPost:(ThreadPost *)post {

@@ -258,9 +258,6 @@
         return;
     }
     
-    NSArray *vips = [self.tableView indexPathsForVisibleRows];
-    keyboardVisiblePath = vips[vips.count-2];
-    
     NSDictionary* userInfo = [n userInfo];
     
     // get the size of the keyboard
@@ -272,14 +269,11 @@
     
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationBeginsFromCurrentState:YES];
-    
     [UIView setAnimationDuration:SCROLL_TIME];
     [self.navigationController.view setFrame:viewFrame];
+    [self.tableView setContentOffset:CGPointMake(0, self.tableView.contentOffset.y + keyboardSize.height - 22)
+                            animated:YES];
     [UIView commitAnimations];
-        
-    // Scroll to last visible row
-    [self.tableView scrollToRowAtIndexPath:keyboardVisiblePath
-                          atScrollPosition:UITableViewScrollPositionTop animated:YES];
     
     keyboardIsShown = YES;
 }
@@ -300,10 +294,6 @@
     [UIView setAnimationDuration:SCROLL_TIME];
     [self.navigationController.view setFrame:viewFrame];
     [UIView commitAnimations];
-    
-    CGRect scrollRect = [self.tableView cellForRowAtIndexPath:keyboardVisiblePath].bounds;
-    scrollRect.origin.y += self.navigationController.toolbar.frame.size.height + 10;
-    [self.tableView scrollRectToVisible:scrollRect animated:YES];
     
     keyboardIsShown = NO;
 }
