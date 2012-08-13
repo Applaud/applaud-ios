@@ -163,6 +163,7 @@
         return cell;
     }
     
+    // General feedback cell
     static NSString *TextViewCellID = @"TextViewCell";
     TextViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:TextViewCellID];
     if ( nil == cell ){
@@ -170,6 +171,7 @@
                                       reuseIdentifier:TextViewCellID];
         cell.placeholder = [NSString stringWithFormat:@"Communicate directly with %@.",self.appDelegate.currentBusiness.name];
         cell.textView.delegate = self;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     return cell;
 }
