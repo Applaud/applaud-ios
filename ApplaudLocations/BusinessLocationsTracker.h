@@ -10,6 +10,7 @@
 #import <CoreLocation/CoreLocation.h>
 
 @class AppDelegate;
+@class MasterViewController;
 
 @interface BusinessLocationsTracker : NSObject <CLLocationManagerDelegate, UIAlertViewDelegate> {
     CLLocationCoordinate2D lastCoordinate; // The last coordinate we were recorded in

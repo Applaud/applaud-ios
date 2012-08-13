@@ -42,11 +42,6 @@
         
         [self.navBar pushNavigationItem:self.navigationItem animated:NO];
         [self.view addSubview:self.navBar];
-
-//        self.backgroundGradient = [CAGradientLayer layer];
-//        self.backgroundGradient.frame = CGRectMake(0,0,320,460);
-//        self.backgroundGradient.colors = @[(id)[UIColor colorWithRed:.7 green:.7 blue:.7 alpha:1.0].CGColor, (id)[UIColor colorWithRed:.5 green:.5 blue:.5 alpha:1.0].CGColor];
-//        self.backgroundGradient.locations = @[@0.0, @1.0f];
         
         self.backgroundImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"plainbackground"]];
         
@@ -56,6 +51,8 @@
         
         self.username = [self makeTextFieldwithYcoordinate:65 name:@"Email" returnKeyType:UIReturnKeyNext isPassword:NO];
         self.password = [self makeTextFieldwithYcoordinate:103 name:@"Password" returnKeyType:UIReturnKeyGo isPassword:YES];
+        
+        self.username.keyboardType = UIKeyboardTypeEmailAddress;
         
         // "Sign In" button
         self.signInButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -105,7 +102,7 @@
     ret.bounces = NO;
     ret.scrollEnabled = NO;
     ret.text = name;
-    
+    ret.autocapitalizationType = UITextAutocapitalizationTypeNone;
     return ret;
 }
 

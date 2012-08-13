@@ -35,11 +35,6 @@
         
         [self.navBar pushNavigationItem:self.navigationItem animated:NO];
         
-//        self.backgroundGradient = [CAGradientLayer layer];
-//        self.backgroundGradient.frame = CGRectMake(0,0,320,460);
-//        self.backgroundGradient.colors = @[(id)[UIColor colorWithRed:.7 green:.7 blue:.7 alpha:1.0].CGColor, (id)[UIColor colorWithRed:.5 green:.5 blue:.5 alpha:1.0].CGColor];
-//        self.backgroundGradient.locations = @[@0.0, @1.0f];
-        
         self.backgroundImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"plainbackground"]];
         
         UIImageView *smallLogo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"smalllogo"]];
@@ -49,6 +44,8 @@
         self.firstName = [self makeTextFieldwithYcoordinate:100 name:@"First Name" returnKeyType:UIReturnKeyNext isPassword:NO];
         self.lastName = [self makeTextFieldwithYcoordinate:138 name:@"Last Name (optional)" returnKeyType:UIReturnKeyNext isPassword:NO];
         self.password = [self makeTextFieldwithYcoordinate:176 name:@"Password" returnKeyType:UIReturnKeyGo isPassword:YES];
+        
+        self.email.keyboardType = UIKeyboardTypeEmailAddress;
         
         // Set up status images
         self.emailStatusImage = [[UIImageView alloc] initWithFrame:CGRectMake(IMAGE_SPACING, 7, 20, 20)];
@@ -112,7 +109,7 @@
     ret.bounces = NO;
     ret.scrollEnabled = NO;
     ret.text = name;
-    
+    ret.autocapitalizationType = UITextAutocapitalizationTypeNone;
     return ret;
 }
 
