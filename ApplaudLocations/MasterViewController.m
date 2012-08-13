@@ -44,7 +44,7 @@
                                                                                             action:@selector(refreshButtonPressed)]];
     
     // Background image
-    self.backgroundImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Default"]];
+    self.backgroundImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"City"]];
     self.backgroundImage.contentMode = UIViewContentModeBottom;
     self.backgroundImage.frame = self.tableView.frame;
     self.tableView.backgroundView = self.backgroundImage;

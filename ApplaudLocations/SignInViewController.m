@@ -43,22 +43,24 @@
         [self.navBar pushNavigationItem:self.navigationItem animated:NO];
         [self.view addSubview:self.navBar];
 
-        self.backgroundGradient = [CAGradientLayer layer];
-        self.backgroundGradient.frame = CGRectMake(0,0,320,460);
-        self.backgroundGradient.colors = @[(id)[UIColor colorWithRed:.7 green:.7 blue:.7 alpha:1.0].CGColor, (id)[UIColor colorWithRed:.5 green:.5 blue:.5 alpha:1.0].CGColor];
-        self.backgroundGradient.locations = @[@0.0, @1.0f];
+//        self.backgroundGradient = [CAGradientLayer layer];
+//        self.backgroundGradient.frame = CGRectMake(0,0,320,460);
+//        self.backgroundGradient.colors = @[(id)[UIColor colorWithRed:.7 green:.7 blue:.7 alpha:1.0].CGColor, (id)[UIColor colorWithRed:.5 green:.5 blue:.5 alpha:1.0].CGColor];
+//        self.backgroundGradient.locations = @[@0.0, @1.0f];
+        
+        self.backgroundImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"plainbackground"]];
         
         UIImageView *smallLogo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"smalllogo"]];
         smallLogo.frame = CGRectMake(135,7, 50, 50);
         
         
         self.username = [self makeTextFieldwithYcoordinate:65 name:@"Email" returnKeyType:UIReturnKeyNext isPassword:NO];
-        self.password = [self makeTextFieldwithYcoordinate:99 name:@"Password" returnKeyType:UIReturnKeyGo isPassword:YES];
+        self.password = [self makeTextFieldwithYcoordinate:103 name:@"Password" returnKeyType:UIReturnKeyGo isPassword:YES];
         
         // "Sign In" button
         self.signInButton = [UIButton buttonWithType:UIButtonTypeCustom];
         self.signInButton.backgroundColor = [UIColor grayColor];
-        self.signInButton.frame = CGRectMake(10,133,TEXTFIELD_WIDTH,TEXTFIELD_HEIGHT);
+        self.signInButton.frame = CGRectMake(10,141,TEXTFIELD_WIDTH,TEXTFIELD_HEIGHT);
         
         self.signInButton.titleLabel.font = [UIFont boldSystemFontOfSize:15.0];
         [self.signInButton setTitle:@"Sign In" forState:UIControlStateNormal];
@@ -77,7 +79,8 @@
     
         
         [self.view addSubview:self.scrollView];
-        [self.scrollView.layer insertSublayer:self.backgroundGradient atIndex:0];
+        //[self.scrollView.layer insertSublayer:self.backgroundGradient atIndex:0];
+        [self.scrollView addSubview:self.backgroundImage];
         [self.scrollView addSubview:smallLogo];
         [self.scrollView addSubview:self.username];
         [self.scrollView addSubview:self.password];
@@ -89,7 +92,7 @@
 -(UITextView *) makeTextFieldwithYcoordinate:(float)height name:(NSString *)name returnKeyType:(UIReturnKeyType)type isPassword:(BOOL)isPassword{
     UITextView *ret = [[UITextView alloc] initWithFrame:CGRectMake(10, height, TEXTFIELD_WIDTH, TEXTFIELD_HEIGHT)];
     ret.layer.cornerRadius = 3;
-    ret.layer.borderColor =[[[UIColor grayColor] colorWithAlphaComponent:0.5] CGColor];
+    ret.layer.borderColor =[UIColor colorWithRed:.5 green:.5 blue:.5 alpha:1.0].CGColor;
     ret.layer.borderWidth = 1.0;
     [ret setReturnKeyType:type];
     ret.delegate = self;
