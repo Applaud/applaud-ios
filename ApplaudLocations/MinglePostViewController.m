@@ -54,7 +54,7 @@
     self.textField.leftViewMode = UITextFieldViewModeAlways;
     self.textField.rightView = paddingView;
     self.textField.rightViewMode = UITextFieldViewModeAlways;
-    
+    self.textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     
     
     

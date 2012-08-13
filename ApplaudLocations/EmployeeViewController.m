@@ -12,7 +12,6 @@
 #import "ConnectionManager.h"
 #import "SDWebImage/UIImageView+WebCache.h"
 #import "AppDelegate.h"
-#import "EmployeeBioCell.h"
 #import "EmployeeDisplayConstants.h"
 #import <QuartzCore/QuartzCore.h>
 
@@ -320,7 +319,7 @@
     }
     
     else {
-        static NSString *cellIdentifier = @"EmployeeViewCell";
+        NSString *cellIdentifier = [NSString stringWithFormat:@"EmployeeViewCell%d",[self.employee.ratingDimensions[indexPath.row][@"id"] intValue]];
         UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         
         if ( nil == cell ) {

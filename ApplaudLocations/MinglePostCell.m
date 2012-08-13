@@ -104,6 +104,7 @@
 
 - (void)upRateWithWidget:(ApatapaRatingWidget *)widget {
     [self.mpvc giveRating:1 toThreadPostWithId:self.post.threadpost_id];
+    self.ratingWidget.enabled = NO;
 }
 
 @end
