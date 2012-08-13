@@ -64,8 +64,6 @@
 - (void)setEnabled:(BOOL)userInteractionEnabled {
     _enabled = userInteractionEnabled;
     self.voteButton.userInteractionEnabled = userInteractionEnabled;
-    self.voteButton.enabled = NO;
-
 }
 
 @end
