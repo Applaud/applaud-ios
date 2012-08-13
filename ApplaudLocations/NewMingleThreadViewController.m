@@ -10,6 +10,7 @@
 #import "MingleListViewController.h"
 #import "NewMingleThreadCell.h"
 #import "ConnectionManager.h"
+#import "UIViewController+KeyboardDismiss.h"
 
 @interface NewMingleThreadViewController ()
 
@@ -21,7 +22,7 @@
 {
     self = [super initWithStyle:style];
     if (self) {
-        // Custom initialization
+        [self initForKeyboardDismissal];
     }
     return self;
 }

@@ -14,6 +14,7 @@
 #import "SDWebImage/UIImageView+WebCache.h"
 #import "AppDelegate.h"
 #import "TextViewCell.h"
+#import "UIViewController+KeyboardDismiss.h"
 
 #define NO_EMPLOYEES_MESSAGE @"This business hasn't added any employees yet. Check back later!"
 #define GENERIC_MESSAGE [NSString stringWithFormat:@"%@%@%@\n\n%@",@"Applaud is the employee evaluation feature of Apatapa. Applaud allows employees to gain recognition for their hard work. By telling ",self.appDelegate.currentBusiness.name,@" to use this feature, you are playing an important part in giving employees more control over their future.",@"If you are interested in helping this business improve, check out the Feedback button below!"]
@@ -29,6 +30,7 @@
                                                  selector:@selector(notificationReceived:)
                                                      name:@"BUSINESS_SET"
                                                    object:nil];
+        [self initForKeyboardDismissal];
     }
     return self;
 }

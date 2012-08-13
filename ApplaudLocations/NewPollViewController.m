@@ -11,6 +11,7 @@
 #import "ConnectionManager.h"
 #import "PollsViewController.h"
 #import "TextViewCell.h"
+#import "UIViewController+KeyboardDismiss.h"
 
 @interface NewPollViewController ()
 
@@ -27,6 +28,7 @@
         self.options = [[NSMutableArray alloc] init];
         self.pollTitle = @"";
         first_time = YES;
+        [self initForKeyboardDismissal];
     }
     return self;
 }

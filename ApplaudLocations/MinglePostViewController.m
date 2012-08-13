@@ -14,6 +14,7 @@
 #import "ConnectionManager.h"
 #import "MingleListViewController.h"
 #import "MingleThreadCell.h"
+#import "UIViewController+KeyboardDismiss.h"
 
 @interface MinglePostViewController ()
 
@@ -29,6 +30,7 @@
         self.threadPosts = self.thread.threadPosts;
         cellMap = [NSMutableDictionary new];
         self.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+        [self initForKeyboardDismissal];
     }
     return self;
 }
