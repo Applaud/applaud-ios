@@ -27,11 +27,13 @@
         self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
         self.navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0,
                                                                         320, 44)];
+        self.navBar.barStyle = UIBarStyleBlackTranslucent;
         UIBarButtonItem *cameraButton = [[UIBarButtonItem alloc]
                                          initWithBarButtonSystemItem:UIBarButtonSystemItemCamera
                                          target:self
                                          action:@selector(cameraButtonPressed)];
         self.navigationItem.rightBarButtonItem = cameraButton;
+        self.navigationItem.title = @"Profile Picture";
         [self.navBar pushNavigationItem:self.navigationItem animated:NO];
         self.imagePicker = [[UIImagePickerController alloc] init];
         self.imagePicker.delegate = self;
@@ -40,27 +42,40 @@
             self.imagePicker.allowsEditing = NO;
         }
         self.text = [[UILabel alloc] init];
-        self.text.text = @"You can add a (totally option) picture to your profile here.";
+        self.text.text = @"You can add a (totally optional) picture to your profile here.";
         self.text.font = [UIFont systemFontOfSize:14.0f];
         self.text.lineBreakMode = UILineBreakModeWordWrap;
         self.text.numberOfLines = 0;
-        CGSize size = [self.text.text sizeWithFont:[UIFont systemFontOfSize:14.0f]
-                                 constrainedToSize:CGSizeMake(self.text.frame.size.width,
-                                                              1000)
-                                     lineBreakMode:UILineBreakModeWordWrap];
-        self.text.frame = CGRectMake(10, 64, TEXTFIELD_WIDTH, size.height);
+        self.text.frame = CGRectMake(10, 65, TEXTFIELD_WIDTH, 40);
+        self.text.backgroundColor = [UIColor clearColor];
         self.noPictureButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        self.noPictureButton.frame = CGRectMake(10,
-                                                self.text.frame.size.height +
-                                                self.text.frame.origin.y + 20,
+        self.noPictureButton.frame = CGRectMake(10, 103,
                                                 TEXTFIELD_WIDTH,
                                                 TEXTFIELD_HEIGHT);
+        [self.noPictureButton setTitle:@"No thanks!" forState:UIControlStateNormal];
+        self.noPictureButton.backgroundColor = [UIColor colorWithRed:.8
+                                                               green:.8
+                                                                blue:.8
+                                                               alpha:1.0];
+        CAGradientLayer *gradient = [CAGradientLayer layer];
+        gradient.cornerRadius = 3;
+        gradient.frame = self.noPictureButton.layer.bounds;
+        gradient.colors = @[(id)[UIColor colorWithRed:.6 green:.6 blue:.6 alpha:1.0].CGColor,
+                            (id)[UIColor colorWithRed:.3 green:.3 blue:.3 alpha:1.0].CGColor];
+        gradient.locations = @[@0.0, @1.0];
         [self.noPictureButton addTarget:self
                                  action:@selector(noPictureButtonPressed)
                        forControlEvents:UIControlEventTouchUpInside];
+        [self.noPictureButton.layer insertSublayer:gradient atIndex:0];
+        UIImageView *smallLogo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"smalllogo"]];
+        smallLogo.frame = CGRectMake(135, 51, 50, 50);
+        UIImageView *backgroundImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"plainbackground"]];
+        backgroundImage.frame = CGRectMake(0, 0, 320, 460);
+        [self.view addSubview:backgroundImage];
         [self.view addSubview:self.navBar];
-        [self.view addSubview:self.text];
         [self.view addSubview:self.noPictureButton];
+        [self.view addSubview:self.text];
+        [self.view addSubview:smallLogo];
     }
     return self;
 }
