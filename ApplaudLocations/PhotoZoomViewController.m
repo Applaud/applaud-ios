@@ -50,7 +50,7 @@
                                                     target:self
                                                     action:@selector(commentButtonPressed)]];
         [self.navigationItem setLeftBarButtonItem:[[UIBarButtonItem alloc]
-                                                   initWithTitle:@"Back"
+                                                   initWithImage:[UIImage imageNamed:@"back"]
                                                    style:UIBarButtonItemStylePlain
                                                    target:self
                                                    action:@selector(backButtonPressed)]];
