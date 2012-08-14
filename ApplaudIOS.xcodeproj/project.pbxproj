@@ -91,6 +91,8 @@
 		1BD494F215BF1E05006A01A9 /* NFTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BD494F115BF1E05006A01A9 /* NFTableViewCell.m */; };
 		1BFF2E7E158D9CDC00753F94 /* EmployeeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BFF2E7C158D9CDB00753F94 /* EmployeeListViewController.m */; };
 		1BFF2E7F158D9CDC00753F94 /* EmployeeListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1BFF2E7D158D9CDC00753F94 /* EmployeeListViewController.xib */; };
+		6F01C9BB15D9814600BDB61B /* ProfilePictureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F01C9BA15D9814600BDB61B /* ProfilePictureViewController.m */; };
+		6F01C9C415D99C6100BDB61B /* UIImage+ResizeNormalize.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F01C9C315D99C6100BDB61B /* UIImage+ResizeNormalize.m */; };
 		6F16232815D1BAC90055AE58 /* PhotoCommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F16232715D1BAC90055AE58 /* PhotoCommentViewController.m */; };
 		6F240AAC15CB529F00908238 /* PhotoZoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F240AAB15CB529F00908238 /* PhotoZoomViewController.m */; };
 		6F2A39171587B2AB0024FB52 /* Business.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F2A39161587B2AB0024FB52 /* Business.m */; };
@@ -284,6 +286,10 @@
 		1BFF2E7B158D9CDB00753F94 /* EmployeeListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmployeeListViewController.h; sourceTree = "<group>"; };
 		1BFF2E7C158D9CDB00753F94 /* EmployeeListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmployeeListViewController.m; sourceTree = "<group>"; };
 		1BFF2E7D158D9CDC00753F94 /* EmployeeListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmployeeListViewController.xib; sourceTree = "<group>"; };
+		6F01C9B915D9814600BDB61B /* ProfilePictureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfilePictureViewController.h; sourceTree = "<group>"; };
+		6F01C9BA15D9814600BDB61B /* ProfilePictureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfilePictureViewController.m; sourceTree = "<group>"; };
+		6F01C9C215D99C6100BDB61B /* UIImage+ResizeNormalize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ResizeNormalize.h"; sourceTree = "<group>"; };
+		6F01C9C315D99C6100BDB61B /* UIImage+ResizeNormalize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ResizeNormalize.m"; sourceTree = "<group>"; };
 		6F16232615D1BAC90055AE58 /* PhotoCommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoCommentViewController.h; sourceTree = "<group>"; };
 		6F16232715D1BAC90055AE58 /* PhotoCommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoCommentViewController.m; sourceTree = "<group>"; };
 		6F240AAA15CB529F00908238 /* PhotoZoomViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoZoomViewController.h; sourceTree = "<group>"; };
@@ -534,9 +540,6 @@
 		1BA358ED1582F05E00EB8F32 /* ApplaudLocations */ = {
 			isa = PBXGroup;
 			children = (
-				1B88332E15D9751E007A982A /* UIViewController+KeyboardDismiss.h */,
-				1B88332F15D9751E007A982A /* UIViewController+KeyboardDismiss.m */,
-				8A7B2D3115D0393D0053DCCF /* Login/Register */,
 				6FAE729515D5A87E004BC304 /* white_comments.png */,
 				1B67EE7B15D1B64400F94CA0 /* SubmitCancelCell.h */,
 				1B67EE7C15D1B64400F94CA0 /* SubmitCancelCell.m */,
@@ -546,6 +549,7 @@
 				1BC0043015D5F79400EB0958 /* TextViewCell.m */,
 				1BC1D44115D84BD400B0B8C1 /* ApatapaRatingWidget.h */,
 				1BC1D44215D84BD400B0B8C1 /* ApatapaRatingWidget.m */,
+				8A7B2D3115D0393D0053DCCF /* Login/Register */,
 				1BD494ED15BDF6D3006A01A9 /* Assets */,
 				1B3769E215D0550C001214B7 /* Polls */,
 				1B1109B315D42BA700B2B07E /* Mingle */,
@@ -565,6 +569,10 @@
 				6F2A39161587B2AB0024FB52 /* Business.m */,
 				1B9389B91584EF010088F468 /* BusinessLocationsTracker.h */,
 				1B9389BA1584EF010088F468 /* BusinessLocationsTracker.m */,
+				6F01C9C215D99C6100BDB61B /* UIImage+ResizeNormalize.h */,
+				6F01C9C315D99C6100BDB61B /* UIImage+ResizeNormalize.m */,
+				1B88332E15D9751E007A982A /* UIViewController+KeyboardDismiss.h */,
+				1B88332F15D9751E007A982A /* UIViewController+KeyboardDismiss.m */,
 				1B9528BE1590D87500103723 /* ConnectionManager.h */,
 				1B9528BF1590D87500103723 /* ConnectionManager.m */,
 				1BA358EE1582F05E00EB8F32 /* Supporting Files */,
@@ -665,6 +673,8 @@
 				8A7B2D3315D044BD0053DCCF /* LoginRegisterViewController.m */,
 				8A7B2D3815D083D80053DCCF /* RegistrationViewController.h */,
 				8A7B2D3915D083D80053DCCF /* RegistrationViewController.m */,
+				6F01C9B915D9814600BDB61B /* ProfilePictureViewController.h */,
+				6F01C9BA15D9814600BDB61B /* ProfilePictureViewController.m */,
 				8A7B2D3B15D084DC0053DCCF /* LoginRegistrationConstants.h */,
 				8A7B2D3515D051830053DCCF /* SignInViewController.h */,
 				8A7B2D3615D051830053DCCF /* SignInViewController.m */,
@@ -876,6 +886,8 @@
 				1BC0043415D5F92E00EB0958 /* UIPlaceHolderTextView.m in Sources */,
 				1BC1D44315D84BD400B0B8C1 /* ApatapaRatingWidget.m in Sources */,
 				1B88333015D9751E007A982A /* UIViewController+KeyboardDismiss.m in Sources */,
+				6F01C9BB15D9814600BDB61B /* ProfilePictureViewController.m in Sources */,
+				6F01C9C415D99C6100BDB61B /* UIImage+ResizeNormalize.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

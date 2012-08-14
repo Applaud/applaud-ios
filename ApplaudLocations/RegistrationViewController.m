@@ -26,7 +26,8 @@
         self.view.backgroundColor = [UIColor whiteColor];
         self.navigationItem.title = @"Registration";
         self.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back"
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]
+                                                 initWithTitle:@"Back"
                                                                                  style:UIBarButtonItemStylePlain
                                                                                 target:self
                                                                                 action:@selector(backButtonPressed)];
@@ -40,12 +41,20 @@
         UIImageView *smallLogo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"smalllogo"]];
         smallLogo.frame = CGRectMake(135,7, 50, 50);
         
+        
+        // Create and customize text fields
         self.email = [self makeTextFieldwithYcoordinate:62 name:@"Email" returnKeyType:UIReturnKeyNext isPassword:NO];
+        
         self.firstName = [self makeTextFieldwithYcoordinate:100 name:@"First Name" returnKeyType:UIReturnKeyNext isPassword:NO];
+        [self.firstName setAutocapitalizationType:UITextAutocapitalizationTypeWords];
+        
         self.lastName = [self makeTextFieldwithYcoordinate:138 name:@"Last Name (optional)" returnKeyType:UIReturnKeyNext isPassword:NO];
+        [self.lastName setAutocapitalizationType:UITextAutocapitalizationTypeWords];
+        
         self.password = [self makeTextFieldwithYcoordinate:176 name:@"Password" returnKeyType:UIReturnKeyGo isPassword:YES];
         
         self.email.keyboardType = UIKeyboardTypeEmailAddress;
+        
         
         // Set up status images
         self.emailStatusImage = [[UIImageView alloc] initWithFrame:CGRectMake(IMAGE_SPACING, 7, 20, 20)];
@@ -189,7 +198,6 @@
     }
     else {
         self.isFirstNameValid = YES;
-        NSLog(@"FIRST NAME %@", self.firstName.text);
     }
     [self setRegisterButton];
 }
@@ -245,6 +253,8 @@
 }
 - (void) registerButtonPressed {
     if([self checkFields]){
+        [self.password resignFirstResponder];
+        
         NSString *lastName = self.lastName.text ? self.lastName.text: @"";
         NSDictionary *dict = @{@"email":self.email.text,
         @"first_name":self.firstName.text,
@@ -252,9 +262,12 @@
         @"password":self.password.text};
         
         [ConnectionManager serverRequest:@"POST" withParams:dict url:REGISTER_URL callback:^(NSHTTPURLResponse *response, NSData *data){
+
             
-            [ConnectionManager authenticateWithUsername:dict[@"email"] password:dict[@"password"]];
-            
+            ProfilePictureViewController *ppvc = [[ProfilePictureViewController alloc]
+                                                  initWithUsername:self.email.text
+                                                  password:self.password.text];
+            [self presentViewController:ppvc animated:YES completion:nil];
         }];
     }
 }
@@ -322,6 +335,7 @@
                                                     .width, self.scrollView.frame.size.height);
                 
             }];
+            [self checkPassword];
             [self registerButtonPressed];
         }
         return NO;

@@ -166,6 +166,8 @@
 - (void) signInButtonPressed {
     if([self checkFields]){
         [ConnectionManager authenticateWithUsername:self.username.text password:self.password.text];
+        [self.password resignFirstResponder];
+        [self.username resignFirstResponder];
     }
 }
 

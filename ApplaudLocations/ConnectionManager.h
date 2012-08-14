@@ -40,6 +40,7 @@
 #define REGISTER_URL @"/mobile/register/"
 #define CHECK_EMAIL_URL @"/mobile/check_email/"
 #define COMMENT_VOTE_URL @"/mobile/vote_comment/"
+#define SET_PROFILE_PICTURE_URL @"/mobile/set_profile_picture/"
 
 @interface ConnectionManager : NSObject
 

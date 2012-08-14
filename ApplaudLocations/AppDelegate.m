@@ -90,6 +90,8 @@
     // Setup the window for display
     self.navControl = [[UINavigationController alloc] initWithRootViewController:self.masterViewController];
     self.navControl.navigationBar.tintColor = [UIColor darkGrayColor];
+    UIView *newView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"plainbackground"]];
+    [self.window addSubview:newView];
     self.window.rootViewController = self.navControl;
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
@@ -99,17 +101,17 @@
                                                  name:@"LOGIN_FAILURE"
                                                object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(loginSuccess:)
+                                                 name:@"LOGIN_SUCCESS"
+                                               object:nil];
+    
     // Authenticate the user
     NSString *username, *password;
-    UIAlertView *loginAlert = [[UIAlertView alloc] initWithTitle:@"Login to Applaud"
-                                                         message:@"Please enter your login information."
-                                                        delegate:self
-                                               cancelButtonTitle:@"Cancel"
-                                               otherButtonTitles:@"OK", nil];
-    loginAlert.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
-    
+ 
     // Try to retrieve username and password from internal database
     if ( (username = self.settings.username) && (password = self.settings.password) ) {
+        
         // Perform login
         [ConnectionManager authenticateWithUsername:username password:password];
     }
@@ -118,8 +120,6 @@
         LRVC.window = self.window;
         LRVC.appDelegate = self;
         
-        //UINavigationController *navBar = [[UINavigationController alloc] initWithRootViewController:LRVC];
-
         self.window.rootViewController = LRVC;//navBar;
     }
        
@@ -333,6 +333,13 @@
                                                       object:nil];
         [self fatalError];
     }
+}
+
+-(void) loginSuccess:(NSNotification *)notification {
+    self.settings.username = notification.object[0];
+    self.settings.password = notification.object[1];
+    NSError *err;
+    [self.managedObjectContext save:&err];
 }
 
 #pragma mark -
