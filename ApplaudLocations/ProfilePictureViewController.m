@@ -39,6 +39,8 @@
         self.imagePicker.delegate = self;
         if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
             self.imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+            self.imagePicker.showsCameraControls = NO;
+            self.imagePicker.cameraOverlayView = [self makeOverlayView];
             self.imagePicker.allowsEditing = NO;
         }
         self.text = [[UILabel alloc] init];
@@ -80,6 +82,54 @@
     return self;
 }
 
+-(UIView *)makeOverlayView {
+    UIView *overlay = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
+    overlay.exclusiveTouch = YES;
+    overlay.backgroundColor = [UIColor clearColor];
+    UIView *topBlack = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 80)];
+    topBlack.backgroundColor = [UIColor blackColor];
+    UIView *bottomBlack = [[UIView alloc] initWithFrame:CGRectMake(0, 400, 320, 80)];
+    bottomBlack.backgroundColor = [UIColor blackColor];
+    UIButton *flipButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [flipButton setTitle:@"Flip" forState:UIControlStateNormal];
+    flipButton.frame = CGRectMake(135, 10, 50, 30);
+    [flipButton addTarget:self action:@selector(flipButtonPressed)
+         forControlEvents:UIControlEventTouchUpInside];
+    UIButton *takePictureButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [takePictureButton setTitle:@"Take Picture" forState:UIControlStateNormal];
+    takePictureButton.frame = CGRectMake(135, 436, 50, 30);
+    [takePictureButton addTarget:self action:@selector(takePictureButtonPressed)
+                forControlEvents:UIControlEventTouchUpInside];
+    UIButton *cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [cancelButton setTitle:@"Cancel" forState:UIControlStateNormal];
+    cancelButton.frame = CGRectMake(280, 436, 35, 30);
+    [cancelButton addTarget:self action:@selector(cancelButtonPressed)
+           forControlEvents:UIControlEventTouchUpInside];
+    [overlay addSubview:topBlack];
+    [overlay addSubview:bottomBlack];
+    [overlay addSubview:flipButton];
+    [overlay addSubview:takePictureButton];
+    [overlay addSubview:cancelButton];
+    return overlay;
+}
+
+-(void)cancelButtonPressed {
+    [self.imagePicker dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void)takePictureButtonPressed {
+    [self.imagePicker takePicture];
+}
+
+-(void)flipButtonPressed {
+    if(self.imagePicker.cameraDevice == UIImagePickerControllerCameraDeviceRear) {
+        self.imagePicker.cameraDevice = UIImagePickerControllerCameraDeviceFront;
+    }
+    else {
+        self.imagePicker.cameraDevice = UIImagePickerControllerCameraDeviceRear;
+    }
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -108,10 +158,10 @@
  */
 -(void)imagePickerController:(UIImagePickerController *)picker
 didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    [self.imagePicker dismissViewControllerAnimated:YES completion:nil];
     UIImage *image = info[UIImagePickerControllerOriginalImage];
     self.image = [[image normalizedImage] resizedImage];
     [ConnectionManager authenticateWithUsername:self.username password:self.password];
+    [self.imagePicker dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
