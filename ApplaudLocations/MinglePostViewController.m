@@ -69,9 +69,9 @@
     UIBarButtonItem *textItem = [[UIBarButtonItem alloc] initWithCustomView:self.textField];
     
     // Back button
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemReply
-                                                                                target:self
-                                                                                action:@selector(goBack)];
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back"]
+                                                                   style:UIBarButtonItemStylePlain
+                                                                  target:self action:@selector(goBack)];
     self.navigationItem.leftBarButtonItem = backButton;
     
     self.toolbarWidgets = [[NSMutableArray alloc] initWithObjects:textItem, submitButton, nil];
