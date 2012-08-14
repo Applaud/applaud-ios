@@ -72,6 +72,8 @@
 		1BA358F21582F05E00EB8F32 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1BA358F01582F05E00EB8F32 /* InfoPlist.strings */; };
 		1BA358F41582F05E00EB8F32 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BA358F31582F05E00EB8F32 /* main.m */; };
 		1BA358F81582F05E00EB8F32 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BA358F71582F05E00EB8F32 /* AppDelegate.m */; };
+		1BAB03BF15DAE15E007341BE /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 1BAB03BD15DAE15E007341BE /* back.png */; };
+		1BAB03C015DAE15E007341BE /* back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1BAB03BE15DAE15E007341BE /* back@2x.png */; };
 		1BC0043115D5F79400EB0958 /* TextViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC0043015D5F79400EB0958 /* TextViewCell.m */; };
 		1BC0043415D5F92E00EB0958 /* UIPlaceHolderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC0043315D5F92E00EB0958 /* UIPlaceHolderTextView.m */; };
 		1BC0046315D6043100EB0958 /* photos.png in Resources */ = {isa = PBXBuildFile; fileRef = 1BC0046115D6043100EB0958 /* photos.png */; };
@@ -255,6 +257,8 @@
 		1BA358F31582F05E00EB8F32 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		1BA358F61582F05E00EB8F32 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1BA358F71582F05E00EB8F32 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		1BAB03BD15DAE15E007341BE /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = back.png; path = assets/back.png; sourceTree = "<group>"; };
+		1BAB03BE15DAE15E007341BE /* back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "back@2x.png"; path = "assets/back@2x.png"; sourceTree = "<group>"; };
 		1BB4AC9C15BF3B58003E8B29 /* EmployeeDisplayConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmployeeDisplayConstants.h; sourceTree = "<group>"; };
 		1BC0042F15D5F79400EB0958 /* TextViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextViewCell.h; sourceTree = "<group>"; };
 		1BC0043015D5F79400EB0958 /* TextViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextViewCell.m; sourceTree = "<group>"; };
@@ -590,6 +594,8 @@
 		1BD494ED15BDF6D3006A01A9 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				1BAB03BD15DAE15E007341BE /* back.png */,
+				1BAB03BE15DAE15E007341BE /* back@2x.png */,
 				1BC1D45E15D8748D00B0B8C1 /* thumbsup_disabled.png */,
 				1BC1D45F15D8748D00B0B8C1 /* thumbsup_disabled@2x.png */,
 				1BC1D45A15D8732C00B0B8C1 /* thumbsup.png */,
@@ -816,6 +822,8 @@
 				8AD58A9D15D895D6002F1438 /* plainbackground.png in Resources */,
 				8AD58A9F15D89615002F1438 /* City.png in Resources */,
 				8AD58AA715D8A6A3002F1438 /* plainbackground@2x.png in Resources */,
+				1BAB03BF15DAE15E007341BE /* back.png in Resources */,
+				1BAB03C015DAE15E007341BE /* back@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
