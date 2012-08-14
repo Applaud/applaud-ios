@@ -254,8 +254,9 @@
 - (void) registerButtonPressed {
     if([self checkFields]){
         [self.password resignFirstResponder];
-        
         NSString *lastName = self.lastName.text ? self.lastName.text: @"";
+        if([lastName isEqualToString:[self placeholderText:self.lastName]])
+            lastName = @"";
         NSDictionary *dict = @{@"email":self.email.text,
         @"first_name":self.firstName.text,
         @"last_name":lastName,
