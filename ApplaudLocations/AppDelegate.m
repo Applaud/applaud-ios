@@ -101,13 +101,18 @@
                                                  name:@"LOGIN_FAILURE"
                                                object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(loginSuccess:)
+                                                 name:@"LOGIN_SUCCESS"
+                                               object:nil];
+    
     // Authenticate the user
     NSString *username, *password;
  
     // Try to retrieve username and password from internal database
     if ( (username = self.settings.username) && (password = self.settings.password) ) {
-        // Perform login
         
+        // Perform login
         [ConnectionManager authenticateWithUsername:username password:password];
     }
     else {
@@ -115,8 +120,6 @@
         LRVC.window = self.window;
         LRVC.appDelegate = self;
         
-        //UINavigationController *navBar = [[UINavigationController alloc] initWithRootViewController:LRVC];
-
         self.window.rootViewController = LRVC;//navBar;
     }
        
@@ -330,6 +333,13 @@
                                                       object:nil];
         [self fatalError];
     }
+}
+
+-(void) loginSuccess:(NSNotification *)notification {
+    self.settings.username = notification.object[0];
+    self.settings.password = notification.object[1];
+    NSError *err;
+    [self.managedObjectContext save:&err];
 }
 
 #pragma mark -
