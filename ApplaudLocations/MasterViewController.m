@@ -93,7 +93,7 @@
     if ( nil == cell ) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"UITableViewCell"];
     }
-    
+
     // Configure the cell...
     Business *business = self.locationsArray[indexPath.row];
     cell.textLabel.text = business.name;
@@ -144,6 +144,19 @@
 
 - (void) businessReceived:(NSNotification *)notification {
     self.locationsArray = [notification object];
+    
+    // debug: add Chambers Landing
+    Business *bus = [[Business alloc] initWithName:@"APATAPA HQ"
+                                           goog_id:@"8eaccc6443d4a16442baf5f3a0bd527594105436"
+                                          latitude:@(39.073778)
+                                         longitude:@(-120.141402)
+                                      primaryColor:@"#e83723"
+                                    secondaryColor:@"#e6d6bc"
+                                           generic:NO
+                                             types:[NSDictionary dictionaryWithObjectsAndKeys:@"restaurant", @"restaurant", nil]];
+    [self.locationsArray addObject:bus];
+    
+    
     [self.tableView reloadData];
 }
 

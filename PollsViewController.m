@@ -152,7 +152,12 @@
                                 Poll* poll = self.polls[indexPath.section];
                                 cell.value = [poll.responses[indexPath.row-1][@"count"] doubleValue] / poll.total_votes;
                                 cell.rank = [poll.responses[indexPath.row-1][@"rank"] intValue];
-                                cell.totalRanks = [poll.responses count];
+                                int greatest = 1;
+                                for ( NSDictionary *dict in poll.responses ) {
+                                    if ([dict[@"rank"]intValue] > greatest)
+                                        greatest = [dict[@"rank"] intValue];
+                                }
+                                cell.totalRanks = greatest;
                                 
                                 for ( int i=0; i<poll.responses.count; i++ ) {
                                     [self showResultAtOptionIndex:i forPoll:poll];
@@ -328,6 +333,13 @@
                                                   optionTitle]];
     // Display percentage in the cell
     cell.value = value;
+    cell.rank = [poll.responses[index][@"rank"] intValue];
+    int greatest = 1;
+    for ( NSDictionary *dict in poll.responses ) {
+        if ([dict[@"rank"]intValue] > greatest)
+            greatest = [dict[@"rank"] intValue];
+    }
+    cell.totalRanks = greatest;
     [cell showResult];
 }
 
