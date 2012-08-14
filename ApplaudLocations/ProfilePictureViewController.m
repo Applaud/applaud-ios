@@ -46,10 +46,10 @@
         self.text.font = [UIFont systemFontOfSize:14.0f];
         self.text.lineBreakMode = UILineBreakModeWordWrap;
         self.text.numberOfLines = 0;
-        self.text.frame = CGRectMake(10, 65, TEXTFIELD_WIDTH, 40);
+        self.text.frame = CGRectMake(10, 106, TEXTFIELD_WIDTH, 40);
         self.text.backgroundColor = [UIColor clearColor];
         self.noPictureButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        self.noPictureButton.frame = CGRectMake(10, 103,
+        self.noPictureButton.frame = CGRectMake(10, 150,
                                                 TEXTFIELD_WIDTH,
                                                 TEXTFIELD_HEIGHT);
         [self.noPictureButton setTitle:@"No thanks!" forState:UIControlStateNormal];
@@ -122,6 +122,8 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
 #pragma mark Other methods
 
 -(void)noPictureButtonPressed {
+    // We don't want to post the picture if we don't have a picture.
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [ConnectionManager authenticateWithUsername:self.username password:self.password];
 }
 

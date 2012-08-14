@@ -89,7 +89,7 @@
                                 NSString *response = [[NSString alloc]
                                                       initWithData:d
                                                       encoding:NSUTF8StringEncoding];
-                                if([response isEqualToString:@"YES"]) {
+                                if([response isEqualToString:@"yes"]) {
                                     self.ratingWidget.enabled = YES;
                                 }
                                 else {
