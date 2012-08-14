@@ -65,10 +65,6 @@
                                             ACCESSORY_SIZE/2.0f - self.percentageLabel.frame.size.height/2.0f,
                                             ACCESSORY_SIZE,
                                             self.percentageLabel.frame.size.height);
-//    self.barGraphView.frame = CGRectMake(0,
-//                                         self.frame.size.height/4.0f,
-//                                         MAX(5.0f, self.value * (CELL_WIDTH - 2*CELL_MARGIN)),
-//                                         self.frame.size.height/2.0f);
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
@@ -114,7 +110,7 @@
     [UIView setAnimationDuration:0.5f];
     self.barGraphView.frame = CGRectMake(0,
                                          self.frame.size.height/4.0f,
-                                         MAX(5.0f, self.value * (CELL_WIDTH - 2*CELL_MARGIN)),
+                                         self.value * (CELL_WIDTH - 2*CELL_MARGIN),
                                          self.frame.size.height/2.0f);
     [UIView commitAnimations];
 }

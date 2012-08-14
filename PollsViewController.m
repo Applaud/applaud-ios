@@ -109,9 +109,20 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ( indexPath.row == 0 ) {
+        Poll *poll = self.polls[indexPath.section];
+        
+        CGSize constraintSize, labelSize;
+        constraintSize = CGSizeMake(self.view.frame.size.width - 2*CELL_MARGIN - CELL_PADDING - POLL_RATING_PADDING - POLL_RATING_WIDTH, 400);
+        labelSize = [poll.title sizeWithFont:[UIFont boldSystemFontOfSize:POLL_QUESTION_TEXT_SIZE]
+                           constrainedToSize:constraintSize
+                               lineBreakMode:UILineBreakModeWordWrap];
+        return labelSize.height + 30;
+    }
+    
     CGSize constraintSize = CGSizeMake(self.view.frame.size.width - 2*CELL_MARGIN - 2*CELL_PADDING - ACCESSORY_SIZE,
                                        400);
-    NSString *optionString = [[(Poll*)[self.polls objectAtIndex:indexPath.section] options] objectAtIndex:indexPath.row];
+    NSString *optionString = [[(Poll*)[self.polls objectAtIndex:indexPath.section] options] objectAtIndex:(indexPath.row-1)];
     CGSize optionSize = [optionString sizeWithFont:[UIFont boldSystemFontOfSize:OPTION_TEXT_SIZE]
                                  constrainedToSize:constraintSize
                                      lineBreakMode:UILineBreakModeWordWrap];
@@ -119,8 +130,10 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ( indexPath.row == 0 )
+        return;
     // This submits a response
-    NSDictionary *response =  @{ @"value" : @(indexPath.row),
+    NSDictionary *response =  @{ @"value" : @(indexPath.row-1),
                                     @"id" : @([[self.polls objectAtIndex:indexPath.section] poll_id]) };
     // Deselect this row
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -132,7 +145,7 @@
                                 [self handlePollsData:dat];
                                 PollOptionCell *cell = (PollOptionCell*)[self.tableView cellForRowAtIndexPath:indexPath];
                                 Poll* poll = self.polls[indexPath.section];
-                                cell.value = [poll.responses[indexPath.row][@"count"] doubleValue] / poll.total_votes;
+                                cell.value = [poll.responses[indexPath.row-1][@"count"] doubleValue] / poll.total_votes;
                                 
                                 for ( int i=0; i<poll.responses.count; i++ ) {
                                     [self showResultAtOptionIndex:i forPoll:poll];
@@ -143,22 +156,18 @@
 #pragma mark -
 #pragma mark UITableViewDataSource Methods
 
--(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return [[self.polls objectAtIndex:section] title];
-}
-
-- (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+- (UIView*)contentViewForPollSection:(int)section {
     Poll *poll = self.polls[section];
     
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CELL_WIDTH, 0)];
     headerView.backgroundColor = [UIColor clearColor];
     
     CGSize constraintSize, labelSize;
-    constraintSize = CGSizeMake(self.view.frame.size.width - 2*CELL_MARGIN - CELL_PADDING - POLL_RATING_PADDING, 400);
+    constraintSize = CGSizeMake(CELL_WIDTH - 2*CELL_MARGIN - CELL_PADDING - - POLL_RATING_WIDTH - POLL_RATING_PADDING, 400);
 
     
     constraintSize = CGSizeMake(constraintSize.width - POLL_RATING_WIDTH, constraintSize.height);
-    ApatapaRatingWidget *ratingWidget = [[ApatapaRatingWidget alloc] initWithFrame:CGRectMake(self.view.frame.size.width - POLL_RATING_PADDING - POLL_RATING_WIDTH,
+    ApatapaRatingWidget *ratingWidget = [[ApatapaRatingWidget alloc] initWithFrame:CGRectMake(CELL_WIDTH - POLL_RATING_PADDING - POLL_RATING_WIDTH - CELL_PADDING - CELL_MARGIN,
                                                                                               CELL_PADDING,
                                                                                               POLL_RATING_WIDTH,
                                                                                               32)
@@ -188,19 +197,8 @@
     return headerView;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    Poll *poll = self.polls[section];
-    
-    CGSize constraintSize, labelSize;
-    constraintSize = CGSizeMake(self.view.frame.size.width - 2*CELL_MARGIN - CELL_PADDING - POLL_RATING_PADDING - POLL_RATING_WIDTH, 400);
-    labelSize = [poll.title sizeWithFont:[UIFont boldSystemFontOfSize:POLL_QUESTION_TEXT_SIZE]
-                       constrainedToSize:constraintSize
-                           lineBreakMode:UILineBreakModeWordWrap];
-    return labelSize.height + 30;
-}
-
 -(int)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [[(Poll*)[self.polls objectAtIndex:section] options] count];
+    return [[(Poll*)[self.polls objectAtIndex:section] options] count] + 1;
 }
 
 -(int)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -209,8 +207,22 @@
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     Poll *poll = self.polls[indexPath.section];
-    NSString *optionTitle = poll.options[indexPath.row];
+    NSString *optionTitle = indexPath.row > 0? poll.options[indexPath.row-1] : @"";
     NSString *pollTitle = poll.title;
+    
+    if ( indexPath.row == 0 ) {
+        // Make the header cell for the poll
+        NSString *cellIdentifier = pollTitle;
+        UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        if ( nil == cell ) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                          reuseIdentifier:cellIdentifier];
+            [cell.contentView addSubview:[self contentViewForPollSection:indexPath.section]];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        }
+        return cell;
+    }
+
     NSString *cellIdentifier = [NSString stringWithFormat:@"%@%@",pollTitle,optionTitle];
     
     PollOptionCell *cell = (PollOptionCell*)[self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
@@ -220,7 +232,7 @@
                                       reuseIdentifier:cellIdentifier];
         [cellMap setObject:cell forKey:cellIdentifier];
         if ( poll.show_results ) {
-            [self showResultAtOptionIndex:indexPath.row forPoll:poll];
+            [self showResultAtOptionIndex:indexPath.row-1 forPoll:poll];
         }
 
     }

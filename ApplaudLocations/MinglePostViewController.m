@@ -64,7 +64,7 @@
     tff.size.height = 30;
     self.textField.frame = tff;
     UIBarButtonItem *submitButton = [[UIBarButtonItem alloc] initWithTitle:@"Post" style:UIBarButtonItemStyleDone target:self action:@selector(submitPost)];
-    submitButton.tintColor = [UIColor grayColor];
+    submitButton.tintColor = [UIColor colorWithRed:0.6 green:0.6 blue:0.6 alpha:1.0];
     submitButton.title = @"Post";
     UIBarButtonItem *textItem = [[UIBarButtonItem alloc] initWithCustomView:self.textField];
     
@@ -86,7 +86,7 @@
     // Set our toolbar items
     [self.navigationController setToolbarHidden:NO animated:NO];
     [self setToolbarItems:self.toolbarWidgets animated:YES];
-    self.navigationController.toolbar.tintColor = [UIColor blackColor];
+    self.navigationController.toolbar.tintColor = [UIColor grayColor];
     
     // Listen for keyboard to show
     [[NSNotificationCenter defaultCenter] addObserver:self
