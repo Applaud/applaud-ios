@@ -74,6 +74,7 @@
 		1BA358F81582F05E00EB8F32 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BA358F71582F05E00EB8F32 /* AppDelegate.m */; };
 		1BAB03BF15DAE15E007341BE /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 1BAB03BD15DAE15E007341BE /* back.png */; };
 		1BAB03C015DAE15E007341BE /* back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1BAB03BE15DAE15E007341BE /* back@2x.png */; };
+		1BAB03CE15DAEC12007341BE /* PollHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BAB03CD15DAEC12007341BE /* PollHeaderCell.m */; };
 		1BC0043115D5F79400EB0958 /* TextViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC0043015D5F79400EB0958 /* TextViewCell.m */; };
 		1BC0043415D5F92E00EB0958 /* UIPlaceHolderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC0043315D5F92E00EB0958 /* UIPlaceHolderTextView.m */; };
 		1BC0046315D6043100EB0958 /* photos.png in Resources */ = {isa = PBXBuildFile; fileRef = 1BC0046115D6043100EB0958 /* photos.png */; };
@@ -259,6 +260,8 @@
 		1BA358F71582F05E00EB8F32 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		1BAB03BD15DAE15E007341BE /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = back.png; path = assets/back.png; sourceTree = "<group>"; };
 		1BAB03BE15DAE15E007341BE /* back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "back@2x.png"; path = "assets/back@2x.png"; sourceTree = "<group>"; };
+		1BAB03CC15DAEC12007341BE /* PollHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PollHeaderCell.h; sourceTree = "<group>"; };
+		1BAB03CD15DAEC12007341BE /* PollHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PollHeaderCell.m; sourceTree = "<group>"; };
 		1BB4AC9C15BF3B58003E8B29 /* EmployeeDisplayConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmployeeDisplayConstants.h; sourceTree = "<group>"; };
 		1BC0042F15D5F79400EB0958 /* TextViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextViewCell.h; sourceTree = "<group>"; };
 		1BC0043015D5F79400EB0958 /* TextViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextViewCell.m; sourceTree = "<group>"; };
@@ -470,6 +473,8 @@
 			children = (
 				1B3769DD15D05505001214B7 /* PollsViewController.h */,
 				1B3769DE15D05505001214B7 /* PollsViewController.m */,
+				1BAB03CC15DAEC12007341BE /* PollHeaderCell.h */,
+				1BAB03CD15DAEC12007341BE /* PollHeaderCell.m */,
 				1BD05DA815D1FC900033DDFC /* PollOptionCell.h */,
 				1BD05DA915D1FC900033DDFC /* PollOptionCell.m */,
 				1BD05DAB15D218B60033DDFC /* PollOptionDisplayConstants.h */,
@@ -888,6 +893,7 @@
 				1B88333015D9751E007A982A /* UIViewController+KeyboardDismiss.m in Sources */,
 				6F01C9BB15D9814600BDB61B /* ProfilePictureViewController.m in Sources */,
 				6F01C9C415D99C6100BDB61B /* UIImage+ResizeNormalize.m in Sources */,
+				1BAB03CE15DAEC12007341BE /* PollHeaderCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

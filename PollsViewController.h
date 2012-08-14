@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
 #import "ApatapaRatingWidget.h"
+#import "Poll.h"
 
-@interface PollsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, RatingWidgetDelegate> {
+@interface PollsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
     NSMutableDictionary *cellMap;
     
     NSMutableArray *pollsSortedNewest;
@@ -30,5 +31,6 @@
 @property (nonatomic, strong) NSMutableArray *polls;
 
 - (void)getPolls;
+- (void)upRatePoll:(Poll*)poll;
 
 @end
