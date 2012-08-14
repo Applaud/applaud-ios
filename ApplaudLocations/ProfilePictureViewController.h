@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <QuartzCore/QuartzCore.h>
 #import "ConnectionManager.h"
 #import "LoginRegistrationConstants.h"
 #import "UIImage+ResizeNormalize.h"
