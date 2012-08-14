@@ -151,6 +151,8 @@
                                 PollOptionCell *cell = (PollOptionCell*)[self.tableView cellForRowAtIndexPath:indexPath];
                                 Poll* poll = self.polls[indexPath.section];
                                 cell.value = [poll.responses[indexPath.row-1][@"count"] doubleValue] / poll.total_votes;
+                                cell.rank = [poll.responses[indexPath.row-1][@"rank"] intValue];
+                                cell.totalRanks = [poll.responses count];
                                 
                                 for ( int i=0; i<poll.responses.count; i++ ) {
                                     [self showResultAtOptionIndex:i forPoll:poll];

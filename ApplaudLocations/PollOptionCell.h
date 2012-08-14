@@ -7,10 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Poll.h"
 
-@interface PollOptionCell : UITableViewCell
+@interface PollOptionCell : UITableViewCell {
+    NSArray *rankingColors;
+}
 
 @property (nonatomic) double value;
+@property (nonatomic) int rank;
+@property (nonatomic) int totalRanks;
 @property (strong, nonatomic, readonly) UILabel *percentageLabel;
 @property (strong, nonatomic, readonly) UIView *barGraphView;
 

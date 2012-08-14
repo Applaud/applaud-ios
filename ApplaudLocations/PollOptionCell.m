@@ -39,6 +39,34 @@
         self.textLabel.numberOfLines = 0;
         self.textLabel.lineBreakMode = UILineBreakModeWordWrap;
         self.textLabel.font = [UIFont boldSystemFontOfSize:OPTION_TEXT_SIZE];
+        
+        // Colors for rakings
+        rankingColors = [NSArray arrayWithObjects:
+                         [UIColor colorWithRed:0.2588f
+                                         green:0.6863f
+                                          blue:0.0f
+                                         alpha:1.0f],
+                         [UIColor colorWithRed:0.6627
+                                         green:0
+                                          blue:0.8078f
+                                         alpha:1.0f],
+                         [UIColor colorWithRed:0.0353f
+                                         green:0.3255f
+                                          blue:0.8980f
+                                         alpha:1.0f],
+                         [UIColor colorWithRed:1.0f
+                                         green:0.9922f
+                                          blue:0.0f
+                                         alpha:1.0f],
+                         [UIColor colorWithRed:0.9333f
+                                         green:0.3451f
+                                          blue:0.0f
+                                         alpha:1.0f],
+                         [UIColor colorWithRed:1.0f
+                                         green:0.0f
+                                          blue:0.0f
+                                         alpha:1.0f],
+                         nil];
     }
     return self;
 }
@@ -87,14 +115,31 @@
     
     // Set percentage label
     self.percentageLabel.text = [NSString stringWithFormat:@"%2.2f%%",100.0f * self.value];
-    
-    // Set bar graph
-    [self setBarGraphColor];    
     [self layoutSubviews];
 }
 
+- (void)setRank:(int)rank {
+    _rank = rank;
+    [self setBarGraphColor];
+}
+
+- (void)setTotalRanks:(int)totalRanks {
+    _totalRanks = totalRanks;
+    [self setBarGraphColor];
+}
+
 - (void)setBarGraphColor {
-    self.barGraphView.backgroundColor = [UIColor colorWithHue:self.value/3.0f saturation:0.9f brightness:0.8f alpha:0.7f];
+    if ( self.rank == 1 )
+        self.barGraphView.backgroundColor = rankingColors[0];
+    else if ( self.rank == self.totalRanks )
+        self.barGraphView.backgroundColor = rankingColors[rankingColors.count-1];
+    else if ( self.totalRanks <= rankingColors.count ) {
+        int whichColor = (self.rank / (double)self.totalRanks) * rankingColors.count;
+        self.barGraphView.backgroundColor = rankingColors[MIN(MAX(1,whichColor),rankingColors.count-2)];
+    }
+    else {
+        self.barGraphView.backgroundColor = rankingColors[rankingColors.count/2];
+    }
 }
 
 - (void)showResult {
