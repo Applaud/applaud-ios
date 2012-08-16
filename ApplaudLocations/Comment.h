@@ -10,6 +10,7 @@
 
 @interface Comment : NSObject
 @property (nonatomic) int user_id;
+@property (nonatomic, strong) NSURL *profilePictureURL;
 @property (nonatomic, strong) NSString *text;
 @property (nonatomic, strong) NSString *firstName;
 @property (nonatomic, strong) NSString *lastName;
@@ -19,6 +20,7 @@
 @property (nonatomic) int votes;
 
 -(id)initWithText:(NSString *)text photo_id:(int)photo_id user_id:(int)user_id
+profilePictureURL:(NSURL *)profilePictureURL
              date:(NSDate *)date_created comment_id:(int)comment_id
         firstName:(NSString *)firstName lastName:(NSString *)lastName
             votes:(int)votes;

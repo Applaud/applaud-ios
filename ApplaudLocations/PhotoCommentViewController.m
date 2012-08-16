@@ -7,6 +7,7 @@
 //
 
 #import "PhotoCommentViewController.h"
+#import "UIViewController+KeyboardDismiss.h"
 
 @interface PhotoCommentViewController ()
 
@@ -17,6 +18,7 @@
 - (id)initWithPhoto:(BusinessPhoto *)businessPhoto
 {
     self = [super init];
+    [self initForKeyboardDismissal];
     if (self) {
         self.navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
         self.navigationItem.title = @"Comments";
@@ -27,19 +29,22 @@
         [self.navBar pushNavigationItem:self.navigationItem animated:NO];
         self.scrollView = [[UIScrollView alloc]
                            initWithFrame:CGRectMake(0,
-                                                    20,
+                                                    -44,
                                                     self.view.frame.size.width,
-                                                    self.view.frame.size.height)];
+                                                    self.view.frame.size.height-20)];
+        NSLog(@"The height is... %f", self.view.frame.size.height);
         self.scrollView.contentSize = self.scrollView.frame.size;
+        //self.scrollView.bounds = CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height);
+        
         // self.view = self.scrollView;
         _businessPhoto = businessPhoto;
         self.comments = [[NSMutableArray alloc] init];
         self.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
         self.tableView = [[UITableView alloc]
                           initWithFrame:CGRectMake(0,
-                                                   30,
+                                                   84,
                                                    self.view.frame.size.width,
-                                                   360)
+                                                   self.view.frame.size.height-106)
                           style:UITableViewStyleGrouped];
         self.tableView.delegate = self;
         self.tableView.dataSource = self;
@@ -80,7 +85,7 @@
         [self.view addSubview:self.scrollView];
         [self.view addSubview:self.navBar];
         [self.view addSubview:self.toolbar];
-        [self getComments];
+        [self getComments:YES];
     }
     return self;
 }
@@ -110,16 +115,17 @@
     return UIInterfaceOrientationIsPortrait(interfaceOrientation);
 }
 
--(void)getComments {
+-(void)getComments:(BOOL)isFirst {
     NSDictionary *params = @{@"photo": @(self.businessPhoto.photo_id)};
     [ConnectionManager serverRequest:@"GET" withParams:params
                                  url:GET_PHOTO_COMMENTS_URL
                             callback:^(NSHTTPURLResponse *r, NSData *d) {
-                                [self handleComments:d];
+                                self.comments = [[NSMutableArray alloc] init];
+                                [self handleComments:d isFirst:isFirst];
                             }];
 }
 
--(void)handleComments:(NSData *)data {
+-(void)handleComments:(NSData *)data isFirst:(BOOL)isFirst {
     NSArray *comments = [NSJSONSerialization JSONObjectWithData:data
                                                         options:0
                                                           error:nil];
@@ -127,9 +133,11 @@
     format.dateFormat = @"MM/dd/yyyy H:m:s";
     for(NSDictionary *dict in comments) {
         NSDictionary *user = dict[@"user"];
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",SERVER_URL,user[@"profile_picture"]]];
         Comment *c = [[Comment alloc] initWithText:dict[@"text"]
                                           photo_id:[dict[@"businessphoto"] intValue]
                                            user_id:[user[@"id"] intValue]
+                                 profilePictureURL:url
                                               date:[format dateFromString:dict[@"date_created"]]
                                         comment_id:[dict[@"id"] intValue]
                                          firstName:user[@"first_name"]
@@ -138,6 +146,20 @@
         [self.comments addObject:c];
     }
     [self.tableView reloadData];
+
+    
+    if(! isFirst){
+        int offset = self.tableView.contentSize.height - 370;//self.tableView.frame.size.height;
+        NSLog(@"The scroll view height is...%f", self.scrollView.frame.size.height);
+        CGPoint bottomOffset = CGPointMake(0, offset);
+        
+        [UIView animateWithDuration:.25 animations:^(void){
+            
+            self.tableView.contentOffset = bottomOffset;
+            
+        }];
+    }
+
 }
 
 -(void)postComment {
@@ -151,23 +173,29 @@
     [ConnectionManager serverRequest:@"POST" withParams:params
                                  url:PHOTO_COMMENT_URL
                             callback:^(NSHTTPURLResponse *r, NSData *d) {
-                                NSDictionary *dict = [NSJSONSerialization
-                                                      JSONObjectWithData:d
-                                                      options:0
-                                                      error:nil];
-                                NSDateFormatter *format = [[NSDateFormatter alloc] init];
-                                format.dateFormat = @"MM/dd/yyyy H:m:s";
-                                Comment *c = [[Comment alloc]
-                                              initWithText:dict[@"text"]
-                                              photo_id:[dict[@"businessphoto"] intValue]
-                                              user_id:[dict[@"user"][@"id"] intValue]
-                                              date:[format dateFromString:dict[@"date_created"]]
-                                              comment_id:[dict[@"id"] intValue]
-                                              firstName:dict[@"user"][@"first_name"]
-                                              lastName:dict[@"user"][@"last_name"]
-                                              votes:[dict[@"votes"] intValue]];
-                                [self.comments addObject:c];
-                                [self.tableView reloadData];
+//                                NSDictionary *dict = [NSJSONSerialization
+//                                                      JSONObjectWithData:d
+//                                                      options:0
+//                                                      error:nil];
+//                                NSDateFormatter *format = [[NSDateFormatter alloc] init];
+//                                NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",SERVER_URL,dict[@"profile_picture"]]];
+//                                format.dateFormat = @"MM/dd/yyyy H:m:s";
+//                                Comment *c = [[Comment alloc]
+//                                              initWithText:dict[@"text"]
+//                                              photo_id:[dict[@"businessphoto"] intValue]
+//                                              user_id:[dict[@"user"][@"id"] intValue]
+//                                              profilePictureURL:url
+//                                              date:[format dateFromString:dict[@"date_created"]]
+//                                              comment_id:[dict[@"id"] intValue]
+//                                              firstName:dict[@"user"][@"first_name"]
+//                                              lastName:dict[@"user"][@"last_name"]
+//                                              votes:[dict[@"votes"] intValue]];
+//                                
+//                                [self.comments addObject:c];
+//                                [self.tableView reloadData];
+                                [self getComments:NO];
+                                
+
                             }];
     self.commentField.text = @"";
 }
@@ -250,7 +278,7 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    CGSize bodyContraint = CGSizeMake(CELL_WIDTH - 2*CELL_MARGIN - 2*CELL_PADDING, 400);
+    CGSize bodyContraint = CGSizeMake(CELL_WIDTH - 2*CELL_MARGIN - 2*CELL_PADDING - 110, 400);
     CGSize bodySize = [[self.comments[indexPath.row] text] sizeWithFont:[UIFont systemFontOfSize:BODY_TEXT_SIZE]
                             constrainedToSize:bodyContraint
                                 lineBreakMode:UILineBreakModeWordWrap];

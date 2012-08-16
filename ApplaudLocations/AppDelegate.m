@@ -78,6 +78,7 @@
     // Since we want to track this throughout the application, we initialize it here.
     self.tracker = [[BusinessLocationsTracker alloc] init];
     self.tracker.appDelegate = self;
+    // Changed by Jack on August 15 @ 8:30
     [self.tracker startUpdatingLocation];
     
     [self refreshViewControllers];
@@ -213,28 +214,33 @@
                                                                image:[UIImage imageNamed:@"applaud"]
                                                                  tag:100];
     elvc.tabBarItem = employeeItem;
+    
     UITabBarItem *pollsItem = [[UITabBarItem alloc] initWithTitle:@"Polls"
                                                                image:[UIImage imageNamed:@"polls"]
                                                                  tag:101];
     pvc.tabBarItem = pollsItem;
-//    UITabBarItem *threadsItem = [[UITabBarItem alloc] init];
-//    threadsItem.title = @"Mingle";
+    
     UITabBarItem *threadsItem = [[UITabBarItem alloc] initWithTitle:@"Mingle"
                                                               image:[UIImage imageNamed:@"dialog"]
                                                                 tag:100];
     mlvc.tabBarItem = threadsItem;
+    
     UITabBarItem *questionItem = [[UITabBarItem alloc] initWithTitle:@"Feedback"
                                                                image:[UIImage imageNamed:@"dialog"]
                                                                  tag:102];
     qvc.tabBarItem = questionItem;
+    
     UITabBarItem *newsItem = [[UITabBarItem alloc] initWithTitle:@"News"
                                                            image:[UIImage imageNamed:@"newsfeed"]
                                                              tag:103];
     nfvc.tabBarItem = newsItem;
+    
     UITabBarItem *photoItem = [[UITabBarItem alloc] initWithTitle:@"Photos"
                                                             image:[UIImage imageNamed:@"photos"]
                                                               tag:104];
     bpvc.tabBarItem = photoItem;
+    
+    
 	self.tabNavigator.viewControllers = @[newsNav, pollsNav, mingleNav, employeeNav, photoNav];
 }
 

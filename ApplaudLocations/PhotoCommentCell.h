@@ -15,6 +15,7 @@
 
 @interface PhotoCommentCell : UITableViewCell <RatingWidgetDelegate>
 @property (strong, nonatomic) Comment *comment;
+@property (nonatomic, strong) UIImageView *profilePicture;
 @property (strong, nonatomic) UITextView *commentTextView;
 @property (strong, nonatomic) UILabel *nameLabel;
 @property (strong, nonatomic) UILabel *dateLabel;

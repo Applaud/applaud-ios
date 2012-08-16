@@ -22,11 +22,25 @@
                                                                upvotesCount:_comment.votes];
         self.ratingWidget.delegate = self;
         [self checkCanVote];
+        
+        
+        NSData *data = [[NSData alloc] initWithContentsOfURL:comment.profilePictureURL];
+        UIImage *pp = [[UIImage alloc] initWithData:data];
+        self.profilePicture = [[UIImageView alloc] initWithFrame:CGRectMake(CELL_PADDING,
+                                                                            CELL_PADDING,
+                                                                            pp.size.width,
+                                                                            pp.size.height)];
+        
+        self.profilePicture.image = pp;
+        
+        //CGSize constrainedSize = CGSizeMake(self.contentView.frame.size.width - 2*CELL_MARGIN - CELL_PADDING - pp.size.width , 1000);
+        
+        CGSize constrainedSize = CGSizeMake(self.contentView.frame.size.width - 2*CELL_MARGIN - CELL_PADDING, 1000);
+        
         CGSize textSize = [self.comment.text sizeWithFont:[UIFont systemFontOfSize:BODY_TEXT_SIZE]
-                                        constrainedToSize:CGSizeMake(self.contentView.frame.size.width -
-                                                                     2*CELL_PADDING,
-                                                                     1000)
+                                        constrainedToSize: constrainedSize
                                             lineBreakMode:UILineBreakModeWordWrap];
+        
         self.commentTextView = [[UITextView alloc]
                                 initWithFrame:CGRectMake(CELL_PADDING,
                                                          CELL_PADDING,
@@ -54,30 +68,61 @@
         [self.contentView addSubview:self.ratingWidget];
         [self.contentView addSubview:self.dateLabel];
         [self.contentView addSubview:self.nameLabel];
+        [self.contentView addSubview:self.profilePicture];
         self.commentTextView.backgroundColor = self.contentView.backgroundColor;
         self.nameLabel.backgroundColor = [UIColor clearColor];
         self.dateLabel.backgroundColor = [UIColor clearColor];
+        
     }
     return self;
 }
 
 -(void)setComment:(Comment *)comment {
     _comment = comment;
-    CGSize bodySize = [self.comment.text sizeWithFont:[UIFont systemFontOfSize:BODY_TEXT_SIZE]
-                                    constrainedToSize:CGSizeMake(self.nameLabel.frame.size.width, 400)
-                                        lineBreakMode:UILineBreakModeWordWrap];
-    self.commentTextView.frame = CGRectMake(CELL_PADDING/2,
-                                            self.dateLabel.frame.origin.y + self.dateLabel.frame.size.height,
-                                            self.nameLabel.frame.size.width,
-                                            bodySize.height);
-    self.commentTextView.text = self.comment.text;
-    self.nameLabel.frame = CGRectMake(CELL_PADDING,
+//    CGSize bodySize = [self.comment.text sizeWithFont:[UIFont systemFontOfSize:BODY_TEXT_SIZE]
+//                                    constrainedToSize:CGSizeMake(self.nameLabel.frame.size.width, 400)
+//                                        lineBreakMode:UILineBreakModeWordWrap];
+
+    CGSize bodyConstraint = CGSizeMake(CELL_WIDTH - 2*CELL_MARGIN - 2*CELL_PADDING - 110, 400);
+    CGSize bodySize = [[comment text] sizeWithFont:[UIFont systemFontOfSize:BODY_TEXT_SIZE]
+                                                      constrainedToSize:bodyConstraint
+                                                          lineBreakMode:UILineBreakModeWordWrap];
+    
+    NSData *data = [[NSData alloc] initWithContentsOfURL:comment.profilePictureURL];
+    UIImage *pp = [[UIImage alloc] initWithData:data];
+    self.profilePicture = [[UIImageView alloc] initWithFrame:CGRectMake(CELL_PADDING,
+                                                                        CELL_PADDING,
+                                                                        pp.size.width,
+                                                                        pp.size.height)];
+    
+    self.profilePicture.image = pp;
+
+    CGSize imageSize = self.profilePicture.image.size;
+
+    [self.contentView addSubview:self.profilePicture];
+    
+    
+    
+    self.nameLabel.frame = CGRectMake(CELL_PADDING*2 + imageSize.width,
                                       CELL_PADDING,
-                                      CELL_WIDTH - 2*CELL_MARGIN - 2*CELL_PADDING,
+                                      CELL_WIDTH - 2*CELL_MARGIN - 3*CELL_PADDING - imageSize.width,
                                       20.0f);
 
     self.nameLabel.text = [NSString stringWithFormat:@"%@ %@", self.comment.firstName,
                            self.comment.lastName];
+    
+    self.dateLabel.frame = CGRectMake(CELL_PADDING*2 + imageSize.width,
+                                      self.nameLabel.frame.size.height+CELL_PADDING,
+                                      self.nameLabel.frame.size.width,
+                                      2*CELL_PADDING);
+    
+    self.commentTextView.frame = CGRectMake(CELL_PADDING + imageSize.width,
+                                            self.dateLabel.frame.origin.y + self.dateLabel.frame.size.height + CELL_PADDING,
+                                            self.nameLabel.frame.size.width,
+                                            bodySize.height+20);
+    
+    self.commentTextView.text = self.comment.text;
+    
     [self checkCanVote];
 }
 

@@ -24,8 +24,11 @@
         self.navigationItem.title = @"Sign In";
         self.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
         
-        // signIning for login success/ failure
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginFailed:) name:@"LOGIN_FAILED" object:nil];
+        // Register for login failer notification
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(loginFailed:)
+                                                     name:@"LOGIN_FAILURE"
+                                                   object:nil];
         
         // Navbar
         self.navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
@@ -199,7 +202,7 @@
 - (void) loginFailed: (NSNotification *) notification {
     
     [[[UIAlertView alloc] initWithTitle:@"Error"
-                               message:@"Invalid Credentials\nTry Again?"
+                               message:@"Invalid credentials"
                               delegate:nil
                      cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     

@@ -179,8 +179,9 @@ static int outbound_connections;
                                 
                                 // We are ok, login was successful
                                 if ( r.statusCode == 200 && [r.allHeaderFields objectForKey:@"Set-Cookie"] != nil) {
-                                    // Reset error code
-                                    error_code = 0;
+                                    // If not a location manager error, reset error code
+                                    if( error_code != ERROR_NO_LOCATION)
+                                        error_code = 0;
                                     
                                     NSArray *userPassword = [NSArray arrayWithObjects:username, password, nil];
                                     [[NSNotificationCenter defaultCenter] postNotificationName:@"LOGIN_SUCCESS" object:userPassword];

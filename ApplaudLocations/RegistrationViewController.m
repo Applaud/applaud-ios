@@ -83,6 +83,14 @@
         [self.registerButton addTarget:self action:@selector(signInButtonDown) forControlEvents:UIControlEventTouchDown];
         [self.registerButton addTarget:self action:@selector(signInButtonUp) forControlEvents:UIControlEventTouchUpOutside];
         
+        UITextView *terms = [[UITextView alloc] initWithFrame:CGRectMake(10, 260, 300, 40)];
+        terms.layer.cornerRadius = 3;
+        terms.font = [UIFont systemFontOfSize:10.0];
+        terms.text = @"By creating an account you agree with our Terms of Service found at: apatapa.com/overview/#terms";
+        terms.editable = NO;
+        
+        
+        
         self.isEmailValid = NO;
         self.isFirstNameValid = NO;
         self.isPasswordValid = NO;
@@ -98,6 +106,7 @@
         [self.scrollView addSubview:self.lastName];
         [self.scrollView addSubview:self.password];
         [self.scrollView addSubview:self.registerButton];
+        [self.scrollView addSubview:terms];
     }
     return self;
 }

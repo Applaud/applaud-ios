@@ -88,8 +88,10 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
+    NSLog(@"View appeared");
     [self getThreads];
+    
+    [super viewWillAppear:animated];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -99,6 +101,7 @@
 
 -(void)notificationReceived:(NSNotification *)notification {
     if([notification.name isEqualToString:@"BUSINESS_SET"]) {
+        
         // Set color
         self.view.opaque = YES;
         self.navigationController.navigationBar.tintColor = self.appDelegate.currentBusiness.primaryColor;

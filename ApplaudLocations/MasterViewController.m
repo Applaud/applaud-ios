@@ -170,7 +170,7 @@
                                                     name:@"DOWNLOAD_FINISHED"
                                                   object:nil];
     
-    // This corresponds to the newsfeed.
+    // 'Default' in tab bar - corresponds to the newsfeed.
     [self.tabBarController setSelectedIndex:0];
     _window.rootViewController = self.tabBarController;
 }

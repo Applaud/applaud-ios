@@ -11,13 +11,14 @@
 @implementation Comment
 
 -(id)initWithText:(NSString *)text photo_id:(int)photo_id user_id:(int)user_id
-             date:(NSDate *)date_created comment_id:(int)comment_id
-        firstName:(NSString *)firstName lastName:(NSString *)lastName
-            votes:(int)votes{
+profilePictureURL:(NSURL *)profilePictureURL date:(NSDate *)date_created
+       comment_id:(int)comment_id firstName:(NSString *)firstName
+         lastName:(NSString *)lastName votes:(int)votes{
     if(self = [super init]) {
         _text = text;
         _photo_id = photo_id;
         _user_id = user_id;
+        _profilePictureURL = profilePictureURL;
         _date_created = date_created;
         _comment_id = comment_id;
         _firstName = firstName;
