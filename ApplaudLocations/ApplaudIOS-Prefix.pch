@@ -43,9 +43,9 @@ enum SORT_METHODS {
     SORT_LIKED = 2
 };
 
-#define SORT_STRING_NEWEST @"newest"
-#define SORT_STRING_POPULAR @"trending"
-#define SORT_STRING_LIKED @"liked"
+#define SORT_STRING_NEWEST @"Newest"
+#define SORT_STRING_POPULAR @"Trending"
+#define SORT_STRING_LIKED @"Liked"
 
 #define BACK_BUTTON_TITLE @"Locations"
 #define BUSINESS_RADIUS_ENTRY 10000

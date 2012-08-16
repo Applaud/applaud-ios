@@ -15,7 +15,7 @@
 #define CELL_PADDING 10.0f          // space between cell wall and anything else
 #define CELL_MARGIN 10.0f           // space between outside of the cell and edge of the screen
 #define TITLE_SIZE 18.0f            // size of newsfeed item titles
-#define SECTION_TITLE_SIZE 20.f     // size of section titles in newsfeed listing
+#define SECTION_TITLE_SIZE 18.0f     // size of section titles in newsfeed listing
 #define SECTION_TITLE_HEIGHT 40.0f  // height of section titles
 #define TEASER_SIZE 14.0f           // size of the teaser text (excerpted from the body)
 #define TEASER_LENGTH 60            // number of characters of the body to use for teaser text

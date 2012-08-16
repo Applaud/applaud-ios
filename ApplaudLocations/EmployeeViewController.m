@@ -470,7 +470,7 @@
                       otherButtonTitles:@"OK", nil] show];
     
     // Switch to another part of the app
-    [(UITabBarController *)self.appDelegate.window.rootViewController setSelectedIndex:4];
+    [(UITabBarController *)self.appDelegate.window.rootViewController setSelectedIndex:3];
     UINavigationController *parent = (UINavigationController *)self.parentViewController;
     [parent popViewControllerAnimated:NO];
     EmployeeListViewController *elvc = parent.viewControllers[0];

@@ -100,6 +100,30 @@
     return @"Share Your Thoughts";
 }
 
+- (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    CGRect sectionFrame = CGRectMake(0.0, 0, 320.0, SECTION_TITLE_HEIGHT);
+    CGRect labelFrame = CGRectMake(CELL_PADDING, CELL_PADDING, 310.0, 22.0);
+    
+    UIView *view = [[UIView alloc] initWithFrame:sectionFrame];
+    view.backgroundColor = [UIColor clearColor];
+    NSString *titleString = @"";
+    if (0 == section ) {
+        titleString = @"Employees";
+    }
+    else {
+        titleString = @"Share Your Thoughts";
+    }
+    UILabel *sectionLabel = [[UILabel alloc] initWithFrame:labelFrame];
+    sectionLabel.text = titleString;
+    sectionLabel.font = [UIFont boldSystemFontOfSize:SECTION_TITLE_SIZE];
+    sectionLabel.textColor = [UIColor darkGrayColor];
+    sectionLabel.backgroundColor = [UIColor clearColor];
+    [view addSubview:sectionLabel];
+    
+    return view;
+
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
@@ -185,7 +209,7 @@
                                               lineBreakMode:UILineBreakModeWordWrap].height;
     }
     else if ( indexPath.section == 1 ) {
-        return 80.0f;
+        return 70.0f;
     }
     else if (self.employeeArray.count == 0 && indexPath.row == 0) {
         return 100;

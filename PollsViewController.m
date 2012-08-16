@@ -73,7 +73,7 @@
     sortControls.tintColor = [UIColor grayColor];
     [sortControls addTarget:self action:@selector(sortMethodSelected:) forControlEvents:UIControlEventValueChanged];
     UIBarButtonItem *sortItem = [[UIBarButtonItem alloc] initWithCustomView:sortControls];
-    self.navigationController.toolbar.tintColor = [UIColor blackColor];
+    self.navigationController.toolbar.tintColor = [UIColor colorWithRed:0.1 green:0.1 blue:0.1 alpha:1];
     [self setToolbarItems:[NSArray arrayWithObjects:flex,sortItem,flex,nil]];
     
     // Sort method is "newest"

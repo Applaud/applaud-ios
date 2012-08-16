@@ -26,6 +26,9 @@
 #define CELL_GAP 90.0f              // Amount of space reserved at top of first cell (hidden under namecard)
 #define NAVBAR_SIZE 49.0f           // size of the navigation bar (for use in resizing view for keyboard appearance)
 #define SCROLL_LENGTH 0.17f         // # of seconds to scroll the view when keyboard appears
+#define SECTION_TITLE_SIZE 18.0f     // size of section titles in newsfeed listing
+#define SECTION_TITLE_HEIGHT 40.0f  // height of section titles
+
 #define NO_RATING_TEXT @"no rating"
 
 #endif
