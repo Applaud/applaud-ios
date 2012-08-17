@@ -133,7 +133,7 @@
                                 self.appDelegate.currentBusiness = business;
                                 
                                 [self setUpWithApplaud:[features[@"applaud"] intValue]
-                                              newsfeed: NO//[features[@"newsfeed"] intValue]
+                                              newsfeed:[features[@"newsfeed"] intValue]
                                                  polls:[features[@"polls"] intValue]
                                                 mingle:[features[@"mingle"] intValue]
                                                 photos:[features[@"photos"] intValue]];
@@ -156,6 +156,21 @@
     NSMutableArray *viewControllers = [[NSMutableArray alloc] init];
     
     // Creating the view controllers in the tab bar
+    if(newsfeed){
+        // And then NFViewController
+        NFViewController *nfvc = [[NFViewController alloc] init];
+        UINavigationController *newsNav = [[UINavigationController alloc] initWithRootViewController:nfvc];
+        nfvc.navigationController = newsNav;
+        nfvc.appDelegate = self.appDelegate;
+        
+        UITabBarItem *newsItem = [[UITabBarItem alloc] initWithTitle:@"News"
+                                                               image:[UIImage imageNamed:@"newsfeed"]
+                                                                 tag:100];
+        nfvc.tabBarItem = newsItem;
+        
+        [viewControllers addObject:newsNav];
+    }
+    
     if(applaud){
         // EmployeeListViewController first
         EmployeeListViewController *elvc = [[EmployeeListViewController alloc] init];
@@ -165,7 +180,7 @@
         
         UITabBarItem *employeeItem = [[UITabBarItem alloc] initWithTitle:@"Applaud"
                                                                    image:[UIImage imageNamed:@"applaud"]
-                                                                     tag:100];
+                                                                     tag:101];
         elvc.tabBarItem = employeeItem;
         
         [viewControllers addObject:employeeNav];
@@ -182,7 +197,7 @@
         
         UITabBarItem *pollsItem = [[UITabBarItem alloc] initWithTitle:@"Polls"
                                                                 image:[UIImage imageNamed:@"polls"]
-                                                                  tag:101];
+                                                                  tag:102];
         pvc.tabBarItem = pollsItem;
         
         [viewControllers addObject:pollsNav];
@@ -198,26 +213,12 @@
         
         UITabBarItem *threadsItem = [[UITabBarItem alloc] initWithTitle:@"Mingle"
                                                                   image:[UIImage imageNamed:@"dialog"]
-                                                                    tag:102];
+                                                                    tag:103];
         mlvc.tabBarItem = threadsItem;
         
         [viewControllers addObject:mingleNav];
     }
     
-    if(newsfeed){
-        // And then NFViewController
-        NFViewController *nfvc = [[NFViewController alloc] init];
-        UINavigationController *newsNav = [[UINavigationController alloc] initWithRootViewController:nfvc];
-        nfvc.navigationController = newsNav;
-        nfvc.appDelegate = self.appDelegate;
-        
-        UITabBarItem *newsItem = [[UITabBarItem alloc] initWithTitle:@"News"
-                                                               image:[UIImage imageNamed:@"newsfeed"]
-                                                                 tag:103];
-        nfvc.tabBarItem = newsItem;
-        
-        [viewControllers addObject:newsNav];
-    }
     // BusinessPhotoViewController
     if(photos){
         BusinessPhotoViewController *bpvc = [[BusinessPhotoViewController alloc] init];

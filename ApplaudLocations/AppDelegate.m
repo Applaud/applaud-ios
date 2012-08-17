@@ -81,7 +81,7 @@
     // Changed by Jack on August 15 @ 8:30
     [self.tracker startUpdatingLocation];
     
-    [self refreshViewControllers];
+    //[self refreshViewControllers];
 	
     self.masterViewController.tabBarController = self.tabNavigator;
     self.tabNavigator.delegate = self;
