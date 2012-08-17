@@ -102,6 +102,7 @@
                                                                            0,
                                                                            320,
                                                                            480)];
+    UIView *blackFixelHack = [[UIView alloc] init];
     imageView.backgroundColor = [UIColor blackColor];
     [imageView setImageWithURL:photo.imageURL
               placeholderImage:nil
@@ -111,9 +112,18 @@
                                                         (480-image.size.height)/2,
                                                         320,
                                                         image.size.height);
+                            blackFixelHack.frame = CGRectMake(oldFrame.origin.x,
+                                                              ((480+image.size.height)/2) - 2,
+                                                              320,
+                                                              2);
+                           blackFixelHack.backgroundColor = [UIColor blackColor];
                        }
                        failure:nil];
     [self.scrollView addSubview:imageView];
+    // Still not totally working
+    if(imageView.frame.size.height <= 320){
+        [self.scrollView addSubview:blackFixelHack];
+    }
     self.scrollView.contentSize = CGSizeMake(self.scrollView.contentSize.width + PHOTO_BORDER + 320,
                                              480);
 }

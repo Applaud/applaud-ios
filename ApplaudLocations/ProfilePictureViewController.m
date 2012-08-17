@@ -86,27 +86,67 @@
     UIView *overlay = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
     overlay.exclusiveTouch = YES;
     overlay.backgroundColor = [UIColor clearColor];
+    
     UIView *topBlack = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 80)];
     topBlack.backgroundColor = [UIColor blackColor];
+    
+    UIView *topBar = [[UIView alloc] initWithFrame:CGRectMake(0,0, 320, 44)];
+    topBar.backgroundColor = [UIColor blackColor];
+    CALayer *bottomBorder = [CALayer layer];
+    bottomBorder.borderColor = [UIColor colorWithRed:.2 green:.2 blue:.2 alpha:1.0].CGColor;
+    bottomBorder.borderWidth = 1.0;
+    bottomBorder.frame = CGRectMake(0, topBar.frame.size.height, 320, 1);
+    [topBar.layer addSublayer:bottomBorder];
+        
+    CAGradientLayer *topBarLayer = [CAGradientLayer layer];
+    topBarLayer.frame = topBar.layer.bounds;
+    topBarLayer.colors = @[(id)[UIColor colorWithRed:.3333 green:.3333 blue:.3333 alpha:1.0].CGColor, (id)[UIColor colorWithRed:.3333 green:.3333 blue:.3333 alpha:0.0].CGColor];
+    topBarLayer.locations = @[@0.0f, @1.0f];
+    
+    [topBar.layer insertSublayer:topBarLayer atIndex:0];
+    
+    
     UIView *bottomBlack = [[UIView alloc] initWithFrame:CGRectMake(0, 400, 320, 80)];
     bottomBlack.backgroundColor = [UIColor blackColor];
+    
+    UIView *bottomBar = [[UIView alloc] initWithFrame:CGRectMake(0,436,320,44)];
+        
+    CAGradientLayer *bottomBarLayer = [CAGradientLayer layer];
+    bottomBarLayer.frame = bottomBar.layer.bounds;
+    bottomBarLayer.colors = @[(id)[UIColor colorWithRed:.9529 green:.9529 blue:.9333 alpha:1.0].CGColor, (id)[UIColor colorWithRed:.5058 green:.5137 blue:.5372 alpha:1.0].CGColor];
+    bottomBarLayer.locations = @[@0.0f, @1.0f];
+    
+    [bottomBar.layer insertSublayer:bottomBarLayer atIndex:0];
+    
+    UIImage *flipButtonImage = [UIImage imageNamed:@"flipCamera"];
     UIButton *flipButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [flipButton setTitle:@"Flip" forState:UIControlStateNormal];
-    flipButton.frame = CGRectMake(135, 10, 50, 30);
+    [flipButton setBackgroundImage:flipButtonImage forState:UIControlStateNormal];
+    flipButton.frame = CGRectMake(124, 5, 72, 36);
     [flipButton addTarget:self action:@selector(flipButtonPressed)
          forControlEvents:UIControlEventTouchUpInside];
+    
+    UIImage *takePictureButtonImage = [UIImage imageNamed:@"camera"];
     UIButton *takePictureButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [takePictureButton setTitle:@"Take Picture" forState:UIControlStateNormal];
-    takePictureButton.frame = CGRectMake(135, 436, 50, 30);
+    [takePictureButton setBackgroundImage:takePictureButtonImage forState:UIControlStateNormal];
+    takePictureButton.frame = CGRectMake(115, 436, 110, 46);
     [takePictureButton addTarget:self action:@selector(takePictureButtonPressed)
                 forControlEvents:UIControlEventTouchUpInside];
+    
     UIButton *cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    cancelButton.titleLabel.font = [UIFont systemFontOfSize:12];
+    cancelButton.titleLabel.textColor = [UIColor colorWithRed:.3 green:.3 blue:.3 alpha:1.0];
     [cancelButton setTitle:@"Cancel" forState:UIControlStateNormal];
-    cancelButton.frame = CGRectMake(280, 436, 35, 30);
+    cancelButton.layer.cornerRadius = 3;
+    cancelButton.layer.borderWidth = 1;
+    cancelButton.layer.borderColor = [UIColor colorWithRed:.6 green:.6 blue:.6 alpha:1.0].CGColor;
+    cancelButton.frame = CGRectMake(260, 443, 50, 30);
     [cancelButton addTarget:self action:@selector(cancelButtonPressed)
            forControlEvents:UIControlEventTouchUpInside];
+    
     [overlay addSubview:topBlack];
+    [overlay addSubview:topBar];
     [overlay addSubview:bottomBlack];
+    [overlay addSubview:bottomBar];
     [overlay addSubview:flipButton];
     [overlay addSubview:takePictureButton];
     [overlay addSubview:cancelButton];

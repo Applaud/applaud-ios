@@ -113,6 +113,8 @@
 		6FA4461015D23A73007DBDBF /* PhotoCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FA4460F15D23A73007DBDBF /* PhotoCommentCell.m */; };
 		6FAB07A01587BF0700C9F1DF /* BusinessAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FAB079F1587BF0700C9F1DF /* BusinessAnnotation.m */; };
 		6FAE729615D5A87E004BC304 /* white_comments.png in Resources */ = {isa = PBXBuildFile; fileRef = 6FAE729515D5A87E004BC304 /* white_comments.png */; };
+		8A3345BE15DE8E2700F019F0 /* flipCamera.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A3345BD15DE8E2700F019F0 /* flipCamera.png */; };
+		8A3345C015DE8E3600F019F0 /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A3345BF15DE8E3500F019F0 /* camera.png */; };
 		8A7B2D3415D044BD0053DCCF /* LoginRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A7B2D3315D044BD0053DCCF /* LoginRegisterViewController.m */; };
 		8A7B2D3715D051830053DCCF /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A7B2D3615D051830053DCCF /* SignInViewController.m */; };
 		8A7B2D3A15D083D80053DCCF /* RegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A7B2D3915D083D80053DCCF /* RegistrationViewController.m */; };
@@ -329,6 +331,8 @@
 		6FAB079E1587BF0700C9F1DF /* BusinessAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessAnnotation.h; sourceTree = "<group>"; };
 		6FAB079F1587BF0700C9F1DF /* BusinessAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessAnnotation.m; sourceTree = "<group>"; };
 		6FAE729515D5A87E004BC304 /* white_comments.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = white_comments.png; path = assets/white_comments.png; sourceTree = "<group>"; };
+		8A3345BD15DE8E2700F019F0 /* flipCamera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = flipCamera.png; path = assets/flipCamera.png; sourceTree = "<group>"; };
+		8A3345BF15DE8E3500F019F0 /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = camera.png; path = assets/camera.png; sourceTree = "<group>"; };
 		8A7B2D3215D044BD0053DCCF /* LoginRegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginRegisterViewController.h; sourceTree = "<group>"; };
 		8A7B2D3315D044BD0053DCCF /* LoginRegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginRegisterViewController.m; sourceTree = "<group>"; };
 		8A7B2D3515D051830053DCCF /* SignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInViewController.h; sourceTree = "<group>"; };
@@ -610,10 +614,12 @@
 				1BC0046115D6043100EB0958 /* photos.png */,
 				8AD58A9A15D895B9002F1438 /* logobackground.png */,
 				1BC0046215D6043100EB0958 /* photos@2x.png */,
+				8A3345BD15DE8E2700F019F0 /* flipCamera.png */,
 				8AD58A9C15D895D6002F1438 /* plainbackground.png */,
 				8AD58AA615D8A6A3002F1438 /* plainbackground@2x.png */,
 				6F8C34EE15D42D0E00EC82E9 /* polls.png */,
 				8AA1443B15D7324300A61148 /* background-50.png */,
+				8A3345BF15DE8E3500F019F0 /* camera.png */,
 				8AA1443C15D7324300A61148 /* background-60.png */,
 				8AD58A9815D886E7002F1438 /* texturedbackground.png */,
 				8AA1443D15D7324300A61148 /* background-70.png */,
@@ -829,6 +835,8 @@
 				8AD58AA715D8A6A3002F1438 /* plainbackground@2x.png in Resources */,
 				1BAB03BF15DAE15E007341BE /* back.png in Resources */,
 				1BAB03C015DAE15E007341BE /* back@2x.png in Resources */,
+				8A3345BE15DE8E2700F019F0 /* flipCamera.png in Resources */,
+				8A3345C015DE8E3600F019F0 /* camera.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

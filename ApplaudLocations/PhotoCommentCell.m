@@ -96,9 +96,8 @@
     self.textLabel.frame = CGRectMake(self.dateLabel.frame.origin.x,
                                       self.dateLabel.frame.origin.y + self.dateLabel.frame.size.height + CELL_ELEMENT_PADDING,
                                       self.nameLabel.frame.size.width,
-                                      bodySize.height);   
+                                      bodySize.height);
 }
-
 
 -(void)upRateWithWidget:(ApatapaRatingWidget *)widget {
 //    NSDictionary *params = @{@"id": @(self.comment.comment_id)};
@@ -110,6 +109,6 @@
 //                                NSLog(@"enabled %d", self.ratingWidget.enabled);
 //                            }];
     [self.pcvc giveRatingToCommentWithId:self.comment.comment_id];
-    self.ratingWidget.userInteractionEnabled = NO;
+    self.ratingWidget.enabled = NO;
 }
 @end

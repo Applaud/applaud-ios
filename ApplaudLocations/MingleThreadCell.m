@@ -106,7 +106,7 @@
 - (void)upRateWithWidget:(ApatapaRatingWidget *)widget {
     [self.mlvc giveRating:1
            toThreadWithId:self.thread.thread_id];
-    self.ratingWidget.userInteractionEnabled = NO;
+    self.ratingWidget.enabled = NO;
 }
 
 @end
