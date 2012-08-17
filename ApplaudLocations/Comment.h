@@ -18,6 +18,7 @@
 @property (nonatomic) int photo_id;
 @property (nonatomic) int comment_id;
 @property (nonatomic) int votes;
+@property (nonatomic) int myRating;
 
 -(id)initWithText:(NSString *)text photo_id:(int)photo_id user_id:(int)user_id
 profilePictureURL:(NSURL *)profilePictureURL

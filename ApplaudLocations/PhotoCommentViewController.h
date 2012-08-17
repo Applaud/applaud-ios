@@ -26,6 +26,8 @@
 @property (strong, nonatomic) UIScrollView *scrollView;
 @property (weak, nonatomic) AppDelegate *appDelegate;
 @property (strong, nonatomic) UIToolbar *toolbar;
+@property (strong, nonatomic) NSMutableDictionary *cellMap;
 
 -(id)initWithPhoto:(BusinessPhoto *)businessPhoto;
+-(void)giveRatingToCommentWithId:(int)comment_id;
 @end
