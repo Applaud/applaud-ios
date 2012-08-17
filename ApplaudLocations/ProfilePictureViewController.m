@@ -44,7 +44,7 @@
             self.imagePicker.allowsEditing = NO;
         }
         self.text = [[UILabel alloc] init];
-        self.text.text = @"You can add a profile picture here.";
+        self.text.text = @"Take your profile picture.";
         self.text.font = [UIFont systemFontOfSize:14.0f];
         self.text.lineBreakMode = UILineBreakModeWordWrap;
         self.text.numberOfLines = 0;
