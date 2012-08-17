@@ -171,77 +171,77 @@
 #pragma Back button methods
 
 -(void)refreshViewControllers {
-    // Creating the view controllers in the tab bar
-    // EmployeeListViewController first
-    EmployeeListViewController *elvc = [[EmployeeListViewController alloc] init];
-    UINavigationController *employeeNav = [[UINavigationController alloc] initWithRootViewController:elvc];
-    elvc.navigationController = employeeNav;
-    elvc.appDelegate = self;
-    
-    // Polls view controller
-    PollsViewController *pvc = [[PollsViewController alloc] init];
-    UINavigationController *pollsNav = [[UINavigationController alloc] initWithRootViewController:pvc];
-    pvc.navigationController = pollsNav;
-    pvc.appDelegate = self;
-    
-    // Threads (mingle) view controller
-    MingleListViewController *mlvc = [[MingleListViewController alloc] initWithStyle:UITableViewStyleGrouped];
-    UINavigationController *mingleNav = [[UINavigationController alloc] initWithRootViewController:mlvc];
-    mlvc.navigationController = mingleNav;
-    mlvc.appDelegate = self;
-    
-    // QuestionsViewController next
-    QuestionsViewController *qvc = [[QuestionsViewController alloc] init];
-    UINavigationController *questionNav = [[UINavigationController alloc] initWithRootViewController:qvc];
-    qvc.navigationController = questionNav;
-    qvc.appDelegate = self;
-    
-    // And then NFViewController
-    NFViewController *nfvc = [[NFViewController alloc] init];
-    UINavigationController *newsNav = [[UINavigationController alloc] initWithRootViewController:nfvc];
-    nfvc.navigationController = newsNav;
-    nfvc.appDelegate = self;
-    
-    // BusinessPhotoViewController
-    BusinessPhotoViewController *bpvc = [[BusinessPhotoViewController alloc] init];
-    UINavigationController *photoNav = [[UINavigationController alloc] initWithRootViewController:bpvc];
-    bpvc.navigationController = photoNav;
-    bpvc.title = @"Photos";
-    bpvc.appDelegate = self;
-
-    // Set up the tab bar
-    UITabBarItem *employeeItem = [[UITabBarItem alloc] initWithTitle:@"Applaud"
-                                                               image:[UIImage imageNamed:@"applaud"]
-                                                                 tag:100];
-    elvc.tabBarItem = employeeItem;
-    
-    UITabBarItem *pollsItem = [[UITabBarItem alloc] initWithTitle:@"Polls"
-                                                               image:[UIImage imageNamed:@"polls"]
-                                                                 tag:101];
-    pvc.tabBarItem = pollsItem;
-    
-    UITabBarItem *threadsItem = [[UITabBarItem alloc] initWithTitle:@"Mingle"
-                                                              image:[UIImage imageNamed:@"dialog"]
-                                                                tag:100];
-    mlvc.tabBarItem = threadsItem;
-    
-    UITabBarItem *questionItem = [[UITabBarItem alloc] initWithTitle:@"Feedback"
-                                                               image:[UIImage imageNamed:@"dialog"]
-                                                                 tag:102];
-    qvc.tabBarItem = questionItem;
-    
-    UITabBarItem *newsItem = [[UITabBarItem alloc] initWithTitle:@"News"
-                                                           image:[UIImage imageNamed:@"newsfeed"]
-                                                             tag:103];
-    nfvc.tabBarItem = newsItem;
-    
-    UITabBarItem *photoItem = [[UITabBarItem alloc] initWithTitle:@"Photos"
-                                                            image:[UIImage imageNamed:@"photos"]
-                                                              tag:104];
-    bpvc.tabBarItem = photoItem;
-    
-    
-	self.tabNavigator.viewControllers = @[newsNav, pollsNav, mingleNav, employeeNav, photoNav];
+//    // Creating the view controllers in the tab bar
+//    // EmployeeListViewController first
+//    EmployeeListViewController *elvc = [[EmployeeListViewController alloc] init];
+//    UINavigationController *employeeNav = [[UINavigationController alloc] initWithRootViewController:elvc];
+//    elvc.navigationController = employeeNav;
+//    elvc.appDelegate = self;
+//    
+//    // Polls view controller
+//    PollsViewController *pvc = [[PollsViewController alloc] init];
+//    UINavigationController *pollsNav = [[UINavigationController alloc] initWithRootViewController:pvc];
+//    pvc.navigationController = pollsNav;
+//    pvc.appDelegate = self;
+//    
+//    // Threads (mingle) view controller
+//    MingleListViewController *mlvc = [[MingleListViewController alloc] initWithStyle:UITableViewStyleGrouped];
+//    UINavigationController *mingleNav = [[UINavigationController alloc] initWithRootViewController:mlvc];
+//    mlvc.navigationController = mingleNav;
+//    mlvc.appDelegate = self;
+//    
+//    // QuestionsViewController next
+//    QuestionsViewController *qvc = [[QuestionsViewController alloc] init];
+//    UINavigationController *questionNav = [[UINavigationController alloc] initWithRootViewController:qvc];
+//    qvc.navigationController = questionNav;
+//    qvc.appDelegate = self;
+//    
+//    // And then NFViewController
+//    NFViewController *nfvc = [[NFViewController alloc] init];
+//    UINavigationController *newsNav = [[UINavigationController alloc] initWithRootViewController:nfvc];
+//    nfvc.navigationController = newsNav;
+//    nfvc.appDelegate = self;
+//    
+//    // BusinessPhotoViewController
+//    BusinessPhotoViewController *bpvc = [[BusinessPhotoViewController alloc] init];
+//    UINavigationController *photoNav = [[UINavigationController alloc] initWithRootViewController:bpvc];
+//    bpvc.navigationController = photoNav;
+//    bpvc.title = @"Photos";
+//    bpvc.appDelegate = self;
+//
+//    // Set up the tab bar
+//    UITabBarItem *employeeItem = [[UITabBarItem alloc] initWithTitle:@"Applaud"
+//                                                               image:[UIImage imageNamed:@"applaud"]
+//                                                                 tag:100];
+//    elvc.tabBarItem = employeeItem;
+//    
+//    UITabBarItem *pollsItem = [[UITabBarItem alloc] initWithTitle:@"Polls"
+//                                                               image:[UIImage imageNamed:@"polls"]
+//                                                                 tag:101];
+//    pvc.tabBarItem = pollsItem;
+//    
+//    UITabBarItem *threadsItem = [[UITabBarItem alloc] initWithTitle:@"Mingle"
+//                                                              image:[UIImage imageNamed:@"dialog"]
+//                                                                tag:100];
+//    mlvc.tabBarItem = threadsItem;
+//    
+//    UITabBarItem *questionItem = [[UITabBarItem alloc] initWithTitle:@"Feedback"
+//                                                               image:[UIImage imageNamed:@"dialog"]
+//                                                                 tag:102];
+//    qvc.tabBarItem = questionItem;
+//    
+//    UITabBarItem *newsItem = [[UITabBarItem alloc] initWithTitle:@"News"
+//                                                           image:[UIImage imageNamed:@"newsfeed"]
+//                                                             tag:103];
+//    nfvc.tabBarItem = newsItem;
+//    
+//    UITabBarItem *photoItem = [[UITabBarItem alloc] initWithTitle:@"Photos"
+//                                                            image:[UIImage imageNamed:@"photos"]
+//                                                              tag:104];
+//    bpvc.tabBarItem = photoItem;
+//    
+//    
+//	self.tabNavigator.viewControllers = @[newsNav, pollsNav, mingleNav, employeeNav, photoNav];
 }
 
 -(void)backButtonPressed {

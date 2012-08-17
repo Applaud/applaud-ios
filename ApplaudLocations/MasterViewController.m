@@ -9,6 +9,9 @@
 #import "MasterViewController.h"
 #import "NFViewController.h"
 #import "EmployeeListViewController.h"
+#import "PollsViewController.h"
+#import "MingleListViewController.h"
+#import "BusinessPhotoViewController.h"
 #import "Business.h"
 #import "ApplaudProgramSettingsModel.h"
 #import "ConnectionManager.h"
@@ -117,6 +120,7 @@
                             callback:^(NSHTTPURLResponse *r, NSData *dat){
                                 // Set app delegate's current business from what was returned by the server
                                 NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:dat options:0 error:nil];
+                                NSDictionary *features = dict[@"features"];
                                 Business *business = [[Business alloc] initWithName:dict[@"name"]
                                                                             goog_id:dict[@"goog_id"]
                                                                            latitude:dict[@"latitude"]
@@ -127,7 +131,12 @@
                                                                               types:dict[@"types"]];
                                 [business setBusiness_id:[dict[@"business_id"] intValue]];
                                 self.appDelegate.currentBusiness = business;
-                                NSLog(@"Business name at checkin: %@",business.name);
+                                
+                                [self setUpWithApplaud:[features[@"applaud"] intValue]
+                                              newsfeed: NO//[features[@"newsfeed"] intValue]
+                                                 polls:[features[@"polls"] intValue]
+                                                mingle:[features[@"mingle"] intValue]
+                                                photos:[features[@"photos"] intValue]];
 
                                 // Listen for when network downloads have stopped.
                                 [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(downloadFinished:) name:@"DOWNLOAD_FINISHED" object:nil];
@@ -141,6 +150,95 @@
 
 #pragma mark -
 #pragma mark Other Methods
+
+-(void)setUpWithApplaud:(BOOL)applaud newsfeed:(BOOL)newsfeed polls:(BOOL)polls mingle:(BOOL)mingle photos:(BOOL)photos{
+    
+    NSMutableArray *viewControllers = [[NSMutableArray alloc] init];
+    
+    // Creating the view controllers in the tab bar
+    if(applaud){
+        // EmployeeListViewController first
+        EmployeeListViewController *elvc = [[EmployeeListViewController alloc] init];
+        UINavigationController *employeeNav = [[UINavigationController alloc] initWithRootViewController:elvc];
+        elvc.navigationController = employeeNav;
+        elvc.appDelegate = self.appDelegate;
+        
+        UITabBarItem *employeeItem = [[UITabBarItem alloc] initWithTitle:@"Applaud"
+                                                                   image:[UIImage imageNamed:@"applaud"]
+                                                                     tag:100];
+        elvc.tabBarItem = employeeItem;
+        
+        [viewControllers addObject:employeeNav];
+
+    }
+    
+    if(polls){
+    
+        // Polls view controller
+        PollsViewController *pvc = [[PollsViewController alloc] init];
+        UINavigationController *pollsNav = [[UINavigationController alloc] initWithRootViewController:pvc];
+        pvc.navigationController = pollsNav;
+        pvc.appDelegate = self.appDelegate;
+        
+        UITabBarItem *pollsItem = [[UITabBarItem alloc] initWithTitle:@"Polls"
+                                                                image:[UIImage imageNamed:@"polls"]
+                                                                  tag:101];
+        pvc.tabBarItem = pollsItem;
+        
+        [viewControllers addObject:pollsNav];
+        
+    }
+
+    if(mingle){
+        // Threads (mingle) view controller
+        MingleListViewController *mlvc = [[MingleListViewController alloc] initWithStyle:UITableViewStyleGrouped];
+        UINavigationController *mingleNav = [[UINavigationController alloc] initWithRootViewController:mlvc];
+        mlvc.navigationController = mingleNav;
+        mlvc.appDelegate = self.appDelegate;
+        
+        UITabBarItem *threadsItem = [[UITabBarItem alloc] initWithTitle:@"Mingle"
+                                                                  image:[UIImage imageNamed:@"dialog"]
+                                                                    tag:102];
+        mlvc.tabBarItem = threadsItem;
+        
+        [viewControllers addObject:mingleNav];
+    }
+    
+    if(newsfeed){
+        // And then NFViewController
+        NFViewController *nfvc = [[NFViewController alloc] init];
+        UINavigationController *newsNav = [[UINavigationController alloc] initWithRootViewController:nfvc];
+        nfvc.navigationController = newsNav;
+        nfvc.appDelegate = self.appDelegate;
+        
+        UITabBarItem *newsItem = [[UITabBarItem alloc] initWithTitle:@"News"
+                                                               image:[UIImage imageNamed:@"newsfeed"]
+                                                                 tag:103];
+        nfvc.tabBarItem = newsItem;
+        
+        [viewControllers addObject:newsNav];
+    }
+    // BusinessPhotoViewController
+    if(photos){
+        BusinessPhotoViewController *bpvc = [[BusinessPhotoViewController alloc] init];
+        UINavigationController *photoNav = [[UINavigationController alloc] initWithRootViewController:bpvc];
+        bpvc.navigationController = photoNav;
+        bpvc.title = @"Photos";
+        bpvc.appDelegate = self.appDelegate;
+        
+        UITabBarItem *photoItem = [[UITabBarItem alloc] initWithTitle:@"Photos"
+                                                                image:[UIImage imageNamed:@"photos"]
+                                                                  tag:104];
+        bpvc.tabBarItem = photoItem;
+        
+        [viewControllers addObject:photoNav];
+        
+    }
+    
+    // Set up the tab bar
+	self.appDelegate.tabNavigator.viewControllers = (NSArray *)viewControllers;
+}
+
 
 - (void) businessReceived:(NSNotification *)notification {
     self.locationsArray = [notification object];
