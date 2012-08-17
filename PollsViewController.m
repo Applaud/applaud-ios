@@ -81,6 +81,11 @@
     [sortControls setSelectedSegmentIndex:SORT_NEWEST];
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self sortAndReloadPolls];
+}
+
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self.navigationController setToolbarHidden:NO animated:NO];
