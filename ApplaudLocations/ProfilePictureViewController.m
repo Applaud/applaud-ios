@@ -45,10 +45,10 @@
         }
         self.text = [[UILabel alloc] init];
         self.text.text = @"Take your profile picture.";
-        self.text.font = [UIFont systemFontOfSize:14.0f];
+        self.text.font = [UIFont systemFontOfSize:18.0f];
         self.text.lineBreakMode = UILineBreakModeWordWrap;
         self.text.numberOfLines = 0;
-        self.text.frame = CGRectMake(10, 106, TEXTFIELD_WIDTH, 40);
+        self.text.frame = CGRectMake(60, 106, TEXTFIELD_WIDTH - 50, 40);
         self.text.backgroundColor = [UIColor clearColor];
         self.noPictureButton = [UIButton buttonWithType:UIButtonTypeCustom];
         self.noPictureButton.frame = CGRectMake(10, 150,
