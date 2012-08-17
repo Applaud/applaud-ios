@@ -7,6 +7,8 @@
 //
 
 #import "PhotoCommentCell.h"
+#import "PhotoCommentViewController.h"
+#import "SDWebImage/UIImageView+WebCache.h"
 
 @implementation PhotoCommentCell
 
@@ -16,140 +18,98 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        NSLog(@"Init.....");
         _comment = comment;
-        self.ratingWidget = [[ApatapaRatingWidget alloc] initWithFrame:CGRectMake(CELL_WIDTH - CELL_MARGIN - CELL_PADDING - MINGLE_RATING_WIDTH, CELL_PADDING,
-                                                                                  MINGLE_RATING_WIDTH, 24.0f)
-                                                               upvotesCount:_comment.votes];
+//        self.ratingWidget = [[ApatapaRatingWidget alloc] initWithFrame:CGRectMake(CELL_WIDTH - CELL_MARGIN - CELL_PADDING - MINGLE_RATING_WIDTH, CELL_PADDING,
+//                                                                                  MINGLE_RATING_WIDTH, 24.0f)
+//                                                               upvotesCount:_comment.votes];
+        self.textLabel.numberOfLines = 0;
+        self.textLabel.font = [UIFont systemFontOfSize:BODY_TEXT_SIZE];
+        self.textLabel.backgroundColor = [UIColor clearColor];
+        self.textLabel.lineBreakMode = UILineBreakModeWordWrap;
+        self.ratingWidget = [[ApatapaRatingWidget alloc] init];
         self.ratingWidget.delegate = self;
-        [self checkCanVote];
-        
-        
-        NSData *data = [[NSData alloc] initWithContentsOfURL:comment.profilePictureURL];
-        UIImage *pp = [[UIImage alloc] initWithData:data];
-        self.profilePicture = [[UIImageView alloc] initWithFrame:CGRectMake(CELL_PADDING,
-                                                                            CELL_PADDING,
-                                                                            pp.size.width,
-                                                                            pp.size.height)];
-        
-        self.profilePicture.image = pp;
-        
-        //CGSize constrainedSize = CGSizeMake(self.contentView.frame.size.width - 2*CELL_MARGIN - CELL_PADDING - pp.size.width , 1000);
-        
-        CGSize constrainedSize = CGSizeMake(self.contentView.frame.size.width - 2*CELL_MARGIN - CELL_PADDING, 1000);
-        
-        CGSize textSize = [self.comment.text sizeWithFont:[UIFont systemFontOfSize:BODY_TEXT_SIZE]
-                                        constrainedToSize: constrainedSize
-                                            lineBreakMode:UILineBreakModeWordWrap];
-        
-        self.commentTextView = [[UITextView alloc]
-                                initWithFrame:CGRectMake(CELL_PADDING,
-                                                         CELL_PADDING,
-                                                         textSize.width,
-                                                         textSize.height)];
-        self.commentTextView.text = self.comment.text;
-        self.commentTextView.editable = NO;
-        self.commentTextView.scrollEnabled = NO;
-        self.commentTextView.font = [UIFont systemFontOfSize:BODY_TEXT_SIZE];
-        [self.contentView addSubview:self.commentTextView];
-        self.nameLabel = [[UILabel alloc]
-                          initWithFrame:CGRectMake(CELL_PADDING,
-                                                   CELL_PADDING,
-                                                   CELL_WIDTH - 2*CELL_MARGIN - 2*CELL_PADDING,
-                                                   20.0f)];
-        self.nameLabel.font = [UIFont boldSystemFontOfSize:USER_SIZE];
-        self.nameLabel.text = [NSString stringWithFormat:@"%@ %@",
-                               self.comment.firstName, self.comment.lastName];
-        self.dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.nameLabel.frame.origin.x,
-                                                                   self.nameLabel.frame.origin.y + self.nameLabel.frame.size.height + CELL_ELEMENT_PADDING,
-                                                                   self.nameLabel.frame.size.width,
-                                                                   20.0f)];
+        self.nameLabel = [[UILabel alloc] init];
+        self.nameLabel.font = [UIFont systemFontOfSize:USER_SIZE];
+        self.nameLabel.backgroundColor = [UIColor clearColor];
+        self.dateLabel = [[UILabel alloc] init];
         self.dateLabel.font = [UIFont systemFontOfSize:DATE_SIZE];
-        self.dateLabel.text = [ApatapaDateFormatter stringFromDate:self.comment.date_created];
+        self.dateLabel.backgroundColor = [UIColor clearColor];
+        self.profilePicture = [[UIImageView alloc] init];
+        
+        // Adding the subviews to the cell
         [self.contentView addSubview:self.ratingWidget];
         [self.contentView addSubview:self.dateLabel];
         [self.contentView addSubview:self.nameLabel];
         [self.contentView addSubview:self.profilePicture];
-        self.commentTextView.backgroundColor = self.contentView.backgroundColor;
-        self.nameLabel.backgroundColor = [UIColor clearColor];
-        self.dateLabel.backgroundColor = [UIColor clearColor];
         
+        [self initContent];
     }
     return self;
 }
 
--(void)setComment:(Comment *)comment {
+-(void)initContent{
+   
+    __weak PhotoCommentCell *weakSelf = self;
+    [self.profilePicture setImageWithURL:self.comment.profilePictureURL
+                        placeholderImage:nil
+                                 success:^(UIImage *image) {
+                                     [weakSelf setNeedsDisplay];
+                                     [weakSelf setNeedsLayout];
+                                 }
+                                 failure:^(NSError *error) {
+                                     NSLog(@"Something went wrong: %@",error);
+                                 }];
+
+    self.textLabel.text = self.comment.text;
+    self.nameLabel.text = [NSString stringWithFormat:@"%@ %@",self.comment.firstName, self.comment.lastName];
+    self.dateLabel.text = [ApatapaDateFormatter stringFromDate:self.comment.date_created];
+    self.ratingWidget.upvotesCount = self.comment.votes;
+    
+    if ( self.comment.myRating )
+        self.ratingWidget.enabled = NO;
+}
+
+-(void)setComment:(Comment *)comment{
     _comment = comment;
-//    CGSize bodySize = [self.comment.text sizeWithFont:[UIFont systemFontOfSize:BODY_TEXT_SIZE]
-//                                    constrainedToSize:CGSizeMake(self.nameLabel.frame.size.width, 400)
-//                                        lineBreakMode:UILineBreakModeWordWrap];
+    [self initContent];
+}
 
-    CGSize bodyConstraint = CGSizeMake(CELL_WIDTH - 2*CELL_MARGIN - 2*CELL_PADDING - 110, 400);
-    CGSize bodySize = [[comment text] sizeWithFont:[UIFont systemFontOfSize:BODY_TEXT_SIZE]
-                                                      constrainedToSize:bodyConstraint
-                                                          lineBreakMode:UILineBreakModeWordWrap];
-    
-    NSData *data = [[NSData alloc] initWithContentsOfURL:comment.profilePictureURL];
-    UIImage *pp = [[UIImage alloc] initWithData:data];
-    self.profilePicture = [[UIImageView alloc] initWithFrame:CGRectMake(CELL_PADDING,
-                                                                        CELL_PADDING,
-                                                                        pp.size.width,
-                                                                        pp.size.height)];
-    
-    self.profilePicture.image = pp;
-
-    CGSize imageSize = self.profilePicture.image.size;
-
-    [self.contentView addSubview:self.profilePicture];
-    
-    
-    
-    self.nameLabel.frame = CGRectMake(CELL_PADDING*2 + imageSize.width,
-                                      CELL_PADDING,
-                                      CELL_WIDTH - 2*CELL_MARGIN - 3*CELL_PADDING - imageSize.width,
-                                      20.0f);
-
-    self.nameLabel.text = [NSString stringWithFormat:@"%@ %@", self.comment.firstName,
-                           self.comment.lastName];
-    
-    self.dateLabel.frame = CGRectMake(CELL_PADDING*2 + imageSize.width,
-                                      self.nameLabel.frame.size.height+CELL_PADDING,
+-(void)layoutSubviews{
+    [super layoutSubviews];
+    self.profilePicture.frame = CGRectMake(CELL_PADDING, CELL_PADDING, IMAGE_SIZE, IMAGE_SIZE);
+    self.ratingWidget.frame = CGRectMake(CELL_WIDTH - CELL_MARGIN - CELL_PADDING - MINGLE_RATING_WIDTH, CELL_PADDING,
+                                         MINGLE_RATING_WIDTH, 24.0f);
+    self.nameLabel.frame = CGRectMake(CELL_PADDING + IMAGE_SIZE + CELL_ELEMENT_PADDING,
+                                          CELL_PADDING,
+                                          CELL_WIDTH - 2*CELL_MARGIN - 2*CELL_PADDING - IMAGE_SIZE - CELL_ELEMENT_PADDING - MINGLE_RATING_PADDING,
+                                          20.0f);
+    self.dateLabel.frame = CGRectMake(self.nameLabel.frame.origin.x,
+                                      self.nameLabel.frame.origin.y + self.nameLabel.frame.size.height + CELL_ELEMENT_PADDING,
                                       self.nameLabel.frame.size.width,
-                                      2*CELL_PADDING);
+                                      20.0f);
     
-    self.commentTextView.frame = CGRectMake(CELL_PADDING + imageSize.width,
-                                            self.dateLabel.frame.origin.y + self.dateLabel.frame.size.height + CELL_PADDING,
-                                            self.nameLabel.frame.size.width,
-                                            bodySize.height+20);
-    
-    self.commentTextView.text = self.comment.text;
-    
-    [self checkCanVote];
+    CGSize bodyContraint = CGSizeMake(self.nameLabel.frame.size.width, 400);
+    CGSize bodySize = [self.comment.text sizeWithFont:[UIFont systemFontOfSize:BODY_TEXT_SIZE]
+                                 constrainedToSize:bodyContraint
+                                     lineBreakMode:UILineBreakModeWordWrap];
+    self.textLabel.frame = CGRectMake(self.dateLabel.frame.origin.x,
+                                      self.dateLabel.frame.origin.y + self.dateLabel.frame.size.height + CELL_ELEMENT_PADDING,
+                                      self.nameLabel.frame.size.width,
+                                      bodySize.height);   
 }
 
--(void)checkCanVote {
-    NSDictionary *params = @{@"id": @(self.comment.comment_id), @"type": @"models.Comment"};
-    [ConnectionManager serverRequest:@"POST" withParams:params
-                                 url:CHECK_VOTE_URL
-                            callback:^(NSHTTPURLResponse *r, NSData *d) {
-                                NSString *response = [[NSString alloc]
-                                                      initWithData:d
-                                                      encoding:NSUTF8StringEncoding];
-                                if([response isEqualToString:@"yes"]) {
-                                    self.ratingWidget.enabled = YES;
-                                }
-                                else {
-                                    self.ratingWidget.enabled = NO;
-                                }
-                            }];
-}
 
 -(void)upRateWithWidget:(ApatapaRatingWidget *)widget {
-    NSDictionary *params = @{@"id": @(self.comment.comment_id)};
-    [ConnectionManager serverRequest:@"POST" withParams:params
-                                 url:COMMENT_VOTE_URL
-                            callback:^(NSHTTPURLResponse *r, NSData *d) {
-                                self.ratingWidget.enabled = NO;
-                                NSLog(@"enabled %d", self.ratingWidget.enabled);
-                            }];
+//    NSDictionary *params = @{@"id": @(self.comment.comment_id)};
+//    [ConnectionManager serverRequest:@"POST" withParams:params
+//                                 url:COMMENT_VOTE_URL
+//                            callback:^(NSHTTPURLResponse *r, NSData *d) {
+//                                self.ratingWidget.enabled = NO;
+//                                self.comment.myRating = 1;
+//                                NSLog(@"enabled %d", self.ratingWidget.enabled);
+//                            }];
+    [self.pcvc giveRatingToCommentWithId:self.comment.comment_id];
+    self.ratingWidget.userInteractionEnabled = NO;
 }
 @end

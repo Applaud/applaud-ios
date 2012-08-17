@@ -13,13 +13,16 @@
 #import "ApatapaRatingWidget.h"
 #import "ConnectionManager.h"
 
+@class PhotoCommentViewController;
+
 @interface PhotoCommentCell : UITableViewCell <RatingWidgetDelegate>
+
 @property (strong, nonatomic) Comment *comment;
 @property (nonatomic, strong) UIImageView *profilePicture;
-@property (strong, nonatomic) UITextView *commentTextView;
 @property (strong, nonatomic) UILabel *nameLabel;
 @property (strong, nonatomic) UILabel *dateLabel;
 @property (strong, nonatomic) ApatapaRatingWidget *ratingWidget;
+@property (nonatomic, weak) PhotoCommentViewController *pcvc;
 
 -(id)initWithComment:(Comment *)comment style:(UITableViewCellStyle)style
      reuseIdentifier:(NSString *)reuseIdentifier;
